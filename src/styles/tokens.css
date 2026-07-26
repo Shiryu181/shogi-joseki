@@ -1,0 +1,144 @@
+/*
+ * デザイントークン: mockup.html の :root 変数をそのまま移植。
+ * 木目パレット・ライト/ダーク切替・書体トークンを一元管理する。
+ * 参照元: /Users/takahashishiryuu/Desktop/tool/shogi-joseki/mockup.html
+ */
+:root {
+  --canvas: #c7a874;
+  --app: #f7f1e4;
+  --card: #ffffff;
+  --card-2: #fbf6ec;
+  --ink: #2a2115;
+  --ink-soft: #7c6f58;
+  --ink-faint: #a79a80;
+  --line: #eadfc8;
+  --line-2: #e0d2b4;
+  --brown: #6e4a25;
+  --brown-soft: #efe3ce;
+  --brown-ink: #523414;
+  --red: #b23a2e;
+  --red-soft: #f4e2dd;
+  --gold: #b0842e;
+  --gold-soft: #f1e7ce;
+  --good: #39795a;
+  --good-soft: #dfede3;
+  --board: #e7c787;
+  --board-line: #8a6233;
+  --board-edge: #c7a257;
+  --star-dot: #6e4e24;
+  --koma: #f3deaa;
+  --koma-rim: #cba85e;
+  --koma-ink: #2b2013;
+  --disp: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", serif;
+  --body: "Hiragino Kaku Gothic ProN", "Yu Gothic", "YuGothic", "Noto Sans JP", "Segoe UI", sans-serif;
+  --kf: "ShogiKaisho", "Kaiti SC", "STKaiti", "Kaiti TC", "YuKyokasho", "游教科書体", "YuKyokasho Yoko",
+    "UD デジタル教科書体 N-R", "Hiragino Mincho ProN", "Yu Mincho", serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --canvas: #241c12;
+    --app: #1b160f;
+    --card: #241e16;
+    --card-2: #2b241a;
+    --ink: #f0e7d6;
+    --ink-soft: #ac9f88;
+    --ink-faint: #7e7360;
+    --line: #37301f;
+    --line-2: #40371f;
+    --brown: #cda163;
+    --brown-soft: #2e2417;
+    --brown-ink: #e7c892;
+    --red: #e0776a;
+    --red-soft: #39221e;
+    --gold: #d6b05c;
+    --gold-soft: #312813;
+    --good: #6fbf95;
+    --good-soft: #1e2e25;
+    --board: #c9a461;
+    --board-line: #5a3f1c;
+    --board-edge: #8a6c38;
+    --star-dot: #3a2a13;
+    --koma: #d9bc80;
+    --koma-rim: #8a6c38;
+    --koma-ink: #241a0d;
+  }
+}
+
+:root[data-theme="dark"] {
+  --canvas: #241c12;
+  --app: #1b160f;
+  --card: #241e16;
+  --card-2: #2b241a;
+  --ink: #f0e7d6;
+  --ink-soft: #ac9f88;
+  --ink-faint: #7e7360;
+  --line: #37301f;
+  --line-2: #40371f;
+  --brown: #cda163;
+  --brown-soft: #2e2417;
+  --brown-ink: #e7c892;
+  --red: #e0776a;
+  --red-soft: #39221e;
+  --gold: #d6b05c;
+  --gold-soft: #312813;
+  --good: #6fbf95;
+  --good-soft: #1e2e25;
+  --board: #c9a461;
+  --board-line: #5a3f1c;
+  --board-edge: #8a6c38;
+  --star-dot: #3a2a13;
+  --koma: #d9bc80;
+  --koma-rim: #8a6c38;
+  --koma-ink: #241a0d;
+}
+
+:root[data-theme="light"] {
+  --canvas: #c7a874;
+  --app: #f7f1e4;
+  --card: #ffffff;
+  --card-2: #fbf6ec;
+  --ink: #2a2115;
+  --ink-soft: #7c6f58;
+  --ink-faint: #a79a80;
+  --line: #eadfc8;
+  --line-2: #e0d2b4;
+  --brown: #6e4a25;
+  --brown-soft: #efe3ce;
+  --brown-ink: #523414;
+  --red: #b23a2e;
+  --red-soft: #f4e2dd;
+  --gold: #b0842e;
+  --gold-soft: #f1e7ce;
+  --good: #39795a;
+  --good-soft: #dfede3;
+  --board: #e7c787;
+  --board-line: #8a6233;
+  --board-edge: #c7a257;
+  --star-dot: #6e4e24;
+  --koma: #f3deaa;
+  --koma-rim: #cba85e;
+  --koma-ink: #2b2013;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--body);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}

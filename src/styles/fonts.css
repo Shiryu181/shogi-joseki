@@ -1,0 +1,13 @@
+/*
+ * 駒フォント: Yuji Syuku (游字-粛)
+ * SIL Open Font License 1.1 / Copyright 2021 The Yuji Project Authors
+ * 再配布・商用/非商用埋め込み可。ライセンス全文は public/fonts/YujiSyuku-OFL-LICENSE.txt を参照。
+ * 出典: https://github.com/Kinutafontfactory/Yuji (Google Fonts 収録)
+ */
+@font-face {
+  font-family: "ShogiKaisho";
+  src: url("/fonts/YujiSyuku-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

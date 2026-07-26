@@ -1,0 +1,503 @@
+<style>
+  :root{
+    --canvas:#C7A874; --app:#F7F1E4; --card:#FFFFFF; --card-2:#FBF6EC;
+    --ink:#2A2115; --ink-soft:#7C6F58; --ink-faint:#A79A80;
+    --line:#EADFC8; --line-2:#E0D2B4;
+    --brown:#6E4A25; --brown-soft:#EFE3CE; --brown-ink:#523414;
+    --red:#B23A2E; --red-soft:#F4E2DD;
+    --gold:#B0842E; --gold-soft:#F1E7CE;
+    --good:#39795A; --good-soft:#DFEDE3;
+    --board:#E7C787; --board-line:#8A6233; --board-edge:#C7A257; --star-dot:#6E4E24;
+    --koma:#F3DEAA; --koma-rim:#CBA85E; --koma-ink:#2B2013;
+    --disp:"Hiragino Mincho ProN","Yu Mincho","YuMincho","Noto Serif JP",serif;
+    --body:"Hiragino Kaku Gothic ProN","Yu Gothic","YuGothic","Noto Sans JP","Segoe UI",sans-serif;
+    --kf:"Kaiti SC","STKaiti","Kaiti TC","YuKyokasho","游教科書体","YuKyokasho Yoko","UD デジタル教科書体 N-R","Hiragino Mincho ProN","Yu Mincho",serif;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --canvas:#241C12; --app:#1B160F; --card:#241E16; --card-2:#2B241A;
+    --ink:#F0E7D6; --ink-soft:#AC9F88; --ink-faint:#7E7360;
+    --line:#37301F; --line-2:#40371F;
+    --brown:#CDA163; --brown-soft:#2E2417; --brown-ink:#E7C892;
+    --red:#E0776A; --red-soft:#39221E;
+    --gold:#D6B05C; --gold-soft:#312813;
+    --good:#6FBF95; --good-soft:#1E2E25;
+    --board:#C9A461; --board-line:#5A3F1C; --board-edge:#8A6C38; --star-dot:#3A2A13;
+    --koma:#D9BC80; --koma-rim:#8A6C38; --koma-ink:#241a0d;
+  }}
+  :root[data-theme="dark"]{
+    --canvas:#241C12; --app:#1B160F; --card:#241E16; --card-2:#2B241A;
+    --ink:#F0E7D6; --ink-soft:#AC9F88; --ink-faint:#7E7360;
+    --line:#37301F; --line-2:#40371f;
+    --brown:#CDA163; --brown-soft:#2E2417; --brown-ink:#E7C892;
+    --red:#E0776A; --red-soft:#39221E;
+    --gold:#D6B05C; --gold-soft:#312813;
+    --good:#6FBF95; --good-soft:#1E2E25;
+    --board:#C9A461; --board-line:#5A3F1C; --board-edge:#8A6C38; --star-dot:#3A2A13;
+    --koma:#D9BC80; --koma-rim:#8A6C38; --koma-ink:#241a0d;
+  }
+  :root[data-theme="light"]{
+    --canvas:#C7A874; --app:#F7F1E4; --card:#FFFFFF; --card-2:#FBF6EC;
+    --ink:#2A2115; --ink-soft:#7C6F58; --ink-faint:#A79A80;
+    --line:#EADFC8; --line-2:#E0D2B4;
+    --brown:#6E4A25; --brown-soft:#EFE3CE; --brown-ink:#523414;
+    --red:#B23A2E; --red-soft:#F4E2DD;
+    --gold:#B0842E; --gold-soft:#F1E7CE;
+    --good:#39795A; --good-soft:#DFEDE3;
+    --board:#E7C787; --board-line:#8A6233; --board-edge:#C7A257; --star-dot:#6E4E24;
+    --koma:#F3DEAA; --koma-rim:#CBA85E; --koma-ink:#2B2013;
+  }
+
+  *{box-sizing:border-box}
+  .wrap{background:var(--canvas); min-height:100vh; padding:26px 14px; font-family:var(--body);
+    display:flex; justify-content:center; color:var(--ink); -webkit-font-smoothing:antialiased;}
+
+  .phone{width:390px; max-width:100%; height:812px; background:var(--app); border-radius:34px;
+    border:8px solid #100d09; box-shadow:0 20px 50px rgba(0,0,0,.35); overflow:hidden;
+    display:flex; flex-direction:column; position:relative;}
+  .statusbar{height:30px; display:flex; align-items:center; justify-content:space-between;
+    padding:0 20px; font-size:12px; font-weight:500; color:var(--ink); flex:none;}
+  .notch{position:absolute; top:8px; left:50%; transform:translateX(-50%); width:110px; height:20px;
+    background:#100d09; border-radius:0 0 14px 14px; z-index:20;}
+  .appbody{flex:1; overflow-y:auto; overflow-x:hidden;}
+  .appbody::-webkit-scrollbar{width:0}
+
+  .screen{display:none;} .screen.active{display:block; animation:fade .28s ease;}
+  @keyframes fade{from{opacity:0} to{opacity:1}}
+  @media (prefers-reduced-motion:reduce){.screen.active{animation:none}}
+
+  /* ---- home / search ---- */
+  .home-head{padding:6px 18px 12px;}
+  .home-head h1{font-family:var(--disp); font-size:23px; font-weight:600; margin:6px 0 2px; letter-spacing:.03em;}
+  .home-head .tl{font-size:12px; color:var(--ink-soft); letter-spacing:.06em;}
+  .searchbar{margin:14px 0 4px; display:flex; align-items:center; gap:10px; background:var(--card);
+    border:1px solid var(--line-2); border-radius:30px; padding:12px 16px; box-shadow:0 3px 10px rgba(120,90,40,.08);}
+  .searchbar svg{color:var(--brown); flex:none;}
+  .searchbar input{border:none; background:transparent; font-family:var(--body); font-size:14px; color:var(--ink);
+    width:100%; outline:none;}
+  .searchbar input::placeholder{color:var(--ink-faint);}
+  .searchbar .filt{width:34px; height:34px; border-radius:50%; border:1px solid var(--line-2); background:var(--card-2);
+    display:flex; align-items:center; justify-content:center; flex:none;}
+
+  .cats{display:flex; gap:8px; overflow-x:auto; padding:12px 18px 10px;}
+  .cats::-webkit-scrollbar{display:none}
+  .cat{flex:none; display:flex; flex-direction:column; align-items:center; gap:5px; padding:6px 4px 8px;
+    font-size:11px; color:var(--ink-faint); cursor:pointer; border-bottom:2px solid transparent; min-width:52px;}
+  .cat .ci{width:24px; height:24px; display:flex; align-items:center; justify-content:center; font-family:var(--kf);
+    font-size:16px; color:var(--ink-faint);}
+  .cat.on{color:var(--ink); border-bottom-color:var(--ink);}
+  .cat.on .ci{color:var(--brown);}
+
+  .listcount{padding:6px 18px 2px; font-size:12px; color:var(--ink-soft);}
+  .cards{padding:6px 18px 14px; display:flex; flex-direction:column; gap:20px;}
+  .lcard{cursor:pointer;}
+  .hero{position:relative; border-radius:14px; overflow:hidden; aspect-ratio:16/10;
+    display:flex; align-items:center; justify-content:center; border:1px solid rgba(0,0,0,.05);}
+  .hero .grid9{position:absolute; inset:0; opacity:.16;
+    background-image:linear-gradient(var(--board-line) 1px,transparent 1px),
+      linear-gradient(90deg,var(--board-line) 1px,transparent 1px);
+    background-size:11px 11px;}
+  .hero .glyph{font-family:var(--kf); font-size:88px; color:rgba(60,38,12,.34); line-height:1;}
+  .hero .fam{position:absolute; top:12px; left:12px; font-size:11px; padding:3px 10px; border-radius:20px;
+    background:rgba(255,252,244,.9); color:var(--brown-ink); letter-spacing:.05em;}
+  .hero .heart{position:absolute; top:10px; right:12px; width:30px; height:30px; display:flex;
+    align-items:center; justify-content:center; color:#fff;}
+  .hero .soon{position:absolute; inset:0; background:rgba(30,22,10,.42); display:flex; align-items:center;
+    justify-content:center; color:#fff; font-family:var(--disp); font-size:14px; letter-spacing:.1em;}
+  .lmeta{padding:9px 2px 0;}
+  .lmeta .r1{display:flex; align-items:baseline; justify-content:space-between; gap:8px;}
+  .lmeta h3{font-family:var(--disp); font-size:16px; font-weight:600; margin:0;}
+  .lmeta .rate{font-size:13px; color:var(--ink); white-space:nowrap;}
+  .lmeta .rate .st{color:var(--gold);}
+  .lmeta .kana{font-size:11.5px; color:var(--ink-faint); letter-spacing:.1em; margin:1px 0 4px;}
+  .lmeta .desc{font-size:12.5px; color:var(--ink-soft); line-height:1.5; margin:0 0 6px;}
+  .lmeta .sub{font-size:12px; color:var(--ink-soft);}
+  .lmeta .sub b{font-family:var(--disp); font-weight:600; color:var(--ink);}
+  .footlink{text-align:center; padding:4px 0 18px; font-size:11.5px; color:var(--ink-faint);}
+  .footlink a{color:var(--brown); text-decoration:underline; cursor:pointer;}
+
+  /* ---- top app bar for sub screens ---- */
+  .abar{display:flex; align-items:center; gap:12px; padding:10px 16px; position:sticky; top:0; z-index:9;
+    background:var(--app); border-bottom:1px solid var(--line);}
+  .abar .back{width:34px; height:34px; border-radius:50%; border:1px solid var(--line-2); background:var(--card);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; flex:none; color:var(--ink);}
+  .abar h2{font-family:var(--disp); font-size:15px; font-weight:600; margin:0;}
+  .abar .as{font-size:11px; color:var(--ink-soft);}
+
+  /* ---- matchup ---- */
+  .mbody{padding:16px 18px 22px;}
+  .vshero{border-radius:14px; padding:18px; background:var(--brown-soft); margin-bottom:18px; text-align:center;}
+  .vshero .vs{font-family:var(--disp); font-size:19px; color:var(--brown-ink); font-weight:600;}
+  .vshero .vs small{font-size:12px; color:var(--ink-soft); display:block; margin-top:3px; font-family:var(--body);}
+  .fld{margin-bottom:16px;}
+  .fld h4{font-family:var(--disp); font-size:13px; margin:0 0 9px; font-weight:600; color:var(--ink);}
+  .opt{display:flex; align-items:center; gap:10px; padding:12px 14px; border:1px solid var(--line-2);
+    border-radius:11px; margin-bottom:8px; cursor:pointer; font-size:13.5px; background:var(--card);}
+  .opt.sel{border-color:var(--brown); background:var(--brown-soft); color:var(--brown-ink);}
+  .opt .chk{margin-left:auto; color:var(--brown); opacity:0;}
+  .opt.sel .chk{opacity:1;}
+  .opt .mini{margin-left:auto; font-size:11px; color:var(--ink-faint);}
+  .pair{display:flex; gap:8px;}
+  .pair .opt{flex:1; justify-content:center; margin:0;}
+  .startbtn{width:100%; background:var(--brown); color:#fff; border:none; font-family:var(--disp);
+    font-size:15px; padding:15px; border-radius:13px; cursor:pointer; letter-spacing:.04em; margin-top:6px;}
+  .startbtn:active{transform:scale(.99);}
+
+  /* ---- board ---- */
+  .board-panel{padding:14px 14px 6px;}
+  .binfo{display:flex; align-items:center; gap:7px; margin-bottom:10px; flex-wrap:wrap;}
+  .badge{font-size:11px; padding:3px 9px; border-radius:20px; letter-spacing:.03em;}
+  .b-line{background:var(--brown-soft); color:var(--brown-ink);}
+  .b-turn{background:var(--red-soft); color:var(--red);}
+  .b-prog{background:var(--card-2); color:var(--ink-soft); border:1px solid var(--line);}
+
+  .tray{display:flex; align-items:center; gap:5px; min-height:30px; padding:5px 8px; background:var(--card-2);
+    border:1px solid var(--line); border-radius:9px; margin:0 auto; width:max-content; max-width:100%;}
+  .tray .tl{font-family:var(--kf); font-size:10px; color:var(--ink-soft); margin-right:2px;}
+  .board-block{width:max-content; margin:8px auto;}
+  .files{display:grid; grid-template-columns:repeat(9,var(--c)); padding-right:15px;}
+  .files div{text-align:center; font-family:var(--kf); font-size:10px; color:var(--ink-soft);}
+  .brow{display:flex; align-items:stretch;}
+  .ranks{display:grid; grid-template-rows:repeat(9,var(--c)); padding-left:4px;}
+  .ranks div{display:flex; align-items:center; font-family:var(--kf); font-size:10px; color:var(--ink-soft);}
+  .board{--c:36px; display:grid; grid-template-columns:repeat(9,var(--c)); grid-template-rows:repeat(9,var(--c));
+    background:var(--board); border:2.5px solid var(--board-line);}
+  .files,.ranks{--c:36px;}
+  .cell{border-right:1px solid var(--board-line); border-bottom:1px solid var(--board-line);
+    display:flex; align-items:center; justify-content:center; position:relative;}
+  .cell:nth-child(9n){border-right:none;}
+  .board .cell:nth-last-child(-n+9){border-bottom:none;}
+  .cell.last{background:rgba(178,58,46,.15);}
+  .cell.from{box-shadow:inset 0 0 0 2px rgba(110,74,37,.55);}
+  .cell.glow{box-shadow:inset 0 0 0 2px var(--gold); animation:glow 1.3s ease-in-out infinite;}
+  @keyframes glow{0%,100%{box-shadow:inset 0 0 0 2px var(--gold); background:rgba(176,132,46,.08);}
+    50%{box-shadow:inset 0 0 0 3px var(--gold); background:rgba(176,132,46,.22);}}
+  @media (prefers-reduced-motion:reduce){.cell.glow{animation:none; background:rgba(176,132,46,.16);}}
+
+  .koma{width:30px; height:33px; clip-path:polygon(50% 3%,84% 25%,90% 97%,10% 97%,16% 25%);
+    background:#B98A44; display:flex; align-items:center; justify-content:center;}
+  .koma .fc{width:87%; height:87%; clip-path:polygon(50% 3%,84% 25%,90% 97%,10% 97%,16% 25%);
+    background:#F1D296; display:flex; align-items:center; justify-content:center;
+    font-family:var(--kf); font-size:19px; font-weight:600; color:#231B0F; line-height:1;}
+  .koma.g{transform:rotate(180deg);}
+  .koma.pr .fc{color:#B23A2E;}
+  .koma.ghost{opacity:.5;}
+  .tray .koma{width:22px; height:24px;} .tray .koma .fc{font-size:13px;}
+  .capn{font-family:var(--body); font-size:11px; color:var(--red); margin-left:-3px; margin-right:3px;}
+
+  .guidepill{display:flex; align-items:center; gap:7px; justify-content:center; margin:2px auto 0; width:max-content;
+    background:var(--gold-soft); color:var(--gold); font-size:11.5px; padding:6px 12px; border-radius:20px;}
+
+  /* explanation card */
+  .explain{margin:10px 14px 0; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:15px;}
+  .mvnow{display:flex; align-items:baseline; gap:9px; margin-bottom:7px;}
+  .mvnow .no{font-size:11px; color:var(--ink-faint);}
+  .mvnow .mv{font-family:var(--kf); font-size:19px; color:var(--brown-ink); font-weight:600;}
+  .explain p{font-size:13px; margin:0 0 10px; line-height:1.72;}
+  .aim{background:var(--brown-soft); border-radius:9px; padding:9px 11px; font-size:12px; color:var(--brown-ink);
+    display:flex; gap:7px;}
+  .aim b{font-family:var(--disp); font-weight:600; white-space:nowrap;}
+  .branchbar{display:flex; gap:6px; margin-top:12px; flex-wrap:wrap;}
+  .branch{font-size:11.5px; padding:6px 10px; border-radius:8px; border:1px solid var(--line-2);
+    background:var(--card-2); cursor:pointer; color:var(--ink-soft);}
+  .branch.on{border-color:var(--brown); background:var(--brown); color:#fff;}
+  .branch.dev{border-color:var(--red); color:var(--red);}
+  .branch.dev.on{background:var(--red); color:#fff;}
+
+  .navrow{display:flex; gap:8px; margin:12px 14px 20px;}
+  .navrow button{flex:1; border:1px solid var(--line-2); background:var(--card); border-radius:11px;
+    padding:12px; cursor:pointer; color:var(--ink); font-size:15px;}
+  .navrow button.primary{flex:2.4; background:var(--brown); color:#fff; border-color:var(--brown);
+    font-family:var(--body); font-size:14px;}
+
+  .fb{border-radius:11px; padding:12px 14px; font-size:12.5px; margin-top:11px; display:flex; gap:9px;}
+  .fb .ic{font-size:16px; line-height:1.25;}
+  .fb.wrong{background:var(--red-soft); color:var(--red);}
+  .fb.right{background:var(--good-soft); color:var(--good);}
+  .fb b{font-family:var(--disp);}
+  .fb .s{display:block; margin-top:3px; color:var(--ink-soft); font-size:11.5px;}
+  .prompt{margin:0 14px; background:var(--gold-soft); color:var(--gold); border-radius:11px; padding:11px 13px;
+    font-size:12.5px; display:flex; gap:8px;}
+  .prompt b{font-family:var(--disp);}
+
+  /* editor */
+  .edbody{padding:14px 16px 22px;}
+  .fieldl{font-size:11.5px; color:var(--ink-soft); display:block; margin:14px 0 6px;}
+  .edbody textarea{width:100%; font-family:var(--body); font-size:13px; color:var(--ink); background:var(--card);
+    border:1px solid var(--line-2); border-radius:9px; padding:9px 11px; resize:vertical;}
+  .cand{display:flex; flex-direction:column; gap:6px;}
+  .candrow{display:grid; grid-template-columns:auto 1fr auto auto; gap:9px; align-items:center; padding:9px 11px;
+    border:1px solid var(--line-2); border-radius:9px; background:var(--card); font-size:12.5px;}
+  .candrow .cmv{font-family:var(--kf); font-size:15px;}
+  .candrow .freq{font-size:11px; color:var(--ink-faint);}
+  .ev{font-family:var(--disp); font-size:12px; padding:1px 8px; border-radius:12px;}
+  .ev.good{background:var(--good-soft); color:var(--good);} .ev.mid{background:var(--gold-soft); color:var(--gold);}
+  .pick{font-size:11px; color:#fff; background:var(--brown); border:none; padding:6px 10px; border-radius:7px; cursor:pointer;}
+  .export{width:100%; margin-top:14px; background:var(--brown); color:#fff; border:none; padding:12px; border-radius:11px;
+    font-size:13px; cursor:pointer;}
+  .json{font-family:ui-monospace,Menlo,monospace; font-size:11px; color:var(--ink-soft); background:var(--card-2);
+    border:1px dashed var(--line-2); border-radius:9px; padding:11px; margin-top:12px; white-space:pre; overflow-x:auto;}
+
+  /* tab bar */
+  .tabbar{flex:none; display:flex; border-top:1px solid var(--line); background:var(--card);
+    padding:7px 0 10px;}
+  .tab{flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; font-size:10.5px;
+    color:var(--ink-faint); cursor:pointer; background:none; border:none;}
+  .tab.on{color:var(--brown);}
+  .tab svg{width:22px; height:22px;}
+</style>
+
+<div class="wrap">
+  <div class="phone">
+    <div class="notch" aria-hidden="true"></div>
+    <div class="statusbar"><span>9:41</span><span>定石道場</span></div>
+
+    <div class="appbody" id="appbody">
+
+      <!-- HOME / SEARCH -->
+      <section class="screen active" id="home">
+        <div class="home-head">
+          <div class="tl">JOSEKI DOJO</div>
+          <h1>戦法を探す</h1>
+          <div class="searchbar">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+            <input id="q" type="text" placeholder="戦法名で検索(例：四間飛車)" oninput="filter()">
+            <div class="filt" aria-label="絞り込み"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h18M6 12h12M10 19h4"/></svg></div>
+          </div>
+        </div>
+        <div class="cats" id="cats"></div>
+        <div class="listcount" id="lcount"></div>
+        <div class="cards" id="cards"></div>
+        <div class="footlink">開発用：<a onclick="go('editor')">定石エディタを開く</a></div>
+      </section>
+
+      <!-- MATCHUP -->
+      <section class="screen" id="matchup">
+        <div class="abar">
+          <button class="back" onclick="go('home')" aria-label="戻る"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <div><h2 id="mtitle">居飛車</h2><div class="as">対戦条件を選ぶ</div></div>
+        </div>
+        <div class="mbody">
+          <div class="vshero"><div class="vs">居飛車 <small>vs 四間飛車</small></div></div>
+          <div class="fld">
+            <h4>相手の戦法</h4>
+            <div class="opt sel">四間飛車 <span class="chk">✓</span></div>
+            <div class="opt">中飛車 <span class="mini">準備中</span></div>
+            <div class="opt">三間飛車 <span class="mini">準備中</span></div>
+          </div>
+          <div class="fld">
+            <h4>自分の手番</h4>
+            <div class="pair"><div class="opt sel">▲ 先手 <span class="chk">✓</span></div><div class="opt">△ 後手</div></div>
+          </div>
+          <div class="fld">
+            <h4>モード</h4>
+            <div class="pair"><div class="opt sel">学習(なぞる) <span class="chk">✓</span></div><div class="opt">練習(自分で指す)</div></div>
+          </div>
+          <button class="startbtn" onclick="go('study')">この設定で始める</button>
+        </div>
+      </section>
+
+      <!-- STUDY -->
+      <section class="screen" id="study">
+        <div class="abar">
+          <button class="back" onclick="go('matchup')" aria-label="戻る"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <div><h2>舟囲い＋急戦</h2><div class="as">居飛車(先手) vs 四間飛車 ・ 学習</div></div>
+        </div>
+        <div class="board-panel">
+          <div class="binfo">
+            <span class="badge b-line">本線 ・ 斜め棒銀</span>
+            <span class="badge b-prog">12 / 34 手</span>
+          </div>
+          <div id="board-study"></div>
+          <div class="guidepill">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="4"/></svg>
+            光っているマスへ動かして次の手をなぞる
+          </div>
+        </div>
+        <div class="explain">
+          <div class="mvnow"><span class="no">第12手</span><span class="mv">▲２五歩</span></div>
+          <p>飛車先の歩をもう一つ伸ばし、角の頭(２四)を狙う準備。相手が受けを誤ると２筋を一気に突破できます。</p>
+          <div class="aim"><b>狙い</b><span>次に△３三角と上がらせ、銀を繰り出して２筋を攻める形へ。</span></div>
+          <div class="branchbar">
+            <button class="branch on">本線</button>
+            <button class="branch">変化：４五歩早仕掛け</button>
+            <button class="branch dev">逸れ手：△４三銀</button>
+          </div>
+        </div>
+        <div class="navrow">
+          <button aria-label="最初へ">⏮</button>
+          <button aria-label="1手戻る">◀</button>
+          <button class="primary" onclick="go('practice')">なぞって次へ ▶</button>
+        </div>
+      </section>
+
+      <!-- PRACTICE -->
+      <section class="screen" id="practice">
+        <div class="abar">
+          <button class="back" onclick="go('study')" aria-label="戻る"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <div><h2>定石を自分で指す</h2><div class="as">居飛車(先手) vs 四間飛車 ・ 練習</div></div>
+        </div>
+        <div class="board-panel">
+          <div class="binfo"><span class="badge b-turn">▲ あなたの手番</span><span class="badge b-line">相手が定石を外した</span></div>
+          <div id="board-practice"></div>
+        </div>
+        <div class="prompt"><b>咎めてください：</b>相手の△６五歩は無理な仕掛け。最善手を指しましょう。</div>
+        <div class="explain">
+          <div class="mvnow"><span class="no">あなたが指した手</span><span class="mv">▲２四歩</span></div>
+          <div class="fb wrong"><span class="ic">✕</span><div><b>定石から外れています</b>
+            <span class="s">今は左辺の△６五歩を咎める場面。２筋を突くのは緩手で、△６六歩と取り込まれて損をします。</span></div></div>
+          <div class="fb right"><span class="ic">✓</span><div><b>正解は ▲同歩</b>
+            <span class="s">まず６五歩を払い、△同桂には▲６六銀と受けて桂頭を狙う。エンジン評価 +180。</span></div></div>
+          <div class="branchbar"><button class="branch dev on">エンジン解説</button><button class="branch">もう一度</button><button class="branch">ヒント</button></div>
+        </div>
+        <div style="height:12px"></div>
+      </section>
+
+      <!-- EDITOR (dev) -->
+      <section class="screen" id="editor">
+        <div class="abar">
+          <button class="back" onclick="go('home')" aria-label="戻る"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <div><h2>定石エディタ</h2><div class="as">開発者専用 ・ 盤で組んでJSON出力</div></div>
+        </div>
+        <div class="board-panel"><div id="board-editor"></div></div>
+        <div class="edbody">
+          <div class="fld"><h4>この手の種別</h4>
+            <div class="pair"><div class="opt sel" style="font-size:12px">本線 <span class="chk">✓</span></div><div class="opt" style="font-size:12px">別手順</div><div class="opt" style="font-size:12px">逸れ手</div></div></div>
+          <label class="fieldl">解説文(Claudeが下書き → 確認)</label>
+          <textarea rows="2">飛車先の歩を伸ばし、角頭を狙う準備の一手。</textarea>
+          <label class="fieldl">定跡DBの候補手(やねうら王)</label>
+          <div class="cand">
+            <div class="candrow"><span class="cmv">▲２五歩</span><span class="freq">出現 62%</span><span class="ev good">+120</span><button class="pick">採用</button></div>
+            <div class="candrow"><span class="cmv">▲３六歩</span><span class="freq">出現 24%</span><span class="ev good">+95</span><button class="pick">採用</button></div>
+            <div class="candrow"><span class="cmv">▲５六歩</span><span class="freq">出現 11%</span><span class="ev mid">+40</span><button class="pick">採用</button></div>
+          </div>
+          <button class="export">⭳ このコースを JSON で書き出す</button>
+          <div class="json">{
+  "id": "ibisha-vs-shikenbisha--sente",
+  "usi": "2f2e",
+  "kind": "main",
+  "note": "飛車先を伸ばし角頭を狙う"
+}</div>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="tabbar">
+      <button class="tab on" data-t="home" onclick="go('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>探す</button>
+      <button class="tab" onclick="go('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21C8 18 4 14.5 4 9.5 4 7 6 5 8.3 5c1.5 0 2.8.8 3.7 2 .9-1.2 2.2-2 3.7-2C18 5 20 7 20 9.5c0 5-4 8.5-8 11.5z"/></svg>保存</button>
+      <button class="tab" onclick="go('study')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M9 4v16M15 4v16M4 9h16M4 15h16"/></svg>学習</button>
+      <button class="tab" onclick="go('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>マイ</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const strategies=[
+    {name:'居飛車',kana:'いびしゃ',fam:'居飛車',glyph:'飛',wood:'#E7C88A',lines:2,level:'入門〜',pop:'4.9',ready:true},
+    {name:'四間飛車',kana:'しけんびしゃ',fam:'振り飛車',glyph:'飛',wood:'#DDB877',lines:2,level:'入門〜',pop:'4.8',ready:true},
+    {name:'角換わり',kana:'かくがわり',fam:'居飛車',glyph:'角',wood:'#E9D0A0',lines:0,level:'中級〜',pop:'4.7',ready:false},
+    {name:'中飛車',kana:'なかびしゃ',fam:'中飛車',glyph:'飛',wood:'#D8AE6B',lines:0,level:'入門〜',pop:'4.6',ready:false},
+    {name:'相掛かり',kana:'あいがかり',fam:'居飛車',glyph:'飛',wood:'#EAD3A6',lines:0,level:'中級〜',pop:'4.5',ready:false},
+    {name:'矢倉',kana:'やぐら',fam:'居飛車',glyph:'金',wood:'#D4A863',lines:0,level:'中級〜',pop:'4.4',ready:false},
+    {name:'三間飛車',kana:'さんけんびしゃ',fam:'振り飛車',glyph:'飛',wood:'#E3C07E',lines:0,level:'入門〜',pop:'4.3',ready:false},
+    {name:'筋違い角',kana:'すじちがいかく',fam:'奇襲戦法',glyph:'角',wood:'#D9B87A',lines:0,level:'力戦',pop:'3.6',ready:false},
+  ];
+  const cats=[
+    {k:'人気',g:'★'},{k:'初心者向け',g:'歩'},{k:'居飛車',g:'飛'},{k:'振り飛車',g:'飛'},{k:'中飛車',g:'飛'},{k:'奇襲戦法',g:'桂'}
+  ];
+  let activeCat='人気', query='';
+
+  function renderCats(){
+    document.getElementById('cats').innerHTML=cats.map(c=>
+      `<div class="cat ${c.k===activeCat?'on':''}" onclick="setCat('${c.k}')"><div class="ci">${c.g}</div>${c.k}</div>`).join('');
+  }
+  function setCat(k){activeCat=k; renderCats(); filter();}
+  function filter(){
+    query=(document.getElementById('q')?.value||'').trim();
+    let list=strategies.filter(s=>{
+      const mc = activeCat==='人気' ? true
+        : activeCat==='初心者向け' ? s.level.includes('入門')
+        : s.fam===activeCat;
+      const mq = !query || s.name.includes(query) || s.kana.includes(query);
+      return mc && mq;
+    });
+    document.getElementById('lcount').textContent=`${list.length}件の戦法`;
+    document.getElementById('cards').innerHTML=list.map(cardHTML).join('') ||
+      `<div style="padding:30px 10px; text-align:center; color:var(--ink-faint); font-size:13px;">「${query}」に一致する戦法はありません</div>`;
+  }
+  function cardHTML(s){
+    const heart=`<div class="heart"><svg width="22" height="22" viewBox="0 0 24 24" fill="rgba(0,0,0,.28)" stroke="#fff" stroke-width="2"><path d="M12 21C8 18 4 14.5 4 9.5 4 7 6 5 8.3 5c1.5 0 2.8.8 3.7 2 .9-1.2 2.2-2 3.7-2C18 5 20 7 20 9.5c0 5-4 8.5-8 11.5z"/></svg></div>`;
+    const soon=s.ready?'':'<div class="soon">準備中</div>';
+    const meta=s.ready
+      ? `<div class="sub"><b>${s.lines}</b> ライン ・ 難易度 ${s.level} ・ 先手/後手対応</div>`
+      : `<div class="sub">定石データ準備中 ・ ${s.level}</div>`;
+    return `<div class="lcard" ${s.ready?`onclick="openStrategy('${s.name}')"`:''}>
+      <div class="hero" style="background:${s.wood}">
+        <div class="grid9"></div><div class="glyph">${s.glyph}</div>
+        <div class="fam">${s.fam}</div>${heart}${soon}
+      </div>
+      <div class="lmeta">
+        <div class="r1"><h3>${s.name}</h3><div class="rate"><span class="st">★</span> ${s.pop}</div></div>
+        <div class="kana">${s.kana}</div>
+        ${meta}
+      </div></div>`;
+  }
+  function openStrategy(name){
+    document.getElementById('mtitle').textContent=name;
+    document.querySelector('#matchup .vs').innerHTML=`${name} <small>vs 四間飛車</small>`;
+    go('matchup');
+  }
+
+  function go(id){
+    document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active', s.id===id));
+    document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on', t.dataset.t===id));
+    document.getElementById('appbody').scrollTop=0;
+  }
+
+  // ---- board ----
+  const GLYPH={l:'香',n:'桂',s:'銀',g:'金',k:'玉',b:'角',r:'飛',p:'歩',tk:'圭',ng:'全',pb:'馬',pr:'龍',tp:'と'};
+  function mk(code,ghost){
+    if(code==='-') return '';
+    const side=code[0], t=code.slice(1), promo=t.length>1;
+    return `<div class="koma ${side==='g'?'g':''} ${promo?'pr':''} ${ghost?'ghost':''}"><div class="fc">${GLYPH[t]}</div></div>`;
+  }
+  const basePos=[
+    ['gl','-','gs','gg','gk','-','-','gn','gl'],
+    ['-','-','-','-','-','gr','gg','gb','-'],
+    ['gp','gp','gp','-','gp','gp','-','gp','gp'],
+    ['-','-','-','gp','-','-','gp','-','-'],
+    ['-','-','-','-','-','-','-','-','-'],
+    ['-','-','sp','-','sp','-','-','sp','-'],
+    ['sp','sp','-','sp','-','sp','sp','-','sp'],
+    ['-','sb','ss','-','sg','-','-','sr','-'],
+    ['sl','sn','-','-','sk','sg','ss','sn','sl'],
+  ];
+  const FILES=['9','8','7','6','5','4','3','2','1'];
+  const RANKS=['一','二','三','四','五','六','七','八','九'];
+  function board(el,pos,o={}){
+    let cells='';
+    for(let r=0;r<9;r++)for(let f=0;f<9;f++){
+      let cls='cell', inner=mk(pos[r][f]);
+      if(o.last&&o.last[0]===r&&o.last[1]===f)cls+=' last';
+      if(o.from&&o.from[0]===r&&o.from[1]===f)cls+=' from';
+      if(o.glow&&o.glow[0]===r&&o.glow[1]===f){cls+=' glow'; if(o.ghost)inner=mk(o.ghost,true);}
+      cells+=`<div class="${cls}">${inner}</div>`;
+    }
+    const trayG=`<div class="tray"><span class="tl">△持駒</span>${mk('gp')}</div>`;
+    const trayS=`<div class="tray"><span class="tl">▲持駒</span>${mk('sp')}<span class="capn">2</span>${mk('ss')}</div>`;
+    el.innerHTML=`${trayG}
+      <div class="board-block">
+        <div class="files">${FILES.map(x=>`<div>${x}</div>`).join('')}</div>
+        <div class="brow">
+          <div class="board">${cells}</div>
+          <div class="ranks">${RANKS.map(x=>`<div>${x}</div>`).join('')}</div>
+        </div>
+      </div>${trayS}`;
+  }
+
+  renderCats(); filter();
+  board(document.getElementById('board-study'), basePos, {from:[5,7], glow:[4,7], ghost:'sp'});
+  const prac=basePos.map(r=>r.slice()); prac[3][3]='gp'; prac[4][5]='gp';
+  board(document.getElementById('board-practice'), prac, {last:[4,5]});
+  board(document.getElementById('board-editor'), basePos, {from:[5,7], glow:[4,7], ghost:'sp'});
+</script>

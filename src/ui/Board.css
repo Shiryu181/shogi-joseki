@@ -1,0 +1,177 @@
+/*
+ * 盤・駒・持ち駒トレイの見た目。mockup.html の対応クラスをそのまま移植。
+ * (五角形の駒シェイプ・木肌配色・楷書グリフ表示)
+ */
+
+.tray {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 30px;
+  padding: 5px 8px;
+  background: var(--card-2);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  margin: 0 auto;
+  width: max-content;
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+.tray .tl {
+  font-family: var(--kf);
+  font-size: 10px;
+  color: var(--ink-soft);
+  margin-right: 2px;
+}
+.tray .handpiece {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 2px;
+  border-radius: 6px;
+}
+.tray .handpiece:hover {
+  background: var(--brown-soft);
+}
+.tray .handpiece.selected {
+  background: var(--gold-soft);
+  box-shadow: inset 0 0 0 2px var(--gold);
+}
+.tray .handpiece:disabled {
+  cursor: default;
+}
+
+.board-block {
+  width: max-content;
+  margin: 8px auto;
+}
+.files {
+  display: grid;
+  grid-template-columns: repeat(9, var(--c));
+  padding-right: 15px;
+  --c: 36px;
+}
+.files div {
+  text-align: center;
+  font-family: var(--kf);
+  font-size: 10px;
+  color: var(--ink-soft);
+}
+.brow {
+  display: flex;
+  align-items: stretch;
+}
+.ranks {
+  display: grid;
+  grid-template-rows: repeat(9, var(--c));
+  padding-left: 4px;
+  --c: 36px;
+}
+.ranks div {
+  display: flex;
+  align-items: center;
+  font-family: var(--kf);
+  font-size: 10px;
+  color: var(--ink-soft);
+}
+.board {
+  --c: 36px;
+  display: grid;
+  grid-template-columns: repeat(9, var(--c));
+  grid-template-rows: repeat(9, var(--c));
+  background: var(--board);
+  border: 2.5px solid var(--board-line);
+}
+.cell {
+  border-right: 1px solid var(--board-line);
+  border-bottom: 1px solid var(--board-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+.cell:nth-child(9n) {
+  border-right: none;
+}
+.board .cell:nth-last-child(-n + 9) {
+  border-bottom: none;
+}
+.cell.last {
+  background: rgba(178, 58, 46, 0.15);
+}
+.cell.from {
+  box-shadow: inset 0 0 0 2px rgba(110, 74, 37, 0.55);
+}
+.cell.glow {
+  box-shadow: inset 0 0 0 2px var(--gold);
+  animation: glow 1.3s ease-in-out infinite;
+}
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: inset 0 0 0 2px var(--gold);
+    background: rgba(176, 132, 46, 0.08);
+  }
+  50% {
+    box-shadow: inset 0 0 0 3px var(--gold);
+    background: rgba(176, 132, 46, 0.22);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cell.glow {
+    animation: none;
+    background: rgba(176, 132, 46, 0.16);
+  }
+}
+
+.koma {
+  width: 30px;
+  height: 33px;
+  clip-path: polygon(50% 3%, 84% 25%, 90% 97%, 10% 97%, 16% 25%);
+  background: var(--koma-rim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.koma .fc {
+  width: 87%;
+  height: 87%;
+  clip-path: polygon(50% 3%, 84% 25%, 90% 97%, 10% 97%, 16% 25%);
+  background: var(--koma);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--kf);
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--koma-ink);
+  line-height: 1;
+}
+.koma.g {
+  transform: rotate(180deg);
+}
+.koma.pr .fc {
+  color: var(--red);
+}
+.koma.ghost {
+  opacity: 0.5;
+}
+.tray .koma {
+  width: 22px;
+  height: 24px;
+}
+.tray .koma .fc {
+  font-size: 13px;
+}
+.capn {
+  font-family: var(--body);
+  font-size: 11px;
+  color: var(--red);
+  margin-left: -3px;
+  margin-right: 3px;
+}
