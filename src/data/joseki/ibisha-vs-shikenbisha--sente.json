@@ -1,0 +1,195 @@
+{
+  "id": "ibisha-vs-shikenbisha--sente",
+  "title": "居飛車 vs 四間飛車(先手・斜め棒銀)",
+  "myStrategy": "ibisha",
+  "opponentStrategy": "shikenbisha",
+  "mySide": "sente",
+  "goalFormation": "舟囲い(玉６八・金７八)+ 銀３七の斜め棒銀で、２筋(２五歩)からの仕掛けに備えた攻撃陣形。",
+  "goalSfen": "lnsg1g1nl/1k3rsb1/ppppp2pp/5pp2/7P1/2P3P2/PP1PPPS1P/1BGK3R1/LNS2G1NL w - 16",
+  "root": {
+    "id": "n0",
+    "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
+    "comment": "平手の初形です。ここから居飛車としてのプレイを進めます。",
+    "branches": [
+      {
+        "usi": "7g7f",
+        "kind": "main",
+        "note": "角道を開ける一手。居飛車のほとんどの戦型に共通する初手です。",
+        "child": {
+          "id": "n1",
+          "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 2",
+          "comment": "後手の出方を待つ局面。",
+          "branches": [
+            {
+              "usi": "3c3d",
+              "kind": "main",
+              "note": "後手も角道を開けます。この時点ではまだ居飛車・振り飛車どちらの可能性もあります。",
+              "child": {
+                "id": "n2",
+                "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 3",
+                "comment": "居飛車の基本方針どおり、飛車先を伸ばして２筋の攻めに含みを持たせます。",
+                "branches": [
+                  {
+                    "usi": "2g2f",
+                    "kind": "main",
+                    "note": "飛車先の歩を突く、居飛車のもう一つの基本手。ここから２筋を攻める構想が本格化します。",
+                    "child": {
+                      "id": "n3",
+                      "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL w - 4",
+                      "comment": "後手が４四歩と突き、四間飛車を明確に志向してきました。",
+                      "branches": [
+                        {
+                          "usi": "4c4d",
+                          "kind": "main",
+                          "note": "角道を止めて振り飛車の態勢に入る一手。次に飛車を４筋へ振る予定です。",
+                          "child": {
+                            "id": "n4",
+                            "sfen": "lnsgkgsnl/1r5b1/ppppp2pp/5pp2/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL b - 5",
+                            "comment": "さらに飛車先を伸ばし、２筋攻めの準備を進めます。",
+                            "branches": [
+                              {
+                                "usi": "2f2e",
+                                "kind": "main",
+                                "note": "２五まで伸ばすことで、後の２四歩の仕掛けに含みを持たせます。",
+                                "child": {
+                                  "id": "n5",
+                                  "sfen": "lnsgkgsnl/1r5b1/ppppp2pp/5pp2/7P1/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL w - 6",
+                                  "comment": "後手が飛車を４筋に振り、四間飛車が完成しました。",
+                                  "branches": [
+                                    {
+                                      "usi": "8b4b",
+                                      "kind": "main",
+                                      "note": "四間飛車の完成形。ここから美濃囲いに組んでいきます。",
+                                      "child": {
+                                        "id": "n6",
+                                        "sfen": "lnsgkgsnl/5r1b1/ppppp2pp/5pp2/7P1/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL b - 7",
+                                        "comment": "四間飛車が確定したので、居飛車側も囲いの形を整えます。",
+                                        "branches": [
+                                          {
+                                            "usi": "6i7h",
+                                            "kind": "main",
+                                            "note": "舟囲いに向けた一手。金を寄せて玉の右側を安定させます。[要検証(DB照合範囲外)]",
+                                            "child": {
+                                              "id": "n7",
+                                              "sfen": "lnsgkgsnl/5r1b1/ppppp2pp/5pp2/7P1/2P6/PP1PPPP1P/1BG4R1/LNS1KGSNL w - 8",
+                                              "comment": "後手も銀を繰り出し、美濃囲いの形を整えていきます。",
+                                              "branches": [
+                                                {
+                                                  "usi": "3a3b",
+                                                  "kind": "main",
+                                                  "note": "銀を中央寄りに繰り出し、玉の守りと飛車の連携を高める一手。[要検証(DB照合範囲外)]",
+                                                  "child": {
+                                                    "id": "n8",
+                                                    "sfen": "lnsgkg1nl/5rsb1/ppppp2pp/5pp2/7P1/2P6/PP1PPPP1P/1BG4R1/LNS1KGSNL b - 9",
+                                                    "comment": "ここから斜め棒銀の攻めの態勢づくりに入ります。",
+                                                    "branches": [
+                                                      {
+                                                        "usi": "3g3f",
+                                                        "kind": "main",
+                                                        "note": "銀を進出させるための一手。この歩によって銀が３七の地点を経由できるようになります。[要検証(DB照合範囲外)]",
+                                                        "child": {
+                                                          "id": "n9",
+                                                          "sfen": "lnsgkg1nl/5rsb1/ppppp2pp/5pp2/7P1/2P3P2/PP1PPP2P/1BG4R1/LNS1KGSNL w - 10",
+                                                          "comment": "後手玉が美濃囲いへ向けて動き出しました。",
+                                                          "branches": [
+                                                            {
+                                                              "usi": "5a6b",
+                                                              "kind": "main",
+                                                              "note": "美濃囲いに向かう一手。玉を右辺に囲っていきます。[要検証(DB照合範囲外)]",
+                                                              "child": {
+                                                                "id": "n10",
+                                                                "sfen": "lnsg1g1nl/3k1rsb1/ppppp2pp/5pp2/7P1/2P3P2/PP1PPP2P/1BG4R1/LNS1KGSNL b - 11",
+                                                                "comment": "いよいよ銀を繰り出し、斜め棒銀の攻めを開始します。",
+                                                                "branches": [
+                                                                  {
+                                                                    "usi": "3i4h",
+                                                                    "kind": "main",
+                                                                    "note": "銀が斜めに進出する、この戦法名の由来となる一手。まっすぐ３筋を上がるのではなく、４八を経由して２筋方面への攻めに備えます。[要検証(DB照合範囲外)]",
+                                                                    "child": {
+                                                                      "id": "n11",
+                                                                      "sfen": "lnsg1g1nl/3k1rsb1/ppppp2pp/5pp2/7P1/2P3P2/PP1PPP2P/1BG2S1R1/LNS1KG1NL w - 12",
+                                                                      "comment": "後手玉がさらに美濃囲いの完成に向かいます。",
+                                                                      "branches": [
+                                                                        {
+                                                                          "usi": "6b7b",
+                                                                          "kind": "main",
+                                                                          "note": "玉をさらに右辺へ寄せる一手。[要検証(DB照合範囲外)]",
+                                                                          "child": {
+                                                                            "id": "n12",
+                                                                            "sfen": "lnsg1g1nl/2k2rsb1/ppppp2pp/5pp2/7P1/2P3P2/PP1PPP2P/1BG2S1R1/LNS1KG1NL b - 13",
+                                                                            "comment": "銀がさらに進出し、２筋攻めを支える位置に近づきます。",
+                                                                            "branches": [
+                                                                              {
+                                                                                "usi": "4h3g",
+                                                                                "kind": "main",
+                                                                                "note": "銀が３七へ進出。ここから２四歩の仕掛けを狙う体勢が整いました。[要検証(DB照合範囲外)]",
+                                                                                "child": {
+                                                                                  "id": "n13",
+                                                                                  "sfen": "lnsg1g1nl/2k2rsb1/ppppp2pp/5pp2/7P1/2P3P2/PP1PPPS1P/1BG4R1/LNS1KG1NL w - 14",
+                                                                                  "comment": "後手の美濃囲いがほぼ完成します。",
+                                                                                  "branches": [
+                                                                                    {
+                                                                                      "usi": "7b8b",
+                                                                                      "kind": "main",
+                                                                                      "note": "玉が８二に収まり、美濃囲いが完成に近づきます。[要検証(DB照合範囲外)]",
+                                                                                      "child": {
+                                                                                        "id": "n14",
+                                                                                        "sfen": "lnsg1g1nl/1k3rsb1/ppppp2pp/5pp2/7P1/2P3P2/PP1PPPS1P/1BG4R1/LNS1KG1NL b - 15",
+                                                                                        "comment": "最後に玉を安定させ、居飛車の攻撃陣形が完成します。",
+                                                                                        "branches": [
+                                                                                          {
+                                                                                            "usi": "5i6h",
+                                                                                            "kind": "main",
+                                                                                            "note": "玉を舟囲いの位置に収める一手。これで銀・金・玉・飛車がバランス良く連携し、２筋攻めの理想陣形が完成します。[要検証(DB照合範囲外)]",
+                                                                                            "child": {
+                                                                                              "id": "n15",
+                                                                                              "sfen": "lnsg1g1nl/1k3rsb1/ppppp2pp/5pp2/7P1/2P3P2/PP1PPPS1P/1BGK3R1/LNS2G1NL w - 16",
+                                                                                              "comment": "斜め棒銀の理想陣形が完成しました。玉は舟囲いで安定し、銀は３七で攻めの態勢を整えています。ここから２四歩の仕掛けで攻めを開始しますが、仕掛け以降の具体的な手順は今後のフェーズで扱います。",
+                                                                                              "branches": []
+                                                                                            }
+                                                                                          }
+                                                                                        ]
+                                                                                      }
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              }
+                                                                            ]
+                                                                          }
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                              }
+                                                            }
+                                                          ]
+                                                        }
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

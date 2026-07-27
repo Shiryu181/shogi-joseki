@@ -11,9 +11,10 @@ import {
   Position,
   Square,
   formatMove,
+  parseUSIMove,
 } from "tsshogi";
 
-export { Color, PieceType, Square, Move, Position };
+export { Color, PieceType, Square, Move, Position, formatMove, parseUSIMove };
 export type { Piece };
 
 /** 駒種→表示グリフ(楷書1文字)。mockup.html の GLYPH 定義を tsshogi の PieceType に合わせて踏襲。 */
@@ -109,4 +110,11 @@ export function tryMove(
 /** Square/PieceType を dests のキーとして使う一意な文字列に変換する */
 export function squareKey(square: Square): string {
   return square.usi;
+}
+
+/** USI文字列から Move と、その表示テキスト(▲２六歩 等)をまとめて取得する(学習モードの手表示用)。 */
+export function moveFromUSI(position: Position, usi: string): { move: Move; displayText: string } | null {
+  const move = position.createMoveByUSI(usi);
+  if (!move) return null;
+  return { move, displayText: formatMove(position, move) };
 }
