@@ -27,6 +27,7 @@ export interface JosekiCourse {
   myStrategy: StrategyId;
   opponentStrategy: StrategyId;
   mySide: "sente" | "gote";
+  source?: string; // 手順の出所(定跡書・サイト等の裏取り情報。表記のみ、DB自体は同梱しない)
   goalFormation: string; // 理想陣形の説明
   goalSfen?: string; // 理想陣形に到達した局面(達成判定用)
   root: JosekiNode;
