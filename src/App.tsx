@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Sandbox } from "./features/sandbox/Sandbox";
 import { Learn } from "./features/learn/Learn";
+import { Practice } from "./features/practice/Practice";
 import { loadIbishaVsShikenbishaSente, loadBranchNavDemo } from "./domain/josekiLoader";
 
-type Screen = "learn" | "sandbox" | "branchDemo";
+type Screen = "learn" | "practice" | "sandbox" | "branchDemo";
 
 const TABS: { key: Screen; label: string }[] = [
   { key: "learn", label: "学習(なぞり)" },
+  { key: "practice", label: "練習" },
   { key: "sandbox", label: "Sandbox" },
   { key: "branchDemo", label: "分岐デモ" },
 ];
@@ -56,6 +58,7 @@ function App() {
         ))}
       </div>
       {screen === "learn" && <Learn course={loadIbishaVsShikenbishaSente()} />}
+      {screen === "practice" && <Practice course={loadIbishaVsShikenbishaSente()} />}
       {screen === "sandbox" && <Sandbox />}
       {screen === "branchDemo" && <Learn course={loadBranchNavDemo()} />}
     </div>

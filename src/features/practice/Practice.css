@@ -1,0 +1,255 @@
+/* 練習モード(実戦)画面。DESIGN.md §5.0/§5.4 のトークン・見た目に合わせる。
+ * 他 feature の CSS(Learn.css / Sandbox.css)には依存せず自己完結させる。 */
+
+.practice-wrap {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 26px 14px;
+}
+
+.practice-frame {
+  width: 390px;
+  max-width: 100%;
+  background: var(--app);
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  padding-bottom: 18px;
+}
+
+.practice-head {
+  padding: 18px 18px 6px;
+}
+.practice-head .tl {
+  font-size: 12px;
+  color: var(--ink-soft);
+  letter-spacing: 0.06em;
+}
+.practice-head h1 {
+  font-family: var(--disp);
+  font-size: 21px;
+  font-weight: 600;
+  margin: 6px 0 2px;
+  letter-spacing: 0.03em;
+}
+
+.binfo {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 10px 18px 8px;
+  flex-wrap: wrap;
+}
+.badge {
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+.b-turn {
+  background: var(--red-soft);
+  color: var(--red);
+}
+.b-turn.gote {
+  background: var(--brown-soft);
+  color: var(--brown-ink);
+}
+.b-turn.waiting {
+  opacity: 0.75;
+}
+.b-goal {
+  background: var(--good-soft);
+  color: var(--good);
+  font-family: var(--disp);
+  font-weight: 600;
+}
+.b-line {
+  background: var(--brown-soft);
+  color: var(--brown-ink);
+}
+.b-prog {
+  background: var(--card-2);
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+}
+.b-good {
+  background: var(--good-soft);
+  color: var(--good);
+}
+.b-bad {
+  background: var(--red-soft);
+  color: var(--red);
+}
+
+.waitpill,
+.hintpill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  justify-content: center;
+  margin: 2px auto 0;
+  width: max-content;
+  font-size: 11.5px;
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+.waitpill {
+  background: var(--card-2);
+  color: var(--ink-soft);
+}
+.hintpill {
+  background: var(--gold-soft);
+  color: var(--gold);
+}
+
+.feedback-area {
+  min-height: 8px;
+}
+
+.explain {
+  margin: 10px 14px 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 15px;
+}
+.mvnow {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  margin-bottom: 7px;
+  flex-wrap: wrap;
+}
+.mvnow .no {
+  font-size: 11px;
+  color: var(--ink-faint);
+}
+.mvnow .mv {
+  font-family: var(--kf);
+  font-size: 19px;
+  color: var(--brown-ink);
+  font-weight: 600;
+}
+
+.fb {
+  border-radius: 11px;
+  padding: 12px 14px;
+  font-size: 12.5px;
+  margin-top: 11px;
+  display: flex;
+  gap: 9px;
+}
+.fb .ic {
+  font-size: 16px;
+  line-height: 1.25;
+}
+.fb.wrong {
+  background: var(--red-soft);
+  color: var(--red);
+}
+.fb.right {
+  background: var(--good-soft);
+  color: var(--good);
+}
+.fb b {
+  font-family: var(--disp);
+  display: block;
+}
+.fb .s {
+  display: block;
+  margin-top: 3px;
+  color: var(--ink-soft);
+  font-size: 11.5px;
+}
+
+@keyframes correct-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.96);
+  }
+  15% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.correct-flash {
+  margin: 10px 14px 0;
+  background: var(--good-soft);
+  color: var(--good);
+  border-radius: 11px;
+  padding: 11px 14px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--disp);
+  font-weight: 600;
+  animation: correct-pop 1.6s ease-out both;
+}
+.correct-flash .ic {
+  font-size: 16px;
+}
+
+.goal-banner {
+  margin: 10px 14px 0;
+  background: var(--good-soft);
+  color: var(--good);
+  border-radius: 14px;
+  padding: 15px;
+  font-size: 13px;
+  line-height: 1.7;
+  text-align: center;
+}
+.goal-banner b {
+  font-family: var(--disp);
+  display: block;
+  margin-bottom: 6px;
+  font-size: 17px;
+}
+.goal-banner p {
+  margin: 0 0 8px;
+  color: var(--ink);
+}
+.goal-stats {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.practice-navrow {
+  display: flex;
+  gap: 8px;
+  margin: 14px 14px 4px;
+}
+.practice-navrow button {
+  flex: 1;
+  border: 1px solid var(--line-2);
+  background: var(--card);
+  border-radius: 11px;
+  padding: 11px 6px;
+  cursor: pointer;
+  color: var(--ink);
+  font-size: 13px;
+  font-family: var(--body);
+}
+.practice-navrow button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.practice-navrow button[aria-pressed="true"] {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: var(--gold-soft);
+}
+.practice-navrow button.primary {
+  background: var(--brown);
+  color: #fff;
+  border-color: var(--brown);
+}
