@@ -1,28 +1,45 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Color, Square, moveFromUSI, parseUSIMove } from "../../domain/shogi";
-import { useLearnStore, guideMove } from "../../store/learnStore";
+import { useLearnStore, branchMove } from "../../store/learnStore";
+import type { JosekiCourse, JosekiNode } from "../../domain/types";
 import { Board } from "../../ui/Board";
 import type { GhostPiece, HandHighlight } from "../../ui/Board";
 import { CommentPanel } from "../../ui/CommentPanel";
 import { BranchNav } from "../../ui/BranchNav";
 import "./Learn.css";
 
+export interface LearnProps {
+  /** 表示するコース。切り替え時は都度渡し直す(本物のコース ⇔ 分岐ナビ動作確認用デモ)。 */
+  course: JosekiCourse;
+}
+
 /**
  * 学習モード(なぞり)画面。DESIGN.md §5.3 準拠。
  * 本線を1手ずつ、なぞりガイド(from強調+dest glow+ghost駒)で提示し、
  * 光っている升をクリックするか「なぞって次へ」ボタンで進める。
+ * 分岐(本線/変化/逸れ手)がある局面では BranchNav で切替可能。
  */
-export function Learn() {
-  const course = useLearnStore((s) => s.course);
+export function Learn({ course }: LearnProps) {
+  const storeCourse = useLearnStore((s) => s.course);
   const currentNode = useLearnStore((s) => s.currentNode);
   const nodeHistory = useLearnStore((s) => s.nodeHistory);
+  const selectedBranchIndex = useLearnStore((s) => s.selectedBranchIndex);
   const position = useLearnStore((s) => s.position);
   const attemptSquare = useLearnStore((s) => s.attemptSquare);
   const advance = useLearnStore((s) => s.advance);
+  const chooseBranch = useLearnStore((s) => s.chooseBranch);
   const goBack = useLearnStore((s) => s.goBack);
   const goToStart = useLearnStore((s) => s.goToStart);
+  const loadCourse = useLearnStore((s) => s.loadCourse);
 
-  const guide = guideMove(currentNode);
+  // 表示すべきコースがストアの現在のコースと違う(画面切替など)場合は読み込み直す。
+  useEffect(() => {
+    if (storeCourse.id !== course.id) {
+      loadCourse(course);
+    }
+  }, [course, storeCourse.id, loadCourse]);
+
+  const guide = branchMove(currentNode, selectedBranchIndex);
   const isGoal = !guide;
   const moveNumber = nodeHistory.length + 1;
   const totalMoves = useMemo(() => countMoves(course.root), [course]);
@@ -51,6 +68,10 @@ export function Learn() {
     // なぞりモードでは持ち駒トレイのクリックでは進めない(移動先マスのクリックのみ受理)。
   }
 
+  // ストアがまだこのコースを読み込み切っていない(切替直後の1レンダー)場合は
+  // currentNode が別コースのものである可能性があるため、描画をスキップする。
+  if (storeCourse.id !== course.id) return null;
+
   return (
     <div className="learn-wrap">
       <div className="learn-frame">
@@ -76,17 +97,17 @@ export function Learn() {
           onHandPieceClick={handleHandPieceClick}
           clickableHandColor="none"
         />
-        {!isGoal && (
-          <div className="guidepill">光っているマスへ動かして次の手をなぞる</div>
-        )}
+        {!isGoal && <div className="guidepill">光っているマスへ動かして次の手をなぞる</div>}
         <CommentPanel
           isGoal={isGoal}
           moveNumber={isGoal ? undefined : moveNumber}
           moveText={moveInfo?.displayText}
           note={guide?.note}
           comment={currentNode.comment}
+          kind={guide?.kind}
+          punishNote={guide?.punishNote}
         />
-        <BranchNav branches={currentNode.branches} activeIndex={0} />
+        <BranchNav branches={currentNode.branches} activeIndex={selectedBranchIndex} onSelect={chooseBranch} />
         <div className="learn-navrow">
           <button type="button" onClick={goToStart} disabled={nodeHistory.length === 0} aria-label="最初へ">
             ⏮
@@ -103,7 +124,7 @@ export function Learn() {
   );
 }
 
-function countMoves(node: import("../../domain/types").JosekiNode): number {
+function countMoves(node: JosekiNode): number {
   let count = 0;
   let current = node;
   while (current.branches.length > 0) {

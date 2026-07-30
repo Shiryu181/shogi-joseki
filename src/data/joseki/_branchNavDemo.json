@@ -1,0 +1,98 @@
+{
+  "id": "_branchNavDemo",
+  "title": "【デモ・分岐ナビ動作確認用/定跡ではない】",
+  "myStrategy": "demo",
+  "opponentStrategy": "demo",
+  "mySide": "sente",
+  "source": "このファイルは分岐ナビ(本線/変化/逸れ手の切替)の仕組みを動作確認するためだけのダミーデータです。実際の定跡ではありません。",
+  "goalFormation": "(デモ用のため理想陣形の概念はありません)",
+  "root": {
+    "id": "demo-n0",
+    "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
+    "comment": "【デモ・分岐ナビ動作確認用】平手の初形です。1手進めると本線/変化/逸れ手を切り替えられる局面になります。",
+    "branches": [
+      {
+        "usi": "7g7f",
+        "kind": "main",
+        "note": "【デモ】角道を開ける一手(ダミー)。",
+        "child": {
+          "id": "demo-n1",
+          "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 2",
+          "comment": "【デモ】ここで本線/変化/逸れ手の3つの分岐を切り替えられます(分岐ナビの動作確認用)。",
+          "branches": [
+            {
+              "usi": "3c3d",
+              "kind": "main",
+              "note": "【デモ】本線のダミーの一手です。",
+              "child": {
+                "id": "demo-main-1",
+                "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 3",
+                "comment": "【デモ】本線の終端です(分岐ナビ動作確認用のダミーで、これ以上の手は収録していません)。",
+                "branches": []
+              }
+            },
+            {
+              "usi": "8c8d",
+              "kind": "alt",
+              "note": "【デモ】変化のダミーの一手です。",
+              "child": {
+                "id": "demo-alt-1",
+                "sfen": "lnsgkgsnl/1r5b1/p1ppppppp/1p7/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 3",
+                "comment": "【デモ】変化(alt)の終端です。分岐ナビの切替を確認するためのダミーです。",
+                "branches": []
+              }
+            },
+            {
+              "usi": "1c1d",
+              "kind": "deviation",
+              "note": "【デモ】この手は定石を外れています、という表示の確認用ダミーです。",
+              "punishNote": "【デモ】咎め方の要点欄の表示確認用ダミーです。実際の定跡内容ではありません。",
+              "child": {
+                "id": "demo-dev-1",
+                "sfen": "lnsgkgsnl/1r5b1/pppppppp1/8p/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                "comment": "【デモ】ここから咎め筋(ダミー)に入ります。",
+                "branches": [
+                  {
+                    "usi": "2g2f",
+                    "kind": "main",
+                    "note": "【デモ】ダミーの咎め手(1手目)です。",
+                    "child": {
+                      "id": "demo-dev-2",
+                      "sfen": "lnsgkgsnl/1r5b1/pppppppp1/8p/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL w - 1",
+                      "comment": "【デモ】ダミーの継続手順です。",
+                      "branches": [
+                        {
+                          "usi": "4c4d",
+                          "kind": "main",
+                          "note": "【デモ】ダミーの後手の一手です。",
+                          "child": {
+                            "id": "demo-dev-3",
+                            "sfen": "lnsgkgsnl/1r5b1/ppppp1pp1/5p2p/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL b - 1",
+                            "comment": "【デモ】ダミーの継続手順です。",
+                            "branches": [
+                              {
+                                "usi": "2f2e",
+                                "kind": "main",
+                                "note": "【デモ】ダミーの咎め手(2手目)です。",
+                                "child": {
+                                  "id": "demo-dev-4",
+                                  "sfen": "lnsgkgsnl/1r5b1/ppppp1pp1/5p2p/7P1/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL w - 1",
+                                  "comment": "【デモ】ダミーの咎め筋の終端です。実際の定跡内容ではありません。",
+                                  "branches": []
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

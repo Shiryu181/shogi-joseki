@@ -11,7 +11,11 @@
   border: 1px solid var(--line-2);
   background: var(--card-2);
   color: var(--ink-soft);
-  cursor: default;
+  cursor: pointer;
+}
+.branch:hover {
+  border-color: var(--brown);
+  color: var(--brown-ink);
 }
 .branch.on {
   border-color: var(--brown);
@@ -21,6 +25,10 @@
 .branch.dev {
   border-color: var(--red);
   color: var(--red);
+}
+.branch.dev:hover {
+  color: var(--red);
+  border-color: var(--red);
 }
 .branch.dev.on {
   background: var(--red);

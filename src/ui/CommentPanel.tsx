@@ -1,3 +1,4 @@
+import type { JosekiMove } from "../domain/types";
 import "./CommentPanel.css";
 
 export interface CommentPanelProps {
@@ -11,6 +12,10 @@ export interface CommentPanelProps {
   note?: string;
   /** JosekiNode.comment(現局面の解説)。 */
   comment?: string;
+  /** 選択中の手の種別。deviation のときは専用の見せ方にする。 */
+  kind?: JosekiMove["kind"];
+  /** JosekiMove.punishNote(逸れ手の咎め方の要点)。kind:"deviation" のときのみ使う。 */
+  punishNote?: string;
 }
 
 const VERIFY_TAG = /\s*\[要検証[^\]]*\]/g;
@@ -23,8 +28,11 @@ function splitNote(note: string | undefined): { text: string; flagged: boolean }
   return { text, flagged };
 }
 
-/** 学習モードの解説カード。現在の手・解説文・(要検証なら)控えめなバッジを表示する。 */
-export function CommentPanel({ isGoal, moveNumber, moveText, note, comment }: CommentPanelProps) {
+/**
+ * 学習モードの解説カード。現在の手・解説文・(要検証なら)控えめなバッジを表示する。
+ * kind:"deviation" のときは「この手は定石を外れています」+ 咎め方の要点を専用の見せ方で表示する。
+ */
+export function CommentPanel({ isGoal, moveNumber, moveText, note, comment, kind, punishNote }: CommentPanelProps) {
   if (isGoal) {
     return (
       <div className="explain">
@@ -37,19 +45,36 @@ export function CommentPanel({ isGoal, moveNumber, moveText, note, comment }: Co
   }
 
   const { text: noteText, flagged } = splitNote(note);
+  const isDeviation = kind === "deviation";
 
   return (
     <div className="explain">
       <div className="mvnow">
         {moveNumber != null && <span className="no">第{moveNumber}手</span>}
         <span className="mv">{moveText}</span>
+        {isDeviation && <span className="dev-badge">逸れ手</span>}
         {flagged && (
           <span className="verify-badge" title="やねうら王定跡DBの照合範囲外のため、一般的な定跡知識に基づく手です">
             要検証
           </span>
         )}
       </div>
-      {noteText && <p>{noteText}</p>}
+
+      {isDeviation ? (
+        <div className="deviation-callout">
+          <b>この手は定石を外れています</b>
+          {noteText && <p>{noteText}</p>}
+          {punishNote && (
+            <div className="punish">
+              <b>咎め方</b>
+              <span>{punishNote}</span>
+            </div>
+          )}
+        </div>
+      ) : (
+        noteText && <p>{noteText}</p>
+      )}
+
       {comment && (
         <div className="aim">
           <b>局面</b>

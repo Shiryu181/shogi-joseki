@@ -32,6 +32,16 @@
   border: 1px solid var(--gold);
   white-space: nowrap;
 }
+.dev-badge {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  background: var(--red-soft);
+  color: var(--red);
+  letter-spacing: 0.05em;
+  border: 1px solid var(--red);
+  white-space: nowrap;
+}
 .explain p {
   font-size: 13px;
   margin: 0 0 10px;
@@ -50,4 +60,35 @@
   font-family: var(--disp);
   font-weight: 600;
   white-space: nowrap;
+}
+.deviation-callout {
+  background: var(--red-soft);
+  border-radius: 9px;
+  padding: 11px 13px;
+  font-size: 13px;
+  color: var(--red);
+  margin: 0 0 10px;
+}
+.deviation-callout > b {
+  display: block;
+  font-family: var(--disp);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.deviation-callout p {
+  margin: 0 0 8px;
+  line-height: 1.65;
+  color: var(--ink);
+}
+.deviation-callout .punish {
+  display: flex;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+.deviation-callout .punish b {
+  font-family: var(--disp);
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--red);
 }
