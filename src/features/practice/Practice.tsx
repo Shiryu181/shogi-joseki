@@ -4,6 +4,7 @@ import { primaryBranch, usePracticeStore } from "../../store/practiceStore";
 import type { JosekiCourse } from "../../domain/types";
 import { Board } from "../../ui/Board";
 import type { GhostPiece, HandHighlight } from "../../ui/Board";
+import { formatSenteViewScore } from "../../engine/scoreView";
 import "./Practice.css";
 
 export interface PracticeProps {
@@ -32,12 +33,16 @@ export function Practice({ course }: PracticeProps) {
   const wrongAttempt = usePracticeStore((s) => s.wrongAttempt);
   const lastMove = usePracticeStore((s) => s.lastMove);
   const hintOn = usePracticeStore((s) => s.hintOn);
+  const engineStatus = usePracticeStore((s) => s.engineStatus);
+  const engineComparisonStatus = usePracticeStore((s) => s.engineComparisonStatus);
+  const engineComparison = usePracticeStore((s) => s.engineComparison);
   const selectSquare = usePracticeStore((s) => s.selectSquare);
   const selectHand = usePracticeStore((s) => s.selectHand);
   const toggleHint = usePracticeStore((s) => s.toggleHint);
   const retry = usePracticeStore((s) => s.retry);
   const restart = usePracticeStore((s) => s.restart);
   const loadCourse = usePracticeStore((s) => s.loadCourse);
+  const ensureEngineLoaded = usePracticeStore((s) => s.ensureEngineLoaded);
 
   // 表示すべきコースがストアの現在のコースと違う(画面切替など)場合は読み込み直す。
   useEffect(() => {
@@ -45,6 +50,14 @@ export function Practice({ course }: PracticeProps) {
       loadCourse(course);
     }
   }, [course, storeCourse.id, loadCourse]);
+
+  // エンジンの遅延ロード: 練習画面に入ったときに一度だけ要求する(学習/Sandboxでは
+  // 呼ばれないため、そちらではロードされない)。既にロード済み/失敗確定なら
+  // ensureEngineLoaded 内部で何もしない。エンジンが無くても練習モードは
+  // 台本判定でそのまま動く(グレースフルデグレード)。
+  useEffect(() => {
+    ensureEngineLoaded();
+  }, [ensureEngineLoaded]);
 
   const myColor = course.mySide === "sente" ? Color.BLACK : Color.WHITE;
 
@@ -116,6 +129,9 @@ export function Practice({ course }: PracticeProps) {
           </span>
           <span className="badge b-good">正解 {correctCount}</span>
           <span className="badge b-bad">ミス {mistakeCount}</span>
+          {engineStatus === "loading" && <span className="badge b-engine loading">エンジン準備中…</span>}
+          {engineStatus === "ready" && <span className="badge b-engine on">エンジン準備完了</span>}
+          {engineStatus === "unavailable" && <span className="badge b-engine off">エンジン利用不可</span>}
         </div>
 
         <Board
@@ -164,6 +180,31 @@ export function Practice({ course }: PracticeProps) {
                     {wrongAttempt.correctNote && <span className="s">{wrongAttempt.correctNote}</span>}
                   </div>
                 </div>
+
+                {engineComparisonStatus === "thinking" && (
+                  <div className="engine-panel engine-thinking">エンジンが確認中…</div>
+                )}
+                {engineComparisonStatus === "error" && (
+                  <div className="engine-panel engine-note">エンジンの評価を取得できませんでした</div>
+                )}
+                {engineComparisonStatus === "done" && engineComparison && (
+                  <div className="engine-panel">
+                    <div className="engine-panel-title">
+                      エンジン評価(先手視点・各{(engineComparison.thinkMs / 1000).toFixed(1)}秒思考)
+                    </div>
+                    <div className="engine-row">
+                      <span className="engine-label">あなたの手 {engineComparison.yourMove.displayText}</span>
+                      <span className="engine-score">{formatSenteViewScore(engineComparison.yourMove)}</span>
+                    </div>
+                    <div className="engine-row">
+                      <span className="engine-label">定石手 {engineComparison.josekiMove.displayText}</span>
+                      <span className="engine-score">{formatSenteViewScore(engineComparison.josekiMove)}</span>
+                    </div>
+                    <div className="engine-caveat">
+                      エンジンによる目安の評価値です。数値差が小さい場合は誤差の範囲のことがあります。
+                    </div>
+                  </div>
+                )}
               </div>
             ) : (
               lastMove?.by === "user" && (

@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# YaneuraOu WASM engine runtime assets (GPL-3.0, @mizarjp/yaneuraou.k-p).
+# Copied from node_modules by scripts/copy-engine-assets.mjs on dev/build;
+# not committed to keep the repo free of the engine binary.
+public/engine/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

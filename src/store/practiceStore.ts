@@ -4,18 +4,38 @@
  * 学習モード(learnStore)と違い、ユーザーは自分の手番で「任意の合法手」を指せる
  * (sandboxStore と同じ選択→着手パターンを使う)。指した手が現局面の分岐
  * (JosekiNode.branches)のどれかと USI 一致すれば正解として前進し、
- * 一致しなければ局面を進めずに正解手を提示する(エンジンなし・台本一致判定のみ)。
+ * 一致しなければ局面を進めずに正解手を提示する(台本一致判定。これはエンジンの
+ * 有無に関わらず常にこの判定だけで行う)。
  *
  * 相手(コースの mySide と逆の手番)は台本のライン(branches[0])を少し間を置いて
  * 自動で指す。
+ *
+ * Phase 3b: 不正解時にエンジン(src/engine/)で「A/B比較」を追加する。
+ * 重要な設計判断(2026-07-31 コーディネーター確認済み):
+ * エンジンの役割は「ユーザーの手 vs 定石手」の評価値を並べて見せることに限定し、
+ * エンジンの bestmove を「推奨手」として提示しない。理由: 不正解局面を評価した
+ * ときの bestmove は「その局面の手番(=相手)の最善応手」であり、ユーザーが
+ * 指すべきだった手ではない。推奨手は既に定石データ(正解手)が持っているため、
+ * エンジンに尋ねる必要が無い。同じ理由でヒント機能にもエンジンのbestmoveは
+ * 使わない(定石手のハイライトのみ)。
+ * エンジンが使えない場合(未初期化・COOP/COEP無し・ロード失敗等)は、この
+ * A/B比較を静かに省略するだけで、台本ベースの判定・進行には一切影響しない
+ * (グレースフルデグレード)。
  */
 import { create } from "zustand";
-import { Color, PieceType, Position, Square, moveFromUSI, tryMove } from "../domain/shogi";
+import { Color, PieceType, Position, Square, applyUsiMove, moveFromUSI, tryMove } from "../domain/shogi";
 import type { DropDests, MoveDests } from "../domain/legalMoves";
 import { computeDropDests, computeMoveDests } from "../domain/legalMoves";
 import type { JosekiCourse, JosekiMove, JosekiNode } from "../domain/types";
 import { listMainLineNodes, loadIbishaVsShikenbishaSente } from "../domain/josekiLoader";
 import type { Selection } from "./sandboxStore";
+import { getEngine } from "../engine/usiEngine";
+import type { EngineStatus } from "../engine/types";
+import { toSenteViewScore } from "../engine/scoreView";
+import type { SenteViewScore } from "../engine/scoreView";
+
+/** 不正解時のA/B比較1手あたりの思考時間(ms)。2手評価するため合計は約1.5秒。 */
+const ENGINE_COMPARE_MOVETIME_MS = 700;
 
 /** 相手の自動着手までの間(ms)。手が急に切り替わらないよう一呼吸置く。 */
 const OPPONENT_MOVE_DELAY_MS = 650;
@@ -40,6 +60,22 @@ export interface PracticeLastMove {
   by: "user" | "opponent";
 }
 
+/** A/B比較の片側(ユーザーの手 or 定石手)の評価。scoreCp/mateは常に先手視点。 */
+export interface EngineMoveEval extends SenteViewScore {
+  /** 表示用の手のテキスト(例: ▲２四歩)。 */
+  displayText: string;
+}
+
+/** 不正解時のエンジンA/B比較結果。 */
+export interface EngineComparison {
+  yourMove: EngineMoveEval;
+  josekiMove: EngineMoveEval;
+  /** 片側あたりの思考時間(ms)。UI表示用。 */
+  thinkMs: number;
+}
+
+export type EngineComparisonStatus = "idle" | "thinking" | "done" | "error";
+
 interface PracticeState {
   course: JosekiCourse;
   currentNode: JosekiNode;
@@ -62,6 +98,13 @@ interface PracticeState {
   /** ヒント表示中か(次の定石手の from/to を光らせる)。 */
   hintOn: boolean;
 
+  /** エンジン(src/engine/)の初期化状態。'idle' はまだロード要求していない。 */
+  engineStatus: EngineStatus;
+  /** 直近の不正解に対するA/B比較の進行状態。 */
+  engineComparisonStatus: EngineComparisonStatus;
+  /** 直近の不正解に対するA/B比較結果(無ければ null)。 */
+  engineComparison: EngineComparison | null;
+
   /** 盤の升をクリックしたときの処理。userTurn 以外では無視する。 */
   selectSquare: (square: Square) => void;
   /** 持ち駒トレイをクリックしたときの処理。userTurn 以外では無視する。 */
@@ -76,6 +119,12 @@ interface PracticeState {
   loadCourse: (course: JosekiCourse) => void;
   /** 相手番のタイマーから呼ばれる自動着手(内部用。UI からは直接呼ばない)。 */
   playOpponentMove: () => void;
+  /**
+   * エンジンの遅延ロードを要求する(練習画面マウント時に一度呼ぶ想定)。
+   * 既に idle でなければ何もしない(多重ロード防止。失敗後の自動再試行もしない)。
+   * 失敗しても reject を投げず、engineStatus を 'unavailable' にするだけ。
+   */
+  ensureEngineLoaded: () => void;
 }
 
 let opponentTimer: ReturnType<typeof setTimeout> | null = null;
@@ -86,6 +135,14 @@ function clearOpponentTimer() {
     opponentTimer = null;
   }
 }
+
+/**
+ * 直近に開始したエンジンA/B比較のシーケンス番号。
+ * evaluate() は非同期(直列化されているため0.5〜1.5秒程度かかる)なので、
+ * その間にユーザーが「もう一度」を押す/正解を指す/別の不正解を指す等で
+ * 状況が変わり得る。resolve時にこの値が変わっていたら古い結果として捨てる。
+ */
+let engineRequestSeq = 0;
 
 /** コースの mySide に対応する tsshogi の Color。 */
 function myColorOf(course: JosekiCourse): Color {
@@ -153,6 +210,8 @@ export const usePracticeStore = create<PracticeState>((set, get) => {
       moveIndex: moveIndex + 1,
       wrongAttempt: null,
       hintOn: false,
+      engineComparison: null,
+      engineComparisonStatus: "idle",
       ...extra,
     });
     if (turn.status === "opponentTurn") {
@@ -180,10 +239,58 @@ export const usePracticeStore = create<PracticeState>((set, get) => {
       wrongAttempt: null,
       lastMove: null,
       hintOn: false,
+      engineComparison: null,
+      engineComparisonStatus: "idle",
     });
     if (turn.status === "opponentTurn") {
       opponentTimer = setTimeout(() => get().playOpponentMove(), OPPONENT_MOVE_DELAY_MS);
     }
+  }
+
+  /**
+   * 不正解時、ユーザーの手と定石手のそれぞれを適用した局面をエンジンで評価し、
+   * A/B比較として提示する。エンジン未準備なら何もしない(黙って省略)。
+   * DESIGN確認済み方針: エンジンのbestmoveは「推奨手」として出さない
+   * (ファイル冒頭のコメント参照)。あくまで2つの手の評価値比較のみに使う。
+   */
+  function triggerEngineComparison(nodeAtAttempt: JosekiNode, userDisplayText: string, sfenAfterUser: string, colorToMove: Color) {
+    if (get().engineStatus !== "ready") return;
+    const correct = primaryBranch(nodeAtAttempt);
+    if (!correct) return;
+
+    const basePosition = new Position();
+    basePosition.resetBySFEN(nodeAtAttempt.sfen);
+    const joseki = applyUsiMove(basePosition, correct.usi);
+    if (!joseki) return;
+
+    const seq = ++engineRequestSeq;
+    set({ engineComparisonStatus: "thinking" });
+
+    const engine = getEngine();
+    Promise.all([
+      engine.evaluate(sfenAfterUser, ENGINE_COMPARE_MOVETIME_MS),
+      engine.evaluate(joseki.sfenAfter, ENGINE_COMPARE_MOVETIME_MS),
+    ])
+      .then(([yourResult, josekiResult]) => {
+        // ユーザーが待っている間に状況が変わっていたら(もう一度/新しい不正解/前進
+        // 等)、古い結果は捨てる。
+        if (seq !== engineRequestSeq || get().wrongAttempt === null) return;
+        const yourView = toSenteViewScore(yourResult, colorToMove);
+        const josekiView = toSenteViewScore(josekiResult, colorToMove);
+        set({
+          engineComparisonStatus: "done",
+          engineComparison: {
+            thinkMs: ENGINE_COMPARE_MOVETIME_MS,
+            yourMove: { displayText: userDisplayText, ...yourView },
+            josekiMove: { displayText: joseki.displayText, ...josekiView },
+          },
+        });
+      })
+      .catch((err: unknown) => {
+        console.warn("[practice] engine comparison failed:", err);
+        if (seq !== engineRequestSeq) return;
+        set({ engineComparisonStatus: "error", engineComparison: null });
+      });
   }
 
   const initialCourse = loadIbishaVsShikenbishaSente();
@@ -210,6 +317,9 @@ export const usePracticeStore = create<PracticeState>((set, get) => {
     wrongAttempt: null,
     lastMove: null,
     hintOn: false,
+    engineStatus: "idle",
+    engineComparisonStatus: "idle",
+    engineComparison: null,
 
     selectSquare(square) {
       const { status, position, selected, moveDests, dropDests, currentNode, correctCount, mistakeCount } = get();
@@ -249,7 +359,13 @@ export const usePracticeStore = create<PracticeState>((set, get) => {
                 correctText: correctInfo?.displayText ?? correct?.usi ?? "",
                 correctNote: correct?.note,
               },
+              // 直前の不正解のA/B比較結果を持ち越さない(新しい不正解のため)。
+              engineComparison: null,
+              engineComparisonStatus: "idle",
             });
+            // エンジンが使えるときだけ、ユーザーの手 vs 定石手のA/B比較を裏で走らせる
+            // (非同期・エンジン未準備なら内部で何もしない)。
+            triggerEngineComparison(currentNode, result.displayText, cloned.sfen, cloned.color);
             return;
           }
         }
@@ -281,7 +397,7 @@ export const usePracticeStore = create<PracticeState>((set, get) => {
     },
 
     retry() {
-      set({ wrongAttempt: null, selected: null });
+      set({ wrongAttempt: null, selected: null, engineComparison: null, engineComparisonStatus: "idle" });
     },
 
     restart() {
@@ -301,6 +417,20 @@ export const usePracticeStore = create<PracticeState>((set, get) => {
       goToNode(move.child, {
         lastMove: { usi: move.usi, displayText: info?.displayText ?? move.usi, kind: move.kind, by: "opponent" },
       });
+    },
+
+    ensureEngineLoaded() {
+      if (get().engineStatus !== "idle") return; // 多重ロード防止・失敗後の自動再試行もしない
+      set({ engineStatus: "loading" });
+      getEngine()
+        .init()
+        .then(() => set({ engineStatus: "ready" }))
+        .catch((err: unknown) => {
+          // グレースフルデグレード: 練習モードは台本判定のまま使えるので、ここでは
+          // 警告ログのみ残しアプリは落とさない。
+          console.warn("[practice] engine unavailable:", err);
+          set({ engineStatus: "unavailable" });
+        });
     },
   };
 });

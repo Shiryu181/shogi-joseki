@@ -118,3 +118,17 @@ export function moveFromUSI(position: Position, usi: string): { move: Move; disp
   if (!move) return null;
   return { move, displayText: formatMove(position, move) };
 }
+
+/**
+ * 指定局面(不変)に USI 形式の手を1つ適用し、適用後の SFEN と表示テキストを返す。
+ * 元の position は変更しない(内部で clone する)。practiceStore がユーザーの手と
+ * 定石手を並べてエンジン評価する(A/B比較)ために使う。
+ */
+export function applyUsiMove(position: Position, usi: string): { sfenAfter: string; displayText: string } | null {
+  const cloned = position.clone();
+  const parsed = moveFromUSI(cloned, usi);
+  if (!parsed) return null;
+  const applied = cloned.doMove(parsed.move);
+  if (!applied) return null;
+  return { sfenAfter: cloned.sfen, displayText: parsed.displayText };
+}
