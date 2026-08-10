@@ -12,9 +12,10 @@ import {
   Square,
   formatMove,
   parseUSIMove,
+  promotedPieceType,
 } from "tsshogi";
 
-export { Color, PieceType, Square, Move, Position, formatMove, parseUSIMove };
+export { Color, PieceType, Square, Move, Position, formatMove, parseUSIMove, promotedPieceType };
 export type { Piece };
 
 /** 駒種→表示グリフ(楷書1文字)。mockup.html の GLYPH 定義を tsshogi の PieceType に合わせて踏襲。 */
@@ -105,6 +106,62 @@ export function tryMove(
   if (!applied) return { ok: false };
 
   return { ok: true, move, displayText };
+}
+
+/**
+ * 成り/不成りの両方が合法な場合にどちらへ進めるか自動で決めず、呼び出し側へ選択を
+ * 委ねるための着手適用(DESIGN.md §3.3 3層目・練習モードのoff-scriptで使用)。
+ * 強制成り(不成が非合法。歩・香の最終段、桂の最終2段)は自動でその1択を適用する。
+ * 判定は tsshogi の isValidMove に委ね、成れる段・駒種の条件を自前で書き下ろさない。
+ *
+ * 既存の tryMove()(常に不成優先・選択UIを出さない)とは別関数にしてあるため、
+ * Sandbox/学習モード等の既存挙動には一切影響しない。
+ */
+export type PromotionAwareMoveResult =
+  | { kind: "applied"; move: Move; displayText: string }
+  | { kind: "choice"; from: Square | PieceType; to: Square }
+  | { kind: "illegal" };
+
+export function tryMoveWithPromotionChoice(
+  position: Position,
+  from: Square | PieceType,
+  to: Square,
+): PromotionAwareMoveResult {
+  const move = position.createMove(from, to);
+  if (!move) return { kind: "illegal" };
+
+  const nonPromoteOk = position.isValidMove(move);
+  const promoted = move.withPromote();
+  const promoteOk = position.isValidMove(promoted);
+
+  if (!nonPromoteOk && !promoteOk) return { kind: "illegal" };
+  if (nonPromoteOk && promoteOk) return { kind: "choice", from, to };
+
+  const chosen = promoteOk ? promoted : move;
+  const displayText = formatMove(position, chosen);
+  const applied = position.doMove(chosen);
+  if (!applied) return { kind: "illegal" };
+  return { kind: "applied", move: chosen, displayText };
+}
+
+/**
+ * tryMoveWithPromotionChoice() が "choice" を返した後、ユーザーが選んだ側
+ * (成る/不成)を実際に適用する。
+ */
+export function applyChosenPromotion(
+  position: Position,
+  from: Square | PieceType,
+  to: Square,
+  promote: boolean,
+): { ok: true; move: Move; displayText: string } | { ok: false } {
+  const move = position.createMove(from, to);
+  if (!move) return { ok: false };
+  const chosen = promote ? move.withPromote() : move;
+  if (!position.isValidMove(chosen)) return { ok: false };
+  const displayText = formatMove(position, chosen);
+  const applied = position.doMove(chosen);
+  if (!applied) return { ok: false };
+  return { ok: true, move: chosen, displayText };
 }
 
 /** Square/PieceType を dests のキーとして使う一意な文字列に変換する */

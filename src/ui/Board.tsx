@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Color, PieceType, Position, Square, boardGrid, handCounts } from "../domain/shogi";
+import { Color, PieceType, Position, Square, boardGrid, handCounts, promotedPieceType } from "../domain/shogi";
 import { PieceView } from "./Piece";
 import "./Board.css";
 
@@ -15,6 +15,16 @@ export interface GhostPiece {
 
 export interface HandHighlight {
   type: PieceType;
+  color: Color;
+}
+
+/**
+ * 成/不成の選択UI(off-script用)。指定時のみ盤上に小さなオーバーレイを出す。
+ * 未指定(undefined/null)なら見た目・挙動は一切変わらない(Learn/Sandboxは無関係)。
+ */
+export interface PromotionChoice {
+  /** 選択対象の駒種(不成のまま)。 */
+  pieceType: PieceType;
   color: Color;
 }
 
@@ -36,6 +46,10 @@ export interface BoardProps {
   onHandPieceClick: (type: PieceType, color: Color) => void;
   /** 持ち駒トレイでクリック可能(選択可能)にする色。指定が無ければ両方クリック可能(Sandbox用)。 */
   clickableHandColor?: Color | "both" | "none";
+  /** 成/不成の選択UI。指定時のみ盤上にオーバーレイ表示する(off-script用・追加のみ)。 */
+  promotionChoice?: PromotionChoice | null;
+  /** 選択UIで「成る」「不成」いずれかが押されたときのコールバック。 */
+  onPromotionChoice?: (promote: boolean) => void;
 }
 
 function HandTray({
@@ -88,6 +102,8 @@ export function Board({
   onSquareClick,
   onHandPieceClick,
   clickableHandColor = "both",
+  promotionChoice = null,
+  onPromotionChoice,
 }: BoardProps) {
   const grid = useMemo(() => boardGrid(position), [position]);
   const glow = glowKeys ?? EMPTY_SET;
@@ -145,6 +161,23 @@ export function Board({
             ))}
           </div>
         </div>
+        {promotionChoice && onPromotionChoice && (
+          <div className="promo-overlay" role="dialog" aria-label="成りますか">
+            <div className="promo-panel">
+              <div className="promo-title">成りますか?</div>
+              <div className="promo-pieces">
+                <button type="button" className="promo-btn" onClick={() => onPromotionChoice(true)}>
+                  <PieceView type={promotedPieceType(promotionChoice.pieceType)} color={promotionChoice.color} />
+                  <span>成る</span>
+                </button>
+                <button type="button" className="promo-btn" onClick={() => onPromotionChoice(false)}>
+                  <PieceView type={promotionChoice.pieceType} color={promotionChoice.color} />
+                  <span>不成</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
       <HandTray
         position={position}

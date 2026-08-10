@@ -46,6 +46,54 @@
 .board-block {
   width: max-content;
   margin: 8px auto;
+  position: relative;
+}
+
+.promo-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(42, 33, 21, 0.45);
+  border-radius: 6px;
+  z-index: 5;
+}
+.promo-panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+.promo-title {
+  font-family: var(--disp);
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+.promo-pieces {
+  display: flex;
+  gap: 14px;
+}
+.promo-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid var(--line-2);
+  background: var(--card-2);
+  border-radius: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 11px;
+  color: var(--ink);
+  font-family: var(--body);
+}
+.promo-btn:hover {
+  border-color: var(--gold);
+  background: var(--gold-soft);
 }
 .files {
   display: grid;

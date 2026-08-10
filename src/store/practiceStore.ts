@@ -21,9 +21,36 @@
  * エンジンが使えない場合(未初期化・COOP/COEP無し・ロード失敗等)は、この
  * A/B比較を静かに省略するだけで、台本ベースの判定・進行には一切影響しない
  * (グレースフルデグレード)。
+ *
+ * DESIGN.md §3.3 3層目(2026-08 コーディネーター確認済み): 不正解フィードバックに
+ * 「このまま指し続ける」を追加し、ユーザーが実際に指した手を盤へ適用して
+ * off-script(台本を離れた自由対局)へ入れるようにする。off-script中は相手の手を
+ * エンジンの bestMove で指す。
+ *
+ * 【bestMoveの使い分け(重要・混同注意)】
+ * - Phase 3b(A/B比較・上記)で禁じたのは「不正解局面のbestMoveをユーザーへの
+ *   推奨手として出す」こと。その局面の手番は相手であり、bestMoveはユーザーが
+ *   指すべきだった手ではないため誤った使い方だった。
+ * - off-script(このファイル内 stepAfterUserOffScriptMove)で使うbestMoveは
+ *   「ユーザーの手の直後の局面」を評価した結果であり、その局面の手番は文字通り
+ *   相手なので、bestMoveをそのまま相手の応手として指すのは意味的に正しい。
+ *   同じevaluate()のscoreCp/mateは「ユーザーの手の後の評価値」としてフィード
+ *   バック表示にも使う(1回のevaluate()呼び出しを両用し、呼び出し回数を増やさない)。
+ *   ここでも「あなたはこう指すべきだった」という推奨手の提示は行わない
+ *   (見せるのは評価値のみ)。
  */
 import { create } from "zustand";
-import { Color, PieceType, Position, Square, applyUsiMove, moveFromUSI, tryMove } from "../domain/shogi";
+import {
+  Color,
+  PieceType,
+  Position,
+  Square,
+  applyChosenPromotion,
+  applyUsiMove,
+  moveFromUSI,
+  tryMove,
+  tryMoveWithPromotionChoice,
+} from "../domain/shogi";
 import type { DropDests, MoveDests } from "../domain/legalMoves";
 import { computeDropDests, computeMoveDests } from "../domain/legalMoves";
 import type { JosekiCourse, JosekiMove, JosekiNode } from "../domain/types";
@@ -50,14 +77,63 @@ export interface WrongAttempt {
   correctText: string;
   /** 正解手の note(あれば)。 */
   correctNote?: string;
+  /** 「このまま指し続ける」用: 実際に指した手のUSI。 */
+  attemptedUsi: string;
+  /** 「このまま指し続ける」用: その手を適用した後のSFEN。 */
+  attemptedSfenAfter: string;
 }
 
-/** 直近に盤上へ適用された1手(ユーザー/相手いずれか)。 */
+/** 直近に盤上へ適用された1手(ユーザー/相手いずれか)。"offscript" = 台本に無い自由対局の手。 */
 export interface PracticeLastMove {
   usi: string;
   displayText: string;
-  kind: JosekiMove["kind"];
+  kind: JosekiMove["kind"] | "offscript";
   by: "user" | "opponent";
+}
+
+/** off-script(台本を離れた自由対局)の手番。 */
+export type OffScriptStatus = "userTurn" | "engineThinking" | "ended";
+
+export type OffScriptOutcomeType = "checkmate" | "engineResign" | "engineWin" | "engineError";
+
+/** off-scriptが終局した理由。 */
+export interface OffScriptOutcome {
+  type: OffScriptOutcomeType;
+  /** checkmateのとき、合法手が無くなった(=詰んだ)側。 */
+  loser?: Color;
+  /** engineErrorのときの補足(UI表示・デバッグ用)。 */
+  message?: string;
+}
+
+/** off-script中、直近のユーザーの手に対するエンジン評価(先手視点)。 */
+export interface OffScriptFeedback extends SenteViewScore {
+  /** 評価対象になったユーザーの手の表示テキスト。 */
+  displayText: string;
+  /** 思考時間(ms)。UI表示用。 */
+  thinkMs: number;
+}
+
+/** 成/不成の選択待ち(両方合法な手を指したとき)。 */
+export interface PendingPromotion {
+  from: Square | PieceType;
+  to: Square;
+}
+
+/**
+ * DESIGN.md §3.3 3層目: 定石(台本)を外れても対局を続けられる状態。
+ * null = 通常の台本ベース練習(既存のPhase3a/3bの挙動そのまま)。
+ */
+export interface OffScriptState {
+  /** 台本を離れる直前のノード。「定石の局面に戻る」の復帰先。 */
+  anchorNode: JosekiNode;
+  /** anchorNode時点のmoveIndex(復帰時に戻す)。 */
+  anchorMoveIndex: number;
+  status: OffScriptStatus;
+  outcome: OffScriptOutcome | null;
+  lastFeedback: OffScriptFeedback | null;
+  pendingPromotion: PendingPromotion | null;
+  /** off-script中に指された手数(表示用)。 */
+  moveCount: number;
 }
 
 /** A/B比較の片側(ユーザーの手 or 定石手)の評価。scoreCp/mateは常に先手視点。 */
@@ -105,6 +181,9 @@ interface PracticeState {
   /** 直近の不正解に対するA/B比較結果(無ければ null)。 */
   engineComparison: EngineComparison | null;
 
+  /** off-script(台本を離れた自由対局)の状態。null = 通常の台本モード。 */
+  offScript: OffScriptState | null;
+
   /** 盤の升をクリックしたときの処理。userTurn 以外では無視する。 */
   selectSquare: (square: Square) => void;
   /** 持ち駒トレイをクリックしたときの処理。userTurn 以外では無視する。 */
@@ -125,6 +204,18 @@ interface PracticeState {
    * 失敗しても reject を投げず、engineStatus を 'unavailable' にするだけ。
    */
   ensureEngineLoaded: () => void;
+
+  /**
+   * 不正解フィードバックの「このまま指し続ける」。ユーザーが実際に指した手
+   * (wrongAttempt)を盤へ適用し、off-scriptへ入る。エンジンが使えない場合
+   * (engineStatus !== 'ready')は何もしない(UI側でボタンを無効化する想定の
+   * グレースフルデグレード。相手役が居ないため続行できない)。
+   */
+  continueOffScript: () => void;
+  /** off-script中、成/不成の選択UIでユーザーが選んだ側を適用する。 */
+  choosePromotion: (promote: boolean) => void;
+  /** 「定石の局面に戻る」。off-scriptを離脱し、台本を離れた地点の局面へ復帰する。 */
+  returnToScript: () => void;
 }
 
 let opponentTimer: ReturnType<typeof setTimeout> | null = null;
@@ -182,6 +273,29 @@ function computeTurnState(
   return { status: "opponentTurn", moveDests: EMPTY_MOVE_DESTS, dropDests: EMPTY_DROP_DESTS };
 }
 
+/**
+ * off-script中の手番/終局判定。合法手が両方(移動・打ち)無ければ、将棋のルール上
+ * 手番側の負け(詰み。停止形も含め一律「合法手なし」として扱う)。
+ */
+function computeOffScriptTurnState(
+  position: Position,
+  myColor: Color,
+): { status: OffScriptStatus; moveDests: MoveDests; dropDests: DropDests; outcome: OffScriptOutcome | null } {
+  const { moveDests, dropDests } = destsFor(position);
+  if (moveDests.size === 0 && dropDests.size === 0) {
+    return {
+      status: "ended",
+      moveDests: EMPTY_MOVE_DESTS,
+      dropDests: EMPTY_DROP_DESTS,
+      outcome: { type: "checkmate", loser: position.color },
+    };
+  }
+  if (position.color === myColor) {
+    return { status: "userTurn", moveDests, dropDests, outcome: null };
+  }
+  return { status: "engineThinking", moveDests: EMPTY_MOVE_DESTS, dropDests: EMPTY_DROP_DESTS, outcome: null };
+}
+
 /** 現ノードの分岐から、実際に指された手(usi)に一致するものを探す(kind問わず一致=正解)。 */
 function findMatchingBranch(node: JosekiNode, usi: string): JosekiMove | null {
   return node.branches.find((b) => b.usi === usi) ?? null;
@@ -222,6 +336,7 @@ export const usePracticeStore = create<PracticeState>((set, get) => {
 
   function resetTo(course: JosekiCourse) {
     clearOpponentTimer();
+    engineRequestSeq++; // 進行中のA/B比較・off-script用エンジン呼び出しを無効化する
     const root = course.root;
     const turn = computeTurnState(course, root);
     set({
@@ -241,10 +356,122 @@ export const usePracticeStore = create<PracticeState>((set, get) => {
       hintOn: false,
       engineComparison: null,
       engineComparisonStatus: "idle",
+      offScript: null, // 「⟲最初からやり直す」はoff-script中でも必ず抜けられる安全弁
     });
     if (turn.status === "opponentTurn") {
       opponentTimer = setTimeout(() => get().playOpponentMove(), OPPONENT_MOVE_DELAY_MS);
     }
+  }
+
+  /**
+   * off-script中、ユーザーが1手指した直後に呼ぶ。適用後の局面を反映し、相手番なら
+   * エンジンへ1回だけ evaluate() を投げて「ユーザーの手への評価値フィードバック」と
+   * 「相手(エンジン)の応手」の両方に使う(ファイル冒頭の bestMove 使い分けコメント
+   * 参照)。詰み(合法手なし)・resign・win・エンジン異常はすべて 'ended' にし、
+   * 例外を投げずアプリを落とさない。
+   */
+  function stepAfterUserOffScriptMove(userDisplayText: string, sfenAfterUserMove: string, myColor: Color) {
+    const afterUserPosition = new Position();
+    afterUserPosition.resetBySFEN(sfenAfterUserMove);
+    const turn = computeOffScriptTurnState(afterUserPosition, myColor);
+
+    set((s) => ({
+      position: afterUserPosition,
+      moveDests: turn.moveDests,
+      dropDests: turn.dropDests,
+      selected: null,
+      offScript: s.offScript && {
+        ...s.offScript,
+        status: turn.status,
+        outcome: turn.outcome,
+        pendingPromotion: null,
+        moveCount: s.offScript.moveCount + 1,
+      },
+    }));
+
+    if (turn.status !== "engineThinking") return; // 詰み等で既に終局・防御的にoffScript解除後の呼び出しも弾く
+
+    if (get().engineStatus !== "ready") {
+      // off-scriptはエンジンready時にしか開始できない設計だが、対局中にエンジンが
+      // 使えなくなった場合(Worker異常等)への防御。
+      set((s) => ({
+        offScript: s.offScript && {
+          ...s.offScript,
+          status: "ended",
+          outcome: { type: "engineError", message: "エンジンが利用できなくなりました" },
+        },
+      }));
+      return;
+    }
+
+    const seq = ++engineRequestSeq;
+    const opponentColor = afterUserPosition.color;
+
+    getEngine()
+      .evaluate(sfenAfterUserMove, ENGINE_COMPARE_MOVETIME_MS)
+      .then((result) => {
+        if (seq !== engineRequestSeq) return; // 古い結果(戻る/やり直し等で状況が変わった)
+        const s = get();
+        if (!s.offScript) return; // その間に「定石の局面に戻る」等で抜けていた
+
+        const senteView = toSenteViewScore(result, opponentColor);
+        const feedback: OffScriptFeedback = {
+          displayText: userDisplayText,
+          thinkMs: ENGINE_COMPARE_MOVETIME_MS,
+          ...senteView,
+        };
+
+        if (result.bestMove === "resign") {
+          set({ offScript: { ...s.offScript, status: "ended", outcome: { type: "engineResign" }, lastFeedback: feedback } });
+          return;
+        }
+        if (result.bestMove === "win") {
+          set({ offScript: { ...s.offScript, status: "ended", outcome: { type: "engineWin" }, lastFeedback: feedback } });
+          return;
+        }
+
+        const applied = applyUsiMove(afterUserPosition, result.bestMove);
+        if (!applied) {
+          set({
+            offScript: {
+              ...s.offScript,
+              status: "ended",
+              outcome: { type: "engineError", message: `エンジンの手(${result.bestMove})を適用できませんでした` },
+              lastFeedback: feedback,
+            },
+          });
+          return;
+        }
+
+        const nextPosition = new Position();
+        nextPosition.resetBySFEN(applied.sfenAfter);
+        const nextTurn = computeOffScriptTurnState(nextPosition, myColor);
+
+        set((s2) => ({
+          position: nextPosition,
+          moveDests: nextTurn.moveDests,
+          dropDests: nextTurn.dropDests,
+          selected: null,
+          lastMove: { usi: result.bestMove, displayText: applied.displayText, kind: "offscript", by: "opponent" },
+          offScript: s2.offScript && {
+            ...s2.offScript,
+            status: nextTurn.status,
+            outcome: nextTurn.outcome,
+            lastFeedback: feedback,
+          },
+        }));
+      })
+      .catch((err: unknown) => {
+        console.warn("[practice] off-script engine step failed:", err);
+        if (seq !== engineRequestSeq) return;
+        set((s) => ({
+          offScript: s.offScript && {
+            ...s.offScript,
+            status: "ended",
+            outcome: { type: "engineError", message: "エンジンの応答を取得できませんでした" },
+          },
+        }));
+      });
   }
 
   /**
@@ -320,9 +547,55 @@ export const usePracticeStore = create<PracticeState>((set, get) => {
     engineStatus: "idle",
     engineComparisonStatus: "idle",
     engineComparison: null,
+    offScript: null,
 
     selectSquare(square) {
-      const { status, position, selected, moveDests, dropDests, currentNode, correctCount, mistakeCount } = get();
+      const { offScript, status, position, selected, moveDests, dropDests, currentNode, correctCount, mistakeCount, course } =
+        get();
+
+      if (offScript) {
+        if (offScript.status !== "userTurn" || offScript.pendingPromotion) return;
+        const turn = position.color;
+        const pieceAtSquare = position.board.at(square);
+
+        if (selected) {
+          const destinations =
+            selected.kind === "board"
+              ? (moveDests.get(selected.square.usi) ?? [])
+              : (dropDests.get(selected.pieceType) ?? []);
+          const isLegalDest = destinations.some((s) => s.usi === square.usi);
+
+          if (isLegalDest) {
+            const cloned = position.clone();
+            const from = selected.kind === "board" ? selected.square : selected.pieceType;
+            const result = tryMoveWithPromotionChoice(cloned, from, square);
+            if (result.kind === "choice") {
+              set({ selected: null, offScript: { ...offScript, pendingPromotion: { from: result.from, to: result.to } } });
+              return;
+            }
+            if (result.kind === "applied") {
+              set({ selected: null });
+              stepAfterUserOffScriptMove(result.displayText, cloned.sfen, myColorOf(course));
+              return;
+            }
+            // "illegal": 理論上は起きない想定(dests計算と食い違うケースへの防御)。
+            // 選び直し判定へフォールスルーする。
+          }
+
+          if (pieceAtSquare && pieceAtSquare.color === turn) {
+            set({ selected: { kind: "board", square } });
+            return;
+          }
+          set({ selected: null });
+          return;
+        }
+
+        if (pieceAtSquare && pieceAtSquare.color === turn) {
+          set({ selected: { kind: "board", square } });
+        }
+        return;
+      }
+
       if (status !== "userTurn") return;
       const turn = position.color;
       const pieceAtSquare = position.board.at(square);
@@ -358,6 +631,8 @@ export const usePracticeStore = create<PracticeState>((set, get) => {
                 attemptedText: result.displayText,
                 correctText: correctInfo?.displayText ?? correct?.usi ?? "",
                 correctNote: correct?.note,
+                attemptedUsi: result.move.usi,
+                attemptedSfenAfter: cloned.sfen,
               },
               // 直前の不正解のA/B比較結果を持ち越さない(新しい不正解のため)。
               engineComparison: null,
@@ -385,7 +660,14 @@ export const usePracticeStore = create<PracticeState>((set, get) => {
     },
 
     selectHand(pieceType, color) {
-      const { status, position } = get();
+      const { offScript, status, position } = get();
+      if (offScript) {
+        if (offScript.status !== "userTurn" || offScript.pendingPromotion) return;
+        if (position.color !== color) return;
+        if (position.hand(color).count(pieceType) <= 0) return;
+        set({ selected: { kind: "hand", pieceType } });
+        return;
+      }
       if (status !== "userTurn") return;
       if (position.color !== color) return;
       if (position.hand(color).count(pieceType) <= 0) return;
@@ -431,6 +713,74 @@ export const usePracticeStore = create<PracticeState>((set, get) => {
           console.warn("[practice] engine unavailable:", err);
           set({ engineStatus: "unavailable" });
         });
+    },
+
+    continueOffScript() {
+      const { wrongAttempt, currentNode, moveIndex, engineStatus, course } = get();
+      // グレースフルデグレード: エンジンが無ければ相手役が居らず続行できないため
+      // 何もしない(UI側は engineStatus !== 'ready' のときボタンを無効化して理由を示す)。
+      if (!wrongAttempt || engineStatus !== "ready") return;
+      clearOpponentTimer();
+      set({
+        wrongAttempt: null,
+        engineComparison: null,
+        engineComparisonStatus: "idle",
+        selected: null,
+        hintOn: false,
+        lastMove: { usi: wrongAttempt.attemptedUsi, displayText: wrongAttempt.attemptedText, kind: "offscript", by: "user" },
+        offScript: {
+          anchorNode: currentNode,
+          anchorMoveIndex: moveIndex,
+          status: "userTurn", // 仮値。直後の stepAfterUserOffScriptMove が正しい値に更新する
+          outcome: null,
+          lastFeedback: null,
+          pendingPromotion: null,
+          moveCount: 0,
+        },
+      });
+      stepAfterUserOffScriptMove(wrongAttempt.attemptedText, wrongAttempt.attemptedSfenAfter, myColorOf(course));
+    },
+
+    choosePromotion(promote) {
+      const { offScript, position, course } = get();
+      if (!offScript || !offScript.pendingPromotion) return;
+      const { from, to } = offScript.pendingPromotion;
+      const cloned = position.clone();
+      const result = applyChosenPromotion(cloned, from, to, promote);
+      if (!result.ok) {
+        // 理論上起きない想定の防御: 選択待ちだけ解除し、局面はそのまま。
+        set({ offScript: { ...offScript, pendingPromotion: null } });
+        return;
+      }
+      set({ offScript: { ...offScript, pendingPromotion: null } });
+      stepAfterUserOffScriptMove(result.displayText, cloned.sfen, myColorOf(course));
+    },
+
+    returnToScript() {
+      const { offScript, course } = get();
+      if (!offScript) return;
+      clearOpponentTimer();
+      engineRequestSeq++; // 進行中のoff-script用エンジン呼び出しを無効化する
+      const anchor = offScript.anchorNode;
+      const turn = computeTurnState(course, anchor);
+      set({
+        currentNode: anchor,
+        position: positionFromNode(anchor),
+        moveDests: turn.moveDests,
+        dropDests: turn.dropDests,
+        status: turn.status,
+        selected: null,
+        moveIndex: offScript.anchorMoveIndex,
+        wrongAttempt: null,
+        hintOn: false,
+        engineComparison: null,
+        engineComparisonStatus: "idle",
+        lastMove: null,
+        offScript: null,
+      });
+      if (turn.status === "opponentTurn") {
+        opponentTimer = setTimeout(() => get().playOpponentMove(), OPPONENT_MOVE_DELAY_MS);
+      }
     },
   };
 });
