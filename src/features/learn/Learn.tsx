@@ -11,6 +11,8 @@ import "./Learn.css";
 export interface LearnProps {
   /** 表示するコース。切り替え時は都度渡し直す(本物のコース ⇔ 分岐ナビ動作確認用デモ)。 */
   course: JosekiCourse;
+  /** 戻るボタン(§5.2 対抗形選択、または開発メニュー)の遷移先。 */
+  onBack: () => void;
 }
 
 /**
@@ -19,18 +21,22 @@ export interface LearnProps {
  * 光っている升をクリックするか「なぞって次へ」ボタンで進める。
  * 分岐(本線/変化/逸れ手)がある局面では BranchNav で切替可能。
  */
-export function Learn({ course }: LearnProps) {
+export function Learn({ course, onBack }: LearnProps) {
   const storeCourse = useLearnStore((s) => s.course);
   const currentNode = useLearnStore((s) => s.currentNode);
   const nodeHistory = useLearnStore((s) => s.nodeHistory);
   const selectedBranchIndex = useLearnStore((s) => s.selectedBranchIndex);
   const position = useLearnStore((s) => s.position);
+  const autoAdvanceOpponent = useLearnStore((s) => s.autoAdvanceOpponent);
   const attemptSquare = useLearnStore((s) => s.attemptSquare);
   const advance = useLearnStore((s) => s.advance);
   const chooseBranch = useLearnStore((s) => s.chooseBranch);
   const goBack = useLearnStore((s) => s.goBack);
   const goToStart = useLearnStore((s) => s.goToStart);
   const loadCourse = useLearnStore((s) => s.loadCourse);
+  const setAutoAdvanceOpponent = useLearnStore((s) => s.setAutoAdvanceOpponent);
+  const pauseAutoAdvance = useLearnStore((s) => s.pauseAutoAdvance);
+  const resumeAutoAdvance = useLearnStore((s) => s.resumeAutoAdvance);
 
   // 表示すべきコースがストアの現在のコースと違う(画面切替など)場合は読み込み直す。
   useEffect(() => {
@@ -38,6 +44,13 @@ export function Learn({ course }: LearnProps) {
       loadCourse(course);
     }
   }, [course, storeCourse.id, loadCourse]);
+
+  // マウント中だけ相手の手の自動進行タイマーを有効にする。他画面へ移動した(アンマウントされた)
+  // 間は裏で手が進み続けないよう、離脱時に必ず保留中のタイマーを破棄する。
+  useEffect(() => {
+    resumeAutoAdvance();
+    return () => pauseAutoAdvance();
+  }, [resumeAutoAdvance, pauseAutoAdvance]);
 
   const guide = branchMove(currentNode, selectedBranchIndex);
   const isGoal = !guide;
@@ -72,12 +85,23 @@ export function Learn({ course }: LearnProps) {
   // currentNode が別コースのものである可能性があるため、描画をスキップする。
   if (storeCourse.id !== course.id) return null;
 
+  const myColor = course.mySide === "sente" ? Color.BLACK : Color.WHITE;
+  const isOpponentTurn = !isGoal && position.color !== myColor;
+  const showWaitPill = isOpponentTurn && autoAdvanceOpponent;
+
   return (
     <div className="learn-wrap">
       <div className="learn-frame">
-        <div className="learn-head">
-          <div className="tl">JOSEKI DOJO ・ 学習(なぞり)</div>
-          <h1>{course.title}</h1>
+        <div className="abar">
+          <button type="button" className="back" onClick={onBack} aria-label="戻る">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M15 5l-7 7 7 7" />
+            </svg>
+          </button>
+          <div className="learn-head">
+            <div className="tl">JOSEKI DOJO ・ 学習(なぞり)</div>
+            <h1>{course.title}</h1>
+          </div>
         </div>
         <div className="binfo" style={{ margin: "0 14px 8px" }}>
           <span className={`badge b-turn${position.color === Color.WHITE ? " gote" : ""}`}>
@@ -86,6 +110,14 @@ export function Learn({ course }: LearnProps) {
           <span className="badge b-prog">
             {Math.min(moveNumber, totalMoves)} / {totalMoves} 手
           </span>
+          <button
+            type="button"
+            className={`badge toggle-auto${autoAdvanceOpponent ? "" : " off"}`}
+            onClick={() => setAutoAdvanceOpponent(!autoAdvanceOpponent)}
+            aria-pressed={!autoAdvanceOpponent}
+          >
+            {autoAdvanceOpponent ? "相手の手:自動" : "相手の手も自分でなぞる"}
+          </button>
         </div>
         <Board
           position={position}
@@ -97,7 +129,8 @@ export function Learn({ course }: LearnProps) {
           onHandPieceClick={handleHandPieceClick}
           clickableHandColor="none"
         />
-        {!isGoal && <div className="guidepill">光っているマスへ動かして次の手をなぞる</div>}
+        {showWaitPill && <div className="waitpill">相手が指しています…</div>}
+        {!isGoal && !showWaitPill && <div className="guidepill">光っているマスへ動かして次の手をなぞる</div>}
         <CommentPanel
           isGoal={isGoal}
           moveNumber={isGoal ? undefined : moveNumber}

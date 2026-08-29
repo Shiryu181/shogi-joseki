@@ -41,6 +41,8 @@ function offScriptEndedDetail(outcome: OffScriptOutcome, myColor: Color): string
 export interface PracticeProps {
   /** 表示するコース。切り替え時は都度渡し直す。 */
   course: JosekiCourse;
+  /** 戻るボタン(§5.2 対抗形選択)の遷移先。 */
+  onBack: () => void;
 }
 
 /**
@@ -49,7 +51,7 @@ export interface PracticeProps {
  * コースの台本を少し間を置いて自動で指す。判定は「収録済みの定石手と一致するか」
  * だけで行い(エンジンなし)、不一致は評価的な断定をせず正解手を提示する。
  */
-export function Practice({ course }: PracticeProps) {
+export function Practice({ course, onBack }: PracticeProps) {
   const storeCourse = usePracticeStore((s) => s.course);
   const currentNode = usePracticeStore((s) => s.currentNode);
   const position = usePracticeStore((s) => s.position);
@@ -155,9 +157,16 @@ export function Practice({ course }: PracticeProps) {
   return (
     <div className="practice-wrap">
       <div className="practice-frame">
-        <div className="practice-head">
-          <div className="tl">JOSEKI DOJO ・ 練習(実戦)</div>
-          <h1>{course.title}</h1>
+        <div className="abar">
+          <button type="button" className="back" onClick={onBack} aria-label="戻る">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M15 5l-7 7 7 7" />
+            </svg>
+          </button>
+          <div className="practice-head">
+            <div className="tl">JOSEKI DOJO ・ 練習(実戦)</div>
+            <h1>{course.title}</h1>
+          </div>
         </div>
 
         <div className="binfo">

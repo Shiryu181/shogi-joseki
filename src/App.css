@@ -1,0 +1,102 @@
+/* アプリ全体のシェル。DESIGN.md §5.0: 上部タブは持たず、下部タブバー+戻るボタンで遷移する。 */
+
+.app-shell {
+  min-height: 100vh;
+  position: relative;
+}
+
+.app-content {
+  min-height: 100vh;
+}
+
+/* 開発用画面(?dev=1)への入口。通常のユーザーには devMode=false のため表示されない。 */
+.dev-fab {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 60;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+/* 開発メニュー画面 */
+.devmenu-wrap {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 26px 14px;
+}
+.devmenu-frame {
+  width: 480px;
+  max-width: 100%;
+  background: var(--app);
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  padding-bottom: 18px;
+}
+.devmenu-frame .abar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px 6px;
+}
+.devmenu-frame .abar .back {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--line-2);
+  background: var(--card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex: none;
+  color: var(--ink);
+  padding: 0;
+}
+.devmenu-frame .tl {
+  font-size: 12px;
+  color: var(--ink-soft);
+  letter-spacing: 0.06em;
+}
+.devmenu-frame h1 {
+  font-family: var(--disp);
+  font-size: 21px;
+  font-weight: 600;
+  margin: 6px 0 2px;
+  letter-spacing: 0.03em;
+}
+.devmenu-note {
+  margin: 6px 18px 16px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.devmenu-note code {
+  background: var(--card-2);
+  padding: 1px 6px;
+  border-radius: 6px;
+}
+.devmenu-item {
+  display: block;
+  width: calc(100% - 36px);
+  margin: 0 18px 10px;
+  text-align: left;
+  padding: 14px 16px;
+  border: 1px solid var(--line-2);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--ink);
+  font-size: 13.5px;
+  font-family: var(--body);
+  cursor: pointer;
+}
+.devmenu-item:hover {
+  background: var(--card-2);
+}

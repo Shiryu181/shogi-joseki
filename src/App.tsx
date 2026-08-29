@@ -1,66 +1,117 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Sandbox } from "./features/sandbox/Sandbox";
 import { Learn } from "./features/learn/Learn";
 import { Practice } from "./features/practice/Practice";
+import { Home } from "./features/home/Home";
+import { Matchup } from "./features/matchup/Matchup";
+import type { PracticeMode } from "./features/matchup/Matchup";
 import { loadIbishaVsShikenbishaSente, loadBranchNavDemo } from "./domain/josekiLoader";
+import type { Strategy } from "./domain/types";
+import { STRATEGIES } from "./data/strategies";
+import { BottomTabBar } from "./ui/BottomTabBar";
+import type { BottomTab } from "./ui/BottomTabBar";
+import "./App.css";
 
-type Screen = "learn" | "practice" | "sandbox" | "branchDemo";
+type Screen = "home" | "matchup" | "learn" | "practice" | "devMenu" | "sandbox" | "branchDemo";
 
-const TABS: { key: Screen; label: string }[] = [
-  { key: "learn", label: "学習(なぞり)" },
-  { key: "practice", label: "練習" },
-  { key: "sandbox", label: "Sandbox" },
-  { key: "branchDemo", label: "分岐デモ" },
-];
+const IBISHA_STRATEGY = STRATEGIES.find((s) => s.id === "ibisha")!;
 
 /**
- * Phase 0/1/2 検証用の最小切り替え。DESIGN.md §5 のホーム/タブ導線は未実装(後続フェーズ)。
- * 「分岐デモ」はユーザー向けの本番導線ではなく、分岐ナビ(本線/変化/逸れ手)の
- * 仕組みを開発・確認するためだけの画面(_branchNavDemo.json を表示する)。
+ * DESIGN.md §5 のユーザー導線。
+ * ホーム(探す)→ 対抗形選択 → 学習/練習、+ 下部タブバー。
+ * Sandbox・分岐デモは開発専用で、通常のユーザー導線からは外し、
+ * `?dev=1` のときだけ画面右上の小さなリンクから到達できるようにする(完全削除はしない)。
  */
 function App() {
-  const [screen, setScreen] = useState<Screen>("learn");
+  const [screen, setScreen] = useState<Screen>("home");
+  const [selectedStrategy, setSelectedStrategy] = useState<Strategy>(IBISHA_STRATEGY);
+
+  // ?dev=1 のときだけ開発用画面(Sandbox/分岐デモ)への入口を出す。通常のユーザーの目には触れない。
+  const [devMode] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return new URLSearchParams(window.location.search).get("dev") === "1";
+  });
+
+  function openStrategy(strategy: Strategy) {
+    setSelectedStrategy(strategy);
+    setScreen("matchup");
+  }
+
+  function startFromMatchup(mode: PracticeMode) {
+    setScreen(mode === "learn" ? "learn" : "practice");
+  }
+
+  function openIbishaLearnDirect() {
+    setSelectedStrategy(IBISHA_STRATEGY);
+    setScreen("learn");
+  }
+
+  // 画面遷移のたびにスクロール位置をリセットする(前の画面でスクロールした状態のまま
+  // 次の画面に来ると、タイトルの途中から表示される等おかしくなるため)。
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [screen]);
+
+  const showTabBar = screen === "home" || screen === "matchup" || screen === "learn" || screen === "practice";
+  const activeTab: BottomTab | null =
+    screen === "home" || screen === "matchup" ? "home" : screen === "learn" || screen === "practice" ? "learn" : null;
 
   return (
-    <div>
-      <div
-        style={{
-          position: "fixed",
-          top: 8,
-          left: "50%",
-          transform: "translateX(-50%)",
-          zIndex: 100,
-          display: "flex",
-          gap: 6,
-          background: "rgba(0,0,0,0.55)",
-          padding: 4,
-          borderRadius: 20,
-        }}
-      >
-        {TABS.map((t) => (
-          <button
-            key={t.key}
-            type="button"
-            onClick={() => setScreen(t.key)}
-            style={{
-              padding: "4px 12px",
-              borderRadius: 16,
-              border: "none",
-              cursor: "pointer",
-              background: screen === t.key ? "#fff" : "transparent",
-              color: screen === t.key ? "#241a0d" : "#fff",
-              fontSize: 12,
-              whiteSpace: "nowrap",
-            }}
-          >
-            {t.label}
-          </button>
-        ))}
+    <div className="app-shell">
+      {devMode && screen !== "devMenu" && screen !== "sandbox" && screen !== "branchDemo" && (
+        <button type="button" className="dev-fab" onClick={() => setScreen("devMenu")}>
+          開発 ▸
+        </button>
+      )}
+
+      <div className="app-content" style={showTabBar ? { paddingBottom: 78 } : undefined}>
+        {screen === "home" && <Home onOpenStrategy={openStrategy} />}
+
+        {screen === "matchup" && (
+          <Matchup strategy={selectedStrategy} onBack={() => setScreen("home")} onStart={startFromMatchup} />
+        )}
+
+        {screen === "learn" && (
+          <Learn course={loadIbishaVsShikenbishaSente()} onBack={() => setScreen("matchup")} />
+        )}
+
+        {screen === "practice" && (
+          <Practice course={loadIbishaVsShikenbishaSente()} onBack={() => setScreen("matchup")} />
+        )}
+
+        {screen === "devMenu" && (
+          <div className="devmenu-wrap">
+            <div className="devmenu-frame">
+              <div className="abar">
+                <button type="button" className="back" onClick={() => setScreen("home")} aria-label="戻る">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M15 5l-7 7 7 7" />
+                  </svg>
+                </button>
+                <div>
+                  <div className="tl">JOSEKI DOJO ・ 開発用</div>
+                  <h1>開発メニュー</h1>
+                </div>
+              </div>
+              <p className="devmenu-note">
+                ここから先は動作確認用の画面です。通常のユーザー導線には出てきません(<code>?dev=1</code> でのみ到達可能)。
+              </p>
+              <button type="button" className="devmenu-item" onClick={() => setScreen("sandbox")}>
+                Sandbox(自由対局・検証用)
+              </button>
+              <button type="button" className="devmenu-item" onClick={() => setScreen("branchDemo")}>
+                分岐デモ(本線/変化/逸れ手 切替の確認用)
+              </button>
+            </div>
+          </div>
+        )}
+
+        {screen === "sandbox" && <Sandbox onBack={() => setScreen("devMenu")} />}
+
+        {screen === "branchDemo" && <Learn course={loadBranchNavDemo()} onBack={() => setScreen("devMenu")} />}
       </div>
-      {screen === "learn" && <Learn course={loadIbishaVsShikenbishaSente()} />}
-      {screen === "practice" && <Practice course={loadIbishaVsShikenbishaSente()} />}
-      {screen === "sandbox" && <Sandbox />}
-      {screen === "branchDemo" && <Learn course={loadBranchNavDemo()} />}
+
+      {showTabBar && <BottomTabBar active={activeTab} onSelectHome={() => setScreen("home")} onSelectLearn={openIbishaLearnDirect} />}
     </div>
   );
 }

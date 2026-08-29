@@ -18,8 +18,29 @@
   padding-bottom: 18px;
 }
 
+.abar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px 6px;
+}
+.abar .back {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--line-2);
+  background: var(--card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex: none;
+  color: var(--ink);
+  padding: 0;
+}
+
 .practice-head {
-  padding: 18px 18px 6px;
+  padding: 0;
 }
 .practice-head .tl {
   font-size: 12px;

@@ -1,7 +1,13 @@
 import { create } from "zustand";
-import { Position, Square, parseUSIMove } from "../domain/shogi";
+import { Color, Position, Square, parseUSIMove } from "../domain/shogi";
 import type { JosekiCourse, JosekiMove, JosekiNode } from "../domain/types";
 import { loadIbishaVsShikenbishaSente } from "../domain/josekiLoader";
+
+/**
+ * 相手(course.mySide の逆の手番)の手を自動で進めるまでの間(ms)。
+ * practiceStore の OPPONENT_MOVE_DELAY_MS と同じ値(手が急に切り替わらないよう一呼吸置く)。
+ */
+const OPPONENT_MOVE_DELAY_MS = 650;
 
 function positionFromNode(node: JosekiNode): Position {
   const position = new Position();
@@ -9,9 +15,23 @@ function positionFromNode(node: JosekiNode): Position {
   return position;
 }
 
+/** コースの mySide に対応する tsshogi の Color。practiceStore の myColorOf と同じ定義。 */
+function myColorOf(course: JosekiCourse): Color {
+  return course.mySide === "sente" ? Color.BLACK : Color.WHITE;
+}
+
 /** 指定した分岐インデックスの手(無ければ null = 末端/理想陣形)。 */
 export function branchMove(node: JosekiNode, index: number): JosekiMove | null {
   return node.branches[index] ?? null;
+}
+
+/**
+ * 自動進行(相手の手)で採用する本線の手。ユーザーが BranchNav で別の分岐(変化/逸れ手)を
+ * プレビュー中でも、自動進行は必ず本線を指す(プレビューは selectedBranchIndex の見せ方
+ * だけを変えるものであり、実際にノードを進める手ではないため)。
+ */
+function mainBranchOf(node: JosekiNode): JosekiMove | null {
+  return node.branches.find((b) => b.kind === "main") ?? node.branches[0] ?? null;
 }
 
 interface LearnState {
@@ -23,6 +43,11 @@ interface LearnState {
   selectedBranchIndex: number;
   /** currentNode.sfen から再構成した局面(選択中の手はまだ適用されていない状態) */
   position: Position;
+  /**
+   * 相手(mySide の逆)の手を一呼吸置いて自動で進めるか。既定 true。
+   * トグル「相手の手も自分でなぞる」で false にすると、従来どおり全手を手動でなぞる挙動に戻る。
+   */
+  autoAdvanceOpponent: boolean;
   /** 光っている升(ガイドの移動先)をクリックしたときだけ進む。それ以外は無視する。 */
   attemptSquare: (square: Square) => void;
   /** 「なぞって次へ」ボタン。選択中の分岐の手をそのまま適用する。 */
@@ -33,6 +58,29 @@ interface LearnState {
   goToStart: () => void;
   /** 表示するコース自体を差し替える(本物のコース ⇔ 分岐ナビ動作確認用デモの切替に使う)。 */
   loadCourse: (course: JosekiCourse) => void;
+  /** トグルUIから呼ぶ。切替時に保留中の自動進行タイマーを必ず破棄してから組み直す。 */
+  setAutoAdvanceOpponent: (value: boolean) => void;
+  /**
+   * Learn画面がアンマウントされた(他画面へ移動した)ときに呼ぶ。保留中の自動進行タイマーを
+   * 破棄し、画面を見ていない間に裏で手が進み続けるのを防ぐ。
+   */
+  pauseAutoAdvance: () => void;
+  /** Learn画面がマウントされた(戻ってきた)ときに呼ぶ。現在の状態に応じて必要ならタイマーを再設定する。 */
+  resumeAutoAdvance: () => void;
+}
+
+/**
+ * 自動進行タイマー(モジュール単位で1つだけ)。practiceStore の opponentTimer と同じ設計。
+ * スケジュールし直す関数(scheduleAutoAdvance)は必ず最初にこれを破棄してから判定するため、
+ * 「古い局面に対して発火する」「重複して2つ走る」は起きない。
+ */
+let autoAdvanceTimer: ReturnType<typeof setTimeout> | null = null;
+
+function clearAutoAdvanceTimer() {
+  if (autoAdvanceTimer !== null) {
+    clearTimeout(autoAdvanceTimer);
+    autoAdvanceTimer = null;
+  }
 }
 
 function initial() {
@@ -43,71 +91,128 @@ function initial() {
     nodeHistory: [] as JosekiNode[],
     selectedBranchIndex: 0,
     position: positionFromNode(course.root),
+    autoAdvanceOpponent: true,
   };
 }
 
-export const useLearnStore = create<LearnState>((set, get) => ({
-  ...initial(),
+export const useLearnStore = create<LearnState>((set, get) => {
+  /**
+   * 現在ノードが相手番(position.color !== myColor)かつ自動進行ONなら、一呼吸置いて
+   * 本線の手を適用するタイマーを(再)設定する。呼び出しの最初に必ず既存のタイマーを
+   * 破棄するため、goBack/goToStart/loadCourse/setAutoAdvanceOpponent/画面遷移のどこから
+   * 呼んでも「古い状態に対して発火する」ことはない。
+   */
+  function scheduleAutoAdvance() {
+    clearAutoAdvanceTimer();
+    const { autoAdvanceOpponent, course, currentNode, position } = get();
+    if (!autoAdvanceOpponent) return;
+    if (position.color === myColorOf(course)) return; // 自分の手番: 自動では進めない
+    const move = mainBranchOf(currentNode);
+    if (!move || !move.child) return; // 理想陣形、またはこの先の本線データが無い
+    autoAdvanceTimer = setTimeout(() => {
+      autoAdvanceTimer = null;
+      goToChild(move);
+    }, OPPONENT_MOVE_DELAY_MS);
+  }
 
-  advance() {
-    const { currentNode, nodeHistory, selectedBranchIndex } = get();
-    const move = branchMove(currentNode, selectedBranchIndex);
-    if (!move || !move.child) return; // 末端(理想陣形、またはダミー分岐の行き止まり)に到達済み
+  /** ノード遷移の共通処理。手動(advance)・自動(scheduleAutoAdvance)の両方から使う。 */
+  function goToChild(move: JosekiMove) {
+    if (!move.child) return;
+    const { currentNode, nodeHistory } = get();
     set({
       currentNode: move.child,
       nodeHistory: [...nodeHistory, currentNode],
       position: positionFromNode(move.child),
       selectedBranchIndex: 0, // 新しいノードでは本線から見せる
     });
-  },
+    scheduleAutoAdvance();
+  }
 
-  attemptSquare(square) {
-    const { currentNode, selectedBranchIndex } = get();
-    const move = branchMove(currentNode, selectedBranchIndex);
-    if (!move) return;
-    const parsed = parseUSIMove(move.usi);
-    if (!parsed) return;
-    if (parsed.to.usi === square.usi) {
-      get().advance();
-    }
-    // ガイドの移動先以外へのクリックは無視する(仕様どおり)
-  },
+  return {
+    ...initial(),
 
-  chooseBranch(index) {
-    const { currentNode } = get();
-    if (index < 0 || index >= currentNode.branches.length) return;
-    set({ selectedBranchIndex: index });
-  },
+    advance() {
+      const { currentNode, selectedBranchIndex } = get();
+      const move = branchMove(currentNode, selectedBranchIndex);
+      if (!move || !move.child) return; // 末端(理想陣形、またはダミー分岐の行き止まり)に到達済み
+      goToChild(move);
+    },
 
-  goBack() {
-    const { nodeHistory } = get();
-    if (nodeHistory.length === 0) return;
-    const prev = nodeHistory[nodeHistory.length - 1];
-    set({
-      currentNode: prev,
-      nodeHistory: nodeHistory.slice(0, -1),
-      position: positionFromNode(prev),
-      selectedBranchIndex: 0,
-    });
-  },
+    attemptSquare(square) {
+      const { currentNode, selectedBranchIndex } = get();
+      const move = branchMove(currentNode, selectedBranchIndex);
+      if (!move) return;
+      const parsed = parseUSIMove(move.usi);
+      if (!parsed) return;
+      if (parsed.to.usi === square.usi) {
+        get().advance();
+      }
+      // ガイドの移動先以外へのクリックは無視する(仕様どおり)
+    },
 
-  goToStart() {
-    const { course } = get();
-    set({
-      currentNode: course.root,
-      nodeHistory: [],
-      position: positionFromNode(course.root),
-      selectedBranchIndex: 0,
-    });
-  },
+    chooseBranch(index) {
+      const { currentNode } = get();
+      if (index < 0 || index >= currentNode.branches.length) return;
+      set({ selectedBranchIndex: index });
+    },
 
-  loadCourse(course) {
-    set({
-      course,
-      currentNode: course.root,
-      nodeHistory: [],
-      selectedBranchIndex: 0,
-      position: positionFromNode(course.root),
-    });
-  },
-}));
+    goBack() {
+      clearAutoAdvanceTimer();
+      const { nodeHistory, course } = get();
+      if (nodeHistory.length === 0) return;
+      const history = [...nodeHistory];
+      let prev = history.pop()!;
+      // 相手の自動手ノードは「戻る」の停止点にしない: そこへ戻すとタイマーがすぐ再発火して
+      // また先へ進んでしまい、「1手戻る」が実質効かなくなるため。自分の直前の手番ノードまで
+      // 遡ることで、体感を「自分の1手を取り消す」に揃える。
+      while (history.length > 0 && positionFromNode(prev).color !== myColorOf(course)) {
+        prev = history.pop()!;
+      }
+      set({
+        currentNode: prev,
+        nodeHistory: history,
+        position: positionFromNode(prev),
+        selectedBranchIndex: 0,
+      });
+      scheduleAutoAdvance();
+    },
+
+    goToStart() {
+      clearAutoAdvanceTimer();
+      const { course } = get();
+      set({
+        currentNode: course.root,
+        nodeHistory: [],
+        position: positionFromNode(course.root),
+        selectedBranchIndex: 0,
+      });
+      scheduleAutoAdvance();
+    },
+
+    loadCourse(course) {
+      clearAutoAdvanceTimer();
+      set({
+        course,
+        currentNode: course.root,
+        nodeHistory: [],
+        selectedBranchIndex: 0,
+        position: positionFromNode(course.root),
+      });
+      scheduleAutoAdvance();
+    },
+
+    setAutoAdvanceOpponent(value) {
+      clearAutoAdvanceTimer();
+      set({ autoAdvanceOpponent: value });
+      scheduleAutoAdvance();
+    },
+
+    pauseAutoAdvance() {
+      clearAutoAdvanceTimer();
+    },
+
+    resumeAutoAdvance() {
+      scheduleAutoAdvance();
+    },
+  };
+});

@@ -4,10 +4,16 @@ import { useSandboxStore } from "../../store/sandboxStore";
 import { Board } from "../../ui/Board";
 import "./Sandbox.css";
 
+export interface SandboxProps {
+  /** 戻るボタン(開発メニュー)の遷移先。 */
+  onBack: () => void;
+}
+
 /**
  * Phase 0 検証用画面: 初期局面から合法手だけで自由に駒を動かせる。
+ * 開発用画面(§本タスクの ?dev=1 導線)専用で、通常のユーザー導線には出さない。
  */
-export function Sandbox() {
+export function Sandbox({ onBack }: SandboxProps) {
   const position = useSandboxStore((s) => s.position);
   const selected = useSandboxStore((s) => s.selected);
   const moveDests = useSandboxStore((s) => s.moveDests);
@@ -42,9 +48,16 @@ export function Sandbox() {
   return (
     <div className="sandbox-wrap">
       <div className="sandbox-frame">
-        <div className="sandbox-head">
-          <div className="tl">JOSEKI DOJO ・ SANDBOX</div>
-          <h1>自由対局(検証用)</h1>
+        <div className="abar">
+          <button type="button" className="back" onClick={onBack} aria-label="戻る">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M15 5l-7 7 7 7" />
+            </svg>
+          </button>
+          <div className="sandbox-head">
+            <div className="tl">JOSEKI DOJO ・ SANDBOX(開発用)</div>
+            <h1>自由対局(検証用)</h1>
+          </div>
         </div>
         <div className="binfo">
           <span className={`badge b-turn${turn === Color.WHITE ? " gote" : ""}`}>
