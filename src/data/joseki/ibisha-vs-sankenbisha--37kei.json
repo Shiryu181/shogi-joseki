@@ -4,7 +4,7 @@
   "myStrategy": "ibisha",
   "opponentStrategy": "sankenbisha",
   "mySide": "sente",
-  "source": "手順は将棋大図書館(shogilounge.com)「三間飛車対▲３七桂早仕掛けの定跡」の基本図までの指し手に準拠(2026-08)",
+  "source": "手順は将棋大図書館(shogilounge.com)「三間飛車対▲３七桂早仕掛けの定跡」の基本図までの指し手に準拠。序盤の駒組みを三間飛車のひとくちメモ等で別途確認(2026-08)",
   "goalFormation": "舟囲いに4六歩を突き、桂を3七へ跳ねた形。次に▲4五歩から角を交換し、飛車先の突破を狙う。",
   "goalSfen": "lnsg3nl/1k2gsr2/1ppp2bpp/p3ppp2/7P1/P1P1PPP2/1P1P2N1P/1BK1GS1R1/LNSG4L w - 1",
   "root": {

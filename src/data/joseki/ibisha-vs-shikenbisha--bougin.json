@@ -4,7 +4,7 @@
   "myStrategy": "ibisha",
   "opponentStrategy": "shikenbisha",
   "mySide": "sente",
-  "source": "手順は将棋大図書館(shogilounge.com)「四間飛車対棒銀の定跡」に準拠(2026-08)",
+  "source": "手順は将棋大図書館(shogilounge.com)「四間飛車対棒銀の定跡」に準拠。銀の経路(3七→2六→3五)と6八金型の舟囲いを、Wikipedia「居飛車舟囲い急戦」およびゼロから始める将棋研究所で別途確認(2026-08)",
   "goalFormation": "舟囲い(玉7八・金5八/6八)を固め、右銀を3七へ。ここから銀を2六→3五と繰り出して2筋を攻める棒銀の基本形。",
   "goalSfen": "ln1g3nl/1ks1gr3/1ppp1sbpp/p3ppp2/7P1/P1P1P1P2/1P1PSPS1P/1BKGG2R1/LN5NL w - 1",
   "root": {

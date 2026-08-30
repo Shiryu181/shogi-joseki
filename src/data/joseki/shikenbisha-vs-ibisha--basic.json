@@ -4,7 +4,7 @@
   "myStrategy": "shikenbisha",
   "opponentStrategy": "ibisha",
   "mySide": "gote",
-  "source": "進行は将棋大図書館(shogilounge.com)「四間飛車対棒銀の定跡」と同じ対局を、四間飛車側から見たもの(2026-08)",
+  "source": "進行は将棋大図書館(shogilounge.com)「四間飛車対棒銀の定跡」と同じ対局を、四間飛車側から見たもの。元の棋譜はWikipedia等でクロスチェック済み(2026-08)",
   "goalFormation": "飛車を4二へ振り、玉を8二の美濃囲いに収め、銀4三で守りを固めた四間飛車の基本形。相手は棒銀を狙っている。",
   "goalSfen": "ln1g3nl/1ks1gr3/1ppppsbpp/p4pp2/7P1/P1P1P1P2/1P1PSP2P/1BK1GS1R1/LN1G3NL b - 1",
   "root": {

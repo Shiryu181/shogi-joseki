@@ -4,7 +4,7 @@
   "myStrategy": "ibisha",
   "opponentStrategy": "sankenbisha",
   "mySide": "sente",
-  "source": "手順は将棋大図書館(shogilounge.com)「三間飛車対棒銀の定跡」の基本図までの指し手に準拠(2026-08)",
+  "source": "手順は将棋大図書館(shogilounge.com)「三間飛車対棒銀の定跡」の基本図までの指し手に準拠。序盤の駒組み(△3二飛・△3三角・△4二銀と居飛車の4八銀・2五歩)を三間飛車のひとくちメモ等で別途確認(2026-08)",
   "goalFormation": "舟囲い(玉7八・金5八)に銀5七、4六歩まで。三間飛車に対する居飛車急戦のもっとも基本的な形。",
   "goalSfen": "ln1g3nl/1ks1gsr2/1pp3bpp/p2pppp2/7P1/P1P1PPP2/1P1PS3P/1BK1GS1R1/LN1G3NL b - 1",
   "root": {

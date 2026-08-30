@@ -4,7 +4,7 @@
   "myStrategy": "ibisha",
   "opponentStrategy": "shikenbisha",
   "mySide": "sente",
-  "source": "手順は日々頓死(hibitonshi.com)「【四間飛車対策】居飛車穴熊戦法の基本定跡と指し方」に準拠(2026-08)",
+  "source": "手順は日々頓死(hibitonshi.com)「【四間飛車対策】居飛車穴熊戦法の基本定跡と指し方」に準拠。組み手順(7七角→9八香→8八玉→9九玉→8八銀、および4八銀→5七銀)をWikipedia「居飛車穴熊」で別途確認(2026-08)",
   "goalFormation": "玉を9九まで運び、8八銀で蓋をした居飛車穴熊の基礎形。急戦とは逆に、堅く囲ってからゆっくり戦う持久戦の構え。",
   "goalSfen": "l1kg3nl/2s1gr3/ppn1psbpp/2pp2p2/5p1P1/2PPP4/PPB1SPP1P/LS2G2R1/KN1G3NL w - 1",
   "root": {

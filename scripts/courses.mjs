@@ -19,7 +19,7 @@ const COURSES = [
     myStrategy: "ibisha",
     opponentStrategy: "shikenbisha",
     mySide: "sente",
-    source: "手順は将棋大図書館(shogilounge.com)「四間飛車対棒銀の定跡」に準拠(2026-08)",
+    source: "手順は将棋大図書館(shogilounge.com)「四間飛車対棒銀の定跡」に準拠。銀の経路(3七→2六→3五)と6八金型の舟囲いを、Wikipedia「居飛車舟囲い急戦」およびゼロから始める将棋研究所で別途確認(2026-08)",
     goalFormation: "舟囲い(玉7八・金5八/6八)を固め、右銀を3七へ。ここから銀を2六→3五と繰り出して2筋を攻める棒銀の基本形。",
     rootComment: "平手の初形です。ここから居飛車の棒銀を目指します。",
     moves: [
@@ -60,7 +60,7 @@ const COURSES = [
     myStrategy: "ibisha",
     opponentStrategy: "shikenbisha",
     mySide: "sente",
-    source: "手順は将棋大図書館(shogilounge.com)「四間飛車対４五歩早仕掛けの定跡」に準拠(2026-08)",
+    source: "手順は将棋大図書館(shogilounge.com)「四間飛車対４五歩早仕掛けの定跡」に準拠。到達する陣形(舟囲い+5七銀+2五歩 vs 美濃囲い+4二飛)を日々頓死(hibitonshi.com)で別途確認(2026-08)",
     goalFormation: "舟囲い(玉7八・金5八)に銀5七。▲4六歩と突いて、次の▲4五歩から4筋を仕掛ける構え。",
     rootComment: "平手の初形です。ここから４五歩早仕掛けを目指します。",
     moves: [
@@ -99,7 +99,7 @@ const COURSES = [
     myStrategy: "ibisha",
     opponentStrategy: "shikenbisha",
     mySide: "sente",
-    source: "手順は日々頓死(hibitonshi.com)「【四間飛車対策】居飛車穴熊戦法の基本定跡と指し方」に準拠(2026-08)",
+    source: "手順は日々頓死(hibitonshi.com)「【四間飛車対策】居飛車穴熊戦法の基本定跡と指し方」に準拠。組み手順(7七角→9八香→8八玉→9九玉→8八銀、および4八銀→5七銀)をWikipedia「居飛車穴熊」で別途確認(2026-08)",
     goalFormation: "玉を9九まで運び、8八銀で蓋をした居飛車穴熊の基礎形。急戦とは逆に、堅く囲ってからゆっくり戦う持久戦の構え。",
     rootComment: "平手の初形です。ここから居飛車穴熊(持久戦)を目指します。",
     moves: [
@@ -145,7 +145,7 @@ const COURSES = [
     myStrategy: "shikenbisha",
     opponentStrategy: "ibisha",
     mySide: "gote",
-    source: "進行は将棋大図書館(shogilounge.com)「四間飛車対棒銀の定跡」と同じ対局を、四間飛車側から見たもの(2026-08)",
+    source: "進行は将棋大図書館(shogilounge.com)「四間飛車対棒銀の定跡」と同じ対局を、四間飛車側から見たもの。元の棋譜はWikipedia等でクロスチェック済み(2026-08)",
     goalFormation: "飛車を4二へ振り、玉を8二の美濃囲いに収め、銀4三で守りを固めた四間飛車の基本形。相手は棒銀を狙っている。",
     rootComment: "平手の初形です。ここから四間飛車を目指します。相手(先手)は居飛車です。",
     moves: [
@@ -187,7 +187,7 @@ const COURSES = [
     myStrategy: "shikenbisha",
     opponentStrategy: "ibisha",
     mySide: "gote",
-    source: "進行は日々頓死(hibitonshi.com)「【四間飛車対策】居飛車穴熊戦法の基本定跡と指し方」と同じ対局を、四間飛車側から見たもの(2026-08)",
+    source: "進行は日々頓死(hibitonshi.com)「【四間飛車対策】居飛車穴熊戦法の基本定跡と指し方」と同じ対局を、四間飛車側から見たもの。元の棋譜はWikipedia「居飛車穴熊」でクロスチェック済み(2026-08)",
     goalFormation: "美濃囲いを組みつつ、6四歩・7四歩・7三桂と攻めの形を作り、4五歩と位を取ったところ。堅い穴熊に対して、囲いが完成しきる前に動いていく構え。",
     rootComment: "平手の初形です。相手が居飛車穴熊に組んできた場合の指し方を見ていきます。",
     moves: [
@@ -234,7 +234,7 @@ const COURSES = [
     myStrategy: "ibisha",
     opponentStrategy: "sankenbisha",
     mySide: "sente",
-    source: "手順は将棋大図書館(shogilounge.com)「三間飛車対棒銀の定跡」の基本図までの指し手に準拠(2026-08)",
+    source: "手順は将棋大図書館(shogilounge.com)「三間飛車対棒銀の定跡」の基本図までの指し手に準拠。序盤の駒組み(△3二飛・△3三角・△4二銀と居飛車の4八銀・2五歩)を三間飛車のひとくちメモ等で別途確認(2026-08)",
     goalFormation: "舟囲い(玉7八・金5八)に銀5七、4六歩まで。三間飛車に対する居飛車急戦のもっとも基本的な形。",
     rootComment: "平手の初形です。相手が三間飛車に振ってきた場合の、居飛車の急戦を見ていきます。",
     moves: [
@@ -275,7 +275,7 @@ const COURSES = [
     myStrategy: "ibisha",
     opponentStrategy: "sankenbisha",
     mySide: "sente",
-    source: "手順は将棋大図書館(shogilounge.com)「三間飛車対▲３七桂早仕掛けの定跡」の基本図までの指し手に準拠(2026-08)",
+    source: "手順は将棋大図書館(shogilounge.com)「三間飛車対▲３七桂早仕掛けの定跡」の基本図までの指し手に準拠。序盤の駒組みを三間飛車のひとくちメモ等で別途確認(2026-08)",
     goalFormation: "舟囲いに4六歩を突き、桂を3七へ跳ねた形。次に▲4五歩から角を交換し、飛車先の突破を狙う。",
     rootComment: "平手の初形です。三間飛車に対して、桂を活用する急戦を見ていきます。",
     moves: [
@@ -312,7 +312,7 @@ const COURSES = [
     myStrategy: "sankenbisha",
     opponentStrategy: "ibisha",
     mySide: "gote",
-    source: "進行は将棋大図書館(shogilounge.com)「三間飛車対棒銀の定跡」の基本図までの指し手と同じ対局を、三間飛車側から見たもの(2026-08)",
+    source: "進行は将棋大図書館(shogilounge.com)「三間飛車対棒銀の定跡」の基本図までの指し手と同じ対局を、三間飛車側から見たもの。元の棋譜はクロスチェック済み(2026-08)",
     goalFormation: "飛車を3二へ振り、玉を8二の美濃囲いに収め、6四歩まで。三間飛車の基本形。",
     rootComment: "平手の初形です。ここから三間飛車を目指します。相手(先手)は居飛車です。",
     moves: [
