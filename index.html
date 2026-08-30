@@ -1,9 +1,25 @@
 <!doctype html>
-<html lang="en">
+<html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>定石道場 - Sandbox</title>
+    <!-- viewport-fit=cover: iPhone のホーム画面から起動したときに端まで描画する -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>定石道場</title>
+    <meta name="description" content="将棋の定石を、なぞって覚え、自分で指して確かめる学習アプリ。" />
+
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/icons/icon-192.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+
+    <!-- ホーム画面から起動したときにブラウザUIを出さない(iOS) -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="定石道場" />
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <!-- ライト/ダークで端末のUI色を合わせる(tokens.css の --app と同じ値) -->
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f1e4" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1b160f" />
   </head>
   <body>
     <div id="root"></div>
