@@ -56,9 +56,10 @@ export const STRATEGIES: Strategy[] = [
     category: "nakabisha",
     popularity: 4.6,
     level: "入門〜",
-    lineCount: 0,
-    ready: false,
-    description: "飛車を5筋に構える振り飛車の一種。中央から攻めを組み立てます。データは準備中です。",
+    lineCount: 1,
+    ready: true,
+    description:
+      "飛車を5筋に構える振り飛車の一種。中央から攻めを組み立てる。対居飛車穴熊の指し方を収録。",
   },
   {
     id: "aigakari",
@@ -79,9 +80,10 @@ export const STRATEGIES: Strategy[] = [
     category: "ibisha",
     popularity: 4.4,
     level: "中級〜",
-    lineCount: 0,
-    ready: false,
-    description: "金銀を堅く組み合わせた矢倉囲いを作ってから戦う、相居飛車の伝統的な戦型。データは準備中です。",
+    lineCount: 1,
+    ready: true,
+    description:
+      "金銀を堅く組み合わせた矢倉囲いを作ってから戦う、相居飛車の伝統的な戦型。基本の駒組み(24手組)を収録。",
   },
   {
     id: "sankenbisha",

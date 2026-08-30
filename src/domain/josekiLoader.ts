@@ -16,6 +16,8 @@ import sankenbishaVsIbishaBasic from "../data/joseki/sankenbisha-vs-ibisha--basi
 import kakugawariBougin from "../data/joseki/kakugawari--bougin.json";
 import kakugawariHayakurigin from "../data/joseki/kakugawari--hayakurigin.json";
 import aigakariBougin from "../data/joseki/aigakari--bougin.json";
+import yagura24te from "../data/joseki/yagura--24te.json";
+import nakabishaVsAnaguma from "../data/joseki/nakabisha-vs-anaguma--basic.json";
 import branchNavDemo from "../data/joseki/_branchNavDemo.json";
 
 function isJosekiMove(value: unknown): value is JosekiMove {
@@ -209,6 +211,26 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "急戦",
     summary: "お互いに飛車先の歩を交換したあと、銀を2七へ繰り出す。",
     load: () => assertJosekiCourse(aigakariBougin, "aigakari--bougin.json"),
+  },
+  {
+    id: "yagura--24te",
+    strategyId: "yagura",
+    opponentLabel: "矢倉",
+    sideLabel: "先手",
+    label: "24手組",
+    kind: "持久戦",
+    summary: "金銀を組み上げる矢倉の基本形。相居飛車の代表的な駒組み。",
+    load: () => assertJosekiCourse(yagura24te, "yagura--24te.json"),
+  },
+  {
+    id: "nakabisha-vs-anaguma--basic",
+    strategyId: "nakabisha",
+    opponentLabel: "居飛車穴熊",
+    sideLabel: "後手",
+    label: "対居飛車穴熊",
+    kind: "持久戦",
+    summary: "飛車を5二へ振り、美濃囲いに収めて4五歩と位を取るまで。",
+    load: () => assertJosekiCourse(nakabishaVsAnaguma, "nakabisha-vs-anaguma--basic.json"),
   },
 ];
 

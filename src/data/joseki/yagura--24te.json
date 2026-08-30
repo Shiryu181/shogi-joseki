@@ -1,0 +1,283 @@
+{
+  "id": "yagura--24te",
+  "title": "矢倉 24手組(先手)",
+  "myStrategy": "yagura",
+  "opponentStrategy": "yagura",
+  "mySide": "sente",
+  "source": "手順は「新24手組」として広く知られる定型の駒組み。2手目△8四歩の世界(ameblo.jp/shogi-84fu)と、こつこつと将棋上達をめざす(ameblo.jp/kazeninaritai81)の2つの記事で内容を突き合わせて確認(2026-08)。両者は手順前後(転換)があるが到達する形は同じ",
+  "goalFormation": "金銀を7八金・6七金・7七銀と組み上げ、角を7九へ引いた矢倉の基本形。玉はこのあと7八→8八と入って矢倉囲いが完成する。",
+  "goalSfen": "ln3kbnl/1r1sg1g2/p2p2spp/1pp1ppp2/9/2PPP1P2/PPSG1P1PP/2G2S1R1/LNBK3NL b - 1",
+  "root": {
+    "id": "n0",
+    "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
+    "comment": "平手の初形です。お互いが居飛車で矢倉に組み合う、伝統的な戦型を見ていきます。",
+    "branches": [
+      {
+        "usi": "7g7f",
+        "kind": "main",
+        "note": "角道を開けます。",
+        "child": {
+          "id": "n1",
+          "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1",
+          "branches": [
+            {
+              "usi": "8c8d",
+              "kind": "main",
+              "note": "相手が飛車先の歩を突きました。お互い居飛車になります。",
+              "child": {
+                "id": "n2",
+                "sfen": "lnsgkgsnl/1r5b1/p1ppppppp/1p7/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                "branches": [
+                  {
+                    "usi": "7i6h",
+                    "kind": "main",
+                    "note": "左銀を上がります。次に8五歩と来られたとき、7七に銀を上げて受けるための準備です。",
+                    "child": {
+                      "id": "n3",
+                      "sfen": "lnsgkgsnl/1r5b1/p1ppppppp/1p7/9/2P6/PP1PPPPPP/1B1S3R1/LN1GKGSNL w - 1",
+                      "branches": [
+                        {
+                          "usi": "3c3d",
+                          "kind": "main",
+                          "note": "相手も角道を開けます。",
+                          "child": {
+                            "id": "n4",
+                            "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/1p4p2/9/2P6/PP1PPPPPP/1B1S3R1/LN1GKGSNL b - 1",
+                            "branches": [
+                              {
+                                "usi": "6g6f",
+                                "kind": "main",
+                                "note": "角道を止めます。矢倉は角を交換せず、じっくり組み合う戦型です。",
+                                "child": {
+                                  "id": "n5",
+                                  "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/1p4p2/9/2PP5/PP2PPPPP/1B1S3R1/LN1GKGSNL w - 1",
+                                  "branches": [
+                                    {
+                                      "usi": "7a6b",
+                                      "kind": "main",
+                                      "note": null,
+                                      "child": {
+                                        "id": "n6",
+                                        "sfen": "ln1gkgsnl/1r1s3b1/p1pppp1pp/1p4p2/9/2PP5/PP2PPPPP/1B1S3R1/LN1GKGSNL b - 1",
+                                        "branches": [
+                                          {
+                                            "usi": "5g5f",
+                                            "kind": "main",
+                                            "note": "中央を伸ばします。",
+                                            "child": {
+                                              "id": "n7",
+                                              "sfen": "ln1gkgsnl/1r1s3b1/p1pppp1pp/1p4p2/9/2PPP4/PP3PPPP/1B1S3R1/LN1GKGSNL w - 1",
+                                              "branches": [
+                                                {
+                                                  "usi": "5c5d",
+                                                  "kind": "main",
+                                                  "note": null,
+                                                  "child": {
+                                                    "id": "n8",
+                                                    "sfen": "ln1gkgsnl/1r1s3b1/p1pp1p1pp/1p2p1p2/9/2PPP4/PP3PPPP/1B1S3R1/LN1GKGSNL b - 1",
+                                                    "branches": [
+                                                      {
+                                                        "usi": "3i4h",
+                                                        "kind": "main",
+                                                        "note": "右銀を上がります。",
+                                                        "child": {
+                                                          "id": "n9",
+                                                          "sfen": "ln1gkgsnl/1r1s3b1/p1pp1p1pp/1p2p1p2/9/2PPP4/PP3PPPP/1B1S1S1R1/LN1GKG1NL w - 1",
+                                                          "branches": [
+                                                            {
+                                                              "usi": "3a4b",
+                                                              "kind": "main",
+                                                              "note": null,
+                                                              "child": {
+                                                                "id": "n10",
+                                                                "sfen": "ln1gkg1nl/1r1s1s1b1/p1pp1p1pp/1p2p1p2/9/2PPP4/PP3PPPP/1B1S1S1R1/LN1GKG1NL b - 1",
+                                                                "branches": [
+                                                                  {
+                                                                    "usi": "4i5h",
+                                                                    "kind": "main",
+                                                                    "note": "金を5八へ。矢倉の骨格になる金銀の配置を作っていきます。",
+                                                                    "child": {
+                                                                      "id": "n11",
+                                                                      "sfen": "ln1gkg1nl/1r1s1s1b1/p1pp1p1pp/1p2p1p2/9/2PPP4/PP3PPPP/1B1SGS1R1/LN1GK2NL w - 1",
+                                                                      "comment": null,
+                                                                      "branches": [
+                                                                        {
+                                                                          "usi": "4a3b",
+                                                                          "kind": "main",
+                                                                          "note": null,
+                                                                          "child": {
+                                                                            "id": "n12",
+                                                                            "sfen": "ln1gk2nl/1r1s1sgb1/p1pp1p1pp/1p2p1p2/9/2PPP4/PP3PPPP/1B1SGS1R1/LN1GK2NL b - 1",
+                                                                            "branches": [
+                                                                              {
+                                                                                "usi": "6i7h",
+                                                                                "kind": "main",
+                                                                                "note": "もう一枚の金も上げます。",
+                                                                                "child": {
+                                                                                  "id": "n13",
+                                                                                  "sfen": "ln1gk2nl/1r1s1sgb1/p1pp1p1pp/1p2p1p2/9/2PPP4/PP3PPPP/1BGSGS1R1/LN2K2NL w - 1",
+                                                                                  "branches": [
+                                                                                    {
+                                                                                      "usi": "5a4a",
+                                                                                      "kind": "main",
+                                                                                      "note": null,
+                                                                                      "child": {
+                                                                                        "id": "n14",
+                                                                                        "sfen": "ln1g1k1nl/1r1s1sgb1/p1pp1p1pp/1p2p1p2/9/2PPP4/PP3PPPP/1BGSGS1R1/LN2K2NL b - 1",
+                                                                                        "branches": [
+                                                                                          {
+                                                                                            "usi": "5i6i",
+                                                                                            "kind": "main",
+                                                                                            "note": "玉を囲いへ向かわせます。矢倉囲いは最後に8八へ入ります。",
+                                                                                            "child": {
+                                                                                              "id": "n15",
+                                                                                              "sfen": "ln1g1k1nl/1r1s1sgb1/p1pp1p1pp/1p2p1p2/9/2PPP4/PP3PPPP/1BGSGS1R1/LN1K3NL w - 1",
+                                                                                              "branches": [
+                                                                                                {
+                                                                                                  "usi": "7c7d",
+                                                                                                  "kind": "main",
+                                                                                                  "note": null,
+                                                                                                  "child": {
+                                                                                                    "id": "n16",
+                                                                                                    "sfen": "ln1g1k1nl/1r1s1sgb1/p2p1p1pp/1pp1p1p2/9/2PPP4/PP3PPPP/1BGSGS1R1/LN1K3NL b - 1",
+                                                                                                    "branches": [
+                                                                                                      {
+                                                                                                        "usi": "5h6g",
+                                                                                                        "kind": "main",
+                                                                                                        "note": "金を6七へ。7八金と合わせて、矢倉囲いの金2枚が揃います。",
+                                                                                                        "child": {
+                                                                                                          "id": "n17",
+                                                                                                          "sfen": "ln1g1k1nl/1r1s1sgb1/p2p1p1pp/1pp1p1p2/9/2PPP4/PP1G1PPPP/1BGS1S1R1/LN1K3NL w - 1",
+                                                                                                          "comment": null,
+                                                                                                          "branches": [
+                                                                                                            {
+                                                                                                              "usi": "6a5b",
+                                                                                                              "kind": "main",
+                                                                                                              "note": null,
+                                                                                                              "child": {
+                                                                                                                "id": "n18",
+                                                                                                                "sfen": "ln3k1nl/1r1sgsgb1/p2p1p1pp/1pp1p1p2/9/2PPP4/PP1G1PPPP/1BGS1S1R1/LN1K3NL b - 1",
+                                                                                                                "branches": [
+                                                                                                                  {
+                                                                                                                    "usi": "6h7g",
+                                                                                                                    "kind": "main",
+                                                                                                                    "note": "銀を7七へ。金2枚と銀1枚で玉を守るのが矢倉囲いの形です。",
+                                                                                                                    "child": {
+                                                                                                                      "id": "n19",
+                                                                                                                      "sfen": "ln3k1nl/1r1sgsgb1/p2p1p1pp/1pp1p1p2/9/2PPP4/PPSG1PPPP/1BG2S1R1/LN1K3NL w - 1",
+                                                                                                                      "branches": [
+                                                                                                                        {
+                                                                                                                          "usi": "4b3c",
+                                                                                                                          "kind": "main",
+                                                                                                                          "note": null,
+                                                                                                                          "child": {
+                                                                                                                            "id": "n20",
+                                                                                                                            "sfen": "ln3k1nl/1r1sg1gb1/p2p1pspp/1pp1p1p2/9/2PPP4/PPSG1PPPP/1BG2S1R1/LN1K3NL b - 1",
+                                                                                                                            "branches": [
+                                                                                                                              {
+                                                                                                                                "usi": "8h7i",
+                                                                                                                                "kind": "main",
+                                                                                                                                "note": "角を引いて、玉が8八へ入る道を空けます。",
+                                                                                                                                "child": {
+                                                                                                                                  "id": "n21",
+                                                                                                                                  "sfen": "ln3k1nl/1r1sg1gb1/p2p1pspp/1pp1p1p2/9/2PPP4/PPSG1PPPP/2G2S1R1/LNBK3NL w - 1",
+                                                                                                                                  "branches": [
+                                                                                                                                    {
+                                                                                                                                      "usi": "2b3a",
+                                                                                                                                      "kind": "main",
+                                                                                                                                      "note": "相手も同じように角を引きます。",
+                                                                                                                                      "child": {
+                                                                                                                                        "id": "n22",
+                                                                                                                                        "sfen": "ln3kbnl/1r1sg1g2/p2p1pspp/1pp1p1p2/9/2PPP4/PPSG1PPPP/2G2S1R1/LNBK3NL b - 1",
+                                                                                                                                        "branches": [
+                                                                                                                                          {
+                                                                                                                                            "usi": "3g3f",
+                                                                                                                                            "kind": "main",
+                                                                                                                                            "note": "攻めの準備として3筋の歩を伸ばします。",
+                                                                                                                                            "child": {
+                                                                                                                                              "id": "n23",
+                                                                                                                                              "sfen": "ln3kbnl/1r1sg1g2/p2p1pspp/1pp1p1p2/9/2PPP1P2/PPSG1P1PP/2G2S1R1/LNBK3NL w - 1",
+                                                                                                                                              "branches": [
+                                                                                                                                                {
+                                                                                                                                                  "usi": "4c4d",
+                                                                                                                                                  "kind": "main",
+                                                                                                                                                  "note": "相手も同様に備えて、24手組の完成です。",
+                                                                                                                                                  "child": {
+                                                                                                                                                    "id": "n24",
+                                                                                                                                                    "sfen": "ln3kbnl/1r1sg1g2/p2p2spp/1pp1ppp2/9/2PPP1P2/PPSG1P1PP/2G2S1R1/LNBK3NL b - 1",
+                                                                                                                                                    "comment": "矢倉24手組が完成しました。お互いに金銀を組み上げた、矢倉の最も基本的な形です。ここから▲3七銀と上がって4六銀を目指す指し方や、▲6八角から森下システムへ進む指し方などに分かれます。この先は今後のフェーズで扱います。",
+                                                                                                                                                    "branches": []
+                                                                                                                                                  }
+                                                                                                                                                }
+                                                                                                                                              ]
+                                                                                                                                            }
+                                                                                                                                          }
+                                                                                                                                        ]
+                                                                                                                                      }
+                                                                                                                                    }
+                                                                                                                                  ]
+                                                                                                                                }
+                                                                                                                              }
+                                                                                                                            ]
+                                                                                                                          }
+                                                                                                                        }
+                                                                                                                      ]
+                                                                                                                    }
+                                                                                                                  }
+                                                                                                                ]
+                                                                                                              }
+                                                                                                            }
+                                                                                                          ]
+                                                                                                        }
+                                                                                                      }
+                                                                                                    ]
+                                                                                                  }
+                                                                                                }
+                                                                                              ]
+                                                                                            }
+                                                                                          }
+                                                                                        ]
+                                                                                      }
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              }
+                                                                            ]
+                                                                          }
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                              }
+                                                            }
+                                                          ]
+                                                        }
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
