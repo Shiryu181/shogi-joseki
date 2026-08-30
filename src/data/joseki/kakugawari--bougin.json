@@ -1,0 +1,195 @@
+{
+  "id": "kakugawari--bougin",
+  "title": "角換わり 棒銀(先手)",
+  "myStrategy": "kakugawari",
+  "opponentStrategy": "kakugawari",
+  "mySide": "sente",
+  "source": "手順は将棋大図書館(shogilounge.com)「角換わり棒銀の定跡」の基本図までの指し手に準拠(2026-08)",
+  "goalFormation": "角を交換し合ったあと、銀を3八へ上げた局面。ここから銀を2七→2六→2五と繰り出して2筋を攻める。",
+  "goalSfen": "ln1gk2nl/1rs3g2/p1ppppspp/6p2/1p5P1/2P6/PPSPPPP1P/2G3SR1/LN2KG1NL b Bb 1",
+  "root": {
+    "id": "n0",
+    "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
+    "comment": "平手の初形です。お互いが居飛車のときの代表的な戦型、角換わりを見ていきます。",
+    "branches": [
+      {
+        "usi": "7g7f",
+        "kind": "main",
+        "note": "角道を開けます。",
+        "child": {
+          "id": "n1",
+          "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1",
+          "branches": [
+            {
+              "usi": "8c8d",
+              "kind": "main",
+              "note": "相手も飛車先の歩を突いてきました。お互い居飛車になりそうです。",
+              "child": {
+                "id": "n2",
+                "sfen": "lnsgkgsnl/1r5b1/p1ppppppp/1p7/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                "branches": [
+                  {
+                    "usi": "2g2f",
+                    "kind": "main",
+                    "note": "こちらも飛車先を突きます。",
+                    "child": {
+                      "id": "n3",
+                      "sfen": "lnsgkgsnl/1r5b1/p1ppppppp/1p7/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL w - 1",
+                      "branches": [
+                        {
+                          "usi": "8d8e",
+                          "kind": "main",
+                          "note": "相手がさらに飛車先を伸ばしてきました。放っておくと8六歩と取り込まれます。",
+                          "child": {
+                            "id": "n4",
+                            "sfen": "lnsgkgsnl/1r5b1/p1ppppppp/9/1p7/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL b - 1",
+                            "branches": [
+                              {
+                                "usi": "8h7g",
+                                "kind": "main",
+                                "note": "角を上がって8六の地点を受けます。この形が角換わりの入口です。",
+                                "child": {
+                                  "id": "n5",
+                                  "sfen": "lnsgkgsnl/1r5b1/p1ppppppp/9/1p7/2P4P1/PPBPPPP1P/7R1/LNSGKGSNL w - 1",
+                                  "branches": [
+                                    {
+                                      "usi": "4a3b",
+                                      "kind": "main",
+                                      "note": "相手も守りを固めます。",
+                                      "child": {
+                                        "id": "n6",
+                                        "sfen": "lnsgk1snl/1r4gb1/p1ppppppp/9/1p7/2P4P1/PPBPPPP1P/7R1/LNSGKGSNL b - 1",
+                                        "branches": [
+                                          {
+                                            "usi": "2f2e",
+                                            "kind": "main",
+                                            "note": "飛車先を伸ばします。",
+                                            "child": {
+                                              "id": "n7",
+                                              "sfen": "lnsgk1snl/1r4gb1/p1ppppppp/9/1p5P1/2P6/PPBPPPP1P/7R1/LNSGKGSNL w - 1",
+                                              "branches": [
+                                                {
+                                                  "usi": "3c3d",
+                                                  "kind": "main",
+                                                  "note": "相手が角道を開けました。角の交換が可能になります。",
+                                                  "child": {
+                                                    "id": "n8",
+                                                    "sfen": "lnsgk1snl/1r4gb1/p1pppp1pp/6p2/1p5P1/2P6/PPBPPPP1P/7R1/LNSGKGSNL b - 1",
+                                                    "branches": [
+                                                      {
+                                                        "usi": "7i8h",
+                                                        "kind": "main",
+                                                        "note": "角が交換されたときに銀で取り返せるよう、あらかじめ上がっておきます。",
+                                                        "child": {
+                                                          "id": "n9",
+                                                          "sfen": "lnsgk1snl/1r4gb1/p1pppp1pp/6p2/1p5P1/2P6/PPBPPPP1P/1S5R1/LN1GKGSNL w - 1",
+                                                          "branches": [
+                                                            {
+                                                              "usi": "2b7g+",
+                                                              "kind": "main",
+                                                              "note": null,
+                                                              "child": {
+                                                                "id": "n10",
+                                                                "sfen": "lnsgk1snl/1r4g2/p1pppp1pp/6p2/1p5P1/2P6/PP+bPPPP1P/1S5R1/LN1GKGSNL b b 1",
+                                                                "comment": null,
+                                                                "branches": [
+                                                                  {
+                                                                    "usi": "8h7g",
+                                                                    "kind": "main",
+                                                                    "note": "銀で取り返します。これで角が交換され、お互いの持ち駒に角がある状態になりました。",
+                                                                    "child": {
+                                                                      "id": "n11",
+                                                                      "sfen": "lnsgk1snl/1r4g2/p1pppp1pp/6p2/1p5P1/2P6/PPSPPPP1P/7R1/LN1GKGSNL w Bb 1",
+                                                                      "comment": "角換わりの形になりました。持ち駒に角があるので、隙のある形にすると打ち込まれます。お互い慎重に駒組みを進めます。",
+                                                                      "branches": [
+                                                                        {
+                                                                          "usi": "3a2b",
+                                                                          "kind": "main",
+                                                                          "note": "相手は銀を上がって陣形を整えます。",
+                                                                          "child": {
+                                                                            "id": "n12",
+                                                                            "sfen": "lnsgk2nl/1r4gs1/p1pppp1pp/6p2/1p5P1/2P6/PPSPPPP1P/7R1/LN1GKGSNL b Bb 1",
+                                                                            "branches": [
+                                                                              {
+                                                                                "usi": "6i7h",
+                                                                                "kind": "main",
+                                                                                "note": "金を上がって、8八や7七のあたりを補強します。",
+                                                                                "child": {
+                                                                                  "id": "n13",
+                                                                                  "sfen": "lnsgk2nl/1r4gs1/p1pppp1pp/6p2/1p5P1/2P6/PPSPPPP1P/2G4R1/LN2KGSNL w Bb 1",
+                                                                                  "branches": [
+                                                                                    {
+                                                                                      "usi": "2b3c",
+                                                                                      "kind": "main",
+                                                                                      "note": "相手も銀を上げます。",
+                                                                                      "child": {
+                                                                                        "id": "n14",
+                                                                                        "sfen": "lnsgk2nl/1r4g2/p1ppppspp/6p2/1p5P1/2P6/PPSPPPP1P/2G4R1/LN2KGSNL b Bb 1",
+                                                                                        "branches": [
+                                                                                          {
+                                                                                            "usi": "3i3h",
+                                                                                            "kind": "main",
+                                                                                            "note": "右銀を上がります。ここから2七→2六と進めるのが棒銀です。",
+                                                                                            "child": {
+                                                                                              "id": "n15",
+                                                                                              "sfen": "lnsgk2nl/1r4g2/p1ppppspp/6p2/1p5P1/2P6/PPSPPPP1P/2G3SR1/LN2KG1NL w Bb 1",
+                                                                                              "branches": [
+                                                                                                {
+                                                                                                  "usi": "7a7b",
+                                                                                                  "kind": "main",
+                                                                                                  "note": "相手も銀を上がって、駒組みが一段落しました。",
+                                                                                                  "child": {
+                                                                                                    "id": "n16",
+                                                                                                    "sfen": "ln1gk2nl/1rs3g2/p1ppppspp/6p2/1p5P1/2P6/PPSPPPP1P/2G3SR1/LN2KG1NL b Bb 1",
+                                                                                                    "comment": "角換わり棒銀の基本形です。ここから銀を2七→2六→2五と繰り出して2筋の突破を狙います。仕掛け以降は今後のフェーズで扱います。",
+                                                                                                    "branches": []
+                                                                                                  }
+                                                                                                }
+                                                                                              ]
+                                                                                            }
+                                                                                          }
+                                                                                        ]
+                                                                                      }
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              }
+                                                                            ]
+                                                                          }
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                              }
+                                                            }
+                                                          ]
+                                                        }
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

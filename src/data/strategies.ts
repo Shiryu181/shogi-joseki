@@ -6,7 +6,7 @@
  *
  * 【重要】実際に定石データ(src/data/joseki/)が存在し、学習/練習ができるのは
  * 現時点で「居飛車(vs 四間飛車・先手)」の1コースのみ。そのため ready:true は
- * 実データがあるのは "ibisha"(4コース)と "shikenbisha"(2コース)で、他はすべて ready:false(準備中)。
+ * 実データがある戦法のみ ready:true にしている(現在: 居飛車・四間飛車・三間飛車・角換わり・相掛かり)。
  * 「選べないものを選べるように見せない」ため、コースの実データが無い戦法は
  * 必ず ready:false にすること。
  */
@@ -44,9 +44,10 @@ export const STRATEGIES: Strategy[] = [
     category: "ibisha",
     popularity: 4.7,
     level: "中級〜",
-    lineCount: 0,
-    ready: false,
-    description: "序盤で角を交換し合ってから駒組みを進める、相居飛車の代表的な戦型。データは準備中です。",
+    lineCount: 2,
+    ready: true,
+    description:
+      "序盤で角を交換し合ってから駒組みを進める、相居飛車の代表的な戦型。棒銀と早繰り銀を収録。",
   },
   {
     id: "nakabisha",
@@ -66,9 +67,10 @@ export const STRATEGIES: Strategy[] = [
     category: "ibisha",
     popularity: 4.5,
     level: "中級〜",
-    lineCount: 0,
-    ready: false,
-    description: "互いに飛車先の歩を交換してから戦う、相居飛車の古典的な戦型。データは準備中です。",
+    lineCount: 1,
+    ready: true,
+    description:
+      "互いに飛車先の歩を交換してから戦う、相居飛車の古典的な戦型。棒銀を収録。",
   },
   {
     id: "yagura",

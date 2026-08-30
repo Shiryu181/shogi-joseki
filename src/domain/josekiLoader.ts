@@ -13,6 +13,9 @@ import shikenbishaVsAnagumaBasic from "../data/joseki/shikenbisha-vs-anaguma--ba
 import ibishaVsSankenbishaBougin from "../data/joseki/ibisha-vs-sankenbisha--bougin.json";
 import ibishaVsSankenbisha37 from "../data/joseki/ibisha-vs-sankenbisha--37kei.json";
 import sankenbishaVsIbishaBasic from "../data/joseki/sankenbisha-vs-ibisha--basic.json";
+import kakugawariBougin from "../data/joseki/kakugawari--bougin.json";
+import kakugawariHayakurigin from "../data/joseki/kakugawari--hayakurigin.json";
+import aigakariBougin from "../data/joseki/aigakari--bougin.json";
 import branchNavDemo from "../data/joseki/_branchNavDemo.json";
 
 function isJosekiMove(value: unknown): value is JosekiMove {
@@ -176,6 +179,36 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "持久戦",
     summary: "飛車を3二へ振り、美濃囲いに収めるまで。三間飛車の土台。",
     load: () => assertJosekiCourse(sankenbishaVsIbishaBasic, "sankenbisha-vs-ibisha--basic.json"),
+  },
+  {
+    id: "kakugawari--bougin",
+    strategyId: "kakugawari",
+    opponentLabel: "角換わり",
+    sideLabel: "先手",
+    label: "棒銀",
+    kind: "急戦",
+    summary: "角を交換したあと、銀を2七→2六と繰り出して2筋を攻める。",
+    load: () => assertJosekiCourse(kakugawariBougin, "kakugawari--bougin.json"),
+  },
+  {
+    id: "kakugawari--hayakurigin",
+    strategyId: "kakugawari",
+    opponentLabel: "角換わり",
+    sideLabel: "先手",
+    label: "早繰り銀",
+    kind: "急戦",
+    summary: "銀を3七→4六と早めに使い、幅広く攻める。棒銀と対になる指し方。",
+    load: () => assertJosekiCourse(kakugawariHayakurigin, "kakugawari--hayakurigin.json"),
+  },
+  {
+    id: "aigakari--bougin",
+    strategyId: "aigakari",
+    opponentLabel: "相掛かり",
+    sideLabel: "先手",
+    label: "棒銀",
+    kind: "急戦",
+    summary: "お互いに飛車先の歩を交換したあと、銀を2七へ繰り出す。",
+    load: () => assertJosekiCourse(aigakariBougin, "aigakari--bougin.json"),
   },
 ];
 

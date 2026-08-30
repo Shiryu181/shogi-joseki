@@ -1,0 +1,228 @@
+{
+  "id": "aigakari--bougin",
+  "title": "相掛かり 棒銀(先手)",
+  "myStrategy": "aigakari",
+  "opponentStrategy": "aigakari",
+  "mySide": "sente",
+  "source": "手順は将棋大図書館(shogilounge.com)「相掛かり棒銀の定跡」の基本図までの指し手に準拠(2026-08)",
+  "goalFormation": "お互いに飛車先の歩を交換したあと、銀を2七へ上げた局面。ここから銀を繰り出して2筋を攻める。",
+  "goalSfen": "lnsgk1snl/6gb1/p1pppp1pp/1r4p2/9/9/PPPPPPPSP/1BG4R1/LNS1KG1NL w Pp 1",
+  "root": {
+    "id": "n0",
+    "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
+    "comment": "平手の初形です。お互いが飛車先の歩を交換し合う「相掛かり」を見ていきます。",
+    "branches": [
+      {
+        "usi": "2g2f",
+        "kind": "main",
+        "note": "いきなり飛車先の歩を突きます。角道を開けないのが相掛かりの特徴です。",
+        "child": {
+          "id": "n1",
+          "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/7P1/PPPPPPP1P/1B5R1/LNSGKGSNL w - 1",
+          "branches": [
+            {
+              "usi": "8c8d",
+              "kind": "main",
+              "note": "相手も飛車先を突いてきました。",
+              "child": {
+                "id": "n2",
+                "sfen": "lnsgkgsnl/1r5b1/p1ppppppp/1p7/9/7P1/PPPPPPP1P/1B5R1/LNSGKGSNL b - 1",
+                "branches": [
+                  {
+                    "usi": "2f2e",
+                    "kind": "main",
+                    "note": "さらに伸ばします。",
+                    "child": {
+                      "id": "n3",
+                      "sfen": "lnsgkgsnl/1r5b1/p1ppppppp/1p7/7P1/9/PPPPPPP1P/1B5R1/LNSGKGSNL w - 1",
+                      "branches": [
+                        {
+                          "usi": "8d8e",
+                          "kind": "main",
+                          "note": null,
+                          "child": {
+                            "id": "n4",
+                            "sfen": "lnsgkgsnl/1r5b1/p1ppppppp/9/1p5P1/9/PPPPPPP1P/1B5R1/LNSGKGSNL b - 1",
+                            "branches": [
+                              {
+                                "usi": "6i7h",
+                                "kind": "main",
+                                "note": "8六の地点を金で受けておきます。",
+                                "child": {
+                                  "id": "n5",
+                                  "sfen": "lnsgkgsnl/1r5b1/p1ppppppp/9/1p5P1/9/PPPPPPP1P/1BG4R1/LNS1KGSNL w - 1",
+                                  "branches": [
+                                    {
+                                      "usi": "4a3b",
+                                      "kind": "main",
+                                      "note": "相手も同様に受けます。",
+                                      "child": {
+                                        "id": "n6",
+                                        "sfen": "lnsgk1snl/1r4gb1/p1ppppppp/9/1p5P1/9/PPPPPPP1P/1BG4R1/LNS1KGSNL b - 1",
+                                        "branches": [
+                                          {
+                                            "usi": "2e2d",
+                                            "kind": "main",
+                                            "note": "歩を突き捨てて飛車先を交換しにいきます。",
+                                            "child": {
+                                              "id": "n7",
+                                              "sfen": "lnsgk1snl/1r4gb1/p1ppppppp/7P1/1p7/9/PPPPPPP1P/1BG4R1/LNS1KGSNL w - 1",
+                                              "branches": [
+                                                {
+                                                  "usi": "2c2d",
+                                                  "kind": "main",
+                                                  "note": null,
+                                                  "child": {
+                                                    "id": "n8",
+                                                    "sfen": "lnsgk1snl/1r4gb1/p1ppppp1p/7p1/1p7/9/PPPPPPP1P/1BG4R1/LNS1KGSNL b p 1",
+                                                    "comment": null,
+                                                    "branches": [
+                                                      {
+                                                        "usi": "2h2d",
+                                                        "kind": "main",
+                                                        "note": "飛車で取り返し、歩を1枚得しました。",
+                                                        "child": {
+                                                          "id": "n9",
+                                                          "sfen": "lnsgk1snl/1r4gb1/p1ppppp1p/7R1/1p7/9/PPPPPPP1P/1BG6/LNS1KGSNL w Pp 1",
+                                                          "branches": [
+                                                            {
+                                                              "usi": "P*2c",
+                                                              "kind": "main",
+                                                              "note": "相手は歩を打って飛車を追い返します。持ち駒の歩を使う手です。",
+                                                              "child": {
+                                                                "id": "n10",
+                                                                "sfen": "lnsgk1snl/1r4gb1/p1ppppppp/7R1/1p7/9/PPPPPPP1P/1BG6/LNS1KGSNL b P 1",
+                                                                "branches": [
+                                                                  {
+                                                                    "usi": "2d2h",
+                                                                    "kind": "main",
+                                                                    "note": "飛車を元の位置へ戻します。",
+                                                                    "child": {
+                                                                      "id": "n11",
+                                                                      "sfen": "lnsgk1snl/1r4gb1/p1ppppppp/9/1p7/9/PPPPPPP1P/1BG4R1/LNS1KGSNL w P 1",
+                                                                      "branches": [
+                                                                        {
+                                                                          "usi": "8e8f",
+                                                                          "kind": "main",
+                                                                          "note": "今度は相手が同じことをしてきます。",
+                                                                          "child": {
+                                                                            "id": "n12",
+                                                                            "sfen": "lnsgk1snl/1r4gb1/p1ppppppp/9/9/1p7/PPPPPPP1P/1BG4R1/LNS1KGSNL b P 1",
+                                                                            "branches": [
+                                                                              {
+                                                                                "usi": "8g8f",
+                                                                                "kind": "main",
+                                                                                "note": null,
+                                                                                "child": {
+                                                                                  "id": "n13",
+                                                                                  "sfen": "lnsgk1snl/1r4gb1/p1ppppppp/9/9/1P7/P1PPPPP1P/1BG4R1/LNS1KGSNL w 2P 1",
+                                                                                  "comment": null,
+                                                                                  "branches": [
+                                                                                    {
+                                                                                      "usi": "8b8f",
+                                                                                      "kind": "main",
+                                                                                      "note": "相手も飛車先の歩を交換しました。これでお互い一歩ずつ持ち合いです。",
+                                                                                      "child": {
+                                                                                        "id": "n14",
+                                                                                        "sfen": "lnsgk1snl/6gb1/p1ppppppp/9/9/1r7/P1PPPPP1P/1BG4R1/LNS1KGSNL b 2Pp 1",
+                                                                                        "branches": [
+                                                                                          {
+                                                                                            "usi": "P*8g",
+                                                                                            "kind": "main",
+                                                                                            "note": "歩を打って飛車を追い返します。先ほど得た持ち駒の歩を使います。",
+                                                                                            "child": {
+                                                                                              "id": "n15",
+                                                                                              "sfen": "lnsgk1snl/6gb1/p1ppppppp/9/9/1r7/PPPPPPP1P/1BG4R1/LNS1KGSNL w Pp 1",
+                                                                                              "branches": [
+                                                                                                {
+                                                                                                  "usi": "8f8d",
+                                                                                                  "kind": "main",
+                                                                                                  "note": "相手の飛車が8四へ引きました。",
+                                                                                                  "child": {
+                                                                                                    "id": "n16",
+                                                                                                    "sfen": "lnsgk1snl/6gb1/p1ppppppp/1r7/9/9/PPPPPPP1P/1BG4R1/LNS1KGSNL b Pp 1",
+                                                                                                    "branches": [
+                                                                                                      {
+                                                                                                        "usi": "3i3h",
+                                                                                                        "kind": "main",
+                                                                                                        "note": "右銀を上がります。",
+                                                                                                        "child": {
+                                                                                                          "id": "n17",
+                                                                                                          "sfen": "lnsgk1snl/6gb1/p1ppppppp/1r7/9/9/PPPPPPP1P/1BG3SR1/LNS1KG1NL w Pp 1",
+                                                                                                          "branches": [
+                                                                                                            {
+                                                                                                              "usi": "3c3d",
+                                                                                                              "kind": "main",
+                                                                                                              "note": "相手が角道を開けました。",
+                                                                                                              "child": {
+                                                                                                                "id": "n18",
+                                                                                                                "sfen": "lnsgk1snl/6gb1/p1pppp1pp/1r4p2/9/9/PPPPPPP1P/1BG3SR1/LNS1KG1NL b Pp 1",
+                                                                                                                "branches": [
+                                                                                                                  {
+                                                                                                                    "usi": "3h2g",
+                                                                                                                    "kind": "main",
+                                                                                                                    "note": "銀を2七へ。ここから2六→2五と繰り出して2筋を攻めるのが棒銀です。",
+                                                                                                                    "child": {
+                                                                                                                      "id": "n19",
+                                                                                                                      "sfen": "lnsgk1snl/6gb1/p1pppp1pp/1r4p2/9/9/PPPPPPPSP/1BG4R1/LNS1KG1NL w Pp 1",
+                                                                                                                      "comment": "相掛かり棒銀の基本形です。お互いに飛車先の歩を交換し合った、開放的な将棋になります。仕掛け以降は今後のフェーズで扱います。",
+                                                                                                                      "branches": []
+                                                                                                                    }
+                                                                                                                  }
+                                                                                                                ]
+                                                                                                              }
+                                                                                                            }
+                                                                                                          ]
+                                                                                                        }
+                                                                                                      }
+                                                                                                    ]
+                                                                                                  }
+                                                                                                }
+                                                                                              ]
+                                                                                            }
+                                                                                          }
+                                                                                        ]
+                                                                                      }
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              }
+                                                                            ]
+                                                                          }
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                              }
+                                                            }
+                                                          ]
+                                                        }
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -27,11 +27,24 @@ function sq(label) {
   return s;
 }
 
-/** その局面で「piece が to へ動く」合法手を総当たりで探す。一意でなければ例外。 */
+/**
+ * その局面で「piece が to へ動く」合法手を総当たりで探す。一意でなければ例外。
+ * 成れる手は spec.promote(true/false)の明示を必須にする。黙って不成を選ぶと
+ * 「▲同銀」と「▲同銀成」のような別の手を取り違えても気づけないため。
+ */
 function resolveMove(position, spec, moveNo) {
   const to = sq(spec.to);
   const type = GLYPH_TO_TYPE[spec.piece];
   if (!type) throw new Error(`${moveNo}手目: 駒種が不正: ${spec.piece}`);
+
+  // 持ち駒を打つ手(例: 相掛かりの △2三歩)。盤上の駒を動かす手とは別扱い。
+  if (spec.drop) {
+    const move = position.createMove(type, to);
+    if (!move || !position.isValidMove(move)) {
+      throw new Error(`${moveNo}手目 ${spec.piece}${spec.to}打: 合法な打ちがありません(持ち駒が無い/二歩など)`);
+    }
+    return move;
+  }
 
   const candidates = [];
   const froms = spec.from
@@ -41,8 +54,29 @@ function resolveMove(position, spec, moveNo) {
   for (const from of froms) {
     const piece = position.board.at(from);
     if (!piece || piece.type !== type) continue;
-    const move = position.createMove(from, to);
-    if (move && position.isValidMove(move)) candidates.push({ from, move });
+    const plain = position.createMove(from, to);
+    if (!plain) continue;
+    const plainOk = position.isValidMove(plain);
+    const promoted = plain.withPromote();
+    const promoteOk = position.isValidMove(promoted);
+
+    if (spec.promote === true) {
+      if (promoteOk) candidates.push({ from, move: promoted });
+      continue;
+    }
+    if (spec.promote === false) {
+      if (plainOk) candidates.push({ from, move: plain });
+      continue;
+    }
+    // promote 未指定: 成/不成の両方が合法なら、どちらの手か決められないので停止する。
+    if (plainOk && promoteOk) {
+      throw new Error(
+        `${moveNo}手目 ${spec.piece}${spec.to}: 成/不成のどちらも合法です。` +
+        `promote: true / false を明示してください`
+      );
+    }
+    if (plainOk) candidates.push({ from, move: plain });
+    else if (promoteOk) candidates.push({ from, move: promoted }); // 強制成り
   }
 
   if (candidates.length === 0) {
