@@ -6,7 +6,7 @@ import { Home } from "./features/home/Home";
 import { Matchup } from "./features/matchup/Matchup";
 import { About } from "./features/about/About";
 import type { PracticeMode } from "./features/matchup/Matchup";
-import { loadIbishaVsShikenbishaSente, loadBranchNavDemo } from "./domain/josekiLoader";
+import { loadCourseById, loadBranchNavDemo, COURSE_ENTRIES } from "./domain/josekiLoader";
 import type { Strategy } from "./domain/types";
 import { STRATEGIES } from "./data/strategies";
 import { BottomTabBar } from "./ui/BottomTabBar";
@@ -26,6 +26,8 @@ const IBISHA_STRATEGY = STRATEGIES.find((s) => s.id === "ibisha")!;
 function App() {
   const [screen, setScreen] = useState<Screen>("home");
   const [selectedStrategy, setSelectedStrategy] = useState<Strategy>(IBISHA_STRATEGY);
+  // 対抗形選択画面で選んだ作戦(定石コース)。学習/練習の両方に渡す。
+  const [courseId, setCourseId] = useState<string>(COURSE_ENTRIES[0].id);
 
   // ?dev=1 のときだけ開発用画面(Sandbox/分岐デモ)への入口を出す。通常のユーザーの目には触れない。
   const [devMode] = useState(() => {
@@ -38,7 +40,8 @@ function App() {
     setScreen("matchup");
   }
 
-  function startFromMatchup(mode: PracticeMode) {
+  function startFromMatchup(nextCourseId: string, mode: PracticeMode) {
+    setCourseId(nextCourseId);
     setScreen(mode === "learn" ? "learn" : "practice");
   }
 
@@ -73,11 +76,11 @@ function App() {
         )}
 
         {screen === "learn" && (
-          <Learn course={loadIbishaVsShikenbishaSente()} onBack={() => setScreen("matchup")} />
+          <Learn course={loadCourseById(courseId)} onBack={() => setScreen("matchup")} />
         )}
 
         {screen === "practice" && (
-          <Practice course={loadIbishaVsShikenbishaSente()} onBack={() => setScreen("matchup")} />
+          <Practice course={loadCourseById(courseId)} onBack={() => setScreen("matchup")} />
         )}
 
         {screen === "about" && <About onBack={() => setScreen("home")} />}

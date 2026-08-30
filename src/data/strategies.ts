@@ -21,10 +21,10 @@ export const STRATEGIES: Strategy[] = [
     category: "ibisha",
     popularity: 4.9,
     level: "入門〜",
-    lineCount: 1,
+    lineCount: 4,
     ready: true,
     description:
-      "飛車を初期位置(２筋・８筋)に構えたまま戦う、最も基本的な戦法群。ここでは対四間飛車の急戦(4六銀左/斜め棒銀)を1ライン収録。",
+      "飛車を初期位置(２筋・８筋)に構えたまま戦う、最も基本的な戦法群。対四間飛車の急戦3種(棒銀・斜め棒銀・４五歩早仕掛け)と持久戦(居飛車穴熊)を収録。",
   },
   {
     id: "shikenbisha",
