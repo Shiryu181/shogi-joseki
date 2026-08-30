@@ -104,8 +104,9 @@ export const STRATEGIES: Strategy[] = [
     category: "kishu",
     popularity: 3.6,
     level: "力戦",
-    lineCount: 0,
-    ready: false,
-    description: "序盤早々に角を敵陣寄りへ打ち直す奇襲戦法の一つ。データは準備中です。",
+    lineCount: 1,
+    ready: true,
+    description:
+      "序盤で角を交換し、本来とは違う筋に角を打ち込む奇襲寄りの戦法。1手損する代わりに歩を得て、相手の意表を突く。",
   },
 ];

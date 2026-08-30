@@ -18,6 +18,7 @@ import kakugawariHayakurigin from "../data/joseki/kakugawari--hayakurigin.json";
 import aigakariBougin from "../data/joseki/aigakari--bougin.json";
 import yagura24te from "../data/joseki/yagura--24te.json";
 import nakabishaVsAnaguma from "../data/joseki/nakabisha-vs-anaguma--basic.json";
+import sujichigaikakuBasic from "../data/joseki/sujichigaikaku--basic.json";
 import branchNavDemo from "../data/joseki/_branchNavDemo.json";
 
 function isJosekiMove(value: unknown): value is JosekiMove {
@@ -231,6 +232,16 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "持久戦",
     summary: "飛車を5二へ振り、美濃囲いに収めて4五歩と位を取るまで。",
     load: () => assertJosekiCourse(nakabishaVsAnaguma, "nakabisha-vs-anaguma--basic.json"),
+  },
+  {
+    id: "sujichigaikaku--basic",
+    strategyId: "sujichigaikaku",
+    opponentLabel: "居飛車",
+    sideLabel: "先手",
+    label: "基本の指し方",
+    kind: "急戦",
+    summary: "早い角交換から4五へ角を打ち、歩を得て8筋から攻める。",
+    load: () => assertJosekiCourse(sujichigaikakuBasic, "sujichigaikaku--basic.json"),
   },
 ];
 
