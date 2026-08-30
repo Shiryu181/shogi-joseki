@@ -4,6 +4,7 @@ import { Learn } from "./features/learn/Learn";
 import { Practice } from "./features/practice/Practice";
 import { Home } from "./features/home/Home";
 import { Matchup } from "./features/matchup/Matchup";
+import { About } from "./features/about/About";
 import type { PracticeMode } from "./features/matchup/Matchup";
 import { loadIbishaVsShikenbishaSente, loadBranchNavDemo } from "./domain/josekiLoader";
 import type { Strategy } from "./domain/types";
@@ -12,7 +13,7 @@ import { BottomTabBar } from "./ui/BottomTabBar";
 import type { BottomTab } from "./ui/BottomTabBar";
 import "./App.css";
 
-type Screen = "home" | "matchup" | "learn" | "practice" | "devMenu" | "sandbox" | "branchDemo";
+type Screen = "home" | "matchup" | "learn" | "practice" | "about" | "devMenu" | "sandbox" | "branchDemo";
 
 const IBISHA_STRATEGY = STRATEGIES.find((s) => s.id === "ibisha")!;
 
@@ -65,7 +66,7 @@ function App() {
       )}
 
       <div className="app-content" style={showTabBar ? { paddingBottom: 78 } : undefined}>
-        {screen === "home" && <Home onOpenStrategy={openStrategy} />}
+        {screen === "home" && <Home onOpenStrategy={openStrategy} onOpenAbout={() => setScreen("about")} />}
 
         {screen === "matchup" && (
           <Matchup strategy={selectedStrategy} onBack={() => setScreen("home")} onStart={startFromMatchup} />
@@ -78,6 +79,8 @@ function App() {
         {screen === "practice" && (
           <Practice course={loadIbishaVsShikenbishaSente()} onBack={() => setScreen("matchup")} />
         )}
+
+        {screen === "about" && <About onBack={() => setScreen("home")} />}
 
         {screen === "devMenu" && (
           <div className="devmenu-wrap">

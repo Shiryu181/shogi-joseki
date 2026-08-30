@@ -8,6 +8,8 @@ import { StrategyCard } from "./StrategyCard";
 import "./Home.css";
 
 export interface HomeProps {
+  /** 「このアプリについて」(ライセンス表記)を開く。 */
+  onOpenAbout: () => void;
   /** ready な戦法カードがタップされたときに呼ばれる(§5.2 対抗形選択へ進む)。 */
   onOpenStrategy: (strategy: Strategy) => void;
 }
@@ -19,7 +21,7 @@ function matchesCategory(s: Strategy, key: CategoryFilterKey): boolean {
 }
 
 /** ホーム(探す)画面。DESIGN.md §5.1 準拠。検索・カテゴリ絞り込み・カード一覧。 */
-export function Home({ onOpenStrategy }: HomeProps) {
+export function Home({ onOpenStrategy, onOpenAbout }: HomeProps) {
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<CategoryFilterKey>("popular");
 
@@ -47,6 +49,11 @@ export function Home({ onOpenStrategy }: HomeProps) {
           ) : (
             <div className="empty">「{query}」に一致する戦法はありません</div>
           )}
+        </div>
+        <div className="home-foot">
+          <button type="button" className="home-about-link" onClick={onOpenAbout}>
+            このアプリについて・ライセンス
+          </button>
         </div>
       </div>
     </div>

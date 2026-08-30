@@ -25,7 +25,8 @@ npm run lint      # oxlint
 - 使用パッケージ: [`@mizarjp/yaneuraou.k-p`](https://www.npmjs.com/package/@mizarjp/yaneuraou.k-p)
   (npm)。ソース: <https://github.com/mizar/YaneuraOu.wasm>(本家 [YaneuraOu](https://github.com/yaneurao/YaneuraOu) の WebAssembly 移植)
 - **ライセンス: GPL-3.0**。評価関数(Suisho5系)はパッケージに内蔵されており、別途入手は不要。
-  ソースの入手方法は上記リポジトリを参照。本アプリ自体のライセンス方針は別途検討中。
+  ソースの入手方法は上記リポジトリを参照。**本アプリ自体も GPL-3.0-or-later で公開**しており、
+  「エンジンと本体が一体の著作物か」という解釈上の曖昧さを持ち込まない方針にした。
 - ブラウザで動かすには **`Cross-Origin-Opener-Policy: same-origin`** /
   **`Cross-Origin-Embedder-Policy: require-corp`** の2ヘッダが必須(WASMの
   pthread が SharedArrayBuffer を要求するため。シングルスレッド版は存在しない)。
@@ -70,3 +71,22 @@ If you are developing a production application, we recommend enabling type-aware
 ```
 
 See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+
+## ライセンス
+
+本アプリは **GPL-3.0-or-later** で公開しています。全文は [LICENSE](./LICENSE) を参照してください。
+
+将棋エンジンに GPL-3.0 の YaneuraOu を同梱しているため、配布(Web公開を含む)にあたって
+ライセンス表記とソース入手先の明示が必要になります。これはアプリ内の
+**「このアプリについて」画面**(ホーム画面下部から開く / `src/features/about/`)で
+訪問者に見える形で行っています。README だけでは配布要件を満たさないため、
+**この画面は消さないこと**。
+
+同梱物と配信されるライセンス文:
+
+| 対象 | ライセンス | 配信パス |
+|---|---|---|
+| 本アプリ | GPL-3.0-or-later | `/LICENSE.txt` |
+| YaneuraOu(`@mizarjp/yaneuraou.k-p`、未改変) | GPL-3.0 | `/THIRD-PARTY-yaneuraou-LICENSE.md` |
+| Yuji Syuku(駒フォント) | SIL OFL 1.1 | `/fonts/YujiSyuku-OFL-LICENSE.txt` |
+| tsshogi / React / Zustand | MIT | — |

@@ -221,3 +221,24 @@
   font-weight: 600;
   color: var(--ink);
 }
+
+/* フッターの「このアプリについて」導線。控えめに置く(主役は戦法カードのため)。 */
+.home-foot {
+  margin: 18px 14px 4px;
+  text-align: center;
+}
+.home-about-link {
+  background: none;
+  border: none;
+  color: var(--ink-2, var(--ink));
+  opacity: 0.75;
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  padding: 6px 8px;
+  font-family: inherit;
+}
+.home-about-link:hover {
+  opacity: 1;
+}

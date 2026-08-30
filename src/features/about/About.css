@@ -1,0 +1,85 @@
+/* 「このアプリについて」画面。Matchup と同じフレーム寸法・トーンに合わせる。 */
+.about-wrap {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 26px 14px;
+}
+
+.about-frame {
+  width: 480px;
+  max-width: 100%;
+  background: var(--app);
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  padding-bottom: 24px;
+}
+
+.about-sec {
+  margin: 18px 16px 0;
+}
+.about-sec h2 {
+  font-family: var(--head, inherit);
+  font-size: 15px;
+  margin: 0 0 8px;
+  color: var(--ink);
+}
+.about-sec p {
+  margin: 0 0 8px;
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--ink-2, var(--ink));
+}
+.about-sec code {
+  font-size: 12px;
+  background: var(--gold-soft);
+  color: var(--gold);
+  padding: 1px 5px;
+  border-radius: 5px;
+}
+
+.about-links {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+}
+.about-links a {
+  font-size: 12.5px;
+  color: var(--accent, var(--gold));
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.about-item {
+  border: 1px solid var(--line-2);
+  background: var(--card);
+  border-radius: 12px;
+  padding: 12px 13px;
+  margin-bottom: 10px;
+}
+.about-item-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+  font-size: 13.5px;
+  color: var(--ink);
+}
+/* ライセンス種別のバッジ。GPL は「条件があるもの」として色を変え、見落とされないようにする。 */
+.about-lic {
+  font-size: 10.5px;
+  padding: 2px 7px;
+  border-radius: 20px;
+  border: 1px solid var(--line-2);
+  color: var(--ink-2, var(--ink));
+  white-space: nowrap;
+}
+.about-lic.gpl {
+  border-color: var(--gold);
+  background: var(--gold-soft);
+  color: var(--gold);
+}
