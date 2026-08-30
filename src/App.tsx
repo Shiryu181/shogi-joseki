@@ -6,7 +6,7 @@ import { Home } from "./features/home/Home";
 import { Matchup } from "./features/matchup/Matchup";
 import { About } from "./features/about/About";
 import type { PracticeMode } from "./features/matchup/Matchup";
-import { loadCourseById, loadBranchNavDemo, COURSE_ENTRIES } from "./domain/josekiLoader";
+import { loadCourseById, loadBranchNavDemo, COURSE_ENTRIES, courseEntriesFor } from "./domain/josekiLoader";
 import type { Strategy } from "./domain/types";
 import { STRATEGIES } from "./data/strategies";
 import { BottomTabBar } from "./ui/BottomTabBar";
@@ -37,6 +37,9 @@ function App() {
 
   function openStrategy(strategy: Strategy) {
     setSelectedStrategy(strategy);
+    // 別の戦法へ移ったとき、前の戦法のコースが選ばれたままにならないようにする。
+    const first = courseEntriesFor(strategy.id)[0];
+    if (first) setCourseId(first.id);
     setScreen("matchup");
   }
 

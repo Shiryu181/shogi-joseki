@@ -6,10 +6,9 @@
  *
  * 【重要】実際に定石データ(src/data/joseki/)が存在し、学習/練習ができるのは
  * 現時点で「居飛車(vs 四間飛車・先手)」の1コースのみ。そのため ready:true は
- * "ibisha" だけとし、他はすべて ready:false(準備中)にしてある。
- * mockup.html のサンプルデータでは「四間飛車」も ready:true だったが、四間飛車側の
- * 手順データはまだ無いため、ここでは意図的に ready:false にしている
- * (選べないものを選べるように見せないため。詳細は完了報告を参照)。
+ * 実データがあるのは "ibisha"(4コース)と "shikenbisha"(2コース)で、他はすべて ready:false(準備中)。
+ * 「選べないものを選べるように見せない」ため、コースの実データが無い戦法は
+ * 必ず ready:false にすること。
  */
 import type { Strategy } from "../domain/types";
 
@@ -33,9 +32,10 @@ export const STRATEGIES: Strategy[] = [
     category: "furibisha",
     popularity: 4.8,
     level: "入門〜",
-    lineCount: 0,
-    ready: false,
-    description: "飛車を4筋(後手番なら6筋)に振る振り飛車の代表格。四間飛車側の手順データは準備中です。",
+    lineCount: 2,
+    ready: true,
+    description:
+      "飛車を4筋(後手番なら6筋)に振る振り飛車の代表格。組み方がパターン化されていて覚えやすい。基本の組み方(美濃囲い)と対居飛車穴熊を収録。",
   },
   {
     id: "kakugawari",

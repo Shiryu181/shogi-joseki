@@ -8,6 +8,8 @@ import ibishaVsShikenbishaSente from "../data/joseki/ibisha-vs-shikenbisha--sent
 import ibishaVsShikenbishaBougin from "../data/joseki/ibisha-vs-shikenbisha--bougin.json";
 import ibishaVsShikenbisha45 from "../data/joseki/ibisha-vs-shikenbisha--45hayashikake.json";
 import ibishaVsShikenbishaAnaguma from "../data/joseki/ibisha-vs-shikenbisha--anaguma.json";
+import shikenbishaVsIbishaBasic from "../data/joseki/shikenbisha-vs-ibisha--basic.json";
+import shikenbishaVsAnagumaBasic from "../data/joseki/shikenbisha-vs-anaguma--basic.json";
 import branchNavDemo from "../data/joseki/_branchNavDemo.json";
 
 function isJosekiMove(value: unknown): value is JosekiMove {
@@ -62,11 +64,17 @@ export type CourseKind = "急戦" | "持久戦";
 /** 選択画面に出すコースの一覧項目。 */
 export interface CourseEntry {
   id: string;
+  /** どの戦法カードから辿れるか(Strategy.id)。選択画面はこれで絞り込む。 */
+  strategyId: string;
   /** 選択肢に出す短い名前。 */
   label: string;
   kind: CourseKind;
   /** どういう作戦かの一行説明。 */
   summary: string;
+  /** 相手の戦法(選択画面の表示用)。 */
+  opponentLabel: string;
+  /** 自分の手番(選択画面の表示用)。 */
+  sideLabel: "先手" | "後手";
   load: () => JosekiCourse;
 }
 
@@ -78,6 +86,9 @@ export interface CourseEntry {
 export const COURSE_ENTRIES: CourseEntry[] = [
   {
     id: "ibisha-vs-shikenbisha--bougin",
+    strategyId: "ibisha",
+    opponentLabel: "四間飛車",
+    sideLabel: "先手",
     label: "棒銀",
     kind: "急戦",
     summary: "銀をまっすぐ繰り出して2筋を破る、最も有名な急戦。",
@@ -85,6 +96,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "ibisha-vs-shikenbisha--sente",
+    strategyId: "ibisha",
+    opponentLabel: "四間飛車",
+    sideLabel: "先手",
     label: "斜め棒銀(4六銀左)",
     kind: "急戦",
     summary: "左の銀を4六へ運び、3五歩から仕掛ける急戦。",
@@ -92,6 +106,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "ibisha-vs-shikenbisha--45hayashikake",
+    strategyId: "ibisha",
+    opponentLabel: "四間飛車",
+    sideLabel: "先手",
     label: "４五歩早仕掛け",
     kind: "急戦",
     summary: "4六歩から4五歩と突き、4筋で戦いを起こす急戦。",
@@ -99,12 +116,40 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "ibisha-vs-shikenbisha--anaguma",
+    strategyId: "ibisha",
+    opponentLabel: "四間飛車",
+    sideLabel: "先手",
     label: "居飛車穴熊",
     kind: "持久戦",
     summary: "玉を隅まで運んで固く囲い、じっくり戦う持久戦。",
     load: () => assertJosekiCourse(ibishaVsShikenbishaAnaguma, "ibisha-vs-shikenbisha--anaguma.json"),
   },
+  {
+    id: "shikenbisha-vs-ibisha--basic",
+    strategyId: "shikenbisha",
+    opponentLabel: "居飛車",
+    sideLabel: "後手",
+    label: "基本の組み方",
+    kind: "持久戦",
+    summary: "飛車を4二へ振り、美濃囲いに収めるまで。四間飛車の土台。",
+    load: () => assertJosekiCourse(shikenbishaVsIbishaBasic, "shikenbisha-vs-ibisha--basic.json"),
+  },
+  {
+    id: "shikenbisha-vs-anaguma--basic",
+    strategyId: "shikenbisha",
+    opponentLabel: "居飛車穴熊",
+    sideLabel: "後手",
+    label: "対居飛車穴熊",
+    kind: "持久戦",
+    summary: "相手が穴熊に組む前に、6四歩〜7三桂と動いて主導権を取る。",
+    load: () => assertJosekiCourse(shikenbishaVsAnagumaBasic, "shikenbisha-vs-anaguma--basic.json"),
+  },
 ];
+
+/** 指定した戦法カードから選べるコース一覧。 */
+export function courseEntriesFor(strategyId: string): CourseEntry[] {
+  return COURSE_ENTRIES.filter((c) => c.strategyId === strategyId);
+}
 
 /** id からコースをロードする。見つからなければ先頭のコースにフォールバックする。 */
 export function loadCourseById(id: string): JosekiCourse {

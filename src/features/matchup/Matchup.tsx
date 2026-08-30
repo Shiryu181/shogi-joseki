@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { Strategy } from "../../domain/types";
-import { COURSE_ENTRIES } from "../../domain/josekiLoader";
+import { courseEntriesFor } from "../../domain/josekiLoader";
 import "./Matchup.css";
 
 export type PracticeMode = "learn" | "practice";
@@ -20,7 +20,10 @@ export interface MatchupProps {
  */
 export function Matchup({ strategy, onBack, onStart }: MatchupProps) {
   const [mode, setMode] = useState<PracticeMode>("learn");
-  const [courseId, setCourseId] = useState<string>(COURSE_ENTRIES[0].id);
+  // この戦法カードから選べるコースだけに絞る(居飛車のカードに四間飛車の作戦が出ないように)。
+  const entries = useMemo(() => courseEntriesFor(strategy.id), [strategy.id]);
+  const [courseId, setCourseId] = useState<string>(() => entries[0]?.id ?? "");
+  const selected = entries.find((c) => c.id === courseId) ?? entries[0];
 
   return (
     <div className="matchup-wrap">
@@ -39,27 +42,24 @@ export function Matchup({ strategy, onBack, onStart }: MatchupProps) {
         <div className="mbody">
           <div className="vshero">
             <div className="vs">
-              {strategy.name} <small>vs 四間飛車</small>
+              {strategy.name} <small>vs {selected?.opponentLabel ?? "—"}</small>
             </div>
           </div>
 
           <div className="fld">
             <h4>相手の戦法</h4>
             <div className="opt sel">
-              四間飛車 <span className="chk">✓</span>
+              {selected?.opponentLabel ?? "—"} <span className="chk">✓</span>
             </div>
             <div className="opt disabled">
-              中飛車 <span className="mini">準備中</span>
-            </div>
-            <div className="opt disabled">
-              三間飛車 <span className="mini">準備中</span>
+              その他の戦法 <span className="mini">準備中</span>
             </div>
           </div>
 
           <div className="fld">
             <h4>作戦</h4>
             <div className="courselist">
-              {COURSE_ENTRIES.map((c) => (
+              {entries.map((c) => (
                 <button
                   key={c.id}
                   type="button"
@@ -83,10 +83,10 @@ export function Matchup({ strategy, onBack, onStart }: MatchupProps) {
             <h4>自分の手番</h4>
             <div className="pair">
               <div className="opt sel">
-                ▲ 先手 <span className="chk">✓</span>
+                {selected?.sideLabel === "後手" ? "△ 後手" : "▲ 先手"} <span className="chk">✓</span>
               </div>
               <div className="opt disabled">
-                △ 後手 <span className="mini">準備中</span>
+                {selected?.sideLabel === "後手" ? "▲ 先手" : "△ 後手"} <span className="mini">準備中</span>
               </div>
             </div>
           </div>

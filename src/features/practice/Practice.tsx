@@ -212,6 +212,8 @@ export function Practice({ course, onBack }: PracticeProps) {
           clickableHandColor={
             (offScript ? offScript.status === "userTurn" : status === "userTurn") ? myColor : "none"
           }
+          // 後手番のコースでは盤を後手側から見た向きにする(自分の駒が手前を向く)
+          flipped={course.mySide === "gote"}
           promotionChoice={promotionChoice}
           onPromotionChoice={choosePromotion}
         />

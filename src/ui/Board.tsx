@@ -50,6 +50,12 @@ export interface BoardProps {
   promotionChoice?: PromotionChoice | null;
   /** 選択UIで「成る」「不成」いずれかが押されたときのコールバック。 */
   onPromotionChoice?: (promote: boolean) => void;
+  /**
+   * 盤を後手側から見た向きで描く。後手番のコース(mySide:"gote")で使う。
+   * 升の並び・筋/段のラベル・持ち駒トレイの上下・駒の向きがすべて反転する。
+   * 未指定なら従来どおり先手視点(既存の呼び出しは無影響)。
+   */
+  flipped?: boolean;
 }
 
 function HandTray({
@@ -59,6 +65,7 @@ function HandTray({
   selected,
   onHandPieceClick,
   clickable,
+  flipped,
 }: {
   position: Position;
   color: Color;
@@ -66,6 +73,7 @@ function HandTray({
   selected: HandHighlight | null | undefined;
   onHandPieceClick: (type: PieceType, color: Color) => void;
   clickable: boolean;
+  flipped: boolean;
 }) {
   const pieces = handCounts(position, color);
 
@@ -84,7 +92,7 @@ function HandTray({
             aria-label={`持ち駒 ${type} ${count}枚`}
           >
             {count > 1 && <span className="capn">{count}</span>}
-            <PieceView type={type} color={color} />
+            <PieceView type={type} color={color} flipped={flipped} />
           </button>
         );
       })}
@@ -104,31 +112,41 @@ export function Board({
   clickableHandColor = "both",
   promotionChoice = null,
   onPromotionChoice,
+  flipped = false,
 }: BoardProps) {
   const grid = useMemo(() => boardGrid(position), [position]);
   const glow = glowKeys ?? EMPTY_SET;
   const last = lastKeys ?? EMPTY_SET;
+  // 描画順だけを反転させ、升の座標(Square)は常に実際の値を使う。
+  // こうすることで、クリック処理や強調表示のロジックは反転を意識しなくてよい。
+  const order = flipped ? REVERSED_ORDER : NORMAL_ORDER;
+  const fileLabels = flipped ? REVERSED_FILES : FILES;
+  const rankLabels = flipped ? REVERSED_RANKS : RANKS;
 
   return (
     <div className="board-panel">
       <HandTray
         position={position}
-        color={Color.WHITE}
-        label="△持駒"
+        color={flipped ? Color.BLACK : Color.WHITE}
+        label={flipped ? "▲持駒" : "△持駒"}
         selected={fromHand}
         onHandPieceClick={onHandPieceClick}
-        clickable={clickableHandColor === "both" || clickableHandColor === Color.WHITE}
+        clickable={
+          clickableHandColor === "both" || clickableHandColor === (flipped ? Color.BLACK : Color.WHITE)
+        }
+        flipped={flipped}
       />
       <div className="board-block">
         <div className="files">
-          {FILES.map((f) => (
+          {fileLabels.map((f) => (
             <div key={f}>{f}</div>
           ))}
         </div>
         <div className="brow">
           <div className="board">
-            {grid.map((row, y) =>
-              row.map((piece, x) => {
+            {order.map((y) =>
+              order.map((x) => {
+                const piece = grid[y][x];
                 const square = Square.newByXY(x, y);
                 const key = square.usi;
                 const showGhost = !piece && ghost && ghost.key === key;
@@ -148,15 +166,15 @@ export function Board({
                     onClick={() => onSquareClick(square)}
                     aria-label={`${FILES[x]}${RANKS[y]}`}
                   >
-                    {piece && <PieceView type={piece.type} color={piece.color} />}
-                    {showGhost && <PieceView type={ghost.type} color={ghost.color} ghost />}
+                    {piece && <PieceView type={piece.type} color={piece.color} flipped={flipped} />}
+                    {showGhost && <PieceView type={ghost.type} color={ghost.color} ghost flipped={flipped} />}
                   </button>
                 );
               }),
             )}
           </div>
           <div className="ranks">
-            {RANKS.map((r) => (
+            {rankLabels.map((r) => (
               <div key={r}>{r}</div>
             ))}
           </div>
@@ -181,14 +199,23 @@ export function Board({
       </div>
       <HandTray
         position={position}
-        color={Color.BLACK}
-        label="▲持駒"
+        color={flipped ? Color.WHITE : Color.BLACK}
+        label={flipped ? "△持駒" : "▲持駒"}
         selected={fromHand}
         onHandPieceClick={onHandPieceClick}
-        clickable={clickableHandColor === "both" || clickableHandColor === Color.BLACK}
+        clickable={
+          clickableHandColor === "both" || clickableHandColor === (flipped ? Color.WHITE : Color.BLACK)
+        }
+        flipped={flipped}
       />
     </div>
   );
 }
 
 const EMPTY_SET: Set<string> = new Set();
+
+/** 盤の描画順(0..8)。反転時は逆順に走査して、座標計算はそのまま使う。 */
+const NORMAL_ORDER = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+const REVERSED_ORDER = [8, 7, 6, 5, 4, 3, 2, 1, 0];
+const REVERSED_FILES = [...FILES].reverse();
+const REVERSED_RANKS = [...RANKS].reverse();

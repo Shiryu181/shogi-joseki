@@ -131,6 +131,8 @@ export function Learn({ course, onBack }: LearnProps) {
           onSquareClick={handleSquareClick}
           onHandPieceClick={handleHandPieceClick}
           clickableHandColor="none"
+          // 後手番のコースでは盤を後手側から見た向きにする(自分の駒が手前を向く)
+          flipped={course.mySide === "gote"}
         />
         {showWaitPill && <div className="waitpill">相手が指しています…</div>}
         {pendingAck && <div className="ackpill">相手が指しました。解説を読んで「次へ」</div>}
