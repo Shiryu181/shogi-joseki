@@ -1,0 +1,272 @@
+{
+  "id": "ibisha-vs-sankenbisha--37kei",
+  "title": "居飛車 vs 三間飛車(先手・▲3七桂早仕掛け)",
+  "myStrategy": "ibisha",
+  "opponentStrategy": "sankenbisha",
+  "mySide": "sente",
+  "source": "手順は将棋大図書館(shogilounge.com)「三間飛車対▲３七桂早仕掛けの定跡」の基本図までの指し手に準拠(2026-08)",
+  "goalFormation": "舟囲いに4六歩を突き、桂を3七へ跳ねた形。次に▲4五歩から角を交換し、飛車先の突破を狙う。",
+  "goalSfen": "lnsg3nl/1k2gsr2/1ppp2bpp/p3ppp2/7P1/P1P1PPP2/1P1P2N1P/1BK1GS1R1/LNSG4L w - 1",
+  "root": {
+    "id": "n0",
+    "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
+    "comment": "平手の初形です。三間飛車に対して、桂を活用する急戦を見ていきます。",
+    "branches": [
+      {
+        "usi": "2g2f",
+        "kind": "main",
+        "note": "飛車先の歩から入ります。",
+        "child": {
+          "id": "n1",
+          "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/7P1/PPPPPPP1P/1B5R1/LNSGKGSNL w - 1",
+          "branches": [
+            {
+              "usi": "3c3d",
+              "kind": "main",
+              "note": null,
+              "child": {
+                "id": "n2",
+                "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/7P1/PPPPPPP1P/1B5R1/LNSGKGSNL b - 1",
+                "branches": [
+                  {
+                    "usi": "7g7f",
+                    "kind": "main",
+                    "note": "角道を開けます。",
+                    "child": {
+                      "id": "n3",
+                      "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL w - 1",
+                      "branches": [
+                        {
+                          "usi": "4c4d",
+                          "kind": "main",
+                          "note": "相手が角道を止めました。",
+                          "child": {
+                            "id": "n4",
+                            "sfen": "lnsgkgsnl/1r5b1/ppppp2pp/5pp2/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL b - 1",
+                            "branches": [
+                              {
+                                "usi": "3i4h",
+                                "kind": "main",
+                                "note": "右銀を上がります。",
+                                "child": {
+                                  "id": "n5",
+                                  "sfen": "lnsgkgsnl/1r5b1/ppppp2pp/5pp2/9/2P4P1/PP1PPPP1P/1B3S1R1/LNSGKG1NL w - 1",
+                                  "branches": [
+                                    {
+                                      "usi": "8b3b",
+                                      "kind": "main",
+                                      "note": "相手の三間飛車が確定しました。",
+                                      "child": {
+                                        "id": "n6",
+                                        "sfen": "lnsgkgsnl/6rb1/ppppp2pp/5pp2/9/2P4P1/PP1PPPP1P/1B3S1R1/LNSGKG1NL b - 1",
+                                        "branches": [
+                                          {
+                                            "usi": "2f2e",
+                                            "kind": "main",
+                                            "note": "飛車先を伸ばします。",
+                                            "child": {
+                                              "id": "n7",
+                                              "sfen": "lnsgkgsnl/6rb1/ppppp2pp/5pp2/7P1/2P6/PP1PPPP1P/1B3S1R1/LNSGKG1NL w - 1",
+                                              "branches": [
+                                                {
+                                                  "usi": "2b3c",
+                                                  "kind": "main",
+                                                  "note": "相手は角で飛車先を受けます。",
+                                                  "child": {
+                                                    "id": "n8",
+                                                    "sfen": "lnsgkgsnl/6r2/ppppp1bpp/5pp2/7P1/2P6/PP1PPPP1P/1B3S1R1/LNSGKG1NL b - 1",
+                                                    "branches": [
+                                                      {
+                                                        "usi": "5i6h",
+                                                        "kind": "main",
+                                                        "note": null,
+                                                        "child": {
+                                                          "id": "n9",
+                                                          "sfen": "lnsgkgsnl/6r2/ppppp1bpp/5pp2/7P1/2P6/PP1PPPP1P/1B1K1S1R1/LNSG1G1NL w - 1",
+                                                          "branches": [
+                                                            {
+                                                              "usi": "3a4b",
+                                                              "kind": "main",
+                                                              "note": null,
+                                                              "child": {
+                                                                "id": "n10",
+                                                                "sfen": "lnsgkg1nl/5sr2/ppppp1bpp/5pp2/7P1/2P6/PP1PPPP1P/1B1K1S1R1/LNSG1G1NL b - 1",
+                                                                "branches": [
+                                                                  {
+                                                                    "usi": "6h7h",
+                                                                    "kind": "main",
+                                                                    "note": "舟囲いへ。",
+                                                                    "child": {
+                                                                      "id": "n11",
+                                                                      "sfen": "lnsgkg1nl/5sr2/ppppp1bpp/5pp2/7P1/2P6/PP1PPPP1P/1BK2S1R1/LNSG1G1NL w - 1",
+                                                                      "branches": [
+                                                                        {
+                                                                          "usi": "5a6b",
+                                                                          "kind": "main",
+                                                                          "note": null,
+                                                                          "child": {
+                                                                            "id": "n12",
+                                                                            "sfen": "lnsg1g1nl/3k1sr2/ppppp1bpp/5pp2/7P1/2P6/PP1PPPP1P/1BK2S1R1/LNSG1G1NL b - 1",
+                                                                            "branches": [
+                                                                              {
+                                                                                "usi": "5g5f",
+                                                                                "kind": "main",
+                                                                                "note": null,
+                                                                                "child": {
+                                                                                  "id": "n13",
+                                                                                  "sfen": "lnsg1g1nl/3k1sr2/ppppp1bpp/5pp2/7P1/2P1P4/PP1P1PP1P/1BK2S1R1/LNSG1G1NL w - 1",
+                                                                                  "branches": [
+                                                                                    {
+                                                                                      "usi": "5c5d",
+                                                                                      "kind": "main",
+                                                                                      "note": null,
+                                                                                      "child": {
+                                                                                        "id": "n14",
+                                                                                        "sfen": "lnsg1g1nl/3k1sr2/pppp2bpp/4ppp2/7P1/2P1P4/PP1P1PP1P/1BK2S1R1/LNSG1G1NL b - 1",
+                                                                                        "branches": [
+                                                                                          {
+                                                                                            "usi": "4i5h",
+                                                                                            "kind": "main",
+                                                                                            "note": "舟囲いを固めます。",
+                                                                                            "child": {
+                                                                                              "id": "n15",
+                                                                                              "sfen": "lnsg1g1nl/3k1sr2/pppp2bpp/4ppp2/7P1/2P1P4/PP1P1PP1P/1BK1GS1R1/LNSG3NL w - 1",
+                                                                                              "comment": null,
+                                                                                              "branches": [
+                                                                                                {
+                                                                                                  "usi": "4a5b",
+                                                                                                  "kind": "main",
+                                                                                                  "note": null,
+                                                                                                  "child": {
+                                                                                                    "id": "n16",
+                                                                                                    "sfen": "lnsg3nl/3kgsr2/pppp2bpp/4ppp2/7P1/2P1P4/PP1P1PP1P/1BK1GS1R1/LNSG3NL b - 1",
+                                                                                                    "comment": null,
+                                                                                                    "branches": [
+                                                                                                      {
+                                                                                                        "usi": "3g3f",
+                                                                                                        "kind": "main",
+                                                                                                        "note": "桂を跳ねる場所を作ります。",
+                                                                                                        "child": {
+                                                                                                          "id": "n17",
+                                                                                                          "sfen": "lnsg3nl/3kgsr2/pppp2bpp/4ppp2/7P1/2P1P1P2/PP1P1P2P/1BK1GS1R1/LNSG3NL w - 1",
+                                                                                                          "branches": [
+                                                                                                            {
+                                                                                                              "usi": "6b7b",
+                                                                                                              "kind": "main",
+                                                                                                              "note": null,
+                                                                                                              "child": {
+                                                                                                                "id": "n18",
+                                                                                                                "sfen": "lnsg3nl/2k1gsr2/pppp2bpp/4ppp2/7P1/2P1P1P2/PP1P1P2P/1BK1GS1R1/LNSG3NL b - 1",
+                                                                                                                "branches": [
+                                                                                                                  {
+                                                                                                                    "usi": "9g9f",
+                                                                                                                    "kind": "main",
+                                                                                                                    "note": null,
+                                                                                                                    "child": {
+                                                                                                                      "id": "n19",
+                                                                                                                      "sfen": "lnsg3nl/2k1gsr2/pppp2bpp/4ppp2/7P1/P1P1P1P2/1P1P1P2P/1BK1GS1R1/LNSG3NL w - 1",
+                                                                                                                      "branches": [
+                                                                                                                        {
+                                                                                                                          "usi": "9c9d",
+                                                                                                                          "kind": "main",
+                                                                                                                          "note": null,
+                                                                                                                          "child": {
+                                                                                                                            "id": "n20",
+                                                                                                                            "sfen": "lnsg3nl/2k1gsr2/1ppp2bpp/p3ppp2/7P1/P1P1P1P2/1P1P1P2P/1BK1GS1R1/LNSG3NL b - 1",
+                                                                                                                            "branches": [
+                                                                                                                              {
+                                                                                                                                "usi": "4g4f",
+                                                                                                                                "kind": "main",
+                                                                                                                                "note": "4筋の歩を伸ばします。次に4五歩と突く狙いです。",
+                                                                                                                                "child": {
+                                                                                                                                  "id": "n21",
+                                                                                                                                  "sfen": "lnsg3nl/2k1gsr2/1ppp2bpp/p3ppp2/7P1/P1P1PPP2/1P1P4P/1BK1GS1R1/LNSG3NL w - 1",
+                                                                                                                                  "branches": [
+                                                                                                                                    {
+                                                                                                                                      "usi": "7b8b",
+                                                                                                                                      "kind": "main",
+                                                                                                                                      "note": "相手の美濃囲いが完成しました。",
+                                                                                                                                      "child": {
+                                                                                                                                        "id": "n22",
+                                                                                                                                        "sfen": "lnsg3nl/1k2gsr2/1ppp2bpp/p3ppp2/7P1/P1P1PPP2/1P1P4P/1BK1GS1R1/LNSG3NL b - 1",
+                                                                                                                                        "branches": [
+                                                                                                                                          {
+                                                                                                                                            "usi": "2i3g",
+                                                                                                                                            "kind": "main",
+                                                                                                                                            "note": "桂を3七へ跳ねて攻めの駒を増やします。ここから▲4五歩と突いて角を交換し、飛車先の突破を狙うのがこの戦法の骨子です。",
+                                                                                                                                            "child": {
+                                                                                                                                              "id": "n23",
+                                                                                                                                              "sfen": "lnsg3nl/1k2gsr2/1ppp2bpp/p3ppp2/7P1/P1P1PPP2/1P1P2N1P/1BK1GS1R1/LNSG4L w - 1",
+                                                                                                                                              "comment": "▲3七桂早仕掛けの基本形です。桂・銀・飛車が2〜4筋に働く形で、次の▲4五歩が仕掛けの合図になります。仕掛け以降は今後のフェーズで扱います。",
+                                                                                                                                              "branches": []
+                                                                                                                                            }
+                                                                                                                                          }
+                                                                                                                                        ]
+                                                                                                                                      }
+                                                                                                                                    }
+                                                                                                                                  ]
+                                                                                                                                }
+                                                                                                                              }
+                                                                                                                            ]
+                                                                                                                          }
+                                                                                                                        }
+                                                                                                                      ]
+                                                                                                                    }
+                                                                                                                  }
+                                                                                                                ]
+                                                                                                              }
+                                                                                                            }
+                                                                                                          ]
+                                                                                                        }
+                                                                                                      }
+                                                                                                    ]
+                                                                                                  }
+                                                                                                }
+                                                                                              ]
+                                                                                            }
+                                                                                          }
+                                                                                        ]
+                                                                                      }
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              }
+                                                                            ]
+                                                                          }
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                              }
+                                                            }
+                                                          ]
+                                                        }
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

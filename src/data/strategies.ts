@@ -20,10 +20,10 @@ export const STRATEGIES: Strategy[] = [
     category: "ibisha",
     popularity: 4.9,
     level: "入門〜",
-    lineCount: 4,
+    lineCount: 6,
     ready: true,
     description:
-      "飛車を初期位置(２筋・８筋)に構えたまま戦う、最も基本的な戦法群。対四間飛車の急戦3種(棒銀・斜め棒銀・４五歩早仕掛け)と持久戦(居飛車穴熊)を収録。",
+      "飛車を初期位置(２筋・８筋)に構えたまま戦う、最も基本的な戦法群。対四間飛車の急戦3種と持久戦(居飛車穴熊)、対三間飛車の急戦2種を収録。",
   },
   {
     id: "shikenbisha",
@@ -88,9 +88,10 @@ export const STRATEGIES: Strategy[] = [
     category: "furibisha",
     popularity: 4.3,
     level: "入門〜",
-    lineCount: 0,
-    ready: false,
-    description: "飛車を3筋(後手番なら7筋)に振る振り飛車の一種。データは準備中です。",
+    lineCount: 1,
+    ready: true,
+    description:
+      "飛車を3筋(後手番なら7筋)に振る振り飛車の一種。飛車が角の頭を守るぶん、四間飛車より一手得と言われる。基本の組み方(美濃囲い)を収録。",
   },
   {
     id: "sujichigaikaku",

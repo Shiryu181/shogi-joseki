@@ -10,6 +10,9 @@ import ibishaVsShikenbisha45 from "../data/joseki/ibisha-vs-shikenbisha--45hayas
 import ibishaVsShikenbishaAnaguma from "../data/joseki/ibisha-vs-shikenbisha--anaguma.json";
 import shikenbishaVsIbishaBasic from "../data/joseki/shikenbisha-vs-ibisha--basic.json";
 import shikenbishaVsAnagumaBasic from "../data/joseki/shikenbisha-vs-anaguma--basic.json";
+import ibishaVsSankenbishaBougin from "../data/joseki/ibisha-vs-sankenbisha--bougin.json";
+import ibishaVsSankenbisha37 from "../data/joseki/ibisha-vs-sankenbisha--37kei.json";
+import sankenbishaVsIbishaBasic from "../data/joseki/sankenbisha-vs-ibisha--basic.json";
 import branchNavDemo from "../data/joseki/_branchNavDemo.json";
 
 function isJosekiMove(value: unknown): value is JosekiMove {
@@ -125,6 +128,26 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     load: () => assertJosekiCourse(ibishaVsShikenbishaAnaguma, "ibisha-vs-shikenbisha--anaguma.json"),
   },
   {
+    id: "ibisha-vs-sankenbisha--bougin",
+    strategyId: "ibisha",
+    opponentLabel: "三間飛車",
+    sideLabel: "先手",
+    label: "対三間飛車・急戦",
+    kind: "急戦",
+    summary: "三間飛車が相手のとき。舟囲いから4六歩と攻めの形を作る。",
+    load: () => assertJosekiCourse(ibishaVsSankenbishaBougin, "ibisha-vs-sankenbisha--bougin.json"),
+  },
+  {
+    id: "ibisha-vs-sankenbisha--37kei",
+    strategyId: "ibisha",
+    opponentLabel: "三間飛車",
+    sideLabel: "先手",
+    label: "対三間飛車・▲3七桂早仕掛け",
+    kind: "急戦",
+    summary: "桂を3七へ跳ね、4五歩から角交換して飛車先の突破を狙う。",
+    load: () => assertJosekiCourse(ibishaVsSankenbisha37, "ibisha-vs-sankenbisha--37kei.json"),
+  },
+  {
     id: "shikenbisha-vs-ibisha--basic",
     strategyId: "shikenbisha",
     opponentLabel: "居飛車",
@@ -143,6 +166,16 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "持久戦",
     summary: "相手が穴熊に組む前に、6四歩〜7三桂と動いて主導権を取る。",
     load: () => assertJosekiCourse(shikenbishaVsAnagumaBasic, "shikenbisha-vs-anaguma--basic.json"),
+  },
+  {
+    id: "sankenbisha-vs-ibisha--basic",
+    strategyId: "sankenbisha",
+    opponentLabel: "居飛車",
+    sideLabel: "後手",
+    label: "基本の組み方",
+    kind: "持久戦",
+    summary: "飛車を3二へ振り、美濃囲いに収めるまで。三間飛車の土台。",
+    load: () => assertJosekiCourse(sankenbishaVsIbishaBasic, "sankenbisha-vs-ibisha--basic.json"),
   },
 ];
 
