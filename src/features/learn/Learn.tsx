@@ -28,6 +28,7 @@ export function Learn({ course, onBack }: LearnProps) {
   const selectedBranchIndex = useLearnStore((s) => s.selectedBranchIndex);
   const position = useLearnStore((s) => s.position);
   const autoAdvanceOpponent = useLearnStore((s) => s.autoAdvanceOpponent);
+  const pendingAck = useLearnStore((s) => s.pendingAck);
   const attemptSquare = useLearnStore((s) => s.attemptSquare);
   const advance = useLearnStore((s) => s.advance);
   const chooseBranch = useLearnStore((s) => s.chooseBranch);
@@ -57,8 +58,10 @@ export function Learn({ course, onBack }: LearnProps) {
   const moveNumber = nodeHistory.length + 1;
   const totalMoves = useMemo(() => countMoves(course.root), [course]);
 
-  const parsed = guide ? parseUSIMove(guide.usi) : null;
-  const moveInfo = guide ? moveFromUSI(position, guide.usi) : null;
+  // 確認待ち中(相手の手を自動で指した直後)は、解説を読むことに集中してもらうため
+  // 次の自分の手のガイドは出さない。「次へ」を押すと通常の表示に戻る。
+  const parsed = guide && !pendingAck ? parseUSIMove(guide.usi) : null;
+  const moveInfo = guide && !pendingAck ? moveFromUSI(position, guide.usi) : null;
 
   const fromKey = parsed && parsed.from instanceof Square ? parsed.from.usi : null;
   const fromHand: HandHighlight | null =
@@ -87,7 +90,7 @@ export function Learn({ course, onBack }: LearnProps) {
 
   const myColor = course.mySide === "sente" ? Color.BLACK : Color.WHITE;
   const isOpponentTurn = !isGoal && position.color !== myColor;
-  const showWaitPill = isOpponentTurn && autoAdvanceOpponent;
+  const showWaitPill = isOpponentTurn && autoAdvanceOpponent && !pendingAck;
 
   return (
     <div className="learn-wrap">
@@ -108,7 +111,7 @@ export function Learn({ course, onBack }: LearnProps) {
             {position.color === Color.BLACK ? "▲ 先手番" : "△ 後手番"}
           </span>
           <span className="badge b-prog">
-            {Math.min(moveNumber, totalMoves)} / {totalMoves} 手
+            {Math.min(pendingAck ? pendingAck.moveNumber : moveNumber, totalMoves)} / {totalMoves} 手
           </span>
           <button
             type="button"
@@ -130,17 +133,34 @@ export function Learn({ course, onBack }: LearnProps) {
           clickableHandColor="none"
         />
         {showWaitPill && <div className="waitpill">相手が指しています…</div>}
-        {!isGoal && !showWaitPill && <div className="guidepill">光っているマスへ動かして次の手をなぞる</div>}
-        <CommentPanel
-          isGoal={isGoal}
-          moveNumber={isGoal ? undefined : moveNumber}
-          moveText={moveInfo?.displayText}
-          note={guide?.note}
-          comment={currentNode.comment}
-          kind={guide?.kind}
-          punishNote={guide?.punishNote}
-        />
-        <BranchNav branches={currentNode.branches} activeIndex={selectedBranchIndex} onSelect={chooseBranch} />
+        {pendingAck && <div className="ackpill">相手が指しました。解説を読んで「次へ」</div>}
+        {!isGoal && !showWaitPill && !pendingAck && (
+          <div className="guidepill">光っているマスへ動かして次の手をなぞる</div>
+        )}
+        {pendingAck ? (
+          <CommentPanel
+            isGoal={false}
+            moveNumber={pendingAck.moveNumber}
+            moveText={pendingAck.moveText}
+            note={pendingAck.note}
+            comment={pendingAck.comment}
+            kind={pendingAck.kind}
+            punishNote={pendingAck.punishNote}
+          />
+        ) : (
+          <CommentPanel
+            isGoal={isGoal}
+            moveNumber={isGoal ? undefined : moveNumber}
+            moveText={moveInfo?.displayText}
+            note={guide?.note}
+            comment={currentNode.comment}
+            kind={guide?.kind}
+            punishNote={guide?.punishNote}
+          />
+        )}
+        {!pendingAck && (
+          <BranchNav branches={currentNode.branches} activeIndex={selectedBranchIndex} onSelect={chooseBranch} />
+        )}
         <div className="learn-navrow">
           <button type="button" onClick={goToStart} disabled={nodeHistory.length === 0} aria-label="最初へ">
             ⏮
@@ -148,8 +168,8 @@ export function Learn({ course, onBack }: LearnProps) {
           <button type="button" onClick={goBack} disabled={nodeHistory.length === 0} aria-label="1手戻る">
             ◀
           </button>
-          <button type="button" className="primary" onClick={advance} disabled={isGoal}>
-            なぞって次へ ▶
+          <button type="button" className="primary" onClick={advance} disabled={isGoal && !pendingAck}>
+            {pendingAck ? "次へ ▶" : "なぞって次へ ▶"}
           </button>
         </div>
       </div>

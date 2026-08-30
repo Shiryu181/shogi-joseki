@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Color, Position, Square, parseUSIMove } from "../domain/shogi";
+import { Color, Position, Square, moveFromUSI, parseUSIMove } from "../domain/shogi";
 import type { JosekiCourse, JosekiMove, JosekiNode } from "../domain/types";
 import { loadIbishaVsShikenbishaSente } from "../domain/josekiLoader";
 
@@ -18,6 +18,24 @@ function positionFromNode(node: JosekiNode): Position {
 /** コースの mySide に対応する tsshogi の Color。practiceStore の myColorOf と同じ定義。 */
 function myColorOf(course: JosekiCourse): Color {
   return course.mySide === "sente" ? Color.BLACK : Color.WHITE;
+}
+
+/**
+ * 相手の手を自動で指した直後に「解説を読む時間」を作るための一時停止状態。
+ * 盤には既に手が適用されている(= ユーザーは盤を操作しなくてよい)が、
+ * その手の解説を表示したまま止まり、「次へ」を押すまで先に進まない。
+ * これが null でない間は自動進行もガイド表示も行わない。
+ */
+export interface AckMove {
+  /** 指された手の番号(第n手)。 */
+  moveNumber: number;
+  /** ▲２六歩 のような表示テキスト。 */
+  moveText: string;
+  note?: string;
+  kind: JosekiMove["kind"];
+  punishNote?: string;
+  /** その手を指す前の局面(JosekiNode)の解説。 */
+  comment?: string;
 }
 
 /** 指定した分岐インデックスの手(無ければ null = 末端/理想陣形)。 */
@@ -48,6 +66,13 @@ interface LearnState {
    * トグル「相手の手も自分でなぞる」で false にすると、従来どおり全手を手動でなぞる挙動に戻る。
    */
   autoAdvanceOpponent: boolean;
+  /**
+   * 相手の手を自動で指した直後の「解説の確認待ち」。null でない間は
+   * 盤のガイドを出さず、自動進行も止めて、ユーザーが読み終えるのを待つ。
+   */
+  pendingAck: AckMove | null;
+  /** 「次へ」で確認待ちを解除する。解除後にまた自動進行の判定を行う。 */
+  acknowledgeMove: () => void;
   /** 光っている升(ガイドの移動先)をクリックしたときだけ進む。それ以外は無視する。 */
   attemptSquare: (square: Square) => void;
   /** 「なぞって次へ」ボタン。選択中の分岐の手をそのまま適用する。 */
@@ -92,6 +117,7 @@ function initial() {
     selectedBranchIndex: 0,
     position: positionFromNode(course.root),
     autoAdvanceOpponent: true,
+    pendingAck: null as AckMove | null,
   };
 }
 
@@ -104,13 +130,28 @@ export const useLearnStore = create<LearnState>((set, get) => {
    */
   function scheduleAutoAdvance() {
     clearAutoAdvanceTimer();
-    const { autoAdvanceOpponent, course, currentNode, position } = get();
+    const { autoAdvanceOpponent, course, currentNode, position, pendingAck } = get();
+    if (pendingAck) return; // 解説の確認待ち中は進めない(「次へ」を押すまで止まる)
     if (!autoAdvanceOpponent) return;
     if (position.color === myColorOf(course)) return; // 自分の手番: 自動では進めない
     const move = mainBranchOf(currentNode);
     if (!move || !move.child) return; // 理想陣形、またはこの先の本線データが無い
     autoAdvanceTimer = setTimeout(() => {
       autoAdvanceTimer = null;
+      // 盤には手を適用するが、その手の解説を表示したまま止まる(pendingAck)。
+      // 表示情報は「手を指す前」の局面から作る必要があるので、goToChild より先に組み立てる。
+      const before = get();
+      const ack: AckMove = {
+        moveNumber: before.nodeHistory.length + 1,
+        moveText: moveFromUSI(before.position, move.usi)?.displayText ?? "",
+        note: move.note,
+        kind: move.kind,
+        punishNote: move.punishNote,
+        comment: before.currentNode.comment,
+      };
+      // 先に立てておくことで、goToChild 内の scheduleAutoAdvance が
+      // (相手の手が連続する局面でも)そのまま先へ進んでしまうのを防ぐ。
+      set({ pendingAck: ack });
       goToChild(move);
     }, OPPONENT_MOVE_DELAY_MS);
   }
@@ -132,13 +173,25 @@ export const useLearnStore = create<LearnState>((set, get) => {
     ...initial(),
 
     advance() {
+      // 確認待ち中の「次へ」は、手を進めるのではなく解説の確認解除として扱う。
+      if (get().pendingAck) {
+        get().acknowledgeMove();
+        return;
+      }
       const { currentNode, selectedBranchIndex } = get();
       const move = branchMove(currentNode, selectedBranchIndex);
       if (!move || !move.child) return; // 末端(理想陣形、またはダミー分岐の行き止まり)に到達済み
       goToChild(move);
     },
 
+    acknowledgeMove() {
+      if (!get().pendingAck) return;
+      set({ pendingAck: null });
+      scheduleAutoAdvance();
+    },
+
     attemptSquare(square) {
+      if (get().pendingAck) return; // 確認待ち中はガイドを出していないので盤クリックは無視
       const { currentNode, selectedBranchIndex } = get();
       const move = branchMove(currentNode, selectedBranchIndex);
       if (!move) return;
@@ -173,6 +226,7 @@ export const useLearnStore = create<LearnState>((set, get) => {
         nodeHistory: history,
         position: positionFromNode(prev),
         selectedBranchIndex: 0,
+        pendingAck: null,
       });
       scheduleAutoAdvance();
     },
@@ -185,6 +239,7 @@ export const useLearnStore = create<LearnState>((set, get) => {
         nodeHistory: [],
         position: positionFromNode(course.root),
         selectedBranchIndex: 0,
+        pendingAck: null,
       });
       scheduleAutoAdvance();
     },
@@ -197,13 +252,14 @@ export const useLearnStore = create<LearnState>((set, get) => {
         nodeHistory: [],
         selectedBranchIndex: 0,
         position: positionFromNode(course.root),
+        pendingAck: null,
       });
       scheduleAutoAdvance();
     },
 
     setAutoAdvanceOpponent(value) {
       clearAutoAdvanceTimer();
-      set({ autoAdvanceOpponent: value });
+      set({ autoAdvanceOpponent: value, pendingAck: null });
       scheduleAutoAdvance();
     },
 

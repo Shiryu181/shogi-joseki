@@ -79,6 +79,28 @@
   border-radius: 20px;
 }
 
+/*
+ * 相手の手を自動で指した直後の「解説を読んでください」表示。
+ * なぞりガイド(金茶の guidepill)とは役割が違う(操作を促すのではなく読ませる)ので、
+ * 落ち着いた配色にして取り違えないようにする。
+ */
+.ackpill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  justify-content: center;
+  margin: 2px auto 0;
+  width: max-content;
+  max-width: calc(100% - 28px);
+  background: var(--card);
+  color: var(--ink-2, var(--ink));
+  border: 1px solid var(--line-2);
+  font-size: 11.5px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  text-align: center;
+}
+
 .learn-navrow {
   display: flex;
   gap: 8px;
