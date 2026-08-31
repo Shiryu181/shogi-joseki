@@ -22,8 +22,24 @@ export function Matchup({ strategy, onBack, onStart }: MatchupProps) {
   const [mode, setMode] = useState<PracticeMode>("learn");
   // この戦法カードから選べるコースだけに絞る(居飛車のカードに四間飛車の作戦が出ないように)。
   const entries = useMemo(() => courseEntriesFor(strategy.id), [strategy.id]);
+  // この戦法で実データがある手番。両方あるなら手番も選べるようにする。
+  const availableSides = useMemo(
+    () => Array.from(new Set(entries.map((c) => c.sideLabel))),
+    [entries],
+  );
+  const [side, setSide] = useState<"先手" | "後手">(() => entries[0]?.sideLabel ?? "先手");
+  // 選んだ手番のコースだけを出す(手番とコースが食い違わないように)。
+  const sideEntries = entries.filter((c) => c.sideLabel === side);
   const [courseId, setCourseId] = useState<string>(() => entries[0]?.id ?? "");
-  const selected = entries.find((c) => c.id === courseId) ?? entries[0];
+  const selected = sideEntries.find((c) => c.id === courseId) ?? sideEntries[0];
+
+  /** 手番を切り替えたら、その手番の先頭コースを選び直す。 */
+  function chooseSide(next: "先手" | "後手") {
+    if (!availableSides.includes(next)) return;
+    setSide(next);
+    const first = entries.find((c) => c.sideLabel === next);
+    if (first) setCourseId(first.id);
+  }
 
   return (
     <div className="matchup-wrap">
@@ -59,7 +75,7 @@ export function Matchup({ strategy, onBack, onStart }: MatchupProps) {
           <div className="fld">
             <h4>作戦</h4>
             <div className="courselist">
-              {entries.map((c) => (
+              {sideEntries.map((c) => (
                 <button
                   key={c.id}
                   type="button"
@@ -82,12 +98,26 @@ export function Matchup({ strategy, onBack, onStart }: MatchupProps) {
           <div className="fld">
             <h4>自分の手番</h4>
             <div className="pair">
-              <div className="opt sel">
-                {selected?.sideLabel === "後手" ? "△ 後手" : "▲ 先手"} <span className="chk">✓</span>
-              </div>
-              <div className="opt disabled">
-                {selected?.sideLabel === "後手" ? "▲ 先手" : "△ 後手"} <span className="mini">準備中</span>
-              </div>
+              {(["先手", "後手"] as const).map((s) => {
+                const label = s === "先手" ? "▲ 先手" : "△ 後手";
+                if (!availableSides.includes(s)) {
+                  return (
+                    <div key={s} className="opt disabled">
+                      {label} <span className="mini">準備中</span>
+                    </div>
+                  );
+                }
+                return (
+                  <button
+                    key={s}
+                    type="button"
+                    className={`opt${side === s ? " sel" : ""}`}
+                    onClick={() => chooseSide(s)}
+                  >
+                    {label} {side === s && <span className="chk">✓</span>}
+                  </button>
+                );
+              })}
             </div>
           </div>
 

@@ -20,6 +20,9 @@ import yagura24te from "../data/joseki/yagura--24te.json";
 import nakabishaVsAnaguma from "../data/joseki/nakabisha-vs-anaguma--basic.json";
 import sujichigaikakuBasic from "../data/joseki/sujichigaikaku--basic.json";
 import ibishaVsNakabishaAnaguma from "../data/joseki/ibisha-vs-nakabisha--anaguma.json";
+import kakugawariGote from "../data/joseki/kakugawari--gote.json";
+import yaguraGote from "../data/joseki/yagura--gote.json";
+import aigakariGote from "../data/joseki/aigakari--gote.json";
 import branchNavDemo from "../data/joseki/_branchNavDemo.json";
 
 function isJosekiMove(value: unknown): value is JosekiMove {
@@ -215,6 +218,16 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     load: () => assertJosekiCourse(kakugawariHayakurigin, "kakugawari--hayakurigin.json"),
   },
   {
+    id: "kakugawari--gote",
+    strategyId: "kakugawari",
+    opponentLabel: "角換わり",
+    sideLabel: "後手",
+    label: "後手番の駒組み",
+    kind: "急戦",
+    summary: "後手番で角換わりに進む場合の組み方。相手の棒銀に備える。",
+    load: () => assertJosekiCourse(kakugawariGote, "kakugawari--gote.json"),
+  },
+  {
     id: "aigakari--bougin",
     strategyId: "aigakari",
     opponentLabel: "相掛かり",
@@ -225,6 +238,16 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     load: () => assertJosekiCourse(aigakariBougin, "aigakari--bougin.json"),
   },
   {
+    id: "aigakari--gote",
+    strategyId: "aigakari",
+    opponentLabel: "相掛かり",
+    sideLabel: "後手",
+    label: "後手番の駒組み",
+    kind: "急戦",
+    summary: "後手番で相掛かりを受けて立つ場合の組み方。",
+    load: () => assertJosekiCourse(aigakariGote, "aigakari--gote.json"),
+  },
+  {
     id: "yagura--24te",
     strategyId: "yagura",
     opponentLabel: "矢倉",
@@ -233,6 +256,16 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "持久戦",
     summary: "金銀を組み上げる矢倉の基本形。相居飛車の代表的な駒組み。",
     load: () => assertJosekiCourse(yagura24te, "yagura--24te.json"),
+  },
+  {
+    id: "yagura--gote",
+    strategyId: "yagura",
+    opponentLabel: "矢倉",
+    sideLabel: "後手",
+    label: "24手組(後手)",
+    kind: "持久戦",
+    summary: "後手番で矢倉に組む場合の24手組。相居飛車ではお互いに同じ形に組み合う。",
+    load: () => assertJosekiCourse(yaguraGote, "yagura--gote.json"),
   },
   {
     id: "nakabisha-vs-anaguma--basic",

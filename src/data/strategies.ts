@@ -44,7 +44,7 @@ export const STRATEGIES: Strategy[] = [
     category: "ibisha",
     popularity: 4.7,
     level: "中級〜",
-    lineCount: 2,
+    lineCount: 3,
     ready: true,
     description:
       "序盤で角を交換し合ってから駒組みを進める、相居飛車の代表的な戦型。棒銀と早繰り銀を収録。",
@@ -68,7 +68,7 @@ export const STRATEGIES: Strategy[] = [
     category: "ibisha",
     popularity: 4.5,
     level: "中級〜",
-    lineCount: 1,
+    lineCount: 2,
     ready: true,
     description:
       "互いに飛車先の歩を交換してから戦う、相居飛車の古典的な戦型。棒銀を収録。",
@@ -80,7 +80,7 @@ export const STRATEGIES: Strategy[] = [
     category: "ibisha",
     popularity: 4.4,
     level: "中級〜",
-    lineCount: 1,
+    lineCount: 2,
     ready: true,
     description:
       "金銀を堅く組み合わせた矢倉囲いを作ってから戦う、相居飛車の伝統的な戦型。基本の駒組み(24手組)を収録。",
