@@ -80,14 +80,21 @@ export function assertSwappable(usiList) {
   }
 }
 
-/** 手番を入れ替えた USI 列を返す。奇数手で終わる場合は最後の1手を落とす。 */
-export function swapSides(usiList) {
-  assertSwappable(usiList);
-  const even = usiList.length - (usiList.length % 2);
+/**
+ * 手番を入れ替えた USI 列を返す。奇数手で終わる場合は最後の1手を落とす。
+ *
+ * limit を渡すと、元の棋譜の先頭 limit 手だけを使う。元コースに仕掛け(駒の
+ * 取り合い)を足しても、手番入れ替え版は駒組みの範囲で安定させるために使う
+ * (取り合いを含めると変換が破綻するため。assertSwappable を参照)。
+ */
+export function swapSides(usiList, limit) {
+  const source = typeof limit === "number" ? usiList.slice(0, limit) : usiList;
+  assertSwappable(source);
+  const even = source.length - (source.length % 2);
   const out = [];
   for (let i = 0; i < even; i += 2) {
-    out.push(mirrorUsi(usiList[i + 1]));  // 元の後手の手 → 新しい先手の手
-    out.push(mirrorUsi(usiList[i]));      // 元の先手の手 → 新しい後手の手
+    out.push(mirrorUsi(source[i + 1]));  // 元の後手の手 → 新しい先手の手
+    out.push(mirrorUsi(source[i]));      // 元の先手の手 → 新しい後手の手
   }
   return out;
 }

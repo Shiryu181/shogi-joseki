@@ -4,32 +4,43 @@
  * import し、最低限の形状チェックをしてから返す。
  */
 import type { JosekiCourse, JosekiMove, JosekiNode } from "./types";
-import ibishaVsShikenbishaSente from "../data/joseki/ibisha-vs-shikenbisha--sente.json";
-import ibishaVsShikenbishaBougin from "../data/joseki/ibisha-vs-shikenbisha--bougin.json";
-import ibishaVsShikenbisha45 from "../data/joseki/ibisha-vs-shikenbisha--45hayashikake.json";
-import ibishaVsShikenbishaAnaguma from "../data/joseki/ibisha-vs-shikenbisha--anaguma.json";
-import shikenbishaVsIbishaBasic from "../data/joseki/shikenbisha-vs-ibisha--basic.json";
-import shikenbishaVsAnagumaBasic from "../data/joseki/shikenbisha-vs-anaguma--basic.json";
-import ibishaVsSankenbishaBougin from "../data/joseki/ibisha-vs-sankenbisha--bougin.json";
-import ibishaVsSankenbisha37 from "../data/joseki/ibisha-vs-sankenbisha--37kei.json";
-import sankenbishaVsIbishaBasic from "../data/joseki/sankenbisha-vs-ibisha--basic.json";
-import kakugawariBougin from "../data/joseki/kakugawari--bougin.json";
-import kakugawariHayakurigin from "../data/joseki/kakugawari--hayakurigin.json";
-import aigakariBougin from "../data/joseki/aigakari--bougin.json";
-import yagura24te from "../data/joseki/yagura--24te.json";
-import nakabishaVsAnaguma from "../data/joseki/nakabisha-vs-anaguma--basic.json";
-import sujichigaikakuBasic from "../data/joseki/sujichigaikaku--basic.json";
-import ibishaVsNakabishaAnaguma from "../data/joseki/ibisha-vs-nakabisha--anaguma.json";
-import kakugawariGote from "../data/joseki/kakugawari--gote.json";
-import yaguraGote from "../data/joseki/yagura--gote.json";
-import aigakariGote from "../data/joseki/aigakari--gote.json";
-import shikenbishaSente from "../data/joseki/shikenbisha-vs-ibisha--sente.json";
-import ibishaVsShikenbishaGote from "../data/joseki/ibisha-vs-shikenbisha--gote.json";
-import sankenbishaSente from "../data/joseki/sankenbisha-vs-ibisha--sente.json";
-import ibishaVsSankenbishaGote from "../data/joseki/ibisha-vs-sankenbisha--gote.json";
-import nakabishaSente from "../data/joseki/nakabisha-vs-ibisha--sente.json";
-import ibishaVsNakabishaGote from "../data/joseki/ibisha-vs-nakabisha--gote.json";
-import branchNavDemo from "../data/joseki/_branchNavDemo.json";
+import ibishaVsShikenbishaSenteRaw from "../data/joseki/ibisha-vs-shikenbisha--sente.json?raw";
+import ibishaVsShikenbishaBouginRaw from "../data/joseki/ibisha-vs-shikenbisha--bougin.json?raw";
+import ibishaVsShikenbisha45Raw from "../data/joseki/ibisha-vs-shikenbisha--45hayashikake.json?raw";
+import ibishaVsShikenbishaAnagumaRaw from "../data/joseki/ibisha-vs-shikenbisha--anaguma.json?raw";
+import shikenbishaVsIbishaBasicRaw from "../data/joseki/shikenbisha-vs-ibisha--basic.json?raw";
+import shikenbishaVsAnagumaBasicRaw from "../data/joseki/shikenbisha-vs-anaguma--basic.json?raw";
+import ibishaVsSankenbishaBouginRaw from "../data/joseki/ibisha-vs-sankenbisha--bougin.json?raw";
+import ibishaVsSankenbisha37Raw from "../data/joseki/ibisha-vs-sankenbisha--37kei.json?raw";
+import sankenbishaVsIbishaBasicRaw from "../data/joseki/sankenbisha-vs-ibisha--basic.json?raw";
+import kakugawariBouginRaw from "../data/joseki/kakugawari--bougin.json?raw";
+import kakugawariHayakuriginRaw from "../data/joseki/kakugawari--hayakurigin.json?raw";
+import aigakariBouginRaw from "../data/joseki/aigakari--bougin.json?raw";
+import yagura24teRaw from "../data/joseki/yagura--24te.json?raw";
+import nakabishaVsAnagumaRaw from "../data/joseki/nakabisha-vs-anaguma--basic.json?raw";
+import sujichigaikakuBasicRaw from "../data/joseki/sujichigaikaku--basic.json?raw";
+import ibishaVsNakabishaAnagumaRaw from "../data/joseki/ibisha-vs-nakabisha--anaguma.json?raw";
+import kakugawariGoteRaw from "../data/joseki/kakugawari--gote.json?raw";
+import yaguraGoteRaw from "../data/joseki/yagura--gote.json?raw";
+import aigakariGoteRaw from "../data/joseki/aigakari--gote.json?raw";
+import shikenbishaSenteRaw from "../data/joseki/shikenbisha-vs-ibisha--sente.json?raw";
+import ibishaVsShikenbishaGoteRaw from "../data/joseki/ibisha-vs-shikenbisha--gote.json?raw";
+import sankenbishaSenteRaw from "../data/joseki/sankenbisha-vs-ibisha--sente.json?raw";
+import ibishaVsSankenbishaGoteRaw from "../data/joseki/ibisha-vs-sankenbisha--gote.json?raw";
+import nakabishaSenteRaw from "../data/joseki/nakabisha-vs-ibisha--sente.json?raw";
+import ibishaVsNakabishaGoteRaw from "../data/joseki/ibisha-vs-nakabisha--gote.json?raw";
+import branchNavDemoRaw from "../data/joseki/_branchNavDemo.json?raw";
+
+/**
+ * 定石 JSON は「手 → 次の局面 → 手 → …」の入れ子構造なので、手数が増えるほど
+ * ネストが深くなる。JSON を ES モジュールへ変換するビルド時プラグインは、
+ * 47手のコースで再帰上限に達してビルドが落ちた。
+ * そこで ?raw で文字列として読み込み、実行時に JSON.parse する
+ * (こちらは深いネストでも問題なく、パースの負荷も無視できる)。
+ */
+function parseRaw(raw: string): unknown {
+  return JSON.parse(raw);
+}
 
 function isJosekiMove(value: unknown): value is JosekiMove {
   if (typeof value !== "object" || value === null) return false;
@@ -77,7 +88,7 @@ function assertJosekiCourse(value: unknown, source: string): JosekiCourse {
 
 /** 居飛車 vs 四間飛車(先手・斜め棒銀)コースをロードする */
 export function loadIbishaVsShikenbishaSente(): JosekiCourse {
-  return assertJosekiCourse(ibishaVsShikenbishaSente, "ibisha-vs-shikenbisha--sente.json");
+  return assertJosekiCourse(parseRaw(ibishaVsShikenbishaSenteRaw), "ibisha-vs-shikenbisha--sente.json");
 }
 
 /** 収録済みコースの分類。選択画面の見出しに使う。 */
@@ -114,7 +125,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "棒銀",
     kind: "急戦",
     summary: "銀をまっすぐ繰り出して2筋を破る、最も有名な急戦。",
-    load: () => assertJosekiCourse(ibishaVsShikenbishaBougin, "ibisha-vs-shikenbisha--bougin.json"),
+    load: () => assertJosekiCourse(parseRaw(ibishaVsShikenbishaBouginRaw), "ibisha-vs-shikenbisha--bougin.json"),
   },
   {
     id: "ibisha-vs-shikenbisha--sente",
@@ -124,7 +135,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "斜め棒銀(4六銀左)",
     kind: "急戦",
     summary: "左の銀を4六へ運び、3五歩から仕掛ける急戦。",
-    load: () => assertJosekiCourse(ibishaVsShikenbishaSente, "ibisha-vs-shikenbisha--sente.json"),
+    load: () => assertJosekiCourse(parseRaw(ibishaVsShikenbishaSenteRaw), "ibisha-vs-shikenbisha--sente.json"),
   },
   {
     id: "ibisha-vs-shikenbisha--45hayashikake",
@@ -134,7 +145,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "４五歩早仕掛け",
     kind: "急戦",
     summary: "4六歩から4五歩と突き、4筋で戦いを起こす急戦。",
-    load: () => assertJosekiCourse(ibishaVsShikenbisha45, "ibisha-vs-shikenbisha--45hayashikake.json"),
+    load: () => assertJosekiCourse(parseRaw(ibishaVsShikenbisha45Raw), "ibisha-vs-shikenbisha--45hayashikake.json"),
   },
   {
     id: "ibisha-vs-shikenbisha--anaguma",
@@ -144,7 +155,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "居飛車穴熊",
     kind: "持久戦",
     summary: "玉を隅まで運んで固く囲い、じっくり戦う持久戦。",
-    load: () => assertJosekiCourse(ibishaVsShikenbishaAnaguma, "ibisha-vs-shikenbisha--anaguma.json"),
+    load: () => assertJosekiCourse(parseRaw(ibishaVsShikenbishaAnagumaRaw), "ibisha-vs-shikenbisha--anaguma.json"),
   },
   {
     id: "ibisha-vs-sankenbisha--bougin",
@@ -154,7 +165,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "急戦",
     kind: "急戦",
     summary: "舟囲いから4六歩と突いて攻めの形を作る。",
-    load: () => assertJosekiCourse(ibishaVsSankenbishaBougin, "ibisha-vs-sankenbisha--bougin.json"),
+    load: () => assertJosekiCourse(parseRaw(ibishaVsSankenbishaBouginRaw), "ibisha-vs-sankenbisha--bougin.json"),
   },
   {
     id: "ibisha-vs-sankenbisha--37kei",
@@ -164,7 +175,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "▲3七桂早仕掛け",
     kind: "急戦",
     summary: "桂を3七へ跳ね、4五歩から角交換して飛車先の突破を狙う。",
-    load: () => assertJosekiCourse(ibishaVsSankenbisha37, "ibisha-vs-sankenbisha--37kei.json"),
+    load: () => assertJosekiCourse(parseRaw(ibishaVsSankenbisha37Raw), "ibisha-vs-sankenbisha--37kei.json"),
   },
   {
     id: "ibisha-vs-shikenbisha--gote",
@@ -174,7 +185,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "基本の組み方",
     kind: "急戦",
     summary: "飛車先を伸ばしつつ玉を囲う、後手番の組み方。",
-    load: () => assertJosekiCourse(ibishaVsShikenbishaGote, "ibisha-vs-shikenbisha--gote.json"),
+    load: () => assertJosekiCourse(parseRaw(ibishaVsShikenbishaGoteRaw), "ibisha-vs-shikenbisha--gote.json"),
   },
   {
     id: "ibisha-vs-sankenbisha--gote",
@@ -184,7 +195,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "基本の組み方",
     kind: "急戦",
     summary: "飛車先を伸ばしつつ玉を囲う、後手番の組み方。",
-    load: () => assertJosekiCourse(ibishaVsSankenbishaGote, "ibisha-vs-sankenbisha--gote.json"),
+    load: () => assertJosekiCourse(parseRaw(ibishaVsSankenbishaGoteRaw), "ibisha-vs-sankenbisha--gote.json"),
   },
   {
     id: "ibisha-vs-nakabisha--gote",
@@ -194,7 +205,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "居飛車穴熊",
     kind: "持久戦",
     summary: "玉を1一まで運んで堅く囲う、後手番の穴熊。",
-    load: () => assertJosekiCourse(ibishaVsNakabishaGote, "ibisha-vs-nakabisha--gote.json"),
+    load: () => assertJosekiCourse(parseRaw(ibishaVsNakabishaGoteRaw), "ibisha-vs-nakabisha--gote.json"),
   },
   {
     id: "ibisha-vs-nakabisha--anaguma",
@@ -204,7 +215,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "居飛車穴熊",
     kind: "持久戦",
     summary: "中央から来る攻めに、穴熊の堅さで対抗する。",
-    load: () => assertJosekiCourse(ibishaVsNakabishaAnaguma, "ibisha-vs-nakabisha--anaguma.json"),
+    load: () => assertJosekiCourse(parseRaw(ibishaVsNakabishaAnagumaRaw), "ibisha-vs-nakabisha--anaguma.json"),
   },
   {
     id: "shikenbisha-vs-ibisha--basic",
@@ -214,7 +225,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "基本の組み方",
     kind: "持久戦",
     summary: "飛車を4二へ振り、美濃囲いに収めるまで。四間飛車の土台。",
-    load: () => assertJosekiCourse(shikenbishaVsIbishaBasic, "shikenbisha-vs-ibisha--basic.json"),
+    load: () => assertJosekiCourse(parseRaw(shikenbishaVsIbishaBasicRaw), "shikenbisha-vs-ibisha--basic.json"),
   },
   {
     id: "shikenbisha-vs-ibisha--sente",
@@ -224,7 +235,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "先手番の組み方",
     kind: "持久戦",
     summary: "先手番で四間飛車を指す場合。飛車は6八、玉は2八の美濃囲いになる。",
-    load: () => assertJosekiCourse(shikenbishaSente, "shikenbisha-vs-ibisha--sente.json"),
+    load: () => assertJosekiCourse(parseRaw(shikenbishaSenteRaw), "shikenbisha-vs-ibisha--sente.json"),
   },
   {
     id: "shikenbisha-vs-anaguma--basic",
@@ -234,7 +245,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "対居飛車穴熊",
     kind: "持久戦",
     summary: "相手が穴熊に組む前に、6四歩〜7三桂と動いて主導権を取る。",
-    load: () => assertJosekiCourse(shikenbishaVsAnagumaBasic, "shikenbisha-vs-anaguma--basic.json"),
+    load: () => assertJosekiCourse(parseRaw(shikenbishaVsAnagumaBasicRaw), "shikenbisha-vs-anaguma--basic.json"),
   },
   {
     id: "sankenbisha-vs-ibisha--basic",
@@ -244,7 +255,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "基本の組み方",
     kind: "持久戦",
     summary: "飛車を3二へ振り、美濃囲いに収めるまで。三間飛車の土台。",
-    load: () => assertJosekiCourse(sankenbishaVsIbishaBasic, "sankenbisha-vs-ibisha--basic.json"),
+    load: () => assertJosekiCourse(parseRaw(sankenbishaVsIbishaBasicRaw), "sankenbisha-vs-ibisha--basic.json"),
   },
   {
     id: "sankenbisha-vs-ibisha--sente",
@@ -254,7 +265,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "先手番の組み方",
     kind: "持久戦",
     summary: "先手番で三間飛車を指す場合。飛車は7八、玉は2八の美濃囲いになる。",
-    load: () => assertJosekiCourse(sankenbishaSente, "sankenbisha-vs-ibisha--sente.json"),
+    load: () => assertJosekiCourse(parseRaw(sankenbishaSenteRaw), "sankenbisha-vs-ibisha--sente.json"),
   },
   {
     id: "nakabisha-vs-ibisha--sente",
@@ -264,7 +275,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "先手番の組み方",
     kind: "持久戦",
     summary: "先手番で中飛車を指す場合。飛車は5八、玉は2八の美濃囲いになる。",
-    load: () => assertJosekiCourse(nakabishaSente, "nakabisha-vs-ibisha--sente.json"),
+    load: () => assertJosekiCourse(parseRaw(nakabishaSenteRaw), "nakabisha-vs-ibisha--sente.json"),
   },
   {
     id: "kakugawari--bougin",
@@ -274,7 +285,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "角換わり・棒銀",
     kind: "急戦",
     summary: "角を交換したあと、銀を2七→2六と繰り出して2筋を攻める。",
-    load: () => assertJosekiCourse(kakugawariBougin, "kakugawari--bougin.json"),
+    load: () => assertJosekiCourse(parseRaw(kakugawariBouginRaw), "kakugawari--bougin.json"),
   },
   {
     id: "kakugawari--hayakurigin",
@@ -284,7 +295,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "角換わり・早繰り銀",
     kind: "急戦",
     summary: "銀を3七→4六と早めに使い、幅広く攻める。棒銀と対になる指し方。",
-    load: () => assertJosekiCourse(kakugawariHayakurigin, "kakugawari--hayakurigin.json"),
+    load: () => assertJosekiCourse(parseRaw(kakugawariHayakuriginRaw), "kakugawari--hayakurigin.json"),
   },
   {
     id: "kakugawari--gote",
@@ -294,7 +305,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "角換わり・基本の駒組み",
     kind: "急戦",
     summary: "後手番で角換わりに進む場合の組み方。相手の棒銀に備える。",
-    load: () => assertJosekiCourse(kakugawariGote, "kakugawari--gote.json"),
+    load: () => assertJosekiCourse(parseRaw(kakugawariGoteRaw), "kakugawari--gote.json"),
   },
   {
     id: "aigakari--bougin",
@@ -304,7 +315,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "相掛かり・棒銀",
     kind: "急戦",
     summary: "お互いに飛車先の歩を交換したあと、銀を2七へ繰り出す。",
-    load: () => assertJosekiCourse(aigakariBougin, "aigakari--bougin.json"),
+    load: () => assertJosekiCourse(parseRaw(aigakariBouginRaw), "aigakari--bougin.json"),
   },
   {
     id: "aigakari--gote",
@@ -314,7 +325,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "相掛かり・基本の駒組み",
     kind: "急戦",
     summary: "後手番で相掛かりを受けて立つ場合の組み方。",
-    load: () => assertJosekiCourse(aigakariGote, "aigakari--gote.json"),
+    load: () => assertJosekiCourse(parseRaw(aigakariGoteRaw), "aigakari--gote.json"),
   },
   {
     id: "yagura--24te",
@@ -324,7 +335,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "矢倉・24手組",
     kind: "持久戦",
     summary: "金銀を組み上げる矢倉の基本形。相居飛車の代表的な駒組み。",
-    load: () => assertJosekiCourse(yagura24te, "yagura--24te.json"),
+    load: () => assertJosekiCourse(parseRaw(yagura24teRaw), "yagura--24te.json"),
   },
   {
     id: "yagura--gote",
@@ -334,7 +345,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "矢倉・24手組",
     kind: "持久戦",
     summary: "後手番で矢倉に組む場合の24手組。お互いに同じ形に組み合う。",
-    load: () => assertJosekiCourse(yaguraGote, "yagura--gote.json"),
+    load: () => assertJosekiCourse(parseRaw(yaguraGoteRaw), "yagura--gote.json"),
   },
   {
     id: "nakabisha-vs-anaguma--basic",
@@ -344,7 +355,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "対居飛車穴熊",
     kind: "持久戦",
     summary: "飛車を5二へ振り、美濃囲いに収めて4五歩と位を取るまで。",
-    load: () => assertJosekiCourse(nakabishaVsAnaguma, "nakabisha-vs-anaguma--basic.json"),
+    load: () => assertJosekiCourse(parseRaw(nakabishaVsAnagumaRaw), "nakabisha-vs-anaguma--basic.json"),
   },
   {
     id: "sujichigaikaku--basic",
@@ -354,7 +365,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     label: "基本の指し方",
     kind: "急戦",
     summary: "早い角交換から4五へ角を打ち、歩を得て8筋から攻める。",
-    load: () => assertJosekiCourse(sujichigaikakuBasic, "sujichigaikaku--basic.json"),
+    load: () => assertJosekiCourse(parseRaw(sujichigaikakuBasicRaw), "sujichigaikaku--basic.json"),
   },
 ];
 
@@ -375,7 +386,7 @@ export function loadCourseById(id: string): JosekiCourse {
  * デフォルト表示には使わず、開発・検証用の画面からのみ読み込むこと。
  */
 export function loadBranchNavDemo(): JosekiCourse {
-  return assertJosekiCourse(branchNavDemo, "_branchNavDemo.json");
+  return assertJosekiCourse(parseRaw(branchNavDemoRaw), "_branchNavDemo.json");
 }
 
 /** ノードの本線(branches[0])を辿り、末端(理想陣形)までのノード列を返す。UI外のテスト・検証にも使える。 */
