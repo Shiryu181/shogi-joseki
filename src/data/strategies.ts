@@ -20,7 +20,7 @@ export const STRATEGIES: Strategy[] = [
     category: "ibisha",
     popularity: 4.9,
     level: "入門〜",
-    lineCount: 8,
+    lineCount: 10,
     ready: true,
     description:
       "飛車を初期位置(２筋・８筋)に構えたまま戦う、最も基本的な戦法群。対四間飛車4種・対三間飛車2種・対中飛車1種を収録し、主要な振り飛車に対応。",
@@ -56,7 +56,7 @@ export const STRATEGIES: Strategy[] = [
     category: "nakabisha",
     popularity: 4.6,
     level: "入門〜",
-    lineCount: 1,
+    lineCount: 2,
     ready: true,
     description:
       "飛車を5筋に構える振り飛車の一種。中央から攻めを組み立てる。対居飛車穴熊の指し方を収録。",
@@ -92,7 +92,7 @@ export const STRATEGIES: Strategy[] = [
     category: "furibisha",
     popularity: 4.3,
     level: "入門〜",
-    lineCount: 1,
+    lineCount: 2,
     ready: true,
     description:
       "飛車を3筋(後手番なら7筋)に振る振り飛車の一種。飛車が角の頭を守るぶん、四間飛車より一手得と言われる。基本の組み方(美濃囲い)を収録。",

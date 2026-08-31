@@ -25,6 +25,10 @@ import yaguraGote from "../data/joseki/yagura--gote.json";
 import aigakariGote from "../data/joseki/aigakari--gote.json";
 import shikenbishaSente from "../data/joseki/shikenbisha-vs-ibisha--sente.json";
 import ibishaVsShikenbishaGote from "../data/joseki/ibisha-vs-shikenbisha--gote.json";
+import sankenbishaSente from "../data/joseki/sankenbisha-vs-ibisha--sente.json";
+import ibishaVsSankenbishaGote from "../data/joseki/ibisha-vs-sankenbisha--gote.json";
+import nakabishaSente from "../data/joseki/nakabisha-vs-ibisha--sente.json";
+import ibishaVsNakabishaGote from "../data/joseki/ibisha-vs-nakabisha--gote.json";
 import branchNavDemo from "../data/joseki/_branchNavDemo.json";
 
 function isJosekiMove(value: unknown): value is JosekiMove {
@@ -170,6 +174,26 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     load: () => assertJosekiCourse(ibishaVsShikenbishaGote, "ibisha-vs-shikenbisha--gote.json"),
   },
   {
+    id: "ibisha-vs-sankenbisha--gote",
+    strategyId: "ibisha",
+    opponentLabel: "三間飛車",
+    sideLabel: "後手",
+    label: "後手番・対三間飛車",
+    kind: "急戦",
+    summary: "後手番で居飛車を持ち、先手の三間飛車と戦う場合の組み方。",
+    load: () => assertJosekiCourse(ibishaVsSankenbishaGote, "ibisha-vs-sankenbisha--gote.json"),
+  },
+  {
+    id: "ibisha-vs-nakabisha--gote",
+    strategyId: "ibisha",
+    opponentLabel: "中飛車",
+    sideLabel: "後手",
+    label: "後手番・対中飛車(穴熊)",
+    kind: "持久戦",
+    summary: "後手番で居飛車穴熊に組み、先手の中飛車と戦う場合の組み方。",
+    load: () => assertJosekiCourse(ibishaVsNakabishaGote, "ibisha-vs-nakabisha--gote.json"),
+  },
+  {
     id: "ibisha-vs-nakabisha--anaguma",
     strategyId: "ibisha",
     opponentLabel: "中飛車",
@@ -218,6 +242,26 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "持久戦",
     summary: "飛車を3二へ振り、美濃囲いに収めるまで。三間飛車の土台。",
     load: () => assertJosekiCourse(sankenbishaVsIbishaBasic, "sankenbisha-vs-ibisha--basic.json"),
+  },
+  {
+    id: "sankenbisha-vs-ibisha--sente",
+    strategyId: "sankenbisha",
+    opponentLabel: "居飛車",
+    sideLabel: "先手",
+    label: "先手番の組み方",
+    kind: "持久戦",
+    summary: "先手番で三間飛車を指す場合。飛車は7八、玉は2八の美濃囲いになる。",
+    load: () => assertJosekiCourse(sankenbishaSente, "sankenbisha-vs-ibisha--sente.json"),
+  },
+  {
+    id: "nakabisha-vs-ibisha--sente",
+    strategyId: "nakabisha",
+    opponentLabel: "居飛車穴熊",
+    sideLabel: "先手",
+    label: "先手番の組み方",
+    kind: "持久戦",
+    summary: "先手番で中飛車を指す場合。飛車は5八、玉は2八の美濃囲いになる。",
+    load: () => assertJosekiCourse(nakabishaSente, "nakabisha-vs-ibisha--sente.json"),
   },
   {
     id: "kakugawari--bougin",

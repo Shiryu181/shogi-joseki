@@ -20,6 +20,7 @@
  * 使い方: node scripts/mirror-course.mjs <コースid>
  */
 import { readFileSync } from "node:fs";
+import { Position, InitialPositionSFEN, parseUSIMove } from "tsshogi";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -52,8 +53,36 @@ function mainLineUsi(course) {
   return out;
 }
 
+/**
+ * この棋譜が手番入れ替え変換に適するかを検査する。
+ *
+ * 隣接する2手を入れ替える変換は、駒の取り合い(取る手と取り返す手)がある棋譜だと
+ * 順序が壊れて別物になる。実例: 筋違い角の「▲2二角成 △同銀」を変換すると
+ * 「▲8八銀 △8八角成」となり、銀をタダで取られる無意味な進行になった。
+ * 合法ではあるので生成時のチェックは素通りしてしまうため、ここで先に弾く。
+ */
+export function assertSwappable(usiList) {
+  const position = new Position();
+  position.resetBySFEN(InitialPositionSFEN.STANDARD);
+  for (let i = 0; i < usiList.length; i++) {
+    const usi = usiList[i];
+    const parsed = parseUSIMove(usi);
+    if (!parsed) throw new Error(`${i + 1}手目 ${usi}: USI として解釈できません`);
+    if (!usi.includes("*") && position.board.at(parsed.to)) {
+      throw new Error(
+        `${i + 1}手目 ${usi} で駒を取っています。取り合いのある棋譜は手番入れ替え変換に使えません` +
+        `(取る手と取り返す手の順序が入れ替わり、別の進行になるため)`
+      );
+    }
+    let move = position.createMove(parsed.from, parsed.to);
+    if (parsed.promote) move = move.withPromote();
+    position.doMove(move);
+  }
+}
+
 /** 手番を入れ替えた USI 列を返す。奇数手で終わる場合は最後の1手を落とす。 */
 export function swapSides(usiList) {
+  assertSwappable(usiList);
   const even = usiList.length - (usiList.length % 2);
   const out = [];
   for (let i = 0; i < even; i += 2) {
