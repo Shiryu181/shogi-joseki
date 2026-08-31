@@ -9,7 +9,7 @@
  * 使い方: node scripts/build-joseki.mjs
  */
 import { writeFileSync } from "node:fs";
-import { Position, PieceType, Square, InitialPositionSFEN } from "tsshogi";
+import { Position, PieceType, Square, InitialPositionSFEN, parseUSIMove } from "tsshogi";
 
 const KANJI_RANK = { 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9 };
 const GLYPH_TO_TYPE = {
@@ -114,6 +114,40 @@ export function buildCourse({ id, title, myStrategy, opponentStrategy, mySide, s
 
     const child = { id: `n${i + 1}`, sfen: position.sfen, comment: spec.comment, branches: [] };
     nodes[i].branches.push({ usi, kind: "main", note: spec.note, child });
+    nodes.push(child);
+  });
+
+  const course = {
+    id, title, myStrategy, opponentStrategy, mySide, source,
+    goalFormation,
+    goalSfen: nodes[nodes.length - 1].sfen,
+    root: nodes[0],
+  };
+  return { course, usiList };
+}
+
+/**
+ * USI の指し手列から直接コースを組み立てる。
+ * mirror-course.mjs で機械変換した棋譜など、既に USI が確定しているものに使う
+ * (人間が指し手を書き写さないので転記ミスが入らない)。
+ * notes[i] = [note, comment] を手ごとに与える。
+ */
+export function buildCourseFromUsi({ id, title, myStrategy, opponentStrategy, mySide, source, goalFormation, rootComment, usiList, notes = [] }) {
+  const position = new Position();
+  position.resetBySFEN(InitialPositionSFEN.STANDARD);
+  const nodes = [{ id: "n0", sfen: position.sfen, comment: rootComment, branches: [] }];
+
+  usiList.forEach((usi, i) => {
+    const parsed = parseUSIMove(usi);
+    if (!parsed) throw new Error(`${i + 1}手目 ${usi}: USI として解釈できません`);
+    let move = position.createMove(parsed.from, parsed.to);
+    if (!move) throw new Error(`${i + 1}手目 ${usi}: 手を作れません`);
+    if (parsed.promote) move = move.withPromote();
+    if (!position.isValidMove(move)) throw new Error(`${i + 1}手目 ${usi}: 非合法です`);
+    if (!position.doMove(move)) throw new Error(`${i + 1}手目 ${usi}: 適用に失敗`);
+    const [note, comment] = notes[i] ?? [];
+    const child = { id: `n${i + 1}`, sfen: position.sfen, comment, branches: [] };
+    nodes[i].branches.push({ usi, kind: "main", note, child });
     nodes.push(child);
   });
 

@@ -23,6 +23,8 @@ import ibishaVsNakabishaAnaguma from "../data/joseki/ibisha-vs-nakabisha--anagum
 import kakugawariGote from "../data/joseki/kakugawari--gote.json";
 import yaguraGote from "../data/joseki/yagura--gote.json";
 import aigakariGote from "../data/joseki/aigakari--gote.json";
+import shikenbishaSente from "../data/joseki/shikenbisha-vs-ibisha--sente.json";
+import ibishaVsShikenbishaGote from "../data/joseki/ibisha-vs-shikenbisha--gote.json";
 import branchNavDemo from "../data/joseki/_branchNavDemo.json";
 
 function isJosekiMove(value: unknown): value is JosekiMove {
@@ -158,6 +160,16 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     load: () => assertJosekiCourse(ibishaVsSankenbisha37, "ibisha-vs-sankenbisha--37kei.json"),
   },
   {
+    id: "ibisha-vs-shikenbisha--gote",
+    strategyId: "ibisha",
+    opponentLabel: "四間飛車",
+    sideLabel: "後手",
+    label: "後手番・対四間飛車",
+    kind: "急戦",
+    summary: "後手番で居飛車を持ち、先手の四間飛車と戦う場合の組み方。",
+    load: () => assertJosekiCourse(ibishaVsShikenbishaGote, "ibisha-vs-shikenbisha--gote.json"),
+  },
+  {
     id: "ibisha-vs-nakabisha--anaguma",
     strategyId: "ibisha",
     opponentLabel: "中飛車",
@@ -176,6 +188,16 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "持久戦",
     summary: "飛車を4二へ振り、美濃囲いに収めるまで。四間飛車の土台。",
     load: () => assertJosekiCourse(shikenbishaVsIbishaBasic, "shikenbisha-vs-ibisha--basic.json"),
+  },
+  {
+    id: "shikenbisha-vs-ibisha--sente",
+    strategyId: "shikenbisha",
+    opponentLabel: "居飛車",
+    sideLabel: "先手",
+    label: "先手番の組み方",
+    kind: "持久戦",
+    summary: "先手番で四間飛車を指す場合。飛車は6八、玉は2八の美濃囲いになる。",
+    load: () => assertJosekiCourse(shikenbishaSente, "shikenbisha-vs-ibisha--sente.json"),
   },
   {
     id: "shikenbisha-vs-anaguma--basic",
