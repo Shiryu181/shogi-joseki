@@ -19,6 +19,7 @@ import aigakariBougin from "../data/joseki/aigakari--bougin.json";
 import yagura24te from "../data/joseki/yagura--24te.json";
 import nakabishaVsAnaguma from "../data/joseki/nakabisha-vs-anaguma--basic.json";
 import sujichigaikakuBasic from "../data/joseki/sujichigaikaku--basic.json";
+import ibishaVsNakabishaAnaguma from "../data/joseki/ibisha-vs-nakabisha--anaguma.json";
 import branchNavDemo from "../data/joseki/_branchNavDemo.json";
 
 function isJosekiMove(value: unknown): value is JosekiMove {
@@ -152,6 +153,16 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "急戦",
     summary: "桂を3七へ跳ね、4五歩から角交換して飛車先の突破を狙う。",
     load: () => assertJosekiCourse(ibishaVsSankenbisha37, "ibisha-vs-sankenbisha--37kei.json"),
+  },
+  {
+    id: "ibisha-vs-nakabisha--anaguma",
+    strategyId: "ibisha",
+    opponentLabel: "中飛車",
+    sideLabel: "先手",
+    label: "対中飛車・穴熊",
+    kind: "持久戦",
+    summary: "中飛車が相手のとき。中央から来る攻めに、穴熊の堅さで対抗する。",
+    load: () => assertJosekiCourse(ibishaVsNakabishaAnaguma, "ibisha-vs-nakabisha--anaguma.json"),
   },
   {
     id: "shikenbisha-vs-ibisha--basic",
