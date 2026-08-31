@@ -22,22 +22,44 @@ export function Matchup({ strategy, onBack, onStart }: MatchupProps) {
   const [mode, setMode] = useState<PracticeMode>("learn");
   // この戦法カードから選べるコースだけに絞る(居飛車のカードに四間飛車の作戦が出ないように)。
   const entries = useMemo(() => courseEntriesFor(strategy.id), [strategy.id]);
-  // この戦法で実データがある手番。両方あるなら手番も選べるようにする。
-  const availableSides = useMemo(
-    () => Array.from(new Set(entries.map((c) => c.sideLabel))),
+
+  // 「相手の戦法 → 自分の手番 → 作戦」の順に絞り込む。
+  // 以前は相手と手番を選択中のコースから逆算していたため、相手が四間飛車なのに
+  // 作戦一覧に「対三間飛車」が並ぶ、という食い違いが起きていた。
+  const opponents = useMemo(
+    () => Array.from(new Set(entries.map((c) => c.opponentLabel))),
     [entries],
   );
+  const [opponent, setOpponent] = useState<string>(() => entries[0]?.opponentLabel ?? "");
   const [side, setSide] = useState<"先手" | "後手">(() => entries[0]?.sideLabel ?? "先手");
-  // 選んだ手番のコースだけを出す(手番とコースが食い違わないように)。
-  const sideEntries = entries.filter((c) => c.sideLabel === side);
   const [courseId, setCourseId] = useState<string>(() => entries[0]?.id ?? "");
+
+  // 選択の組み合わせが無くなった場合(相手を変えてその手番が無い等)は、
+  // state を書き換えずに実際に選べる値へ寄せる。表示と中身が食い違わないようにする。
+  const effectiveOpponent = opponents.includes(opponent) ? opponent : (opponents[0] ?? "");
+  const byOpponent = entries.filter((c) => c.opponentLabel === effectiveOpponent);
+  const availableSides = Array.from(new Set(byOpponent.map((c) => c.sideLabel)));
+  const effectiveSide = availableSides.includes(side) ? side : (availableSides[0] ?? "先手");
+  const sideEntries = byOpponent.filter((c) => c.sideLabel === effectiveSide);
   const selected = sideEntries.find((c) => c.id === courseId) ?? sideEntries[0];
+
+  /** 相手の戦法を切り替える。手番と作戦も、その相手で選べるものへ寄せ直す。 */
+  function chooseOpponent(next: string) {
+    setOpponent(next);
+    const list = entries.filter((c) => c.opponentLabel === next);
+    const keepSide = list.some((c) => c.sideLabel === side);
+    const first = keepSide ? list.find((c) => c.sideLabel === side) : list[0];
+    if (first) {
+      setSide(first.sideLabel);
+      setCourseId(first.id);
+    }
+  }
 
   /** 手番を切り替えたら、その手番の先頭コースを選び直す。 */
   function chooseSide(next: "先手" | "後手") {
     if (!availableSides.includes(next)) return;
     setSide(next);
-    const first = entries.find((c) => c.sideLabel === next);
+    const first = byOpponent.find((c) => c.sideLabel === next);
     if (first) setCourseId(first.id);
   }
 
@@ -58,15 +80,22 @@ export function Matchup({ strategy, onBack, onStart }: MatchupProps) {
         <div className="mbody">
           <div className="vshero">
             <div className="vs">
-              {strategy.name} <small>vs {selected?.opponentLabel ?? "—"}</small>
+              {strategy.name} <small>vs {effectiveOpponent || "—"}</small>
             </div>
           </div>
 
           <div className="fld">
             <h4>相手の戦法</h4>
-            <div className="opt sel">
-              {selected?.opponentLabel ?? "—"} <span className="chk">✓</span>
-            </div>
+            {opponents.map((o) => (
+              <button
+                key={o}
+                type="button"
+                className={`opt${effectiveOpponent === o ? " sel" : ""}`}
+                onClick={() => chooseOpponent(o)}
+              >
+                {o} {effectiveOpponent === o && <span className="chk">✓</span>}
+              </button>
+            ))}
             <div className="opt disabled">
               その他の戦法 <span className="mini">準備中</span>
             </div>
@@ -79,7 +108,7 @@ export function Matchup({ strategy, onBack, onStart }: MatchupProps) {
                 <button
                   key={c.id}
                   type="button"
-                  className={`opt course${courseId === c.id ? " sel" : ""}`}
+                  className={`opt course${selected?.id === c.id ? " sel" : ""}`}
                   onClick={() => setCourseId(c.id)}
                 >
                   <span className="course-main">
@@ -89,7 +118,7 @@ export function Matchup({ strategy, onBack, onStart }: MatchupProps) {
                     </span>
                     <span className="course-summary">{c.summary}</span>
                   </span>
-                  {courseId === c.id && <span className="chk">✓</span>}
+                  {selected?.id === c.id && <span className="chk">✓</span>}
                 </button>
               ))}
             </div>
@@ -111,10 +140,10 @@ export function Matchup({ strategy, onBack, onStart }: MatchupProps) {
                   <button
                     key={s}
                     type="button"
-                    className={`opt${side === s ? " sel" : ""}`}
+                    className={`opt${effectiveSide === s ? " sel" : ""}`}
                     onClick={() => chooseSide(s)}
                   >
-                    {label} {side === s && <span className="chk">✓</span>}
+                    {label} {effectiveSide === s && <span className="chk">✓</span>}
                   </button>
                 );
               })}
@@ -137,7 +166,7 @@ export function Matchup({ strategy, onBack, onStart }: MatchupProps) {
             </div>
           </div>
 
-          <button type="button" className="startbtn" onClick={() => onStart(courseId, mode)}>
+          <button type="button" className="startbtn" onClick={() => selected && onStart(selected.id, mode)}>
             この設定で始める
           </button>
         </div>
