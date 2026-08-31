@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import type { Strategy } from "../../domain/types";
 import { STRATEGIES } from "../../data/strategies";
+import { courseEntriesFor } from "../../domain/josekiLoader";
 import { SearchBar } from "./SearchBar";
 import { CategoryTabs } from "./CategoryTabs";
 import type { CategoryFilterKey } from "./categories";
@@ -28,7 +29,14 @@ export function Home({ onOpenStrategy, onOpenAbout }: HomeProps) {
   const list = useMemo(() => {
     const q = query.trim();
     return STRATEGIES.filter((s) => {
-      const matchesQuery = !q || s.name.includes(q) || s.kana.includes(q);
+      // 戦法名・かなに加えて、そのカードに入っている作戦名でも引けるようにする。
+      // 角換わり・矢倉・相掛かりは居飛車カードの中の作戦なので、
+      // これが無いと「矢倉」で検索しても何も出てこない。
+      const matchesQuery =
+        !q ||
+        s.name.includes(q) ||
+        s.kana.includes(q) ||
+        courseEntriesFor(s.id).some((c) => c.label.includes(q) || c.opponentLabel.includes(q));
       return matchesCategory(s, activeCategory) && matchesQuery;
     }).sort((a, b) => b.popularity - a.popularity);
   }, [query, activeCategory]);
