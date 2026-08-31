@@ -252,7 +252,7 @@ export function Practice({ course, onBack }: PracticeProps) {
           </div>
         ) : status === "goal" ? (
           <div className="goal-banner">
-            <b>理想陣形に到達しました</b>
+            <b>{course.goalLabel ?? "理想陣形に到達しました"}</b>
             <p>{course.goalFormation}</p>
             <div className="goal-stats">
               <span>

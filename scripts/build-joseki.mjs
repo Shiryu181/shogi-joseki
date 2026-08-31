@@ -99,7 +99,7 @@ function resolveMove(position, spec, moveNo) {
  * 手のリストからコース JSON を組み立てる。
  * moves[i] = { piece, to, from?, note } / nodeComments[i] = そのノードの局面解説
  */
-export function buildCourse({ id, title, myStrategy, opponentStrategy, mySide, source, goalFormation, rootComment, moves }) {
+export function buildCourse({ id, title, myStrategy, opponentStrategy, mySide, source, goalFormation, goalLabel, rootComment, moves }) {
   const position = new Position();
   position.resetBySFEN(InitialPositionSFEN.STANDARD);
 
@@ -120,6 +120,7 @@ export function buildCourse({ id, title, myStrategy, opponentStrategy, mySide, s
   const course = {
     id, title, myStrategy, opponentStrategy, mySide, source,
     goalFormation,
+    ...(goalLabel ? { goalLabel } : {}),
     goalSfen: nodes[nodes.length - 1].sfen,
     root: nodes[0],
   };
@@ -132,7 +133,7 @@ export function buildCourse({ id, title, myStrategy, opponentStrategy, mySide, s
  * (人間が指し手を書き写さないので転記ミスが入らない)。
  * notes[i] = [note, comment] を手ごとに与える。
  */
-export function buildCourseFromUsi({ id, title, myStrategy, opponentStrategy, mySide, source, goalFormation, rootComment, usiList, notes = [] }) {
+export function buildCourseFromUsi({ id, title, myStrategy, opponentStrategy, mySide, source, goalFormation, goalLabel, rootComment, usiList, notes = [] }) {
   const position = new Position();
   position.resetBySFEN(InitialPositionSFEN.STANDARD);
   const nodes = [{ id: "n0", sfen: position.sfen, comment: rootComment, branches: [] }];
@@ -154,6 +155,7 @@ export function buildCourseFromUsi({ id, title, myStrategy, opponentStrategy, my
   const course = {
     id, title, myStrategy, opponentStrategy, mySide, source,
     goalFormation,
+    ...(goalLabel ? { goalLabel } : {}),
     goalSfen: nodes[nodes.length - 1].sfen,
     root: nodes[0],
   };

@@ -63,6 +63,9 @@ function assertJosekiCourse(value: unknown, source: string): JosekiCourse {
   if (c.mySide !== "sente" && c.mySide !== "gote") {
     throw new Error(`定石データが不正です(${source}): mySide が sente/gote ではありません`);
   }
+  if ("goalLabel" in c && typeof c.goalLabel !== "string") {
+    throw new Error(`定石データが不正です(${source}): goalLabel は文字列である必要があります`);
+  }
   if ("source" in c && typeof c.source !== "string") {
     throw new Error(`定石データが不正です(${source}): source は文字列である必要があります`);
   }

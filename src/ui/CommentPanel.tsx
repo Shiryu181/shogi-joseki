@@ -16,6 +16,8 @@ export interface CommentPanelProps {
   kind?: JosekiMove["kind"];
   /** JosekiMove.punishNote(逸れ手の咎め方の要点)。kind:"deviation" のときのみ使う。 */
   punishNote?: string;
+  /** 到達時の見出し。未指定なら「理想陣形に到達しました」。 */
+  goalLabel?: string;
 }
 
 const VERIFY_TAG = /\s*\[要検証[^\]]*\]/g;
@@ -32,12 +34,12 @@ function splitNote(note: string | undefined): { text: string; flagged: boolean }
  * 学習モードの解説カード。現在の手・解説文・(要検証なら)控えめなバッジを表示する。
  * kind:"deviation" のときは「この手は定石を外れています」+ 咎め方の要点を専用の見せ方で表示する。
  */
-export function CommentPanel({ isGoal, moveNumber, moveText, note, comment, kind, punishNote }: CommentPanelProps) {
+export function CommentPanel({ isGoal, moveNumber, moveText, note, comment, kind, punishNote, goalLabel }: CommentPanelProps) {
   if (isGoal) {
     return (
       <div className="explain">
         <div className="mvnow">
-          <span className="mv">理想陣形に到達しました</span>
+          <span className="mv">{goalLabel ?? "理想陣形に到達しました"}</span>
         </div>
         {comment && <p>{comment}</p>}
       </div>

@@ -158,6 +158,7 @@ export function Learn({ course, onBack }: LearnProps) {
             comment={currentNode.comment}
             kind={guide?.kind}
             punishNote={guide?.punishNote}
+            goalLabel={course.goalLabel}
           />
         )}
         {!pendingAck && (
