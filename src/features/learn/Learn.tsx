@@ -32,6 +32,7 @@ export function Learn({ course, onBack }: LearnProps) {
   const quiz = useLearnStore((s) => s.quiz);
   const moveDests = useLearnStore((s) => s.moveDests);
   const dropDests = useLearnStore((s) => s.dropDests);
+  const lastMoveUsi = useLearnStore((s) => s.lastMoveUsi);
   const selected = useLearnStore((s) => s.selected);
   const quizSelectSquare = useLearnStore((s) => s.quizSelectSquare);
   const quizSelectHand = useLearnStore((s) => s.quizSelectHand);
@@ -84,6 +85,16 @@ export function Learn({ course, onBack }: LearnProps) {
       ghost = { key: parsed.to.usi, color: position.color, type: movingType };
     }
   }
+
+  // 直前に指された手の移動元・移動先。相手の手は自動で進むので、
+  // どの駒が動いたのかを盤上ではっきり示す。
+  const lastParsed = lastMoveUsi ? parseUSIMove(lastMoveUsi) : null;
+  let lastKeys: Set<string> | undefined;
+  if (lastParsed) {
+    lastKeys = new Set<string>([lastParsed.to.usi]);
+    if (lastParsed.from instanceof Square) lastKeys.add(lastParsed.from.usi);
+  }
+  const lastToKey = lastParsed ? lastParsed.to.usi : null;
 
   function handleSquareClick(square: Square) {
     if (quiz) { quizSelectSquare(square); return; }
@@ -152,6 +163,9 @@ export function Learn({ course, onBack }: LearnProps) {
           fromHand={quiz ? quizFromHand : fromHand}
           glowKeys={quiz ? quizGlow : glowKeys}
           ghost={quiz ? null : ghost}
+          lastKeys={lastKeys}
+          emphasizeLast
+          lastToKey={lastToKey}
           onSquareClick={handleSquareClick}
           onHandPieceClick={handleHandPieceClick}
           clickableHandColor={quiz ? (course.mySide === "sente" ? Color.BLACK : Color.WHITE) : "none"}

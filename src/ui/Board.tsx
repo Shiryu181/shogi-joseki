@@ -38,6 +38,14 @@ export interface BoardProps {
   glowKeys?: Set<string>;
   /** 'last'(直前の手)強調を出す升の集合。 */
   lastKeys?: Set<string>;
+  /**
+   * 直前の手の強調を強める(移動先に枠を付ける)。相手の手が自動で進む学習モードで、
+   * どの駒が動いたのか見落とさないようにするために使う。
+   * 未指定なら従来どおりの淡い強調のまま(Sandbox/Practice は無影響)。
+   */
+  emphasizeLast?: boolean;
+  /** emphasizeLast のとき、特に強調する升(通常は移動先)。 */
+  lastToKey?: string | null;
   /** なぞりガイド用の半透明ゴースト駒(移動先にうっすら表示)。 */
   ghost?: GhostPiece | null;
   /** 盤の升をクリックしたときのコールバック。 */
@@ -106,6 +114,8 @@ export function Board({
   fromHand = null,
   glowKeys,
   lastKeys,
+  emphasizeLast = false,
+  lastToKey = null,
   ghost = null,
   onSquareClick,
   onHandPieceClick,
@@ -152,7 +162,8 @@ export function Board({
                 const showGhost = !piece && ghost && ghost.key === key;
                 const classes = [
                   "cell",
-                  last.has(key) ? "last" : "",
+                  last.has(key) ? (emphasizeLast ? "last last-strong" : "last") : "",
+                  emphasizeLast && lastToKey === key ? "last-to" : "",
                   fromKey === key ? "from" : "",
                   glow.has(key) ? "glow" : "",
                 ]

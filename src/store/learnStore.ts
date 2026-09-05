@@ -117,6 +117,11 @@ interface LearnState {
    * 同じ局面でもう一度出題してしまい、先へ進めなくなるのを防ぐ。
    */
   askedQuizIds: string[];
+  /**
+   * 直前に盤に現れた手(USI)。どの駒が動いたかを盤上で示すために使う。
+   * 相手の手は自動で進むので、これが無いと見落としやすい。
+   */
+  lastMoveUsi: string | null;
   /** 出題中に自分の手番で選べる合法手。通常時は空。 */
   moveDests: MoveDests;
   dropDests: DropDests;
@@ -178,6 +183,7 @@ function initial() {
     pendingAck: null as AckMove | null,
     quiz: null as QuizState | null,
     askedQuizIds: [] as string[],
+    lastMoveUsi: null as string | null,
     moveDests: new Map() as MoveDests,
     dropDests: new Map() as DropDests,
     selected: null as Selection,
@@ -256,6 +262,7 @@ export const useLearnStore = create<LearnState>((set, get) => {
       position,
       pendingAck: null,
       selectedBranchIndex: 0,
+      lastMoveUsi: dev.usi,
       askedQuizIds: [...askedQuizIds, anchor.id],
       ...questDests(position),
       selected: null,
@@ -280,6 +287,7 @@ export const useLearnStore = create<LearnState>((set, get) => {
       position,
       ...questDests(position),
       selected: null,
+      lastMoveUsi: move.usi,
       quiz: quiz ? { ...quiz, wrong: null, solved: true } : null,
     });
     // 咎めの手順の途中で相手番になったら、その応手も自動で指して最後まで見せる。
@@ -304,6 +312,7 @@ export const useLearnStore = create<LearnState>((set, get) => {
       nodeHistory: [...nodeHistory, currentNode],
       position: positionFromNode(move.child),
       selectedBranchIndex: 0, // 新しいノードでは本線から見せる
+      lastMoveUsi: move.usi,
     });
     scheduleAutoAdvance();
   }
@@ -394,6 +403,7 @@ export const useLearnStore = create<LearnState>((set, get) => {
         currentNode: anchor,
         position: positionFromNode(anchor),
         quiz: null,
+        lastMoveUsi: null,
         moveDests: new Map(),
         dropDests: new Map(),
         selected: null,
@@ -441,6 +451,7 @@ export const useLearnStore = create<LearnState>((set, get) => {
         position: positionFromNode(prev),
         selectedBranchIndex: 0,
         pendingAck: null,
+        lastMoveUsi: null,
       });
       scheduleAutoAdvance();
     },
@@ -454,6 +465,7 @@ export const useLearnStore = create<LearnState>((set, get) => {
         position: positionFromNode(course.root),
         selectedBranchIndex: 0,
         pendingAck: null,
+        lastMoveUsi: null,
       });
       scheduleAutoAdvance();
     },
@@ -467,6 +479,7 @@ export const useLearnStore = create<LearnState>((set, get) => {
         selectedBranchIndex: 0,
         position: positionFromNode(course.root),
         pendingAck: null,
+        lastMoveUsi: null,
       });
       scheduleAutoAdvance();
     },
