@@ -213,3 +213,9 @@
   border-radius: 10px;
   padding: 9px 11px;
 }
+/* 相手の応手を待っている間は「今は指す番ではない」と分かるよう色を落とす。 */
+.quizpill.waiting {
+  background: var(--card);
+  color: var(--ink-soft);
+  border: 1px solid var(--line-2);
+}

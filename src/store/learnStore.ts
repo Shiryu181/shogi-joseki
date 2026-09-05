@@ -68,7 +68,9 @@ export interface QuizState {
   deviationText: string;
   /** 直近の誤答(正解するかクリアするまで表示)。 */
   wrong: { attemptedText: string; correctText: string } | null;
-  /** 咎め手を当てたか。当てたあとは咎めの手順を最後まで見せる。 */
+  /** 咎めの手順の何手目か(0 = 逸れ手の直後の最初の一手)。表示文の出し分けに使う。 */
+  step: number;
+  /** 咎めの手順を最後まで指し終えたか。ここまで来たら本線へ戻れる。 */
   solved: boolean;
 }
 
@@ -272,6 +274,7 @@ export const useLearnStore = create<LearnState>((set, get) => {
         deviation: dev,
         deviationText: devText,
         wrong: null,
+        step: 0,
         solved: false,
       },
     });
@@ -282,24 +285,25 @@ export const useLearnStore = create<LearnState>((set, get) => {
     if (!move.child) return;
     const position = positionFromNode(move.child);
     const { quiz, course } = get();
+    const next = mainBranchOf(move.child);
+    // 手順がまだ続くなら出題は終わらない。相手の応手は自動で指し、
+    // 自分の手番なら「続けて咎める」手をもう一度自分で見つけてもらう
+    // (▲2四歩△同歩▲同飛 のように、最後の一手こそが咎めの核心になるため)。
+    const finished = !(next && next.child);
     set({
       currentNode: move.child,
       position,
       ...questDests(position),
       selected: null,
       lastMoveUsi: move.usi,
-      quiz: quiz ? { ...quiz, wrong: null, solved: true } : null,
+      quiz: quiz ? { ...quiz, wrong: null, step: quiz.step + 1, solved: finished } : null,
     });
-    // 咎めの手順の途中で相手番になったら、その応手も自動で指して最後まで見せる。
     clearAutoAdvanceTimer();
-    if (position.color !== myColorOf(course)) {
-      const next = mainBranchOf(move.child);
-      if (next && next.child) {
-        autoAdvanceTimer = setTimeout(() => {
-          autoAdvanceTimer = null;
-          advanceQuizLine(next);
-        }, OPPONENT_MOVE_DELAY_MS);
-      }
+    if (!finished && position.color !== myColorOf(course)) {
+      autoAdvanceTimer = setTimeout(() => {
+        autoAdvanceTimer = null;
+        advanceQuizLine(next!);
+      }, OPPONENT_MOVE_DELAY_MS);
     }
   }
 

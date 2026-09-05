@@ -173,7 +173,13 @@ export function Learn({ course, onBack }: LearnProps) {
           flipped={course.mySide === "gote"}
         />
         {quiz && !quiz.solved && (
-          <div className="quizpill">相手が定石を外しました。咎める手を指してください</div>
+          <div className={`quizpill${position.color === myColor ? "" : " waiting"}`}>
+            {position.color !== myColor
+              ? "相手が応じています…"
+              : quiz.step === 0
+                ? "相手が定石を外しました。咎める手を指してください"
+                : "続けて咎める手を指してください"}
+          </div>
         )}
         {showWaitPill && !quiz && <div className="waitpill">相手が指しています…</div>}
         {pendingAck && !quiz && <div className="ackpill">相手が指しました。解説を読んで「次へ」</div>}
