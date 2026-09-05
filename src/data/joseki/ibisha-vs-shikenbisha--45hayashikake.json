@@ -424,6 +424,30 @@
                                                                                                                                                                                                                                                                   }
                                                                                                                                                                                                                                                                 ]
                                                                                                                                                                                                                                                               }
+                                                                                                                                                                                                                                                            },
+                                                                                                                                                                                                                                                            {
+                                                                                                                                                                                                                                                              "usi": "7c7d",
+                                                                                                                                                                                                                                                              "kind": "deviation",
+                                                                                                                                                                                                                                                              "note": "2筋の飛車を放置して他の手を指した形です。ここで手を抜くと大変なことになります。",
+                                                                                                                                                                                                                                                              "punishNote": "▲2二飛成と成り込みます。竜が敵陣に居座り、受けがききません。",
+                                                                                                                                                                                                                                                              "child": {
+                                                                                                                                                                                                                                                                "id": "d42",
+                                                                                                                                                                                                                                                                "sfen": "ln1g4l/1ks6/1p1g2n1p/p1ppp1pR1/5r3/P1P1P1P2/1P1PS3P/2K1GS3/LN1G4L b BSPbn3p 1",
+                                                                                                                                                                                                                                                                "comment": "相手が2筋を放置しました。飛車が成り込めます。",
+                                                                                                                                                                                                                                                                "branches": [
+                                                                                                                                                                                                                                                                  {
+                                                                                                                                                                                                                                                                    "usi": "2d2b+",
+                                                                                                                                                                                                                                                                    "kind": "main",
+                                                                                                                                                                                                                                                                    "note": "飛車を成り込みます。竜ができました。",
+                                                                                                                                                                                                                                                                    "child": {
+                                                                                                                                                                                                                                                                      "id": "d42_1",
+                                                                                                                                                                                                                                                                      "sfen": "ln1g4l/1ks4+R1/1p1g2n1p/p1ppp1p2/5r3/P1P1P1P2/1P1PS3P/2K1GS3/LN1G4L w BSPbn3p 1",
+                                                                                                                                                                                                                                                                      "comment": "竜を作ることに成功しました。飛車が働いている筋を放置すると、一手で決定的な差がつきます。",
+                                                                                                                                                                                                                                                                      "branches": []
+                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                  }
+                                                                                                                                                                                                                                                                ]
+                                                                                                                                                                                                                                                              }
                                                                                                                                                                                                                                                             }
                                                                                                                                                                                                                                                           ]
                                                                                                                                                                                                                                                         }
@@ -438,6 +462,52 @@
                                                                                                                                                                                                                                       }
                                                                                                                                                                                                                                     }
                                                                                                                                                                                                                                   ]
+                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                              }
+                                                                                                                                                                                                                            ]
+                                                                                                                                                                                                                          }
+                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                      ]
+                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                  }
+                                                                                                                                                                                                                ]
+                                                                                                                                                                                                              }
+                                                                                                                                                                                                            },
+                                                                                                                                                                                                            {
+                                                                                                                                                                                                              "usi": "3c4d",
+                                                                                                                                                                                                              "kind": "deviation",
+                                                                                                                                                                                                              "note": "銀ではなく角で取り返した形です。どちらでも取れるように見えますが、大きな違いがあります。",
+                                                                                                                                                                                                              "punishNote": "▲同角と角を交換します。相手の角が消えると2筋の守りが弱まり、▲2四飛と走れます。",
+                                                                                                                                                                                                              "child": {
+                                                                                                                                                                                                                "id": "d34",
+                                                                                                                                                                                                                "sfen": "ln1g3nl/1ks2r3/1ppg1s2p/p2ppbpp1/9/P1P1P1P2/1P1PS1N1P/1BK1GS1R1/LN1G4L b P2p 1",
+                                                                                                                                                                                                                "comment": "相手が角で取り返しました。角を交換できます。",
+                                                                                                                                                                                                                "branches": [
+                                                                                                                                                                                                                  {
+                                                                                                                                                                                                                    "usi": "8h4d",
+                                                                                                                                                                                                                    "kind": "main",
+                                                                                                                                                                                                                    "note": "角を交換します。",
+                                                                                                                                                                                                                    "child": {
+                                                                                                                                                                                                                      "id": "d34_1",
+                                                                                                                                                                                                                      "sfen": "ln1g3nl/1ks2r3/1ppg1s2p/p2ppBpp1/9/P1P1P1P2/1P1PS1N1P/2K1GS1R1/LN1G4L w BP2p 1",
+                                                                                                                                                                                                                      "branches": [
+                                                                                                                                                                                                                        {
+                                                                                                                                                                                                                          "usi": "4c4d",
+                                                                                                                                                                                                                          "kind": "main",
+                                                                                                                                                                                                                          "note": "相手は銀で取り返すよりありません。",
+                                                                                                                                                                                                                          "child": {
+                                                                                                                                                                                                                            "id": "d34_2",
+                                                                                                                                                                                                                            "sfen": "ln1g3nl/1ks2r3/1ppg4p/p2ppspp1/9/P1P1P1P2/1P1PS1N1P/2K1GS1R1/LN1G4L b BPb2p 1",
+                                                                                                                                                                                                                            "branches": [
+                                                                                                                                                                                                                              {
+                                                                                                                                                                                                                                "usi": "2h2d",
+                                                                                                                                                                                                                                "kind": "main",
+                                                                                                                                                                                                                                "note": "飛車を走ります。角が消えたので2筋が受かりません。",
+                                                                                                                                                                                                                                "child": {
+                                                                                                                                                                                                                                  "id": "d34_3",
+                                                                                                                                                                                                                                  "sfen": "ln1g3nl/1ks2r3/1ppg4p/p2ppspR1/9/P1P1P1P2/1P1PS1N1P/2K1GS3/LN1G4L w B2Pb2p 1",
+                                                                                                                                                                                                                                  "comment": "角がいなくなったことで2筋が破れました。取り返す駒の選択で結果が変わる例です。",
+                                                                                                                                                                                                                                  "branches": []
                                                                                                                                                                                                                                 }
                                                                                                                                                                                                                               }
                                                                                                                                                                                                                             ]
@@ -510,6 +580,52 @@
                                                                                       }
                                                                                     }
                                                                                   ]
+                                                                                }
+                                                                              }
+                                                                            ]
+                                                                          }
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                              }
+                                                            },
+                                                            {
+                                                              "usi": "6c6d",
+                                                              "kind": "deviation",
+                                                              "note": "飛車先を受けずに他の手を指した形です。一見ふつうの手ですが、2筋の守りが留守になっています。",
+                                                              "punishNote": "▲2四歩と突き捨てます。△同歩▲同飛で2筋を突破でき、飛車が敵陣に迫ります。",
+                                                              "child": {
+                                                                "id": "d10",
+                                                                "sfen": "ln1gkgsnl/2s2r1b1/ppp1p2pp/3p1pp2/7P1/2P6/PP1PPPP1P/1B1K1S1R1/LNSG1G1NL b - 1",
+                                                                "comment": "相手が飛車先の受けを怠りました。2筋に狙いがあります。",
+                                                                "branches": [
+                                                                  {
+                                                                    "usi": "2e2d",
+                                                                    "kind": "main",
+                                                                    "note": "歩を突き捨てます。相手は取るしかありません。",
+                                                                    "child": {
+                                                                      "id": "d10_1",
+                                                                      "sfen": "ln1gkgsnl/2s2r1b1/ppp1p2pp/3p1ppP1/9/2P6/PP1PPPP1P/1B1K1S1R1/LNSG1G1NL w - 1",
+                                                                      "branches": [
+                                                                        {
+                                                                          "usi": "2c2d",
+                                                                          "kind": "main",
+                                                                          "note": "相手は歩で取り返します。",
+                                                                          "child": {
+                                                                            "id": "d10_2",
+                                                                            "sfen": "ln1gkgsnl/2s2r1b1/ppp1p3p/3p1ppp1/9/2P6/PP1PPPP1P/1B1K1S1R1/LNSG1G1NL b p 1",
+                                                                            "branches": [
+                                                                              {
+                                                                                "usi": "2h2d",
+                                                                                "kind": "main",
+                                                                                "note": "飛車で取り返し、2筋を突破しました。角で受けていればこうはなりません。",
+                                                                                "child": {
+                                                                                  "id": "d10_3",
+                                                                                  "sfen": "ln1gkgsnl/2s2r1b1/ppp1p3p/3p1ppR1/9/2P6/PP1PPPP1P/1B1K1S3/LNSG1G1NL w Pp 1",
+                                                                                  "comment": "飛車先を破ることに成功しました。飛車先の受けを怠ると、これだけで大きな差がつきます。",
+                                                                                  "branches": []
                                                                                 }
                                                                               }
                                                                             ]

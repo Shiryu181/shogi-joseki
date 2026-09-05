@@ -394,7 +394,9 @@ export function listMainLineNodes(course: JosekiCourse): JosekiNode[] {
   const nodes: JosekiNode[] = [course.root];
   let current = course.root;
   while (current.branches.length > 0) {
-    const child = current.branches[0].child;
+    // 逸れ手(deviation)の枝が混ざるので、必ず kind で本線を選ぶ。
+    const main = current.branches.find((b) => b.kind === "main") ?? current.branches[0];
+    const child = main.child;
     if (!child) break;
     nodes.push(child);
     current = child;

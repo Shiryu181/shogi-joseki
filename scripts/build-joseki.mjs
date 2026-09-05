@@ -107,6 +107,11 @@ export function buildCourse({ id, title, myStrategy, opponentStrategy, mySide, s
   const usiList = [];
 
   moves.forEach((spec, i) => {
+    // 逸れ手(相手が定石を外す手)は、本線を適用する前の局面から枝を伸ばす。
+    // 学習画面で「相手がこう指してきたらどう咎めるか」を出題するために使う。
+    // 本線を常に branches[0] に置くため、逸れ手は本線を積んでから後ろに足す。
+    const devBranches = (spec.devs ?? []).map((dev) => buildDeviation(position, dev, i + 1));
+
     const move = resolveMove(position, spec, i + 1);
     const usi = move.usi;
     usiList.push(usi);
@@ -114,6 +119,7 @@ export function buildCourse({ id, title, myStrategy, opponentStrategy, mySide, s
 
     const child = { id: `n${i + 1}`, sfen: position.sfen, comment: spec.comment, branches: [] };
     nodes[i].branches.push({ usi, kind: "main", note: spec.note, child });
+    for (const b of devBranches) nodes[i].branches.push(b);
     nodes.push(child);
   });
 
@@ -125,6 +131,35 @@ export function buildCourse({ id, title, myStrategy, opponentStrategy, mySide, s
     root: nodes[0],
   };
   return { course, usiList };
+}
+
+/**
+ * 逸れ手の枝を1本組み立てる。
+ * dev = { piece, to, from?, drop?, promote?, note, punishNote, line: [手のspec...] }
+ * line には咎め方の手順を入れる(先頭がこちらの咎め手)。
+ */
+function buildDeviation(position, dev, moveNo) {
+  const work = position.clone();
+  const devMove = resolveMove(work, dev, `${moveNo}(逸れ手)`);
+  if (!work.doMove(devMove)) throw new Error(`${moveNo}手目の逸れ手 ${devMove.usi}: 適用に失敗`);
+
+  const head = { id: `d${moveNo}`, sfen: work.sfen, comment: dev.comment, branches: [] };
+  let cursor = head;
+  (dev.line ?? []).forEach((spec, j) => {
+    const mv = resolveMove(work, spec, `${moveNo}(咎め${j + 1})`);
+    if (!work.doMove(mv)) throw new Error(`${moveNo}手目の咎め手 ${mv.usi}: 適用に失敗`);
+    const child = { id: `d${moveNo}_${j + 1}`, sfen: work.sfen, comment: spec.comment, branches: [] };
+    cursor.branches.push({ usi: mv.usi, kind: "main", note: spec.note, child });
+    cursor = child;
+  });
+
+  return {
+    usi: devMove.usi,
+    kind: "deviation",
+    note: dev.note,
+    punishNote: dev.punishNote,
+    child: head,
+  };
 }
 
 /**

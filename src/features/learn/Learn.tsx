@@ -185,7 +185,9 @@ function countMoves(node: JosekiNode): number {
   let current = node;
   while (current.branches.length > 0) {
     count++;
-    const child = current.branches[0].child;
+    // 逸れ手の枝を数に含めないよう、本線だけを辿る。
+    const main = current.branches.find((b) => b.kind === "main") ?? current.branches[0];
+    const child = main.child;
     if (!child) break;
     current = child;
   }
