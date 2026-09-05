@@ -144,3 +144,72 @@
   margin-bottom: 6px;
   font-size: 15px;
 }
+
+/*
+ * 出題(相手が定石を外した局面で咎め手を当てる)。
+ * なぞりガイドと違って「答えを教えない」画面なので、金茶のガイド色ではなく
+ * 赤系にして、今が問われている場面だと一目で分かるようにする。
+ */
+.quizpill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2px auto 0;
+  width: max-content;
+  max-width: calc(100% - 28px);
+  background: var(--red-soft);
+  color: var(--red);
+  font-size: 11.5px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.quizpanel {
+  margin: 10px 14px 0;
+  background: var(--card);
+  border: 1px solid var(--line-2);
+  border-radius: 14px;
+  padding: 14px 15px;
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--ink);
+}
+.quizpanel p {
+  margin: 0;
+}
+.quizpanel p + p {
+  margin-top: 8px;
+}
+.quiz-head {
+  font-family: var(--disp);
+  font-size: 14.5px;
+}
+.quiz-no {
+  display: inline-block;
+  margin-right: 8px;
+  color: var(--ink-faint);
+  font-size: 11.5px;
+  font-family: var(--body);
+}
+.quiz-note,
+.quiz-comment {
+  color: var(--ink-soft);
+}
+.quiz-wrong {
+  background: var(--red-soft);
+  color: var(--red);
+  border-radius: 10px;
+  padding: 9px 11px;
+}
+.quiz-wrong span {
+  display: block;
+  font-size: 12px;
+  opacity: 0.85;
+}
+.quiz-punish {
+  background: var(--good-soft);
+  color: var(--good);
+  border-radius: 10px;
+  padding: 9px 11px;
+}

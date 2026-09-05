@@ -177,6 +177,29 @@ export function moveFromUSI(position: Position, usi: string): { move: Move; disp
 }
 
 /**
+ * 局面を一切変えずに着手を試す(出題の正誤判定用)。tryMove は position を進めてしまうため、
+ * 「不正解なら盤はそのまま」を保証したい場面ではこちらを使う。
+ * 成/不成の両方が合法なときは preferUsi(想定している正解手)に一致するほうを選ぶ。
+ * これが無いと、咎め手が「成」でも不成と解釈されて不正解になってしまう。
+ */
+export function tryMovePreview(
+  position: Position,
+  from: Square | PieceType,
+  to: Square,
+  preferUsi?: string,
+): { ok: true; move: Move; displayText: string } | { ok: false } {
+  const base = position.createMove(from, to);
+  if (!base) return { ok: false };
+  const promoted = base.withPromote();
+  const baseOk = position.isValidMove(base);
+  const promoteOk = position.isValidMove(promoted);
+  const move =
+    promoteOk && preferUsi === promoted.usi ? promoted : baseOk ? base : promoteOk ? promoted : null;
+  if (!move) return { ok: false };
+  return { move, ok: true, displayText: formatMove(position, move) };
+}
+
+/**
  * 指定局面(不変)に USI 形式の手を1つ適用し、適用後の SFEN と表示テキストを返す。
  * 元の position は変更しない(内部で clone する)。practiceStore がユーザーの手と
  * 定石手を並べてエンジン評価する(A/B比較)ために使う。
