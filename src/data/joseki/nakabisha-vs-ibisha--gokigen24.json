@@ -1,0 +1,400 @@
+{
+  "id": "nakabisha-vs-ibisha--gokigen24",
+  "title": "ゴキゲン中飛車 vs 速攻▲2四歩(後手)",
+  "myStrategy": "nakabisha",
+  "opponentStrategy": "ibisha",
+  "mySide": "gote",
+  "source": "手順は将棋大図書館(shogilounge.com)「ゴキゲン中飛車対速攻▲2四歩の定跡」の『積極的に咎める△3三角』→『最善▲7七銀』の変化に準拠",
+  "goalFormation": "▲2四歩の速攻に角交換から反撃し、2筋にと金を作って△4二銀と落ち着いた局面。出典では振り飛車優勢とされる。",
+  "goalLabel": "反撃が決まりました",
+  "goalSfen": "lnsgkg1nl/5s1r1/pppp1p2p/4p1p2/9/2P6/PPNPPPP+pP/4R4/L2GKG1NL b 2BSPs 1",
+  "root": {
+    "id": "n0",
+    "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
+    "comment": "平手の初形です。ゴキゲン中飛車で、相手の速攻▲2四歩を迎え撃ちます。",
+    "branches": [
+      {
+        "usi": "7g7f",
+        "kind": "main",
+        "note": "相手が角道を開けました。",
+        "child": {
+          "id": "n1",
+          "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1",
+          "branches": [
+            {
+              "usi": "3c3d",
+              "kind": "main",
+              "note": "こちらも角道を開けます。",
+              "child": {
+                "id": "n2",
+                "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                "branches": [
+                  {
+                    "usi": "2g2f",
+                    "kind": "main",
+                    "note": "相手が飛車先を突きました。",
+                    "child": {
+                      "id": "n3",
+                      "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL w - 1",
+                      "branches": [
+                        {
+                          "usi": "5c5d",
+                          "kind": "main",
+                          "note": "5筋の歩を突きます。中飛車の合図です。",
+                          "child": {
+                            "id": "n4",
+                            "sfen": "lnsgkgsnl/1r5b1/pppp1p1pp/4p1p2/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL b - 1",
+                            "branches": [
+                              {
+                                "usi": "2f2e",
+                                "kind": "main",
+                                "note": "相手はさらに飛車先を伸ばしてきました。",
+                                "child": {
+                                  "id": "n5",
+                                  "sfen": "lnsgkgsnl/1r5b1/pppp1p1pp/4p1p2/7P1/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL w - 1",
+                                  "branches": [
+                                    {
+                                      "usi": "8b5b",
+                                      "kind": "main",
+                                      "note": "飛車を5筋へ。ゴキゲン中飛車の基本形です。角道を止めないのが特徴で、相手が2筋を攻めてきたら角交換から反撃します。",
+                                      "child": {
+                                        "id": "n6",
+                                        "sfen": "lnsgkgsnl/4r2b1/pppp1p1pp/4p1p2/7P1/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL b - 1",
+                                        "comment": "ゴキゲン中飛車の基本形です。ここで相手が▲2四歩と速攻してくる変化を見ていきます。",
+                                        "branches": [
+                                          {
+                                            "usi": "2e2d",
+                                            "kind": "main",
+                                            "note": "相手が2筋の歩を突いてきました。速攻▲2四歩です。",
+                                            "child": {
+                                              "id": "n7",
+                                              "sfen": "lnsgkgsnl/4r2b1/pppp1p1pp/4p1pP1/9/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL w - 1",
+                                              "comment": null,
+                                              "branches": [
+                                                {
+                                                  "usi": "2c2d",
+                                                  "kind": "main",
+                                                  "note": "歩で取ります。相手は飛車で取り返してきます。",
+                                                  "child": {
+                                                    "id": "n8",
+                                                    "sfen": "lnsgkgsnl/4r2b1/pppp1p2p/4p1pp1/9/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL b p 1",
+                                                    "comment": null,
+                                                    "branches": [
+                                                      {
+                                                        "usi": "2h2d",
+                                                        "kind": "main",
+                                                        "note": "相手は飛車で取り返しました。飛車先を交換された形です。",
+                                                        "child": {
+                                                          "id": "n9",
+                                                          "sfen": "lnsgkgsnl/4r2b1/pppp1p2p/4p1pR1/9/2P6/PP1PPPP1P/1B7/LNSGKGSNL w Pp 1",
+                                                          "comment": null,
+                                                          "branches": [
+                                                            {
+                                                              "usi": "2b8h+",
+                                                              "kind": "main",
+                                                              "note": "ここで角交換。飛車先を切られたら角を換えて反撃するのが、角交換振り飛車の常套手段です。",
+                                                              "child": {
+                                                                "id": "n10",
+                                                                "sfen": "lnsgkgsnl/4r4/pppp1p2p/4p1pR1/9/2P6/PP1PPPP1P/1+b7/LNSGKGSNL b Pbp 1",
+                                                                "comment": null,
+                                                                "branches": [
+                                                                  {
+                                                                    "usi": "7i8h",
+                                                                    "kind": "main",
+                                                                    "note": "相手は銀で取り返します。",
+                                                                    "child": {
+                                                                      "id": "n11",
+                                                                      "sfen": "lnsgkgsnl/4r4/pppp1p2p/4p1pR1/9/2P6/PP1PPPP1P/1S7/LN1GKGSNL w BPbp 1",
+                                                                      "comment": null,
+                                                                      "branches": [
+                                                                        {
+                                                                          "usi": "B*3c",
+                                                                          "kind": "main",
+                                                                          "note": "持ち駒の角を3三へ打ちます。飛車取りを見せながら、積極的に咎めにいく一手です。",
+                                                                          "child": {
+                                                                            "id": "n12",
+                                                                            "sfen": "lnsgkgsnl/4r4/pppp1pb1p/4p1pR1/9/2P6/PP1PPPP1P/1S7/LN1GKGSNL b BPp 1",
+                                                                            "branches": [
+                                                                              {
+                                                                                "usi": "2d2h",
+                                                                                "kind": "main",
+                                                                                "note": "相手は飛車を引いて受けました。ここが一番多い対応です。",
+                                                                                "child": {
+                                                                                  "id": "n13",
+                                                                                  "sfen": "lnsgkgsnl/4r4/pppp1pb1p/4p1p2/9/2P6/PP1PPPP1P/1S5R1/LN1GKGSNL w BPp 1",
+                                                                                  "comment": null,
+                                                                                  "branches": [
+                                                                                    {
+                                                                                      "usi": "P*2f",
+                                                                                      "kind": "main",
+                                                                                      "note": "2六に歩を垂らします。次に△2七歩成と成られると痛いので、相手は受けなければなりません。",
+                                                                                      "child": {
+                                                                                        "id": "n14",
+                                                                                        "sfen": "lnsgkgsnl/4r4/pppp1pb1p/4p1p2/9/2P4p1/PP1PPPP1P/1S5R1/LN1GKGSNL b BP 1",
+                                                                                        "branches": [
+                                                                                          {
+                                                                                            "usi": "8h7g",
+                                                                                            "kind": "main",
+                                                                                            "note": "相手は銀を上がって8八を守りました。これが居飛車の最善の受けです。",
+                                                                                            "child": {
+                                                                                              "id": "n15",
+                                                                                              "sfen": "lnsgkgsnl/4r4/pppp1pb1p/4p1p2/9/2P4p1/PPSPPPP1P/7R1/LN1GKGSNL w BP 1",
+                                                                                              "comment": null,
+                                                                                              "branches": [
+                                                                                                {
+                                                                                                  "usi": "5b2b",
+                                                                                                  "kind": "main",
+                                                                                                  "note": "飛車を2筋へ回し、垂らした歩と連携させます。",
+                                                                                                  "child": {
+                                                                                                    "id": "n16",
+                                                                                                    "sfen": "lnsgkgsnl/7r1/pppp1pb1p/4p1p2/9/2P4p1/PPSPPPP1P/7R1/LN1GKGSNL b BP 1",
+                                                                                                    "comment": null,
+                                                                                                    "branches": [
+                                                                                                      {
+                                                                                                        "usi": "3i3h",
+                                                                                                        "kind": "main",
+                                                                                                        "note": "相手も銀を上げて2筋を補強します。",
+                                                                                                        "child": {
+                                                                                                          "id": "n17",
+                                                                                                          "sfen": "lnsgkgsnl/7r1/pppp1pb1p/4p1p2/9/2P4p1/PPSPPPP1P/6SR1/LN1GKG1NL w BP 1",
+                                                                                                          "comment": null,
+                                                                                                          "branches": [
+                                                                                                            {
+                                                                                                              "usi": "3c7g+",
+                                                                                                              "kind": "main",
+                                                                                                              "note": "角を切ります。銀を手に入れるための、思い切った一手です。",
+                                                                                                              "child": {
+                                                                                                                "id": "n18",
+                                                                                                                "sfen": "lnsgkgsnl/7r1/pppp1p2p/4p1p2/9/2P4p1/PP+bPPPP1P/6SR1/LN1GKG1NL b BPs 1",
+                                                                                                                "comment": null,
+                                                                                                                "branches": [
+                                                                                                                  {
+                                                                                                                    "usi": "8i7g",
+                                                                                                                    "kind": "main",
+                                                                                                                    "note": "相手は桂で取り返します。",
+                                                                                                                    "child": {
+                                                                                                                      "id": "n19",
+                                                                                                                      "sfen": "lnsgkgsnl/7r1/pppp1p2p/4p1p2/9/2P4p1/PPNPPPP1P/6SR1/L2GKG1NL w 2BPs 1",
+                                                                                                                      "comment": null,
+                                                                                                                      "branches": [
+                                                                                                                        {
+                                                                                                                          "usi": "S*2g",
+                                                                                                                          "kind": "main",
+                                                                                                                          "note": "手に入れた銀を2七へ打ち込みます。",
+                                                                                                                          "child": {
+                                                                                                                            "id": "n20",
+                                                                                                                            "sfen": "lnsgkgsnl/7r1/pppp1p2p/4p1p2/9/2P4p1/PPNPPPPsP/6SR1/L2GKG1NL b 2BP 1",
+                                                                                                                            "branches": [
+                                                                                                                              {
+                                                                                                                                "usi": "3h2g",
+                                                                                                                                "kind": "main",
+                                                                                                                                "note": "相手は銀で取ります。",
+                                                                                                                                "child": {
+                                                                                                                                  "id": "n21",
+                                                                                                                                  "sfen": "lnsgkgsnl/7r1/pppp1p2p/4p1p2/9/2P4p1/PPNPPPPSP/7R1/L2GKG1NL w 2BSP 1",
+                                                                                                                                  "comment": null,
+                                                                                                                                  "branches": [
+                                                                                                                                    {
+                                                                                                                                      "usi": "2f2g+",
+                                                                                                                                      "kind": "main",
+                                                                                                                                      "note": "垂らしておいた歩で取り返し、と金ができました。",
+                                                                                                                                      "child": {
+                                                                                                                                        "id": "n22",
+                                                                                                                                        "sfen": "lnsgkgsnl/7r1/pppp1p2p/4p1p2/9/2P6/PPNPPPP+pP/7R1/L2GKG1NL b 2BSPs 1",
+                                                                                                                                        "comment": null,
+                                                                                                                                        "branches": [
+                                                                                                                                          {
+                                                                                                                                            "usi": "2h5h",
+                                                                                                                                            "kind": "main",
+                                                                                                                                            "note": "相手は飛車を逃げます。",
+                                                                                                                                            "child": {
+                                                                                                                                              "id": "n23",
+                                                                                                                                              "sfen": "lnsgkgsnl/7r1/pppp1p2p/4p1p2/9/2P6/PPNPPPP+pP/4R4/L2GKG1NL w 2BSPs 1",
+                                                                                                                                              "comment": null,
+                                                                                                                                              "branches": [
+                                                                                                                                                {
+                                                                                                                                                  "usi": "3a4b",
+                                                                                                                                                  "kind": "main",
+                                                                                                                                                  "note": "ここで落ち着いて銀を上がるのが好手です。5三の地点と玉のコビンを守っておきます。",
+                                                                                                                                                  "child": {
+                                                                                                                                                    "id": "n24",
+                                                                                                                                                    "sfen": "lnsgkg1nl/5s1r1/pppp1p2p/4p1p2/9/2P6/PPNPPPP+pP/4R4/L2GKG1NL b 2BSPs 1",
+                                                                                                                                                    "comment": "反撃が決まりました。出典はこの局面を『振り飛車優勢』としています。2七のと金が残っているのが大きく、次に△1八とや△3八銀といった攻めもあり、玉を囲いに行くこともできます。飛車先を切られても、角交換から反撃できるのがゴキゲン中飛車の主張です。",
+                                                                                                                                                    "branches": []
+                                                                                                                                                  }
+                                                                                                                                                }
+                                                                                                                                              ]
+                                                                                                                                            }
+                                                                                                                                          }
+                                                                                                                                        ]
+                                                                                                                                      }
+                                                                                                                                    }
+                                                                                                                                  ]
+                                                                                                                                }
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                "usi": "P*2c",
+                                                                                                                                "kind": "deviation",
+                                                                                                                                "note": "銀を取らずに、2三へ歩を打ってきた形です。この歩は何に当たっているでしょうか。",
+                                                                                                                                "punishNote": "△同飛。打たれた歩は2二の飛車に当たっています。取っておけば損はなく、2七の銀も残ります。",
+                                                                                                                                "child": {
+                                                                                                                                  "id": "d21",
+                                                                                                                                  "sfen": "lnsgkgsnl/7r1/pppp1p1Pp/4p1p2/9/2P4p1/PPNPPPPsP/6SR1/L2GKG1NL w 2B 1",
+                                                                                                                                  "comment": "相手が歩を打ってきました。当たっている駒を確かめてください。",
+                                                                                                                                  "branches": [
+                                                                                                                                    {
+                                                                                                                                      "usi": "2b2c",
+                                                                                                                                      "kind": "main",
+                                                                                                                                      "note": "飛車で歩を取ります。飛車取りを解消しつつ、歩得です。",
+                                                                                                                                      "child": {
+                                                                                                                                        "id": "d21_1",
+                                                                                                                                        "sfen": "lnsgkgsnl/9/pppp1p1rp/4p1p2/9/2P4p1/PPNPPPPsP/6SR1/L2GKG1NL b 2Bp 1",
+                                                                                                                                        "branches": [
+                                                                                                                                          {
+                                                                                                                                            "usi": "3h2g",
+                                                                                                                                            "kind": "main",
+                                                                                                                                            "note": "相手は銀を取り返します。",
+                                                                                                                                            "child": {
+                                                                                                                                              "id": "d21_2",
+                                                                                                                                              "sfen": "lnsgkgsnl/9/pppp1p1rp/4p1p2/9/2P4p1/PPNPPPPSP/7R1/L2GKG1NL w 2BSp 1",
+                                                                                                                                              "branches": [
+                                                                                                                                                {
+                                                                                                                                                  "usi": "2f2g+",
+                                                                                                                                                  "kind": "main",
+                                                                                                                                                  "note": "垂らした歩で取り返し、と金ができました。",
+                                                                                                                                                  "child": {
+                                                                                                                                                    "id": "d21_3",
+                                                                                                                                                    "sfen": "lnsgkgsnl/9/pppp1p1rp/4p1p2/9/2P6/PPNPPPP+pP/7R1/L2GKG1NL b 2BSsp 1",
+                                                                                                                                                    "comment": "歩を取り返したうえで、と金まで作れました。相手が駒を打ってきたら、まず『何に当たっているか』を見ます。",
+                                                                                                                                                    "branches": []
+                                                                                                                                                  }
+                                                                                                                                                }
+                                                                                                                                              ]
+                                                                                                                                            }
+                                                                                                                                          }
+                                                                                                                                        ]
+                                                                                                                                      }
+                                                                                                                                    }
+                                                                                                                                  ]
+                                                                                                                                }
+                                                                                                                              }
+                                                                                                                            ]
+                                                                                                                          }
+                                                                                                                        }
+                                                                                                                      ]
+                                                                                                                    }
+                                                                                                                  }
+                                                                                                                ]
+                                                                                                              }
+                                                                                                            }
+                                                                                                          ]
+                                                                                                        }
+                                                                                                      }
+                                                                                                    ]
+                                                                                                  }
+                                                                                                }
+                                                                                              ]
+                                                                                            }
+                                                                                          }
+                                                                                        ]
+                                                                                      }
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              },
+                                                                              {
+                                                                                "usi": "2d2a+",
+                                                                                "kind": "deviation",
+                                                                                "note": "飛車を引かずに、桂を取って成り込んできた形です。一番激しい変化で、駒損を承知で攻めてきています。",
+                                                                                "punishNote": "△8八角成。竜を作らせても、こちらは角を成って馬を作り、桂・香も拾えます。駒得と馬で振り飛車が優勢になります。",
+                                                                                "child": {
+                                                                                  "id": "d13",
+                                                                                  "sfen": "lnsgkgs+Rl/4r4/pppp1pb1p/4p1p2/9/2P6/PP1PPPP1P/1S7/LN1GKGSNL w BNPp 1",
+                                                                                  "comment": "相手が飛車を成り込んできました。怖い形ですが、こちらにも反撃があります。",
+                                                                                  "branches": [
+                                                                                    {
+                                                                                      "usi": "3c8h+",
+                                                                                      "kind": "main",
+                                                                                      "note": "角を成って銀を取り、馬を作ります。",
+                                                                                      "child": {
+                                                                                        "id": "d13_1",
+                                                                                        "sfen": "lnsgkgs+Rl/4r4/pppp1p2p/4p1p2/9/2P6/PP1PPPP1P/1+b7/LN1GKGSNL b BNPsp 1",
+                                                                                        "branches": [
+                                                                                          {
+                                                                                            "usi": "B*7g",
+                                                                                            "kind": "main",
+                                                                                            "note": "相手は角を打って馬に当ててきます。",
+                                                                                            "child": {
+                                                                                              "id": "d13_2",
+                                                                                              "sfen": "lnsgkgs+Rl/4r4/pppp1p2p/4p1p2/9/2P6/PPBPPPP1P/1+b7/LN1GKGSNL w NPsp 1",
+                                                                                              "branches": [
+                                                                                                {
+                                                                                                  "usi": "8h8i",
+                                                                                                  "kind": "main",
+                                                                                                  "note": "馬を逃げながら桂も取ります。",
+                                                                                                  "child": {
+                                                                                                    "id": "d13_3",
+                                                                                                    "sfen": "lnsgkgs+Rl/4r4/pppp1p2p/4p1p2/9/2P6/PPBPPPP1P/9/L+b1GKGSNL b NPsnp 1",
+                                                                                                    "branches": [
+                                                                                                      {
+                                                                                                        "usi": "7g1a+",
+                                                                                                        "kind": "main",
+                                                                                                        "note": "相手も角を成って馬を作り、香を取ります。",
+                                                                                                        "child": {
+                                                                                                          "id": "d13_4",
+                                                                                                          "sfen": "lnsgkgs+R+B/4r4/pppp1p2p/4p1p2/9/2P6/PP1PPPP1P/9/L+b1GKGSNL w NLPsnp 1",
+                                                                                                          "comment": "お互いに馬を作りましたが、駒の損得ではこちらが得をしています。出典はこの局面を『振り飛車優勢』とし、次に△6二玉と落ち着いて寄る手を推奨しています(△3二銀も有力で、将棋ソフトはこちらを推します)。飛車を成り込まれても、駒得と馬があれば戦えます。",
+                                                                                                          "branches": []
+                                                                                                        }
+                                                                                                      }
+                                                                                                    ]
+                                                                                                  }
+                                                                                                }
+                                                                                              ]
+                                                                                            }
+                                                                                          }
+                                                                                        ]
+                                                                                      }
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              }
+                                                                            ]
+                                                                          }
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                              }
+                                                            }
+                                                          ]
+                                                        }
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

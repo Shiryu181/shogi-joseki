@@ -19,6 +19,7 @@ import kakugawariHayakuriginRaw from "../data/joseki/kakugawari--hayakurigin.jso
 import aigakariBouginRaw from "../data/joseki/aigakari--bougin.json?raw";
 import yagura24teRaw from "../data/joseki/yagura--24te.json?raw";
 import nakabishaVsAnagumaRaw from "../data/joseki/nakabisha-vs-anaguma--basic.json?raw";
+import nakabishaGokigen24Raw from "../data/joseki/nakabisha-vs-ibisha--gokigen24.json?raw";
 import sujichigaikakuBasicRaw from "../data/joseki/sujichigaikaku--basic.json?raw";
 import ibishaVsNakabishaAnagumaRaw from "../data/joseki/ibisha-vs-nakabisha--anaguma.json?raw";
 import kakugawariGoteRaw from "../data/joseki/kakugawari--gote.json?raw";
@@ -367,6 +368,16 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "持久戦",
     summary: "飛車を5二へ振り、美濃囲いに収めて4五歩と位を取るまで。",
     load: () => assertJosekiCourse(parseRaw(nakabishaVsAnagumaRaw), "nakabisha-vs-anaguma--basic.json"),
+  },
+  {
+    id: "nakabisha-vs-ibisha--gokigen24",
+    strategyId: "nakabisha",
+    opponentLabel: "居飛車",
+    sideLabel: "後手",
+    label: "対速攻▲2四歩",
+    kind: "急戦",
+    summary: "飛車先を切られたら角交換から反撃する、ゴキゲン中飛車の主張。",
+    load: () => assertJosekiCourse(parseRaw(nakabishaGokigen24Raw), "nakabisha-vs-ibisha--gokigen24.json"),
   },
   {
     id: "sujichigaikaku--basic",

@@ -15,6 +15,10 @@ const KANJI_RANK = { 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八
 const GLYPH_TO_TYPE = {
   歩: PieceType.PAWN, 香: PieceType.LANCE, 桂: PieceType.KNIGHT, 銀: PieceType.SILVER,
   金: PieceType.GOLD, 角: PieceType.BISHOP, 飛: PieceType.ROOK, 玉: PieceType.KING,
+  // 成駒。すでに成っている駒を動かす手(馬を寄る、竜で取るなど)を書けるようにする。
+  // 「角」と書くと成る前の駒しか探さないので、馬の移動は必ず「馬」と書く。
+  と: PieceType.PROM_PAWN, 杏: PieceType.PROM_LANCE, 圭: PieceType.PROM_KNIGHT,
+  全: PieceType.PROM_SILVER, 馬: PieceType.HORSE, 龍: PieceType.DRAGON,
 };
 
 /** "7六" → tsshogi の Square */

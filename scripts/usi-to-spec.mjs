@@ -15,8 +15,10 @@ const TYPE_TO_GLYPH = {
   [PieceType.PAWN]: "歩", [PieceType.LANCE]: "香", [PieceType.KNIGHT]: "桂",
   [PieceType.SILVER]: "銀", [PieceType.GOLD]: "金", [PieceType.BISHOP]: "角",
   [PieceType.ROOK]: "飛", [PieceType.KING]: "玉",
-  [PieceType.PROM_PAWN]: "歩", [PieceType.PROM_LANCE]: "香", [PieceType.PROM_KNIGHT]: "桂",
-  [PieceType.PROM_SILVER]: "銀", [PieceType.HORSE]: "角", [PieceType.DRAGON]: "飛",
+  // 成駒は成駒として出す。build-joseki.mjs は「角」と書かれると成る前の駒しか探さないため、
+  // 馬の移動を「角」と書くと合法手が見つからずエラーになる。
+  [PieceType.PROM_PAWN]: "と", [PieceType.PROM_LANCE]: "杏", [PieceType.PROM_KNIGHT]: "圭",
+  [PieceType.PROM_SILVER]: "全", [PieceType.HORSE]: "馬", [PieceType.DRAGON]: "龍",
 };
 const RANK_KANJI = ["一", "二", "三", "四", "五", "六", "七", "八", "九"];
 const label = (square) => `${9 - square.x}${RANK_KANJI[square.y]}`;
