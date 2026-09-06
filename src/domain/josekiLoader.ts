@@ -11,6 +11,7 @@ import ibishaVsShikenbishaAnagumaRaw from "../data/joseki/ibisha-vs-shikenbisha-
 import shikenbishaVsIbishaBasicRaw from "../data/joseki/shikenbisha-vs-ibisha--basic.json?raw";
 import shikenbishaVsAnagumaBasicRaw from "../data/joseki/shikenbisha-vs-anaguma--basic.json?raw";
 import shikenbishaVsBouginKuboryuRaw from "../data/joseki/shikenbisha-vs-bougin--kuboryu.json?raw";
+import shikenbishaVsAnagumaSokkouRaw from "../data/joseki/shikenbisha-vs-anaguma--sokkou.json?raw";
 import ibishaVsSankenbishaBouginRaw from "../data/joseki/ibisha-vs-sankenbisha--bougin.json?raw";
 import ibishaVsSankenbisha37Raw from "../data/joseki/ibisha-vs-sankenbisha--37kei.json?raw";
 import sankenbishaVsIbishaBasicRaw from "../data/joseki/sankenbisha-vs-ibisha--basic.json?raw";
@@ -260,6 +261,16 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "持久戦",
     summary: "相手が穴熊に組む前に、6四歩〜7三桂と動いて主導権を取る。",
     load: () => assertJosekiCourse(parseRaw(shikenbishaVsAnagumaBasicRaw), "shikenbisha-vs-anaguma--basic.json"),
+  },
+  {
+    id: "shikenbisha-vs-anaguma--sokkou",
+    strategyId: "shikenbisha",
+    opponentLabel: "居飛車穴熊",
+    sideLabel: "先手",
+    label: "穴熊に組ませない速攻",
+    kind: "急戦",
+    summary: "右桂を早めに跳ね、角のラインと4筋への集中で穴熊が完成する前に攻める。",
+    load: () => assertJosekiCourse(parseRaw(shikenbishaVsAnagumaSokkouRaw), "shikenbisha-vs-anaguma--sokkou.json"),
   },
   {
     id: "sankenbisha-vs-ibisha--basic",
