@@ -8,6 +8,7 @@ import ibishaVsShikenbishaSenteRaw from "../data/joseki/ibisha-vs-shikenbisha--s
 import ibishaVsShikenbishaBouginRaw from "../data/joseki/ibisha-vs-shikenbisha--bougin.json?raw";
 import ibishaVsShikenbisha45Raw from "../data/joseki/ibisha-vs-shikenbisha--45hayashikake.json?raw";
 import ibishaVsShikenbishaYamadaRaw from "../data/joseki/ibisha-vs-shikenbisha--yamada.json?raw";
+import ibishaVsShikenbishaSaginomiyaRaw from "../data/joseki/ibisha-vs-shikenbisha--saginomiya.json?raw";
 import ibishaVsShikenbishaAnagumaRaw from "../data/joseki/ibisha-vs-shikenbisha--anaguma.json?raw";
 import shikenbishaVsIbishaBasicRaw from "../data/joseki/shikenbisha-vs-ibisha--basic.json?raw";
 import shikenbishaVsAnagumaBasicRaw from "../data/joseki/shikenbisha-vs-anaguma--basic.json?raw";
@@ -164,6 +165,16 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "急戦",
     summary: "相手が△3二銀型のときに有効な急戦。3筋を突き捨てて銀を繰り出す。",
     load: () => assertJosekiCourse(parseRaw(ibishaVsShikenbishaYamadaRaw), "ibisha-vs-shikenbisha--yamada.json"),
+  },
+  {
+    id: "ibisha-vs-shikenbisha--saginomiya",
+    strategyId: "ibisha",
+    opponentLabel: "四間飛車",
+    sideLabel: "先手",
+    label: "鷺宮定跡",
+    kind: "急戦",
+    summary: "飛車を3筋へ回して角頭を攻める、青野照市九段創案の急戦。",
+    load: () => assertJosekiCourse(parseRaw(ibishaVsShikenbishaSaginomiyaRaw), "ibisha-vs-shikenbisha--saginomiya.json"),
   },
   {
     id: "ibisha-vs-shikenbisha--anaguma",
