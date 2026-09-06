@@ -1,0 +1,427 @@
+{
+  "id": "shikenbisha-vs-migishiken--41kin",
+  "title": "四間飛車 vs 右四間飛車(後手・△4一金待機型)",
+  "myStrategy": "shikenbisha",
+  "opponentStrategy": "ibisha",
+  "mySide": "gote",
+  "source": "手順は将棋大図書館(shogilounge.com)「四間飛車対右四間飛車の定跡」の基本図までの指し手＋△5四銀型『△4一金待機型』の変化に準拠",
+  "goalFormation": "△1二香と香を逃がし、△3一金と全部の駒に紐をつけた形。相手に取れる駒が無く、出典では後手十分とされる。",
+  "goalLabel": "右四間飛車を受け止めました",
+  "goalSfen": "ln1g2gn+B/1ks2r2l/1pppp2pp/p3s1pb1/5p1N1/P1P1S1PP1/1P1PP3P/2K1GR3/LNSG4L b p 1",
+  "root": {
+    "id": "n0",
+    "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
+    "comment": "平手の初形です。アマチュアで人気の右四間飛車を、四間飛車でどう受けるかを学びます。",
+    "branches": [
+      {
+        "usi": "2g2f",
+        "kind": "main",
+        "note": "相手が飛車先を突きました。",
+        "child": {
+          "id": "n1",
+          "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/7P1/PPPPPPP1P/1B5R1/LNSGKGSNL w - 1",
+          "branches": [
+            {
+              "usi": "3c3d",
+              "kind": "main",
+              "note": "角道を開けます。",
+              "child": {
+                "id": "n2",
+                "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/7P1/PPPPPPP1P/1B5R1/LNSGKGSNL b - 1",
+                "branches": [
+                  {
+                    "usi": "7g7f",
+                    "kind": "main",
+                    "note": "相手も角道を開けます。",
+                    "child": {
+                      "id": "n3",
+                      "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL w - 1",
+                      "branches": [
+                        {
+                          "usi": "4c4d",
+                          "kind": "main",
+                          "note": "角道を止めて振り飛車へ向かいます。",
+                          "child": {
+                            "id": "n4",
+                            "sfen": "lnsgkgsnl/1r5b1/ppppp2pp/5pp2/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL b - 1",
+                            "branches": [
+                              {
+                                "usi": "4g4f",
+                                "kind": "main",
+                                "note": "相手が4筋の歩を伸ばしました。右四間飛車の合図です。",
+                                "child": {
+                                  "id": "n5",
+                                  "sfen": "lnsgkgsnl/1r5b1/ppppp2pp/5pp2/9/2P2P1P1/PP1PP1P1P/1B5R1/LNSGKGSNL w - 1",
+                                  "branches": [
+                                    {
+                                      "usi": "8b4b",
+                                      "kind": "main",
+                                      "note": "飛車を4筋へ。四間飛車の完成です。",
+                                      "child": {
+                                        "id": "n6",
+                                        "sfen": "lnsgkgsnl/5r1b1/ppppp2pp/5pp2/9/2P2P1P1/PP1PP1P1P/1B5R1/LNSGKGSNL b - 1",
+                                        "branches": [
+                                          {
+                                            "usi": "3i4h",
+                                            "kind": "main",
+                                            "note": "相手は銀を上げます。",
+                                            "child": {
+                                              "id": "n7",
+                                              "sfen": "lnsgkgsnl/5r1b1/ppppp2pp/5pp2/9/2P2P1P1/PP1PP1P1P/1B3S1R1/LNSGKG1NL w - 1",
+                                              "branches": [
+                                                {
+                                                  "usi": "5a6b",
+                                                  "kind": "main",
+                                                  "note": "玉を囲いへ運びます。",
+                                                  "child": {
+                                                    "id": "n8",
+                                                    "sfen": "lnsg1gsnl/3k1r1b1/ppppp2pp/5pp2/9/2P2P1P1/PP1PP1P1P/1B3S1R1/LNSGKG1NL b - 1",
+                                                    "branches": [
+                                                      {
+                                                        "usi": "4h4g",
+                                                        "kind": "main",
+                                                        "note": "相手の銀が4七へ。",
+                                                        "child": {
+                                                          "id": "n9",
+                                                          "sfen": "lnsg1gsnl/3k1r1b1/ppppp2pp/5pp2/9/2P2P1P1/PP1PPSP1P/1B5R1/LNSGKG1NL w - 1",
+                                                          "branches": [
+                                                            {
+                                                              "usi": "6b7b",
+                                                              "kind": "main",
+                                                              "note": "玉をさらに右へ。",
+                                                              "child": {
+                                                                "id": "n10",
+                                                                "sfen": "lnsg1gsnl/2k2r1b1/ppppp2pp/5pp2/9/2P2P1P1/PP1PPSP1P/1B5R1/LNSGKG1NL b - 1",
+                                                                "branches": [
+                                                                  {
+                                                                    "usi": "4g5f",
+                                                                    "kind": "main",
+                                                                    "note": "相手の銀が5六まで出てきました。",
+                                                                    "child": {
+                                                                      "id": "n11",
+                                                                      "sfen": "lnsg1gsnl/2k2r1b1/ppppp2pp/5pp2/9/2P1SP1P1/PP1PP1P1P/1B5R1/LNSGKG1NL w - 1",
+                                                                      "branches": [
+                                                                        {
+                                                                          "usi": "3a3b",
+                                                                          "kind": "main",
+                                                                          "note": "こちらも銀を上がります。",
+                                                                          "child": {
+                                                                            "id": "n12",
+                                                                            "sfen": "lnsg1g1nl/2k2rsb1/ppppp2pp/5pp2/9/2P1SP1P1/PP1PP1P1P/1B5R1/LNSGKG1NL b - 1",
+                                                                            "branches": [
+                                                                              {
+                                                                                "usi": "2h4h",
+                                                                                "kind": "main",
+                                                                                "note": "相手が飛車を4筋へ回しました。飛車・角・銀・桂を4筋に集める、右四間飛車の攻めの形です。",
+                                                                                "child": {
+                                                                                  "id": "n13",
+                                                                                  "sfen": "lnsg1g1nl/2k2rsb1/ppppp2pp/5pp2/9/2P1SP1P1/PP1PP1P1P/1B3R3/LNSGKG1NL w - 1",
+                                                                                  "branches": [
+                                                                                    {
+                                                                                      "usi": "3b4c",
+                                                                                      "kind": "main",
+                                                                                      "note": "銀を4三へ。4筋を受けます。",
+                                                                                      "child": {
+                                                                                        "id": "n14",
+                                                                                        "sfen": "lnsg1g1nl/2k2r1b1/ppppps1pp/5pp2/9/2P1SP1P1/PP1PP1P1P/1B3R3/LNSGKG1NL b - 1",
+                                                                                        "comment": null,
+                                                                                        "branches": [
+                                                                                          {
+                                                                                            "usi": "5i6h",
+                                                                                            "kind": "main",
+                                                                                            "note": "相手も玉を囲いへ。",
+                                                                                            "child": {
+                                                                                              "id": "n15",
+                                                                                              "sfen": "lnsg1g1nl/2k2r1b1/ppppps1pp/5pp2/9/2P1SP1P1/PP1PP1P1P/1B1K1R3/LNSG1G1NL w - 1",
+                                                                                              "branches": [
+                                                                                                {
+                                                                                                  "usi": "7b8b",
+                                                                                                  "kind": "main",
+                                                                                                  "note": "玉が美濃囲いの定位置に入ります。",
+                                                                                                  "child": {
+                                                                                                    "id": "n16",
+                                                                                                    "sfen": "lnsg1g1nl/1k3r1b1/ppppps1pp/5pp2/9/2P1SP1P1/PP1PP1P1P/1B1K1R3/LNSG1G1NL b - 1",
+                                                                                                    "branches": [
+                                                                                                      {
+                                                                                                        "usi": "6h7h",
+                                                                                                        "kind": "main",
+                                                                                                        "note": "相手も玉を寄せます。",
+                                                                                                        "child": {
+                                                                                                          "id": "n17",
+                                                                                                          "sfen": "lnsg1g1nl/1k3r1b1/ppppps1pp/5pp2/9/2P1SP1P1/PP1PP1P1P/1BK2R3/LNSG1G1NL w - 1",
+                                                                                                          "branches": [
+                                                                                                            {
+                                                                                                              "usi": "7a7b",
+                                                                                                              "kind": "main",
+                                                                                                              "note": "銀を上がって美濃囲いの完成です。",
+                                                                                                              "child": {
+                                                                                                                "id": "n18",
+                                                                                                                "sfen": "ln1g1g1nl/1ks2r1b1/ppppps1pp/5pp2/9/2P1SP1P1/PP1PP1P1P/1BK2R3/LNSG1G1NL b - 1",
+                                                                                                                "comment": "右四間飛車の基本形です。相手は4筋に戦力を集中しています。ここからの受け方が勝負です。",
+                                                                                                                "branches": [
+                                                                                                                  {
+                                                                                                                    "usi": "9g9f",
+                                                                                                                    "kind": "main",
+                                                                                                                    "note": "相手は端歩を突きます。",
+                                                                                                                    "child": {
+                                                                                                                      "id": "n19",
+                                                                                                                      "sfen": "ln1g1g1nl/1ks2r1b1/ppppps1pp/5pp2/9/P1P1SP1P1/1P1PP1P1P/1BK2R3/LNSG1G1NL w - 1",
+                                                                                                                      "branches": [
+                                                                                                                        {
+                                                                                                                          "usi": "9c9d",
+                                                                                                                          "kind": "main",
+                                                                                                                          "note": "端歩は受けておきます。",
+                                                                                                                          "child": {
+                                                                                                                            "id": "n20",
+                                                                                                                            "sfen": "ln1g1g1nl/1ks2r1b1/1pppps1pp/p4pp2/9/P1P1SP1P1/1P1PP1P1P/1BK2R3/LNSG1G1NL b - 1",
+                                                                                                                            "branches": [
+                                                                                                                              {
+                                                                                                                                "usi": "3g3f",
+                                                                                                                                "kind": "main",
+                                                                                                                                "note": "相手は3筋の歩も伸ばします。桂を跳ねる準備です。",
+                                                                                                                                "child": {
+                                                                                                                                  "id": "n21",
+                                                                                                                                  "sfen": "ln1g1g1nl/1ks2r1b1/1pppps1pp/p4pp2/9/P1P1SPPP1/1P1PP3P/1BK2R3/LNSG1G1NL w - 1",
+                                                                                                                                  "branches": [
+                                                                                                                                    {
+                                                                                                                                      "usi": "2b3c",
+                                                                                                                                      "kind": "main",
+                                                                                                                                      "note": "角を3三へ上げて備えます。",
+                                                                                                                                      "child": {
+                                                                                                                                        "id": "n22",
+                                                                                                                                        "sfen": "ln1g1g1nl/1ks2r3/1ppppsbpp/p4pp2/9/P1P1SPPP1/1P1PP3P/1BK2R3/LNSG1G1NL b - 1",
+                                                                                                                                        "branches": [
+                                                                                                                                          {
+                                                                                                                                            "usi": "4i5h",
+                                                                                                                                            "kind": "main",
+                                                                                                                                            "note": "相手は金を上げて陣形を整えます。",
+                                                                                                                                            "child": {
+                                                                                                                                              "id": "n23",
+                                                                                                                                              "sfen": "ln1g1g1nl/1ks2r3/1ppppsbpp/p4pp2/9/P1P1SPPP1/1P1PP3P/1BK1GR3/LNSG3NL w - 1",
+                                                                                                                                              "comment": null,
+                                                                                                                                              "branches": [
+                                                                                                                                                {
+                                                                                                                                                  "usi": "4c5d",
+                                                                                                                                                  "kind": "main",
+                                                                                                                                                  "note": "銀を5四へ。四間飛車もこの形で対抗するのが一番多い指し方です。",
+                                                                                                                                                  "child": {
+                                                                                                                                                    "id": "n24",
+                                                                                                                                                    "sfen": "ln1g1g1nl/1ks2r3/1pppp1bpp/p3spp2/9/P1P1SPPP1/1P1PP3P/1BK1GR3/LNSG3NL b - 1",
+                                                                                                                                                    "comment": "お互いの陣形が決まりました。ここから相手の仕掛けが始まります。",
+                                                                                                                                                    "branches": [
+                                                                                                                                                      {
+                                                                                                                                                        "usi": "2i3g",
+                                                                                                                                                        "kind": "main",
+                                                                                                                                                        "note": "相手が桂を跳ねました。次に▲2五桂と跳ねて角を追う狙いです。",
+                                                                                                                                                        "child": {
+                                                                                                                                                          "id": "n25",
+                                                                                                                                                          "sfen": "ln1g1g1nl/1ks2r3/1pppp1bpp/p3spp2/9/P1P1SPPP1/1P1PP1N1P/1BK1GR3/LNSG4L w - 1",
+                                                                                                                                                          "comment": null,
+                                                                                                                                                          "branches": [
+                                                                                                                                                            {
+                                                                                                                                                              "usi": "1a1b",
+                                                                                                                                                              "kind": "main",
+                                                                                                                                                              "note": "ここで△1二香と上がるのが定跡です。相手の角成りからあらかじめ香を逃がしておきます。▲3七桂にはセットで覚える一手です。",
+                                                                                                                                                              "child": {
+                                                                                                                                                                "id": "n26",
+                                                                                                                                                                "sfen": "ln1g1g1n1/1ks2r2l/1pppp1bpp/p3spp2/9/P1P1SPPP1/1P1PP1N1P/1BK1GR3/LNSG4L b - 1",
+                                                                                                                                                                "comment": null,
+                                                                                                                                                                "branches": [
+                                                                                                                                                                  {
+                                                                                                                                                                    "usi": "3g2e",
+                                                                                                                                                                    "kind": "main",
+                                                                                                                                                                    "note": "相手は桂を跳ねて角に当ててきます。",
+                                                                                                                                                                    "child": {
+                                                                                                                                                                      "id": "n27",
+                                                                                                                                                                      "sfen": "ln1g1g1n1/1ks2r2l/1pppp1bpp/p3spp2/7N1/P1P1SPPP1/1P1PP3P/1BK1GR3/LNSG4L w - 1",
+                                                                                                                                                                      "comment": null,
+                                                                                                                                                                      "branches": [
+                                                                                                                                                                        {
+                                                                                                                                                                          "usi": "3c2d",
+                                                                                                                                                                          "kind": "main",
+                                                                                                                                                                          "note": "角を2四へ逃げます。",
+                                                                                                                                                                          "child": {
+                                                                                                                                                                            "id": "n28",
+                                                                                                                                                                            "sfen": "ln1g1g1n1/1ks2r2l/1pppp2pp/p3sppb1/7N1/P1P1SPPP1/1P1PP3P/1BK1GR3/LNSG4L b - 1",
+                                                                                                                                                                            "comment": null,
+                                                                                                                                                                            "branches": [
+                                                                                                                                                                              {
+                                                                                                                                                                                "usi": "4f4e",
+                                                                                                                                                                                "kind": "main",
+                                                                                                                                                                                "note": "相手は4筋の歩をぶつけて仕掛けてきました。",
+                                                                                                                                                                                "child": {
+                                                                                                                                                                                  "id": "n29",
+                                                                                                                                                                                  "sfen": "ln1g1g1n1/1ks2r2l/1pppp2pp/p3sppb1/5P1N1/P1P1S1PP1/1P1PP3P/1BK1GR3/LNSG4L w - 1",
+                                                                                                                                                                                  "comment": null,
+                                                                                                                                                                                  "branches": [
+                                                                                                                                                                                    {
+                                                                                                                                                                                      "usi": "4d4e",
+                                                                                                                                                                                      "kind": "main",
+                                                                                                                                                                                      "note": "歩で取ります。",
+                                                                                                                                                                                      "child": {
+                                                                                                                                                                                        "id": "n30",
+                                                                                                                                                                                        "sfen": "ln1g1g1n1/1ks2r2l/1pppp2pp/p3s1pb1/5p1N1/P1P1S1PP1/1P1PP3P/1BK1GR3/LNSG4L b p 1",
+                                                                                                                                                                                        "comment": null,
+                                                                                                                                                                                        "branches": [
+                                                                                                                                                                                          {
+                                                                                                                                                                                            "usi": "8h1a+",
+                                                                                                                                                                                            "kind": "main",
+                                                                                                                                                                                            "note": "相手は角を成って香を取りにきますが、香は1二へ逃げてあるので取れるのは元の位置だけです。",
+                                                                                                                                                                                            "child": {
+                                                                                                                                                                                              "id": "n31",
+                                                                                                                                                                                              "sfen": "ln1g1g1n+B/1ks2r2l/1pppp2pp/p3s1pb1/5p1N1/P1P1S1PP1/1P1PP3P/2K1GR3/LNSG4L w p 1",
+                                                                                                                                                                                              "comment": null,
+                                                                                                                                                                                              "branches": [
+                                                                                                                                                                                                {
+                                                                                                                                                                                                  "usi": "4a3a",
+                                                                                                                                                                                                  "kind": "main",
+                                                                                                                                                                                                  "note": "ここで△3一金と上がるのが狙いの一手です。これで四間飛車の駒すべてに紐がつき、相手に取れる駒がありません。",
+                                                                                                                                                                                                  "child": {
+                                                                                                                                                                                                    "id": "n32",
+                                                                                                                                                                                                    "sfen": "ln1g2gn+B/1ks2r2l/1pppp2pp/p3s1pb1/5p1N1/P1P1S1PP1/1P1PP3P/2K1GR3/LNSG4L b p 1",
+                                                                                                                                                                                                    "comment": "右四間飛車の攻めを受け止めました。出典はこの局面を『後手十分』としています。ポイントは2つで、▲3七桂にはセットで△1二香と香を逃がしておくこと、そして△3一金と上がって全部の駒に紐をつけることです。この後は△4六角と覗く手が厳しく、居飛車がすぐ仕掛けるのは無理筋とされています。",
+                                                                                                                                                                                                    "branches": []
+                                                                                                                                                                                                  }
+                                                                                                                                                                                                }
+                                                                                                                                                                                              ]
+                                                                                                                                                                                            }
+                                                                                                                                                                                          },
+                                                                                                                                                                                          {
+                                                                                                                                                                                            "usi": "8g8f",
+                                                                                                                                                                                            "kind": "deviation",
+                                                                                                                                                                                            "note": "角を成らずに8筋へ手を戻した形です。4筋は今どうなっているでしょうか。",
+                                                                                                                                                                                            "punishNote": "△4六角。4筋は飛車と角が正面から向き合っています。角を出れば、飛車と交換できます。",
+                                                                                                                                                                                            "child": {
+                                                                                                                                                                                              "id": "d31",
+                                                                                                                                                                                              "sfen": "ln1g1g1n1/1ks2r2l/1pppp2pp/p3s1pb1/5p1N1/PPP1S1PP1/3PP3P/1BK1GR3/LNSG4L w p 1",
+                                                                                                                                                                                              "comment": "相手が手を戻しました。4筋の飛車と、こちらの角の位置を見てください。",
+                                                                                                                                                                                              "branches": [
+                                                                                                                                                                                                {
+                                                                                                                                                                                                  "usi": "2d4f",
+                                                                                                                                                                                                  "kind": "main",
+                                                                                                                                                                                                  "note": "角を4六へ出ます。飛車の正面なので取られますが、それが狙いです。",
+                                                                                                                                                                                                  "child": {
+                                                                                                                                                                                                    "id": "d31_1",
+                                                                                                                                                                                                    "sfen": "ln1g1g1n1/1ks2r2l/1pppp2pp/p3s1p2/5p1N1/PPP1SbPP1/3PP3P/1BK1GR3/LNSG4L b p 1",
+                                                                                                                                                                                                    "branches": [
+                                                                                                                                                                                                      {
+                                                                                                                                                                                                        "usi": "4h4f",
+                                                                                                                                                                                                        "kind": "main",
+                                                                                                                                                                                                        "note": "相手は飛車で取るよりありません。",
+                                                                                                                                                                                                        "child": {
+                                                                                                                                                                                                          "id": "d31_2",
+                                                                                                                                                                                                          "sfen": "ln1g1g1n1/1ks2r2l/1pppp2pp/p3s1p2/5p1N1/PPP1SRPP1/3PP3P/1BK1G4/LNSG4L w Bp 1",
+                                                                                                                                                                                                          "branches": [
+                                                                                                                                                                                                            {
+                                                                                                                                                                                                              "usi": "4e4f",
+                                                                                                                                                                                                              "kind": "main",
+                                                                                                                                                                                                              "note": "歩で飛車を取り返します。角と飛車の交換に成功しました。",
+                                                                                                                                                                                                              "child": {
+                                                                                                                                                                                                                "id": "d31_3",
+                                                                                                                                                                                                                "sfen": "ln1g1g1n1/1ks2r2l/1pppp2pp/p3s1p2/7N1/PPP1SpPP1/3PP3P/1BK1G4/LNSG4L b Brp 1",
+                                                                                                                                                                                                                "comment": "角を飛車と交換できました。相手の攻めの主役だった飛車が消えたので、右四間飛車の攻めは無くなります。出典もこの△4六角を『厳しい手』としています。",
+                                                                                                                                                                                                                "branches": []
+                                                                                                                                                                                                              }
+                                                                                                                                                                                                            }
+                                                                                                                                                                                                          ]
+                                                                                                                                                                                                        }
+                                                                                                                                                                                                      }
+                                                                                                                                                                                                    ]
+                                                                                                                                                                                                  }
+                                                                                                                                                                                                }
+                                                                                                                                                                                              ]
+                                                                                                                                                                                            }
+                                                                                                                                                                                          }
+                                                                                                                                                                                        ]
+                                                                                                                                                                                      }
+                                                                                                                                                                                    }
+                                                                                                                                                                                  ]
+                                                                                                                                                                                }
+                                                                                                                                                                              }
+                                                                                                                                                                            ]
+                                                                                                                                                                          }
+                                                                                                                                                                        }
+                                                                                                                                                                      ]
+                                                                                                                                                                    }
+                                                                                                                                                                  }
+                                                                                                                                                                ]
+                                                                                                                                                              }
+                                                                                                                                                            }
+                                                                                                                                                          ]
+                                                                                                                                                        }
+                                                                                                                                                      }
+                                                                                                                                                    ]
+                                                                                                                                                  }
+                                                                                                                                                }
+                                                                                                                                              ]
+                                                                                                                                            }
+                                                                                                                                          }
+                                                                                                                                        ]
+                                                                                                                                      }
+                                                                                                                                    }
+                                                                                                                                  ]
+                                                                                                                                }
+                                                                                                                              }
+                                                                                                                            ]
+                                                                                                                          }
+                                                                                                                        }
+                                                                                                                      ]
+                                                                                                                    }
+                                                                                                                  }
+                                                                                                                ]
+                                                                                                              }
+                                                                                                            }
+                                                                                                          ]
+                                                                                                        }
+                                                                                                      }
+                                                                                                    ]
+                                                                                                  }
+                                                                                                }
+                                                                                              ]
+                                                                                            }
+                                                                                          }
+                                                                                        ]
+                                                                                      }
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              }
+                                                                            ]
+                                                                          }
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                              }
+                                                            }
+                                                          ]
+                                                        }
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
