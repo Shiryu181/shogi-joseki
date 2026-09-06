@@ -199,7 +199,7 @@ export function Learn({ course, onBack }: LearnProps) {
             {quiz.wrong && (
               <p className="quiz-wrong">
                 ✕ {quiz.wrong.attemptedText}
-                <span>この手では咎められません。もう一度考えてみましょう。</span>
+                <span>ここでは、もっと厳しい手があります。もう一度考えてみましょう。</span>
               </p>
             )}
             {quiz.solved && quiz.deviation.punishNote && (

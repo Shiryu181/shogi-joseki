@@ -4,8 +4,9 @@
  * verify-joseki.cjs が本線を見るのに対し、こちらは分岐(kind:"deviation")だけを見る。
  * 出題として成立するには次の3つが必要で、そのすべてを機械に確かめさせる:
  *   1. 逸れ手が実際に損な手であること(そうでなければ咎める理由が無い)
- *   2. 咎めの手順で「自分が指す手」がエンジンの最善手から大きく離れていないこと
- *      (咎め方そのものが間違っていたら、教材として有害)
+ *   2. 咎めの手順で「自分が指す手」がエンジンの最善手であり、かつ次善手と
+ *      はっきり差が付いていること。差が小さい局面を出題にすると、ユーザーが
+ *      同じくらい良い別の手を指したときに「不正解」と表示してしまう
  *   3. 咎め終わった局面が自分から見て有利であること
  *
  * 使い方: node scripts/verify-deviations.cjs [コースid] [--ms 3000] [--slack 80]
@@ -22,6 +23,10 @@ const only = args.find((a, i) => !a.startsWith("--") && !(i > 0 && args[i - 1].s
 const argVal = (n, d) => { const i = args.indexOf(n); return i >= 0 && args[i + 1] ? Number(args[i + 1]) : d; };
 const MS = argVal("--ms", 3000);
 const SLACK = argVal("--slack", 80);      // 咎め手が最善手より何点まで劣ってよいか
+// 咎め手は次善手より最低これだけ良くないと、ユーザーの別解を誤って不正解にしてしまう。
+// 2.5秒程度の探索では評価が±20点ほど揺れるため、40点を下限にしている。
+// これを下回る手は出題手順から外し、解説文で触れる方針。
+const UNIQUE_MIN = argVal("--unique", 40);
 const DEV_MIN = argVal("--devmin", 120);  // 逸れ手が最低これだけ損でなければ出題する意味が無い
 
 const dir = path.join(__dirname, "..", "src", "data", "joseki");
@@ -100,18 +105,26 @@ function collectQuizzes(course) {
     return [...m.entries()].sort((a, b) => a[0] - b[0]).map((e) => e[1]);
   }
 
-  /** ある手が最善手より何点劣るか。候補に出てこない手は指した局面を評価して求める。 */
-  async function lossOf(sfen, usi) {
+  /**
+   * ある手について「最善手より何点劣るか(loss)」と「次善手より何点良いか(margin)」を返す。
+   * margin は、その手が最善手のときだけ意味を持つ(別解の有無を見るために使う)。
+   */
+  async function judge(sfen, usi) {
     const list = await top(sfen, 8);
-    if (list.length === 0) return null;
+    if (list.length === 0) return { loss: null, margin: null };
     const hit = list.find((c) => c.usi === usi);
-    if (hit) return list[0].cp - hit.cp;
-    const next = after(sfen, usi);
-    if (!next) return null;
-    const reply = await top(next, 1);
-    if (reply.length === 0) return null;
-    return list[0].cp + reply[0].cp; // 相手番の評価値なので符号が反転している
+    if (!hit) {
+      const next = after(sfen, usi);
+      if (!next) return { loss: null, margin: null };
+      const reply = await top(next, 1);
+      if (reply.length === 0) return { loss: null, margin: null };
+      return { loss: list[0].cp + reply[0].cp, margin: null };
+    }
+    const loss = list[0].cp - hit.cp;
+    const margin = list.length > 1 && loss === 0 ? list[0].cp - list[1].cp : null;
+    return { loss, margin };
   }
+  const lossOf = async (sfen, usi) => (await judge(sfen, usi)).loss;
 
   let ng = 0, total = 0;
   for (const file of files) {
@@ -133,10 +146,14 @@ function collectQuizzes(course) {
         const mv = mainOf(node);
         if (!mv || !mv.child) break;
         if (sideToMove(node.sfen) === course.mySide) {
-          const loss = await lossOf(node.sfen, mv.usi);
+          const { loss, margin } = await judge(node.sfen, mv.usi);
           const ok = loss !== null && loss <= SLACK;
-          console.log(`      咎め手 ${mv.usi}: 最善手との差 ${loss}点 ${ok ? "OK" : "← 要確認"}`);
-          if (!ok) bad = true;
+          // 次善手と差が無い手を出題すると、ユーザーが別の好手を指したときに
+          // 不正解と出てしまう。手順をそこで終える(または別の手順にする)必要がある。
+          const unique = margin === null ? loss === 0 : margin >= UNIQUE_MIN;
+          const note = !ok ? "← 要確認" : unique ? "OK" : `← 別解あり(次善手との差 ${margin}点)`;
+          console.log(`      咎め手 ${mv.usi}: 最善手との差 ${loss}点 ${note}`);
+          if (!ok || !unique) bad = true;
         }
         node = mv.child;
       }

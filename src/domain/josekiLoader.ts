@@ -18,6 +18,7 @@ import ibishaVsSankenbishaBouginRaw from "../data/joseki/ibisha-vs-sankenbisha--
 import ibishaVsSankenbisha37Raw from "../data/joseki/ibisha-vs-sankenbisha--37kei.json?raw";
 import sankenbishaVsIbishaBasicRaw from "../data/joseki/sankenbisha-vs-ibisha--basic.json?raw";
 import sankenbishaVsBougin53Raw from "../data/joseki/sankenbisha-vs-bougin--53kin.json?raw";
+import sankenbishaVs45Raw from "../data/joseki/sankenbisha-vs-45hayashikake--sabaki.json?raw";
 import kakugawariBouginRaw from "../data/joseki/kakugawari--bougin.json?raw";
 import kakugawariHayakuriginRaw from "../data/joseki/kakugawari--hayakurigin.json?raw";
 import aigakariBouginRaw from "../data/joseki/aigakari--bougin.json?raw";
@@ -313,6 +314,16 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "急戦",
     summary: "飛車を回す一手が要らない三間飛車ならではの、手厚い棒銀の受け方。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaVsBougin53Raw), "sankenbisha-vs-bougin--53kin.json"),
+  },
+  {
+    id: "sankenbisha-vs-45hayashikake--sabaki",
+    strategyId: "sankenbisha",
+    opponentLabel: "居飛車",
+    sideLabel: "後手",
+    label: "対▲4五歩早仕掛け",
+    kind: "急戦",
+    summary: "受けるのではなく、角を捌いて馬を作る三間飛車の考え方。",
+    load: () => assertJosekiCourse(parseRaw(sankenbishaVs45Raw), "sankenbisha-vs-45hayashikake--sabaki.json"),
   },
   {
     id: "sankenbisha-vs-ibisha--sente",
