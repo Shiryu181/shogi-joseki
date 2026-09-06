@@ -10,6 +10,7 @@ import ibishaVsShikenbisha45Raw from "../data/joseki/ibisha-vs-shikenbisha--45ha
 import ibishaVsShikenbishaAnagumaRaw from "../data/joseki/ibisha-vs-shikenbisha--anaguma.json?raw";
 import shikenbishaVsIbishaBasicRaw from "../data/joseki/shikenbisha-vs-ibisha--basic.json?raw";
 import shikenbishaVsAnagumaBasicRaw from "../data/joseki/shikenbisha-vs-anaguma--basic.json?raw";
+import shikenbishaVsBouginKuboryuRaw from "../data/joseki/shikenbisha-vs-bougin--kuboryu.json?raw";
 import ibishaVsSankenbishaBouginRaw from "../data/joseki/ibisha-vs-sankenbisha--bougin.json?raw";
 import ibishaVsSankenbisha37Raw from "../data/joseki/ibisha-vs-sankenbisha--37kei.json?raw";
 import sankenbishaVsIbishaBasicRaw from "../data/joseki/sankenbisha-vs-ibisha--basic.json?raw";
@@ -226,6 +227,16 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "持久戦",
     summary: "飛車を4二へ振り、美濃囲いに収めるまで。四間飛車の土台。",
     load: () => assertJosekiCourse(parseRaw(shikenbishaVsIbishaBasicRaw), "shikenbisha-vs-ibisha--basic.json"),
+  },
+  {
+    id: "shikenbisha-vs-bougin--kuboryu",
+    strategyId: "shikenbisha",
+    opponentLabel: "居飛車",
+    sideLabel: "後手",
+    label: "対棒銀(久保流)",
+    kind: "急戦",
+    summary: "棒銀の攻めを受け止めるのではなく、△4五歩から捌いて反撃する。",
+    load: () => assertJosekiCourse(parseRaw(shikenbishaVsBouginKuboryuRaw), "shikenbisha-vs-bougin--kuboryu.json"),
   },
   {
     id: "shikenbisha-vs-ibisha--sente",
