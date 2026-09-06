@@ -154,7 +154,9 @@ export function Learn({ course, onBack }: LearnProps) {
             onClick={() => setAutoAdvanceOpponent(!autoAdvanceOpponent)}
             aria-pressed={!autoAdvanceOpponent}
           >
-            {autoAdvanceOpponent ? "相手の手:自動" : "相手の手も自分でなぞる"}
+            {/* 出題は相手の手を自動で指すときだけ出る(逸れ手を相手に指させるため)。
+                切り替えるとクイズが出なくなることが分かるようラベルに明記する。 */}
+            {autoAdvanceOpponent ? "相手の手:自動" : "全部なぞる(出題なし)"}
           </button>
         </div>
         <Board
