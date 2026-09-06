@@ -19,6 +19,7 @@ import kakugawariBouginRaw from "../data/joseki/kakugawari--bougin.json?raw";
 import kakugawariHayakuriginRaw from "../data/joseki/kakugawari--hayakurigin.json?raw";
 import aigakariBouginRaw from "../data/joseki/aigakari--bougin.json?raw";
 import yagura24teRaw from "../data/joseki/yagura--24te.json?raw";
+import yagura36gin37keiRaw from "../data/joseki/yagura--36gin37kei.json?raw";
 import nakabishaVsAnagumaRaw from "../data/joseki/nakabisha-vs-anaguma--basic.json?raw";
 import nakabishaGokigen24Raw from "../data/joseki/nakabisha-vs-ibisha--gokigen24.json?raw";
 import sujichigaikakuBasicRaw from "../data/joseki/sujichigaikaku--basic.json?raw";
@@ -359,6 +360,16 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "持久戦",
     summary: "金銀を組み上げる矢倉の基本形。相居飛車の代表的な駒組み。",
     load: () => assertJosekiCourse(parseRaw(yagura24teRaw), "yagura--24te.json"),
+  },
+  {
+    id: "yagura--36gin37kei",
+    strategyId: "yagura",
+    opponentLabel: "矢倉",
+    sideLabel: "先手",
+    label: "3六銀3七桂の攻め",
+    kind: "急戦",
+    summary: "24手組から攻めの形を作り、2筋の継ぎ歩から急所の▲3三歩まで。",
+    load: () => assertJosekiCourse(parseRaw(yagura36gin37keiRaw), "yagura--36gin37kei.json"),
   },
   {
     id: "yagura--gote",
