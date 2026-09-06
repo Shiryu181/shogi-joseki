@@ -6,7 +6,7 @@
   "mySide": "sente",
   "source": "手順は将棋大図書館(shogilounge.com)「三間飛車対▲３七桂早仕掛けの定跡」の基本図までの指し手に準拠。序盤の駒組みを三間飛車のひとくちメモ等で別途確認(2026-08)",
   "goalFormation": "舟囲いに4六歩を突き、桂を3七へ跳ねた形。次に▲4五歩から角を交換し、飛車先の突破を狙う。",
-  "goalSfen": "lnsg3nl/1k2gsr2/1ppp2bpp/p3ppp2/7P1/P1P1PPP2/1P1P2N1P/1BK1GS1R1/LNSG4L w - 1",
+  "goalSfen": "ln1g3nl/1ks1gs1r1/1pp4pp/p2p1bp2/4pN1P1/P1P3P2/1P1PS3P/1BK1GS1R1/LN1G4L b P2p 1",
   "root": {
     "id": "n0",
     "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
@@ -197,8 +197,139 @@
                                                                                                                                             "child": {
                                                                                                                                               "id": "n23",
                                                                                                                                               "sfen": "lnsg3nl/1k2gsr2/1ppp2bpp/p3ppp2/7P1/P1P1PPP2/1P1P2N1P/1BK1GS1R1/LNSG4L w - 1",
-                                                                                                                                              "comment": "▲3七桂早仕掛けの基本形です。桂・銀・飛車が2〜4筋に働く形で、次の▲4五歩が仕掛けの合図になります。仕掛け以降は今後のフェーズで扱います。",
-                                                                                                                                              "branches": []
+                                                                                                                                              "comment": "▲3七桂早仕掛けの基本形です。次の▲4五歩が仕掛けの合図になります。相手はここで受けを間違えると一気に潰れます。",
+                                                                                                                                              "branches": [
+                                                                                                                                                {
+                                                                                                                                                  "usi": "3b2b",
+                                                                                                                                                  "kind": "main",
+                                                                                                                                                  "note": "相手は飛車を2筋へ回して受けました。▲3七桂にはセットで△2二飛と覚えられている、最善の受けです。美濃囲いの完成を急ぐ△7二銀もありますが、出典では危険とされています(ただし将棋ソフトの判断ではそこまで差はつきません)。",
+                                                                                                                                                  "child": {
+                                                                                                                                                    "id": "n24",
+                                                                                                                                                    "sfen": "lnsg3nl/1k2gs1r1/1ppp2bpp/p3ppp2/7P1/P1P1PPP2/1P1P2N1P/1BK1GS1R1/LNSG4L b - 1",
+                                                                                                                                                    "comment": null,
+                                                                                                                                                    "branches": [
+                                                                                                                                                      {
+                                                                                                                                                        "usi": "7i6h",
+                                                                                                                                                        "kind": "main",
+                                                                                                                                                        "note": "左銀を繰り出します。",
+                                                                                                                                                        "child": {
+                                                                                                                                                          "id": "n25",
+                                                                                                                                                          "sfen": "lnsg3nl/1k2gs1r1/1ppp2bpp/p3ppp2/7P1/P1P1PPP2/1P1P2N1P/1BKSGS1R1/LN1G4L w - 1",
+                                                                                                                                                          "comment": null,
+                                                                                                                                                          "branches": [
+                                                                                                                                                            {
+                                                                                                                                                              "usi": "6c6d",
+                                                                                                                                                              "kind": "main",
+                                                                                                                                                              "note": "相手も駒組みを進めます。",
+                                                                                                                                                              "child": {
+                                                                                                                                                                "id": "n26",
+                                                                                                                                                                "sfen": "lnsg3nl/1k2gs1r1/1pp3bpp/p2pppp2/7P1/P1P1PPP2/1P1P2N1P/1BKSGS1R1/LN1G4L b - 1",
+                                                                                                                                                                "branches": [
+                                                                                                                                                                  {
+                                                                                                                                                                    "usi": "6h5g",
+                                                                                                                                                                    "kind": "main",
+                                                                                                                                                                    "note": "銀を5七へ。攻めに厚みを持たせます。",
+                                                                                                                                                                    "child": {
+                                                                                                                                                                      "id": "n27",
+                                                                                                                                                                      "sfen": "lnsg3nl/1k2gs1r1/1pp3bpp/p2pppp2/7P1/P1P1PPP2/1P1PS1N1P/1BK1GS1R1/LN1G4L w - 1",
+                                                                                                                                                                      "comment": null,
+                                                                                                                                                                      "branches": [
+                                                                                                                                                                        {
+                                                                                                                                                                          "usi": "7a7b",
+                                                                                                                                                                          "kind": "main",
+                                                                                                                                                                          "note": "相手は美濃囲いを完成させます。",
+                                                                                                                                                                          "child": {
+                                                                                                                                                                            "id": "n28",
+                                                                                                                                                                            "sfen": "ln1g3nl/1ks1gs1r1/1pp3bpp/p2pppp2/7P1/P1P1PPP2/1P1PS1N1P/1BK1GS1R1/LN1G4L b - 1",
+                                                                                                                                                                            "comment": null,
+                                                                                                                                                                            "branches": [
+                                                                                                                                                                              {
+                                                                                                                                                                                "usi": "5f5e",
+                                                                                                                                                                                "kind": "main",
+                                                                                                                                                                                "note": "ここで▲5五歩と突き捨てるのが加藤一二三九段創案の妙手順です。単に▲4五歩では△同歩▲3三角成△同桂で何にもなりません。",
+                                                                                                                                                                                "child": {
+                                                                                                                                                                                  "id": "n29",
+                                                                                                                                                                                  "sfen": "ln1g3nl/1ks1gs1r1/1pp3bpp/p2pppp2/4P2P1/P1P2PP2/1P1PS1N1P/1BK1GS1R1/LN1G4L w - 1",
+                                                                                                                                                                                  "comment": null,
+                                                                                                                                                                                  "branches": [
+                                                                                                                                                                                    {
+                                                                                                                                                                                      "usi": "5d5e",
+                                                                                                                                                                                      "kind": "main",
+                                                                                                                                                                                      "note": "相手は歩で取ります。",
+                                                                                                                                                                                      "child": {
+                                                                                                                                                                                        "id": "n30",
+                                                                                                                                                                                        "sfen": "ln1g3nl/1ks1gs1r1/1pp3bpp/p2p1pp2/4p2P1/P1P2PP2/1P1PS1N1P/1BK1GS1R1/LN1G4L b p 1",
+                                                                                                                                                                                        "comment": null,
+                                                                                                                                                                                        "branches": [
+                                                                                                                                                                                          {
+                                                                                                                                                                                            "usi": "4f4e",
+                                                                                                                                                                                            "kind": "main",
+                                                                                                                                                                                            "note": "続けて4筋の歩を突きます。",
+                                                                                                                                                                                            "child": {
+                                                                                                                                                                                              "id": "n31",
+                                                                                                                                                                                              "sfen": "ln1g3nl/1ks1gs1r1/1pp3bpp/p2p1pp2/4pP1P1/P1P3P2/1P1PS1N1P/1BK1GS1R1/LN1G4L w p 1",
+                                                                                                                                                                                              "comment": null,
+                                                                                                                                                                                              "branches": [
+                                                                                                                                                                                                {
+                                                                                                                                                                                                  "usi": "4d4e",
+                                                                                                                                                                                                  "kind": "main",
+                                                                                                                                                                                                  "note": "相手は自然に歩で取りますが、これには攻めが決まります。",
+                                                                                                                                                                                                  "child": {
+                                                                                                                                                                                                    "id": "n32",
+                                                                                                                                                                                                    "sfen": "ln1g3nl/1ks1gs1r1/1pp3bpp/p2p2p2/4pp1P1/P1P3P2/1P1PS1N1P/1BK1GS1R1/LN1G4L b 2p 1",
+                                                                                                                                                                                                    "comment": null,
+                                                                                                                                                                                                    "branches": [
+                                                                                                                                                                                                      {
+                                                                                                                                                                                                        "usi": "3g4e",
+                                                                                                                                                                                                        "kind": "main",
+                                                                                                                                                                                                        "note": "桂で取り返します。",
+                                                                                                                                                                                                        "child": {
+                                                                                                                                                                                                          "id": "n33",
+                                                                                                                                                                                                          "sfen": "ln1g3nl/1ks1gs1r1/1pp3bpp/p2p2p2/4pN1P1/P1P3P2/1P1PS3P/1BK1GS1R1/LN1G4L w P2p 1",
+                                                                                                                                                                                                          "comment": null,
+                                                                                                                                                                                                          "branches": [
+                                                                                                                                                                                                            {
+                                                                                                                                                                                                              "usi": "3c4d",
+                                                                                                                                                                                                              "kind": "main",
+                                                                                                                                                                                                              "note": "相手は角を4四へ出て受けます。",
+                                                                                                                                                                                                              "child": {
+                                                                                                                                                                                                                "id": "n34",
+                                                                                                                                                                                                                "sfen": "ln1g3nl/1ks1gs1r1/1pp4pp/p2p1bp2/4pN1P1/P1P3P2/1P1PS3P/1BK1GS1R1/LN1G4L b P2p 1",
+                                                                                                                                                                                                                "comment": "▲3七桂早仕掛けの攻めが決まりました。5筋を突き捨ててから4筋を突く、という順番が急所で、単に▲4五歩では成立しません。将棋ソフトの評価もこの局面は先手大優勢(+490)です。出典はここで▲5四歩と垂らす手を推奨していますが、ソフトは▲4六銀と銀を足す手のほうを高く評価しました(▲5四歩だと+130まで下がります)。なお相手が先手番の三間飛車だと一手早く高美濃に組めるため、垂れ歩を金で取られてしまう点にも注意が必要です。",
+                                                                                                                                                                                                                "branches": []
+                                                                                                                                                                                                              }
+                                                                                                                                                                                                            }
+                                                                                                                                                                                                          ]
+                                                                                                                                                                                                        }
+                                                                                                                                                                                                      }
+                                                                                                                                                                                                    ]
+                                                                                                                                                                                                  }
+                                                                                                                                                                                                }
+                                                                                                                                                                                              ]
+                                                                                                                                                                                            }
+                                                                                                                                                                                          }
+                                                                                                                                                                                        ]
+                                                                                                                                                                                      }
+                                                                                                                                                                                    }
+                                                                                                                                                                                  ]
+                                                                                                                                                                                }
+                                                                                                                                                                              }
+                                                                                                                                                                            ]
+                                                                                                                                                                          }
+                                                                                                                                                                        }
+                                                                                                                                                                      ]
+                                                                                                                                                                    }
+                                                                                                                                                                  }
+                                                                                                                                                                ]
+                                                                                                                                                              }
+                                                                                                                                                            }
+                                                                                                                                                          ]
+                                                                                                                                                        }
+                                                                                                                                                      }
+                                                                                                                                                    ]
+                                                                                                                                                  }
+                                                                                                                                                }
+                                                                                                                                              ]
                                                                                                                                             }
                                                                                                                                           }
                                                                                                                                         ]
