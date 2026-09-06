@@ -413,6 +413,52 @@
                                                       }
                                                     ]
                                                   }
+                                                },
+                                                {
+                                                  "usi": "6a5b",
+                                                  "kind": "deviation",
+                                                  "note": "飛車先を受けずに金を寄った形です。囲いを作る自然な手ですが、2筋の受けが間に合っていません。",
+                                                  "punishNote": "▲2四歩△同歩▲同飛。角で受けていないので、2筋の歩を交換して飛車が2四へ出られます。",
+                                                  "child": {
+                                                    "id": "d8",
+                                                    "sfen": "lns1kgsnl/4g1rb1/ppppp2pp/5pp2/7P1/2P6/PP1PPPP1P/1B3S1R1/LNSGKG1NL b - 1",
+                                                    "comment": "相手が飛車先の受けを省きました。2筋に狙いがあります。",
+                                                    "branches": [
+                                                      {
+                                                        "usi": "2e2d",
+                                                        "kind": "main",
+                                                        "note": "2筋の歩を突き捨てます。相手は取るしかありません。",
+                                                        "child": {
+                                                          "id": "d8_1",
+                                                          "sfen": "lns1kgsnl/4g1rb1/ppppp2pp/5ppP1/9/2P6/PP1PPPP1P/1B3S1R1/LNSGKG1NL w - 1",
+                                                          "branches": [
+                                                            {
+                                                              "usi": "2c2d",
+                                                              "kind": "main",
+                                                              "note": "相手は歩で取り返します。",
+                                                              "child": {
+                                                                "id": "d8_2",
+                                                                "sfen": "lns1kgsnl/4g1rb1/ppppp3p/5ppp1/9/2P6/PP1PPPP1P/1B3S1R1/LNSGKG1NL b p 1",
+                                                                "branches": [
+                                                                  {
+                                                                    "usi": "2h2d",
+                                                                    "kind": "main",
+                                                                    "note": "飛車で取り返し、2筋を突破しました。",
+                                                                    "child": {
+                                                                      "id": "d8_3",
+                                                                      "sfen": "lns1kgsnl/4g1rb1/ppppp3p/5ppR1/9/2P6/PP1PPPP1P/1B3S3/LNSGKG1NL w Pp 1",
+                                                                      "comment": "飛車先を破ることができました。序盤で相手が飛車先を受けなかったら、まずここを疑います。",
+                                                                      "branches": []
+                                                                    }
+                                                                  }
+                                                                ]
+                                                              }
+                                                            }
+                                                          ]
+                                                        }
+                                                      }
+                                                    ]
+                                                  }
                                                 }
                                               ]
                                             }

@@ -213,6 +213,52 @@
                               }
                             ]
                           }
+                        },
+                        {
+                          "usi": "7a6b",
+                          "kind": "deviation",
+                          "note": "飛車先を伸ばさずに銀を上がった形です。自然な一手に見えますが、相掛かりは2筋と8筋の速さ比べなので、この一手の差が響きます。",
+                          "punishNote": "▲2四歩と突き捨てます。△同歩▲同飛で歩を取り返し、飛車が2四まで進出できます。",
+                          "child": {
+                            "id": "d4",
+                            "sfen": "ln1gkgsnl/1r1s3b1/p1ppppppp/1p7/7P1/9/PPPPPPP1P/1B5R1/LNSGKGSNL b - 1",
+                            "comment": "相手が飛車先を伸ばす手を省きました。2筋を狙えます。",
+                            "branches": [
+                              {
+                                "usi": "2e2d",
+                                "kind": "main",
+                                "note": "2筋の歩を突き捨てます。相手は取るしかありません。",
+                                "child": {
+                                  "id": "d4_1",
+                                  "sfen": "ln1gkgsnl/1r1s3b1/p1ppppppp/1p5P1/9/9/PPPPPPP1P/1B5R1/LNSGKGSNL w - 1",
+                                  "branches": [
+                                    {
+                                      "usi": "2c2d",
+                                      "kind": "main",
+                                      "note": "相手は歩で取り返します。",
+                                      "child": {
+                                        "id": "d4_2",
+                                        "sfen": "ln1gkgsnl/1r1s3b1/p1ppppp1p/1p5p1/9/9/PPPPPPP1P/1B5R1/LNSGKGSNL b p 1",
+                                        "branches": [
+                                          {
+                                            "usi": "2h2d",
+                                            "kind": "main",
+                                            "note": "飛車で取り返します。歩を持ち駒にでき、飛車も働きました。",
+                                            "child": {
+                                              "id": "d4_3",
+                                              "sfen": "ln1gkgsnl/1r1s3b1/p1ppppp1p/1p5R1/9/9/PPPPPPP1P/1B7/LNSGKGSNL w Pp 1",
+                                              "comment": "2筋の歩を交換して飛車が進出しました。相掛かりは、先に飛車先を破ったほうが主導権を握ります。",
+                                              "branches": []
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
                         }
                       ]
                     }

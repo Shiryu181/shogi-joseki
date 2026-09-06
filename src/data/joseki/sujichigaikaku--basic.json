@@ -241,8 +241,56 @@
                                                                   }
                                                                 ]
                                                               }
+                                                            },
+                                                            {
+                                                              "usi": "1c1d",
+                                                              "kind": "deviation",
+                                                              "note": "銀を7二へ上がらずに端歩を突いた形です。8三の歩を守る駒がいません。",
+                                                              "punishNote": "▲8三角成。5六の角は8三をにらんでいます。△7二銀と受けないと、歩を取られて馬を作られます。",
+                                                              "child": {
+                                                                "id": "d10",
+                                                                "sfen": "lnsgkg1nl/5r1s1/pppppp1p1/8p/9/2P1B4/PP1PPPPPP/7R1/LNSGKGSNL b Pb 1",
+                                                                "comment": "相手が8三の守りを省きました。角の利きの先を見てください。",
+                                                                "branches": [
+                                                                  {
+                                                                    "usi": "5f8c+",
+                                                                    "kind": "main",
+                                                                    "note": "角が8三の歩を取って成り込みます。",
+                                                                    "child": {
+                                                                      "id": "d10_1",
+                                                                      "sfen": "lnsgkg1nl/5r1s1/p+Bpppp1p1/8p/9/2P6/PP1PPPPPP/7R1/LNSGKGSNL w 2Pb 1",
+                                                                      "comment": "馬を作ることに成功しました。筋違い角は盤の反対側までにらんでいるので、相手が受けを一手でも省くと成り込めます。",
+                                                                      "branches": []
+                                                                    }
+                                                                  }
+                                                                ]
+                                                              }
                                                             }
                                                           ]
+                                                        }
+                                                      }
+                                                    ]
+                                                  }
+                                                },
+                                                {
+                                                  "usi": "2a3c",
+                                                  "kind": "deviation",
+                                                  "note": "飛車を4二へ回さずに桂を跳ねた形です。4三の歩を守る駒がいなくなっています。",
+                                                  "punishNote": "▲4三角成。筋違い角は4三をにらんでいるので、飛車を回して受けないと歩を取られて馬を作られます。",
+                                                  "child": {
+                                                    "id": "d8",
+                                                    "sfen": "lnsgkg2l/3r3s1/ppppppnpp/6B2/9/2P6/PP1PPPPPP/7R1/LNSGKGSNL b Pb 1",
+                                                    "comment": "相手が4三の守りを省きました。角の利きを確かめてください。",
+                                                    "branches": [
+                                                      {
+                                                        "usi": "3d4c+",
+                                                        "kind": "main",
+                                                        "note": "角が4三の歩を取って成り込みます。",
+                                                        "child": {
+                                                          "id": "d8_1",
+                                                          "sfen": "lnsgkg2l/3r3s1/ppppp+Bnpp/9/9/2P6/PP1PPPPPP/7R1/LNSGKGSNL w 2Pb 1",
+                                                          "comment": "歩を取ったうえに馬ができました。筋違い角の狙いは、この4三の地点です。相手が受けを省いたら、すぐ成り込めます。",
+                                                          "branches": []
                                                         }
                                                       }
                                                     ]

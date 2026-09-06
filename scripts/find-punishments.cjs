@@ -73,7 +73,7 @@ const sideToMove = (sfen) => (sfen.split(" ")[1] === "w" ? "gote" : "sente");
       const t = line.split(/\s+/);
       const mi = t.indexOf("multipv"), si = t.indexOf("score"), pi = t.indexOf("pv");
       if (mi < 0 || si < 0 || pi < 0 || t[si+1] !== "cp") continue;
-      m.set(Number(t[mi+1]), { usi: t[pi+1], cp: Number(t[si+2]) });
+      m.set(Number(t[mi+1]), { usi: t[pi+1], cp: Number(t[si+2]), pv: t.slice(pi+1, pi+9).join(" ") });
     }
     return [...m.entries()].sort((a,b)=>a[0]-b[0]).map(e=>e[1]);
   }
@@ -114,6 +114,10 @@ const sideToMove = (sfen) => (sfen.split(" ")[1] === "w" ? "gote" : "sente");
       found.push({ n: i+1, joseki: moves[i].usi, dev: cand.usi, loss, punish: reply[0].usi, sharp });
       console.log(`  ${String(i+1).padStart(2)}手目: 定石は ${moves[i].usi} / 相手が ${cand.usi} と指すと ${loss}点の損`);
       console.log(`         → 咎め手 ${reply[0].usi} (次善手より ${sharp}点良い)`);
+      // 咎めの手順を書き起こすための読み筋。これをそのまま採用するのではなく、
+      // 手順として自然かどうかは人が見て判断する。
+      console.log(`         読み筋 ${reply[0].pv}`);
+      console.log(`         逸れ手後のSFEN ${sfen2}`);
       break; // 1局面につき最有力の1つだけ拾う
     }
   }

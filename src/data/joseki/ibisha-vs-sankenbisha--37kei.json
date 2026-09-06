@@ -245,6 +245,52 @@
                                                       }
                                                     ]
                                                   }
+                                                },
+                                                {
+                                                  "usi": "1c1d",
+                                                  "kind": "deviation",
+                                                  "note": "飛車先を受けずに端歩を突いた形です。端歩は価値のある手ですが、この局面では2筋の受けが優先です。",
+                                                  "punishNote": "▲2四歩△同歩▲同飛。受けが一手遅れたので、2筋を破ることができます。",
+                                                  "child": {
+                                                    "id": "d8",
+                                                    "sfen": "lnsgkgsnl/6rb1/ppppp2p1/5pp1p/7P1/2P6/PP1PPPP1P/1B3S1R1/LNSGKG1NL b - 1",
+                                                    "comment": "相手が飛車先を受けずに端に手を回しました。",
+                                                    "branches": [
+                                                      {
+                                                        "usi": "2e2d",
+                                                        "kind": "main",
+                                                        "note": "2筋の歩を突き捨てます。",
+                                                        "child": {
+                                                          "id": "d8_1",
+                                                          "sfen": "lnsgkgsnl/6rb1/ppppp2p1/5ppPp/9/2P6/PP1PPPP1P/1B3S1R1/LNSGKG1NL w - 1",
+                                                          "branches": [
+                                                            {
+                                                              "usi": "2c2d",
+                                                              "kind": "main",
+                                                              "note": "相手は歩で取り返します。",
+                                                              "child": {
+                                                                "id": "d8_2",
+                                                                "sfen": "lnsgkgsnl/6rb1/ppppp4/5pppp/9/2P6/PP1PPPP1P/1B3S1R1/LNSGKG1NL b p 1",
+                                                                "branches": [
+                                                                  {
+                                                                    "usi": "2h2d",
+                                                                    "kind": "main",
+                                                                    "note": "飛車で取り返し、2筋を突破しました。",
+                                                                    "child": {
+                                                                      "id": "d8_3",
+                                                                      "sfen": "lnsgkgsnl/6rb1/ppppp4/5ppRp/9/2P6/PP1PPPP1P/1B3S3/LNSGKG1NL w Pp 1",
+                                                                      "comment": "端歩と飛車先の受け、どちらが急ぐかを比べる問題でした。攻められている筋の受けが先です。",
+                                                                      "branches": []
+                                                                    }
+                                                                  }
+                                                                ]
+                                                              }
+                                                            }
+                                                          ]
+                                                        }
+                                                      }
+                                                    ]
+                                                  }
                                                 }
                                               ]
                                             }
