@@ -15,6 +15,7 @@ import shikenbishaVsAnagumaBasicRaw from "../data/joseki/shikenbisha-vs-anaguma-
 import shikenbishaVsBouginKuboryuRaw from "../data/joseki/shikenbisha-vs-bougin--kuboryu.json?raw";
 import shikenbishaVsAnagumaSokkouRaw from "../data/joseki/shikenbisha-vs-anaguma--sokkou.json?raw";
 import shikenbishaVsMigishikenRaw from "../data/joseki/shikenbisha-vs-migishiken--41kin.json?raw";
+import shikenbishaVsPonponkeiRaw from "../data/joseki/shikenbisha-vs-ponponkei--basic.json?raw";
 import ibishaVsSankenbishaBouginRaw from "../data/joseki/ibisha-vs-sankenbisha--bougin.json?raw";
 import ibishaVsSankenbisha37Raw from "../data/joseki/ibisha-vs-sankenbisha--37kei.json?raw";
 import sankenbishaVsIbishaBasicRaw from "../data/joseki/sankenbisha-vs-ibisha--basic.json?raw";
@@ -275,6 +276,16 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "急戦",
     summary: "4筋に集中する攻めを、△1二香と△3一金で受け止める定跡の受け方。",
     load: () => assertJosekiCourse(parseRaw(shikenbishaVsMigishikenRaw), "shikenbisha-vs-migishiken--41kin.json"),
+  },
+  {
+    id: "shikenbisha-vs-ponponkei--basic",
+    strategyId: "shikenbisha",
+    opponentLabel: "居飛車",
+    sideLabel: "後手",
+    label: "対ポンポン桂",
+    kind: "急戦",
+    summary: "跳ねてきた桂は取ってよい。飛車を成らせても紐をつけて受け止める。",
+    load: () => assertJosekiCourse(parseRaw(shikenbishaVsPonponkeiRaw), "shikenbisha-vs-ponponkei--basic.json"),
   },
   {
     id: "shikenbisha-vs-ibisha--sente",
