@@ -16,6 +16,7 @@ import shikenbishaVsBouginKuboryuRaw from "../data/joseki/shikenbisha-vs-bougin-
 import shikenbishaVsAnagumaSokkouRaw from "../data/joseki/shikenbisha-vs-anaguma--sokkou.json?raw";
 import shikenbishaVsMigishikenRaw from "../data/joseki/shikenbisha-vs-migishiken--41kin.json?raw";
 import shikenbishaVsPonponkeiRaw from "../data/joseki/shikenbisha-vs-ponponkei--basic.json?raw";
+import shikenbishaVsTorisashiRaw from "../data/joseki/shikenbisha-vs-torisashi--basic.json?raw";
 import ibishaVsSankenbishaBouginRaw from "../data/joseki/ibisha-vs-sankenbisha--bougin.json?raw";
 import ibishaVsSankenbisha37Raw from "../data/joseki/ibisha-vs-sankenbisha--37kei.json?raw";
 import ibishaVsSankenbisha35Raw from "../data/joseki/ibisha-vs-sankenbisha--35hayashikake.json?raw";
@@ -298,6 +299,16 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "急戦",
     summary: "跳ねてきた桂は取ってよい。飛車を成らせても紐をつけて受け止める。",
     load: () => assertJosekiCourse(parseRaw(shikenbishaVsPonponkeiRaw), "shikenbisha-vs-ponponkei--basic.json"),
+  },
+  {
+    id: "shikenbisha-vs-torisashi--basic",
+    strategyId: "shikenbisha",
+    opponentLabel: "鳥刺し(嬉野流)",
+    sideLabel: "後手",
+    label: "対鳥刺し",
+    kind: "急戦",
+    summary: "無理に攻めず手厚く受け、攻めの反動を利用して好形に組む。",
+    load: () => assertJosekiCourse(parseRaw(shikenbishaVsTorisashiRaw), "shikenbisha-vs-torisashi--basic.json"),
   },
   {
     id: "shikenbisha-vs-ibisha--sente",
