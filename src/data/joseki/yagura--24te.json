@@ -6,7 +6,7 @@
   "mySide": "sente",
   "source": "手順は「新24手組」として広く知られる定型の駒組み。2手目△8四歩の世界(ameblo.jp/shogi-84fu)と、こつこつと将棋上達をめざす(ameblo.jp/kazeninaritai81)の2つの記事で内容を突き合わせて確認(2026-08)。両者は手順前後(転換)があるが到達する形は同じ",
   "goalFormation": "金銀を7八金・6七金・7七銀と組み上げ、角を7九へ引いた矢倉の基本形。玉はこのあと7八→8八と入って矢倉囲いが完成する。",
-  "goalSfen": "ln3kbnl/1r1sg1g2/p2p2spp/1pp1ppp2/9/2PPP1P2/PPSG1P1PP/2G2S1R1/LNBK3NL b - 1",
+  "goalSfen": "ln3k1nl/1r1sg1g2/p2p2spp/1ppbppp2/9/2PPP1P2/PPSG1PSPP/2GB3R1/LN1K3NL w - 1",
   "root": {
     "id": "n0",
     "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
@@ -205,8 +205,44 @@
                                                                                                                                                   "child": {
                                                                                                                                                     "id": "n24",
                                                                                                                                                     "sfen": "ln3kbnl/1r1sg1g2/p2p2spp/1pp1ppp2/9/2PPP1P2/PPSG1P1PP/2G2S1R1/LNBK3NL b - 1",
-                                                                                                                                                    "comment": "矢倉24手組が完成しました。お互いに金銀を組み上げた、矢倉の最も基本的な形です。ここから▲3七銀と上がって4六銀を目指す指し方や、▲6八角から森下システムへ進む指し方などに分かれます。この先は今後のフェーズで扱います。",
-                                                                                                                                                    "branches": []
+                                                                                                                                                    "comment": "矢倉24手組が完成しました。お互いに金銀を組み上げた、矢倉の最も基本的な形です。ここから▲3七銀と上がるのが現代矢倉の基本です。",
+                                                                                                                                                    "branches": [
+                                                                                                                                                      {
+                                                                                                                                                        "usi": "4h3g",
+                                                                                                                                                        "kind": "main",
+                                                                                                                                                        "note": "銀を3七へ。ここから4六銀を目指す、▲3七銀戦法の第一歩です。",
+                                                                                                                                                        "child": {
+                                                                                                                                                          "id": "n25",
+                                                                                                                                                          "sfen": "ln3kbnl/1r1sg1g2/p2p2spp/1pp1ppp2/9/2PPP1P2/PPSG1PSPP/2G4R1/LNBK3NL w - 1",
+                                                                                                                                                          "comment": null,
+                                                                                                                                                          "branches": [
+                                                                                                                                                            {
+                                                                                                                                                              "usi": "3a6d",
+                                                                                                                                                              "kind": "main",
+                                                                                                                                                              "note": "相手は角を6四へ出しました。この角がこちらの3五歩を牽制しています。この一手を怠ると、3筋の歩を交換されて攻撃陣を作られてしまいます。",
+                                                                                                                                                              "child": {
+                                                                                                                                                                "id": "n26",
+                                                                                                                                                                "sfen": "ln3k1nl/1r1sg1g2/p2p2spp/1ppbppp2/9/2PPP1P2/PPSG1PSPP/2G4R1/LNBK3NL b - 1",
+                                                                                                                                                                "comment": "相手が△6四角と牽制してきました。ここで▲6八角と引いて角のにらみ合いを外すのが一つの形です。",
+                                                                                                                                                                "branches": [
+                                                                                                                                                                  {
+                                                                                                                                                                    "usi": "7i6h",
+                                                                                                                                                                    "kind": "main",
+                                                                                                                                                                    "note": "角を6八へ引き、相手の角のにらみを外します。",
+                                                                                                                                                                    "child": {
+                                                                                                                                                                      "id": "n27",
+                                                                                                                                                                      "sfen": "ln3k1nl/1r1sg1g2/p2p2spp/1ppbppp2/9/2PPP1P2/PPSG1PSPP/2GB3R1/LN1K3NL w - 1",
+                                                                                                                                                                      "comment": "▲3七銀戦法の出だしです。ここから▲4六銀や▲3七桂と攻めの形を作っていきますが、その先は今後のフェーズで扱います。",
+                                                                                                                                                                      "branches": []
+                                                                                                                                                                    }
+                                                                                                                                                                  }
+                                                                                                                                                                ]
+                                                                                                                                                              }
+                                                                                                                                                            }
+                                                                                                                                                          ]
+                                                                                                                                                        }
+                                                                                                                                                      }
+                                                                                                                                                    ]
                                                                                                                                                   }
                                                                                                                                                 }
                                                                                                                                               ]
