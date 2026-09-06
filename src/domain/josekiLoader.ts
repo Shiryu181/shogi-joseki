@@ -18,9 +18,11 @@ import shikenbishaVsMigishikenRaw from "../data/joseki/shikenbisha-vs-migishiken
 import shikenbishaVsPonponkeiRaw from "../data/joseki/shikenbisha-vs-ponponkei--basic.json?raw";
 import ibishaVsSankenbishaBouginRaw from "../data/joseki/ibisha-vs-sankenbisha--bougin.json?raw";
 import ibishaVsSankenbisha37Raw from "../data/joseki/ibisha-vs-sankenbisha--37kei.json?raw";
+import ibishaVsSankenbisha35Raw from "../data/joseki/ibisha-vs-sankenbisha--35hayashikake.json?raw";
 import sankenbishaVsIbishaBasicRaw from "../data/joseki/sankenbisha-vs-ibisha--basic.json?raw";
 import sankenbishaVsBougin53Raw from "../data/joseki/sankenbisha-vs-bougin--53kin.json?raw";
 import sankenbishaVs45Raw from "../data/joseki/sankenbisha-vs-45hayashikake--sabaki.json?raw";
+import sankenbishaVsAnagumaKoyanRaw from "../data/joseki/sankenbisha-vs-anaguma--koyan.json?raw";
 import kakugawariBouginRaw from "../data/joseki/kakugawari--bougin.json?raw";
 import kakugawariHayakuriginRaw from "../data/joseki/kakugawari--hayakurigin.json?raw";
 import aigakariBouginRaw from "../data/joseki/aigakari--bougin.json?raw";
@@ -208,6 +210,16 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     load: () => assertJosekiCourse(parseRaw(ibishaVsSankenbisha37Raw), "ibisha-vs-sankenbisha--37kei.json"),
   },
   {
+    id: "ibisha-vs-sankenbisha--35hayashikake",
+    strategyId: "ibisha",
+    opponentLabel: "三間飛車",
+    sideLabel: "先手",
+    label: "▲3五歩早仕掛け",
+    kind: "急戦",
+    summary: "いきなり3筋の歩をぶつけて、銀と飛車を働かせる急戦。",
+    load: () => assertJosekiCourse(parseRaw(ibishaVsSankenbisha35Raw), "ibisha-vs-sankenbisha--35hayashikake.json"),
+  },
+  {
     id: "ibisha-vs-shikenbisha--gote",
     strategyId: "ibisha",
     opponentLabel: "四間飛車",
@@ -346,6 +358,16 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "急戦",
     summary: "受けるのではなく、角を捌いて馬を作る三間飛車の考え方。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaVs45Raw), "sankenbisha-vs-45hayashikake--sabaki.json"),
+  },
+  {
+    id: "sankenbisha-vs-anaguma--koyan",
+    strategyId: "sankenbisha",
+    opponentLabel: "居飛車穴熊",
+    sideLabel: "先手",
+    label: "コーヤン流",
+    kind: "持久戦",
+    summary: "玉を3九に構え、角で相手玉をにらみながら端から攻め潰す。",
+    load: () => assertJosekiCourse(parseRaw(sankenbishaVsAnagumaKoyanRaw), "sankenbisha-vs-anaguma--koyan.json"),
   },
   {
     id: "sankenbisha-vs-ibisha--sente",
