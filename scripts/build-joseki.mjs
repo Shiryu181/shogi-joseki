@@ -122,7 +122,8 @@ export function buildCourse({ id, title, myStrategy, opponentStrategy, mySide, s
     if (!position.doMove(move)) throw new Error(`${i + 1}手目 ${usi}: 適用に失敗`);
 
     const child = { id: `n${i + 1}`, sfen: position.sfen, comment: spec.comment, branches: [] };
-    nodes[i].branches.push({ usi, kind: "main", note: spec.note, child });
+    // aim は出題時に見せる「ねらい」。省略時はアプリ側が note から自動生成する。
+    nodes[i].branches.push({ usi, kind: "main", note: spec.note, ...(spec.aim ? { aim: spec.aim } : {}), child });
     for (const b of devBranches) nodes[i].branches.push(b);
     nodes.push(child);
   });
