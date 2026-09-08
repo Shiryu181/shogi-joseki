@@ -316,6 +316,13 @@ export function Learn({ course, onBack }: LearnProps) {
             kind={pendingAck.kind}
             punishNote={pendingAck.punishNote}
           />
+        ) : showWaitPill && bookQuizEnabled ? (
+          // 相手が指すまでの待ち時間。ここで通常の解説パネルを出すと、
+          // これから相手が指す手の解説が先に見えてしまい(ネタバレ)、
+          // 指したあとに出題パネルでもう一度同じ説明が出て二重になる。
+          <div className="quizpanel">
+            <p className="quiz-comment">相手の手を待っています…</p>
+          </div>
         ) : (
           <CommentPanel
             isGoal={isGoal}
