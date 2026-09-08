@@ -208,7 +208,13 @@ export function Learn({ course, onBack }: LearnProps) {
           <div className="bookpill">次の一手を考えて、盤に指してください</div>
         )}
         {showWaitPill && !quiz && <div className="waitpill">相手が指しています…</div>}
-        {pendingAck && !quiz && <div className="ackpill">相手が指しました。解説を読んで「次へ」</div>}
+        {pendingAck && !quiz && (
+          <div className="ackpill">
+            {pendingAck.by === "me"
+              ? "正解です。解説を読んで「次へ」"
+              : "相手が指しました。解説を読んで「次へ」"}
+          </div>
+        )}
         {!isGoal && !showWaitPill && !pendingAck && !quiz && !bookQuiz && (
           <div className="guidepill">光っているマスへ動かして次の手をなぞる</div>
         )}
@@ -247,7 +253,7 @@ export function Learn({ course, onBack }: LearnProps) {
             ◀
           </button>
           <button type="button" className="primary" onClick={advance} disabled={isGoal && !pendingAck}>
-            {pendingAck ? "次へ ▶" : "なぞって次へ ▶"}
+            {pendingAck ? (pendingAck.by === "me" ? "相手の手へ ▶" : "次へ ▶") : "なぞって次へ ▶"}
           </button>
         </div>
         )}

@@ -47,6 +47,11 @@ export interface AckMove {
   punishNote?: string;
   /** その手を指す前の局面(JosekiNode)の解説。 */
   comment?: string;
+  /**
+   * 誰が指した手か。次の一手クイズで正解したあとは自分の手で一旦止まり、
+   * 解説を読んでから「次へ」で相手を進める(進む速さを自分で決められるように)。
+   */
+  by?: "me" | "opponent";
 }
 
 /**
@@ -275,6 +280,7 @@ export const useLearnStore = create<LearnState>((set, get) => {
         kind: move.kind,
         punishNote: move.punishNote,
         comment: before.currentNode.comment,
+        by: "opponent",
       };
       // 次の一手クイズが有効なら、確認待ちで止めずに相手の手の情報だけ残す。
       // ユーザーは「相手の手の解説」と「次の一手」を同じ画面で見て、そのまま指せる。
@@ -499,7 +505,25 @@ export const useLearnStore = create<LearnState>((set, get) => {
       const applied = tryMovePreview(position, from, square, answer?.usi);
       if (!applied.ok) { set({ selected: null }); return; }
       if (answer && applied.move.usi === answer.usi) {
-        set({ bookQuiz: null, selected: null, moveDests: new Map(), dropDests: new Map(), lastOpponent: null });
+        // 正解。ここで一旦止めて、自分が指した手の解説を読ませる。
+        // 「次へ」を押すと相手が指す(scheduleAutoAdvance が走る)。
+        const ack: AckMove = {
+          moveNumber: get().nodeHistory.length + 1,
+          moveText: applied.displayText,
+          note: answer.note,
+          kind: answer.kind,
+          punishNote: answer.punishNote,
+          comment: answer.child?.comment,
+          by: "me",
+        };
+        set({
+          bookQuiz: null,
+          selected: null,
+          moveDests: new Map(),
+          dropDests: new Map(),
+          lastOpponent: null,
+          pendingAck: ack,
+        });
         goToChild(answer);
         return;
       }
