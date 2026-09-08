@@ -29,8 +29,11 @@
   cursor: pointer;
   border: none;
   background: none;
-  padding: 2px;
+  /* 持ち駒も指で押しやすいように、当たり判定を広げる。 */
+  padding: 6px;
   border-radius: 6px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 .tray .handpiece:hover {
   background: var(--brown-soft);
@@ -161,6 +164,16 @@
   padding: 0;
   background: none;
   cursor: pointer;
+  /* タップの取りこぼしを減らす: ダブルタップ拡大の待ち時間を無くし、
+     長押しの選択メニューやタップ時の青いハイライトを抑える。 */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+/* 押している間の手応え。反応したことが指を離す前に分かる。 */
+.cell:active {
+  background: rgba(110, 74, 37, 0.18);
 }
 .cell:nth-child(9n) {
   border-right: none;

@@ -1,7 +1,55 @@
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
+import type React from "react";
 import { Color, PieceType, Position, Square, boardGrid, handCounts, promotedPieceType } from "../domain/shogi";
 import { PieceView } from "./Piece";
 import "./Board.css";
+
+/**
+ * 指がわずかに動いただけでブラウザが click を取り消してしまい、
+ * 「しっかり押さないと反応しない」状態になっていたため、タップ判定を自前で行う。
+ * pointerdown からの移動が TAP_SLOP_PX 以内なら、pointerup でタップとみなす。
+ * 盤をスクロールしようとした場合(大きく動かした場合)は着手しない。
+ */
+const TAP_SLOP_PX = 16;
+
+function useTapHandlers(onTap: () => void) {
+  const start = useRef<{ x: number; y: number } | null>(null);
+  return {
+    onPointerDown: (e: React.PointerEvent) => {
+      start.current = { x: e.clientX, y: e.clientY };
+    },
+    onPointerUp: (e: React.PointerEvent) => {
+      const s = start.current;
+      start.current = null;
+      if (!s) return;
+      if (Math.abs(e.clientX - s.x) > TAP_SLOP_PX || Math.abs(e.clientY - s.y) > TAP_SLOP_PX) return;
+      onTap();
+    },
+    onPointerCancel: () => {
+      start.current = null;
+    },
+  };
+}
+
+/** 盤の升。タップ判定を持たせるためにコンポーネントへ分けている。 */
+function BoardCell({
+  className,
+  label,
+  onTap,
+  children,
+}: {
+  className: string;
+  label: string;
+  onTap: () => void;
+  children?: React.ReactNode;
+}) {
+  const tap = useTapHandlers(onTap);
+  return (
+    <button type="button" className={className} aria-label={label} {...tap} onClick={() => {}}>
+      {children}
+    </button>
+  );
+}
 
 const FILES = ["9", "8", "7", "6", "5", "4", "3", "2", "1"];
 const RANKS = ["一", "二", "三", "四", "五", "六", "七", "八", "九"];
@@ -179,16 +227,15 @@ export function Board({
                   .filter(Boolean)
                   .join(" ");
                 return (
-                  <button
+                  <BoardCell
                     key={key}
-                    type="button"
                     className={classes}
-                    onClick={() => onSquareClick(square)}
-                    aria-label={`${FILES[x]}${RANKS[y]}`}
+                    label={`${FILES[x]}${RANKS[y]}`}
+                    onTap={() => onSquareClick(square)}
                   >
                     {piece && <PieceView type={piece.type} color={piece.color} flipped={flipped} />}
                     {showGhost && <PieceView type={ghost.type} color={ghost.color} ghost flipped={flipped} />}
-                  </button>
+                  </BoardCell>
                 );
               }),
             )}
