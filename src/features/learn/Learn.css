@@ -219,3 +219,19 @@
   color: var(--ink-soft);
   border: 1px solid var(--line-2);
 }
+
+/* 「次の一手」クイズ。咎めクイズ(赤)より穏やかな色にして、性質の違いを示す。 */
+.bookpill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2px auto 0;
+  width: max-content;
+  max-width: calc(100% - 28px);
+  background: var(--brown-soft);
+  color: var(--brown-ink);
+  font-size: 11.5px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  text-align: center;
+}

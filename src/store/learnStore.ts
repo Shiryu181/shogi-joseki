@@ -57,6 +57,21 @@ export interface AckMove {
  * ほぼ存在しなかった(scripts/analyze-critical.cjs)。急所ができるのは相手が
  * 明確に損な手を指した直後なので、そこだけを出題する。
  */
+/**
+ * 「次の一手」クイズ。自分の手番のたびに、定跡手を自分で見つけてもらう。
+ *
+ * 咎めクイズ(QuizState)との違い: あちらは相手が悪手を指した局面にしか作れないので
+ * 数が限られる。こちらは自分の手番すべてで出せるので、駒組みの段階から
+ * 考えながら進められる。ただし駒組みでは「その手でないと劣勢」ではないため、
+ * 外したときの文言を強く書かない(定跡手とその理由を示すだけにする)。
+ */
+export interface BookQuizState {
+  /** 直近の誤答。null なら未回答。 */
+  wrong: { attemptedText: string; correctText: string } | null;
+  /** 「答えを見る」が押された。以降はガイドを出してなぞらせる。 */
+  revealed: boolean;
+}
+
 export interface QuizState {
   /** 分岐点のノード。咎め終わったらここへ戻り、本線を続ける。 */
   anchorNode: JosekiNode;
@@ -124,6 +139,23 @@ interface LearnState {
    * 相手の手は自動で進むので、これが無いと見落としやすい。
    */
   lastMoveUsi: string | null;
+  /**
+   * 自分の手番での「次の一手」クイズ。null = ガイドを出してなぞる従来動作。
+   * bookQuizEnabled が false のときは常に null。
+   */
+  bookQuiz: BookQuizState | null;
+  /** 「次の一手」クイズを出すか。既定 true。 */
+  bookQuizEnabled: boolean;
+  /** 「次の一手」クイズの出題を切り替える。 */
+  setBookQuizEnabled: (value: boolean) => void;
+  /** 次の一手クイズで盤の升をクリックしたときの処理。 */
+  bookSelectSquare: (square: Square) => void;
+  /** 次の一手クイズで持ち駒をクリックしたときの処理。 */
+  bookSelectHand: (pieceType: PieceType, color: Color) => void;
+  /** 誤答表示を消してやり直す。 */
+  bookRetry: () => void;
+  /** 答えを見る(以降はガイドを出してなぞらせる)。 */
+  bookReveal: () => void;
   /** 出題中に自分の手番で選べる合法手。通常時は空。 */
   moveDests: MoveDests;
   dropDests: DropDests;
@@ -182,9 +214,11 @@ function initial() {
     selectedBranchIndex: 0,
     position: positionFromNode(course.root),
     autoAdvanceOpponent: true,
+    bookQuizEnabled: true,
     pendingAck: null as AckMove | null,
     quiz: null as QuizState | null,
     askedQuizIds: [] as string[],
+    bookQuiz: null as BookQuizState | null,
     lastMoveUsi: null as string | null,
     moveDests: new Map() as MoveDests,
     dropDests: new Map() as DropDests,
@@ -203,8 +237,10 @@ export const useLearnStore = create<LearnState>((set, get) => {
     clearAutoAdvanceTimer();
     const { autoAdvanceOpponent, course, currentNode, position, pendingAck } = get();
     if (pendingAck) return; // 解説の確認待ち中は進めない(「次へ」を押すまで止まる)
+    // 自分の手番なら「次の一手」クイズを立てる。相手の手の自動進行とは無関係なので、
+    // 「全部なぞる」設定でも出題は出す(判定より先に置くこと)。
+    if (position.color === myColorOf(course)) { refreshBookQuiz(); return; }
     if (!autoAdvanceOpponent) return;
-    if (position.color === myColorOf(course)) return; // 自分の手番: 自動では進めない
     const move = mainBranchOf(currentNode);
     if (!move || !move.child) return; // 理想陣形、またはこの先の本線データが無い
     // 相手番で逸れ手が用意されている局面は、本線ではなく逸れ手を指させて出題する。
@@ -238,6 +274,19 @@ export const useLearnStore = create<LearnState>((set, get) => {
       set({ pendingAck: ack });
       goToChild(move);
     }, OPPONENT_MOVE_DELAY_MS);
+  }
+
+  /**
+   * 自分の手番になったときに「次の一手」クイズを立てる。
+   * 相手番・咎めクイズ中・確認待ち中・この先の本線が無いときは立てない。
+   */
+  function refreshBookQuiz() {
+    const { course, currentNode, position, pendingAck, quiz, bookQuizEnabled } = get();
+    if (!bookQuizEnabled || pendingAck || quiz) { set({ bookQuiz: null, moveDests: new Map(), dropDests: new Map(), selected: null }); return; }
+    if (position.color !== myColorOf(course)) { set({ bookQuiz: null, moveDests: new Map(), dropDests: new Map(), selected: null }); return; }
+    const move = mainBranchOf(currentNode);
+    if (!move || !move.child) { set({ bookQuiz: null, moveDests: new Map(), dropDests: new Map(), selected: null }); return; }
+    set({ bookQuiz: { wrong: null, revealed: false }, ...questDests(position), selected: null });
   }
 
   /** 出題中に自分が指せる合法手を計算する。 */
@@ -383,6 +432,64 @@ export const useLearnStore = create<LearnState>((set, get) => {
       if (!quiz || quiz.solved) return;
       if (color !== position.color) return;
       set({ selected: { kind: "hand", pieceType } });
+    },
+
+    setBookQuizEnabled(value) {
+      set({ bookQuizEnabled: value });
+      if (!value) set({ bookQuiz: null, moveDests: new Map(), dropDests: new Map(), selected: null });
+      else refreshBookQuiz();
+    },
+
+    bookSelectSquare(square) {
+      const { bookQuiz, position, selected, currentNode, moveDests, course } = get();
+      if (!bookQuiz || bookQuiz.revealed) return;
+      if (position.color !== myColorOf(course)) return;
+
+      if (!selected || selected.kind === "hand") {
+        if (position.board.at(square)?.color === position.color) set({ selected: { kind: "board", square } });
+        else set({ selected: null });
+        return;
+      }
+      const from = selected.square;
+      if (from.usi === square.usi) { set({ selected: null }); return; }
+      if (!moveDests.get(from.usi)?.some((d) => d.usi === square.usi)) {
+        if (position.board.at(square)?.color === position.color) set({ selected: { kind: "board", square } });
+        else set({ selected: null });
+        return;
+      }
+      const answer = mainBranchOf(currentNode);
+      const applied = tryMovePreview(position, from, square, answer?.usi);
+      if (!applied.ok) { set({ selected: null }); return; }
+      if (answer && applied.move.usi === answer.usi) {
+        set({ bookQuiz: null, selected: null, moveDests: new Map(), dropDests: new Map() });
+        goToChild(answer);
+        return;
+      }
+      const correctText = answer ? (moveFromUSI(position, answer.usi)?.displayText ?? "") : "";
+      set({
+        selected: null,
+        bookQuiz: { ...bookQuiz, wrong: { attemptedText: applied.displayText, correctText } },
+      });
+    },
+
+    bookSelectHand(pieceType, color) {
+      const { bookQuiz, position } = get();
+      if (!bookQuiz || bookQuiz.revealed) return;
+      if (color !== position.color) return;
+      set({ selected: { kind: "hand", pieceType } });
+    },
+
+    bookRetry() {
+      const { bookQuiz } = get();
+      if (!bookQuiz) return;
+      set({ bookQuiz: { ...bookQuiz, wrong: null }, selected: null });
+    },
+
+    bookReveal() {
+      const { bookQuiz } = get();
+      if (!bookQuiz) return;
+      // 答えを見たら、以降はガイドを出してなぞってもらう(操作は従来と同じ)。
+      set({ bookQuiz: { wrong: null, revealed: true }, selected: null, moveDests: new Map(), dropDests: new Map() });
     },
 
     quizRetry() {

@@ -36,6 +36,13 @@ export function Learn({ course, onBack }: LearnProps) {
   const selected = useLearnStore((s) => s.selected);
   const quizSelectSquare = useLearnStore((s) => s.quizSelectSquare);
   const quizSelectHand = useLearnStore((s) => s.quizSelectHand);
+  const bookQuiz = useLearnStore((s) => s.bookQuiz);
+  const bookQuizEnabled = useLearnStore((s) => s.bookQuizEnabled);
+  const setBookQuizEnabled = useLearnStore((s) => s.setBookQuizEnabled);
+  const bookSelectSquare = useLearnStore((s) => s.bookSelectSquare);
+  const bookSelectHand = useLearnStore((s) => s.bookSelectHand);
+  const bookRetry = useLearnStore((s) => s.bookRetry);
+  const bookReveal = useLearnStore((s) => s.bookReveal);
   const quizRetry = useLearnStore((s) => s.quizRetry);
   const quizReveal = useLearnStore((s) => s.quizReveal);
   const quizReturnToMainLine = useLearnStore((s) => s.quizReturnToMainLine);
@@ -70,8 +77,9 @@ export function Learn({ course, onBack }: LearnProps) {
 
   // 確認待ち中(相手の手を自動で指した直後)は、解説を読むことに集中してもらうため
   // 次の自分の手のガイドは出さない。「次へ」を押すと通常の表示に戻る。
-  const parsed = guide && !pendingAck && !quiz ? parseUSIMove(guide.usi) : null;
-  const moveInfo = guide && !pendingAck && !quiz ? moveFromUSI(position, guide.usi) : null;
+  const guideHidden = pendingAck !== null || quiz !== null || bookQuiz !== null;
+  const parsed = guide && !guideHidden ? parseUSIMove(guide.usi) : null;
+  const moveInfo = guide && !guideHidden ? moveFromUSI(position, guide.usi) : null;
 
   const fromKey = parsed && parsed.from instanceof Square ? parsed.from.usi : null;
   const fromHand: HandHighlight | null =
@@ -98,12 +106,14 @@ export function Learn({ course, onBack }: LearnProps) {
 
   function handleSquareClick(square: Square) {
     if (quiz) { quizSelectSquare(square); return; }
+    if (bookQuiz) { bookSelectSquare(square); return; }
     attemptSquare(square);
   }
 
   // 出題中は「自分で合法手を探す」ので、選択した駒の行き先を光らせる。
-  const quizFromKey = quiz && selected?.kind === "board" ? selected.square.usi : null;
-  const quizGlow = quiz
+  const inQuiz = quiz !== null || bookQuiz !== null;
+  const quizFromKey = inQuiz && selected?.kind === "board" ? selected.square.usi : null;
+  const quizGlow = inQuiz
     ? selected?.kind === "board"
       ? new Set((moveDests.get(selected.square.usi) ?? []).map((d) => d.usi))
       : selected?.kind === "hand"
@@ -111,12 +121,13 @@ export function Learn({ course, onBack }: LearnProps) {
         : undefined
     : undefined;
   const quizFromHand =
-    quiz && selected?.kind === "hand" ? { type: selected.pieceType, color: position.color } : null;
+    inQuiz && selected?.kind === "hand" ? { type: selected.pieceType, color: position.color } : null;
 
   function handleHandPieceClick(type: PieceType, color: Color) {
     // なぞりモードでは持ち駒トレイのクリックでは進めない(移動先マスのクリックのみ受理)。
     // 出題中は自分で手を探すので、打つ手のために持ち駒も選べるようにする。
     if (quiz) quizSelectHand(type, color);
+    else if (bookQuiz) bookSelectHand(type, color);
   }
 
   // ストアがまだこのコースを読み込み切っていない(切替直後の1レンダー)場合は
@@ -158,19 +169,27 @@ export function Learn({ course, onBack }: LearnProps) {
                 切り替えるとクイズが出なくなることが分かるようラベルに明記する。 */}
             {autoAdvanceOpponent ? "相手の手:自動" : "全部なぞる(出題なし)"}
           </button>
+          <button
+            type="button"
+            className={`badge toggle-auto${bookQuizEnabled ? "" : " off"}`}
+            onClick={() => setBookQuizEnabled(!bookQuizEnabled)}
+            aria-pressed={bookQuizEnabled}
+          >
+            {bookQuizEnabled ? "次の一手:出題" : "次の一手:なぞる"}
+          </button>
         </div>
         <Board
           position={position}
-          fromKey={quiz ? quizFromKey : fromKey}
-          fromHand={quiz ? quizFromHand : fromHand}
-          glowKeys={quiz ? quizGlow : glowKeys}
-          ghost={quiz ? null : ghost}
+          fromKey={inQuiz ? quizFromKey : fromKey}
+          fromHand={inQuiz ? quizFromHand : fromHand}
+          glowKeys={inQuiz ? quizGlow : glowKeys}
+          ghost={inQuiz ? null : ghost}
           lastKeys={lastKeys}
           emphasizeLast
           lastToKey={lastToKey}
           onSquareClick={handleSquareClick}
           onHandPieceClick={handleHandPieceClick}
-          clickableHandColor={quiz ? (course.mySide === "sente" ? Color.BLACK : Color.WHITE) : "none"}
+          clickableHandColor={inQuiz ? (course.mySide === "sente" ? Color.BLACK : Color.WHITE) : "none"}
           // 後手番のコースでは盤を後手側から見た向きにする(自分の駒が手前を向く)
           flipped={course.mySide === "gote"}
         />
@@ -183,12 +202,32 @@ export function Learn({ course, onBack }: LearnProps) {
                 : "続けて咎める手を指してください"}
           </div>
         )}
+        {bookQuiz && !bookQuiz.wrong && (
+          <div className="bookpill">次の一手を考えて、盤に指してください</div>
+        )}
         {showWaitPill && !quiz && <div className="waitpill">相手が指しています…</div>}
         {pendingAck && !quiz && <div className="ackpill">相手が指しました。解説を読んで「次へ」</div>}
-        {!isGoal && !showWaitPill && !pendingAck && !quiz && (
+        {!isGoal && !showWaitPill && !pendingAck && !quiz && !bookQuiz && (
           <div className="guidepill">光っているマスへ動かして次の手をなぞる</div>
         )}
-        {quiz ? (
+        {bookQuiz ? (
+          <div className="quizpanel">
+            <p className="quiz-head">
+              <span className="quiz-no">{moveNumber}手目</span>
+              ここでの定跡の一手は？
+            </p>
+            {currentNode.comment && <p className="quiz-comment">{currentNode.comment}</p>}
+            {bookQuiz.wrong && (
+              <p className="quiz-wrong">
+                ✕ {bookQuiz.wrong.attemptedText}
+                <span>
+                  定跡は {bookQuiz.wrong.correctText} です。この手が悪いとは限りませんが、
+                  まずは定跡の形を覚えましょう。
+                </span>
+              </p>
+            )}
+          </div>
+        ) : quiz ? (
           <div className="quizpanel">
             <p className="quiz-head">
               <span className="quiz-no">{quiz.anchorMoveNumber}手目</span>
@@ -228,10 +267,19 @@ export function Learn({ course, onBack }: LearnProps) {
             goalLabel={course.goalLabel}
           />
         )}
-        {!pendingAck && !quiz && (
+        {!pendingAck && !quiz && !bookQuiz && (
           <BranchNav branches={currentNode.branches} activeIndex={selectedBranchIndex} onSelect={chooseBranch} />
         )}
-        {quiz ? (
+        {bookQuiz ? (
+          <div className="learn-navrow">
+            <button type="button" onClick={bookRetry} disabled={!bookQuiz.wrong}>
+              もう一度
+            </button>
+            <button type="button" onClick={bookReveal}>
+              答えを見る
+            </button>
+          </div>
+        ) : quiz ? (
           <div className="learn-navrow">
             {quiz.solved ? (
               <button type="button" className="primary" onClick={quizReturnToMainLine}>
