@@ -36,6 +36,11 @@ export interface BoardProps {
   fromHand?: HandHighlight | null;
   /** 'glow' 強調(なぞりガイド/合法手ハイライト)を出す升の集合。 */
   glowKeys?: Set<string>;
+  /**
+   * 行き先の候補(クイズで駒を選んだときの着手可能マス)。
+   * glowKeys の点滅とは別に、落ち着いた丸印で示して押しやすくする。
+   */
+  destKeys?: Set<string>;
   /** 'last'(直前の手)強調を出す升の集合。 */
   lastKeys?: Set<string>;
   /**
@@ -113,6 +118,7 @@ export function Board({
   fromKey = null,
   fromHand = null,
   glowKeys,
+  destKeys,
   lastKeys,
   emphasizeLast = false,
   lastToKey = null,
@@ -126,6 +132,7 @@ export function Board({
 }: BoardProps) {
   const grid = useMemo(() => boardGrid(position), [position]);
   const glow = glowKeys ?? EMPTY_SET;
+  const dests = destKeys ?? EMPTY_SET;
   const last = lastKeys ?? EMPTY_SET;
   // 描画順だけを反転させ、升の座標(Square)は常に実際の値を使う。
   // こうすることで、クリック処理や強調表示のロジックは反転を意識しなくてよい。
@@ -164,8 +171,10 @@ export function Board({
                   "cell",
                   last.has(key) ? (emphasizeLast ? "last last-strong" : "last") : "",
                   emphasizeLast && lastToKey === key ? "last-to" : "",
-                  fromKey === key ? "from" : "",
+                  fromKey === key ? "from selected-from" : "",
                   glow.has(key) ? "glow" : "",
+                  dests.has(key) ? "dest" : "",
+                  dests.has(key) && piece ? "occupied" : "",
                 ]
                   .filter(Boolean)
                   .join(" ");

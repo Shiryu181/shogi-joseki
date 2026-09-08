@@ -6,7 +6,8 @@
 }
 
 .learn-frame {
-  width: 390px;
+  /* 盤を大きく見せるため、画面が広いときは枠も広げる(スマホでは 100%)。 */
+  width: 560px;
   max-width: 100%;
   background: var(--app);
   border-radius: 20px;

@@ -95,11 +95,19 @@
   border-color: var(--gold);
   background: var(--gold-soft);
 }
+/*
+ * マスの大きさ。「次の一手」クイズでは駒とマスを自分で選ぶため、
+ * なぞるだけだった頃より正確なタップが要る。画面(枠)の幅いっぱいまで広げ、
+ * 端末が小さくても 34px を下回らないようにしている。
+ * ここを基準に .files / .ranks / .board が同じ値を使う。
+ */
+.board-panel {
+  --c: clamp(32px, calc((min(100vw, 560px) - 40px) / 9), 56px);
+}
 .files {
   display: grid;
   grid-template-columns: repeat(9, var(--c));
   padding-right: 15px;
-  --c: 36px;
 }
 .files div {
   text-align: center;
@@ -115,7 +123,6 @@
   display: grid;
   grid-template-rows: repeat(9, var(--c));
   padding-left: 4px;
-  --c: 36px;
 }
 .ranks div {
   display: flex;
@@ -125,7 +132,6 @@
   color: var(--ink-soft);
 }
 .board {
-  --c: 36px;
   display: grid;
   grid-template-columns: repeat(9, var(--c));
   grid-template-rows: repeat(9, var(--c));
@@ -159,6 +165,30 @@
   box-shadow: inset 0 0 0 2px var(--gold);
   animation: glow 1.3s ease-in-out infinite;
 }
+/*
+ * 行き先の候補。クイズでは一度に10か所以上光ることがあるので、
+ * 枠の点滅ではなく落ち着いた丸印にして、どこを押せばよいかを分かりやすくする。
+ * 駒がいる升(取れる升)は丸ではなくリングにして、取る手だと分かるようにする。
+ */
+.cell.dest::after {
+  content: "";
+  position: absolute;
+  width: 34%;
+  height: 34%;
+  border-radius: 50%;
+  background: rgba(110, 74, 37, 0.38);
+  pointer-events: none;
+}
+.cell.dest.occupied::after {
+  width: 76%;
+  height: 76%;
+  background: none;
+  border: 3px solid rgba(178, 58, 46, 0.5);
+}
+.cell.selected-from {
+  background: rgba(176, 132, 46, 0.3);
+  box-shadow: inset 0 0 0 3px var(--gold);
+}
 @keyframes glow {
   0%,
   100% {
@@ -178,8 +208,9 @@
 }
 
 .koma {
-  width: 30px;
-  height: 33px;
+  /* マスの大きさに追従させる。--c が未定義の文脈(持ち駒トレイ)では従来の 30px を使う。 */
+  width: calc(var(--c, 36px) * 0.84);
+  height: calc(var(--c, 36px) * 0.92);
   clip-path: polygon(50% 3%, 84% 25%, 90% 97%, 10% 97%, 16% 25%);
   background: var(--koma-rim);
   display: flex;
@@ -195,7 +226,7 @@
   align-items: center;
   justify-content: center;
   font-family: var(--kf);
-  font-size: 19px;
+  font-size: calc(var(--c, 36px) * 0.53);
   font-weight: 600;
   color: var(--koma-ink);
   line-height: 1;

@@ -182,7 +182,8 @@ export function Learn({ course, onBack }: LearnProps) {
           position={position}
           fromKey={inQuiz ? quizFromKey : fromKey}
           fromHand={inQuiz ? quizFromHand : fromHand}
-          glowKeys={inQuiz ? quizGlow : glowKeys}
+          glowKeys={inQuiz ? undefined : glowKeys}
+          destKeys={inQuiz ? quizGlow : undefined}
           ghost={inQuiz ? null : ghost}
           lastKeys={lastKeys}
           emphasizeLast
