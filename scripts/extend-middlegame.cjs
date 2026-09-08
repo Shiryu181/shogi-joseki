@@ -83,7 +83,6 @@ function tailOf(c) {
   const { node: tail, n: tailNo } = tailOf(course);
   const position = new Position();
   position.resetBySFEN(tail.sfen);
-  const mySide = course.mySide;
 
   console.log(`■ ${course.title}`);
   console.log(`  ${tailNo}手目までのコース。ここから ${PLIES} 手をエンジンに指させる`);
