@@ -17,6 +17,7 @@
         "usi": "7g7f",
         "kind": "main",
         "note": "角道を開ける一手。",
+        "aim": "大駒の道を開けて、序盤の選択肢を広げたい。",
         "child": {
           "id": "n1",
           "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1",
@@ -33,6 +34,7 @@
                     "usi": "2g2f",
                     "kind": "main",
                     "note": "飛車先の歩を突きます。",
+                    "aim": "攻めの主役の前を開けて、攻める姿勢を見せたい。",
                     "child": {
                       "id": "n3",
                       "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL w - 1",
@@ -49,6 +51,7 @@
                                 "usi": "3i4h",
                                 "kind": "main",
                                 "note": "右銀を上がります。",
+                                "aim": "攻めに使う駒を一枚、前へ送り出す準備をしたい。",
                                 "child": {
                                   "id": "n5",
                                   "sfen": "lnsgkgsnl/1r5b1/ppppp2pp/5pp2/9/2P4P1/PP1PPPP1P/1B3S1R1/LNSGKG1NL w - 1",
@@ -66,6 +69,7 @@
                                             "usi": "5i6h",
                                             "kind": "main",
                                             "note": "玉を囲いへ向かわせます。",
+                                            "aim": "戦いが始まる前に、玉を戦場から遠ざけたい。",
                                             "child": {
                                               "id": "n7",
                                               "sfen": "lnsgkgsnl/5r1b1/ppppp2pp/5pp2/9/2P4P1/PP1PPPP1P/1B1K1S1R1/LNSG1G1NL w - 1",
@@ -82,6 +86,7 @@
                                                         "usi": "2f2e",
                                                         "kind": "main",
                                                         "note": "飛車先を早めに伸ばしておきます。",
+                                                        "aim": "早いうちに攻めの主役の前を伸ばして、含みを持たせたい。",
                                                         "child": {
                                                           "id": "n9",
                                                           "sfen": "ln1gkgsnl/2s2r1b1/ppppp2pp/5pp2/7P1/2P6/PP1PPPP1P/1B1K1S1R1/LNSG1G1NL w - 1",
@@ -90,6 +95,7 @@
                                                               "usi": "2b3c",
                                                               "kind": "main",
                                                               "note": "飛車先を角で受けます。",
+                                                              "aim": "相手の飛車先の攻めを、大駒を上げて受け止めたい。",
                                                               "child": {
                                                                 "id": "n10",
                                                                 "sfen": "ln1gkgsnl/2s2r3/ppppp1bpp/5pp2/7P1/2P6/PP1PPPP1P/1B1K1S1R1/LNSG1G1NL b - 1",
@@ -98,6 +104,7 @@
                                                                     "usi": "6h7h",
                                                                     "kind": "main",
                                                                     "note": "舟囲いの定位置へ。",
+                                                                    "aim": "玉を囲いの定位置へ動かし、守りの形を決めたい。",
                                                                     "child": {
                                                                       "id": "n11",
                                                                       "sfen": "ln1gkgsnl/2s2r3/ppppp1bpp/5pp2/7P1/2P6/PP1PPPP1P/1BK2S1R1/LNSG1G1NL w - 1",
@@ -114,6 +121,7 @@
                                                                                 "usi": "9g9f",
                                                                                 "kind": "main",
                                                                                 "note": "端歩を受けます。",
+                                                                                "aim": "相手が突いてきた端に、こちらも合わせて備えておきたい。",
                                                                                 "child": {
                                                                                   "id": "n13",
                                                                                   "sfen": "ln1gkgsnl/2s2r3/1pppp1bpp/p4pp2/7P1/P1P6/1P1PPPP1P/1BK2S1R1/LNSG1G1NL w - 1",
@@ -130,6 +138,7 @@
                                                                                             "usi": "5g5f",
                                                                                             "kind": "main",
                                                                                             "note": "中央を伸ばし、左銀の進路を開けます。",
+                                                                                            "aim": "中央に厚みを作りつつ、左の守り駒が前へ出る道を開けたい。",
                                                                                             "child": {
                                                                                               "id": "n15",
                                                                                               "sfen": "ln1gkg1nl/2s2rs2/1pppp1bpp/p4pp2/7P1/P1P1P4/1P1P1PP1P/1BK2S1R1/LNSG1G1NL w - 1",
@@ -146,6 +155,7 @@
                                                                                                         "usi": "4i5h",
                                                                                                         "kind": "main",
                                                                                                         "note": "舟囲いを固めます。",
+                                                                                                        "aim": "玉の周りに守り駒を足して、囲いを安定させたい。",
                                                                                                         "child": {
                                                                                                           "id": "n17",
                                                                                                           "sfen": "ln1g1g1nl/2sk1rs2/1pppp1bpp/p4pp2/7P1/P1P1P4/1P1P1PP1P/1BK1GS1R1/LNSG3NL w - 1",
@@ -163,6 +173,7 @@
                                                                                                                     "usi": "7i6h",
                                                                                                                     "kind": "main",
                                                                                                                     "note": "左銀を繰り出します。",
+                                                                                                                    "aim": "遊んでいる駒を働く場所へ動かし始めたい。",
                                                                                                                     "child": {
                                                                                                                       "id": "n19",
                                                                                                                       "sfen": "lnkg1g1nl/2s2rs2/1pppp1bpp/p4pp2/7P1/P1P1P4/1P1P1PP1P/1BKSGS1R1/LN1G3NL w - 1",
@@ -179,6 +190,7 @@
                                                                                                                                 "usi": "6h5g",
                                                                                                                                 "kind": "main",
                                                                                                                                 "note": "銀を5七へ。4六歩と突いたときに4五へ進める形です。",
+                                                                                                                                "aim": "守り駒を中央へ進めて、次に前へ出られる形にしたい。",
                                                                                                                                 "child": {
                                                                                                                                   "id": "n21",
                                                                                                                                   "sfen": "ln1g1g1nl/1ks2rs2/1pppp1bpp/p4pp2/7P1/P1P1P4/1P1PSPP1P/1BK1GS1R1/LN1G3NL w - 1",
@@ -196,7 +208,8 @@
                                                                                                                                           {
                                                                                                                                             "usi": "3g3f",
                                                                                                                                             "kind": "main",
-                                                                                                                                            "note": null,
+                                                                                                                                            "note": "3筋の歩を伸ばします。",
+                                                                                                                                            "aim": "攻めたい筋の歩を伸ばして、仕掛けの準備をしたい。",
                                                                                                                                             "child": {
                                                                                                                                               "id": "n23",
                                                                                                                                               "sfen": "ln1g3nl/1ks1grs2/1pppp1bpp/p4pp2/7P1/P1P1P1P2/1P1PSP2P/1BK1GS1R1/LN1G3NL w - 1",
@@ -213,6 +226,7 @@
                                                                                                                                                         "usi": "4g4f",
                                                                                                                                                         "kind": "main",
                                                                                                                                                         "note": "４五歩早仕掛けの意思表示。次に▲4五歩と突いて4筋の戦いを起こします。",
+                                                                                                                                                        "aim": "攻めたい筋に手をかけて、次に戦いを起こす形にしたい。",
                                                                                                                                                         "child": {
                                                                                                                                                           "id": "n25",
                                                                                                                                                           "sfen": "ln1g3nl/1ks1gr3/1ppppsbpp/p4pp2/7P1/P1P1PPP2/1P1PS3P/1BK1GS1R1/LN1G3NL w - 1",
@@ -230,6 +244,7 @@
                                                                                                                                                                     "usi": "4f4e",
                                                                                                                                                                     "kind": "main",
                                                                                                                                                                     "note": "戦法名になっている一手。4筋の歩をぶつけて開戦します。",
+                                                                                                                                                                    "aim": "攻めたい筋の歩をぶつけて、戦いを起こしたい。",
                                                                                                                                                                     "child": {
                                                                                                                                                                       "id": "n27",
                                                                                                                                                                       "sfen": "ln1g3nl/1ks1gr3/1ppp1sbpp/p3ppp2/5P1P1/P1P1P1P2/1P1PS3P/1BK1GS1R1/LN1G3NL w - 1",
@@ -246,6 +261,7 @@
                                                                                                                                                                                 "usi": "2i3g",
                                                                                                                                                                                 "kind": "main",
                                                                                                                                                                                 "note": "桂を跳ねて攻めの駒を増やします。",
+                                                                                                                                                                                "aim": "跳ねる駒を使って、攻めの戦力を増やしたい。",
                                                                                                                                                                                 "child": {
                                                                                                                                                                                   "id": "n29",
                                                                                                                                                                                   "sfen": "ln1g3nl/1ks1gr3/1pp2sbpp/p2pppp2/5P1P1/P1P1P1P2/1P1PS1N1P/1BK1GS1R1/LN1G4L w - 1",
@@ -263,6 +279,7 @@
                                                                                                                                                                                             "usi": "2e2d",
                                                                                                                                                                                             "kind": "main",
                                                                                                                                                                                             "note": "2筋の歩を突き捨てます。一時的に歩を損しますが、後で飛車が2四へ出る道を作る手で、これが終盤に効いてきます。",
+                                                                                                                                                                                            "aim": "歩を1枚損しても、大駒が前へ出る道を先に作っておきたい。",
                                                                                                                                                                                             "child": {
                                                                                                                                                                                               "id": "n31",
                                                                                                                                                                                               "sfen": "ln1g3nl/1ks2r3/1ppg1sbpp/p2ppppP1/5P3/P1P1P1P2/1P1PS1N1P/1BK1GS1R1/LN1G4L w - 1",
@@ -280,6 +297,7 @@
                                                                                                                                                                                                         "usi": "4e4d",
                                                                                                                                                                                                         "kind": "main",
                                                                                                                                                                                                         "note": "4筋の歩を取り込みます。ここから激しい取り合いになります。",
+                                                                                                                                                                                                        "aim": "ぶつけた歩を取り込んで、取り合いに持ち込みたい。",
                                                                                                                                                                                                         "child": {
                                                                                                                                                                                                           "id": "n33",
                                                                                                                                                                                                           "sfen": "ln1g3nl/1ks2r3/1ppg1sb1p/p2ppPpp1/9/P1P1P1P2/1P1PS1N1P/1BK1GS1R1/LN1G4L w Pp 1",
@@ -298,6 +316,7 @@
                                                                                                                                                                                                                     "usi": "P*4e",
                                                                                                                                                                                                                     "kind": "main",
                                                                                                                                                                                                                     "note": "持ち駒の歩を打って、その銀に当てます。",
+                                                                                                                                                                                                                    "aim": "持ち駒を使って、出てきた相手の駒に当てたい。",
                                                                                                                                                                                                                     "child": {
                                                                                                                                                                                                                       "id": "n35",
                                                                                                                                                                                                                       "sfen": "ln1g3nl/1ks2r3/1ppg2b1p/p2ppspp1/5P3/P1P1P1P2/1P1PS1N1P/1BK1GS1R1/LN1G4L w 2p 1",
@@ -315,6 +334,7 @@
                                                                                                                                                                                                                                 "usi": "3g4e",
                                                                                                                                                                                                                                 "kind": "main",
                                                                                                                                                                                                                                 "note": "桂で銀を取り返します。",
+                                                                                                                                                                                                                                "aim": "取られた駒を取り返して、損得を無くしておきたい。",
                                                                                                                                                                                                                                 "child": {
                                                                                                                                                                                                                                   "id": "n37",
                                                                                                                                                                                                                                   "sfen": "ln1g3nl/1ks2r3/1ppg2b1p/p2pp1pp1/5N3/P1P1P1P2/1P1PS3P/1BK1GS1R1/LN1G4L w S3p 1",
@@ -333,6 +353,7 @@
                                                                                                                                                                                                                                             "usi": "8h3c+",
                                                                                                                                                                                                                                             "kind": "main",
                                                                                                                                                                                                                                             "note": "角を切って相手の角と刺し違えます。ここが仕掛けの急所です。",
+                                                                                                                                                                                                                                            "aim": "大駒を切ってでも、相手の大駒と刺し違えたい。",
                                                                                                                                                                                                                                             "child": {
                                                                                                                                                                                                                                               "id": "n39",
                                                                                                                                                                                                                                               "sfen": "ln1g3nl/1ks6/1ppg2+B1p/p2pp1pp1/5r3/P1P1P1P2/1P1PS3P/2K1GS1R1/LN1G4L w BSn3p 1",
@@ -351,6 +372,7 @@
                                                                                                                                                                                                                                                         "usi": "2h2d",
                                                                                                                                                                                                                                                         "kind": "main",
                                                                                                                                                                                                                                                         "note": "飛車で2四の歩を取ります。突き捨てておいた効果が出ました。",
+                                                                                                                                                                                                                                                        "aim": "先に捨てておいた歩の効果を活かして、大駒を前線へ出したい。",
                                                                                                                                                                                                                                                         "child": {
                                                                                                                                                                                                                                                           "id": "n41",
                                                                                                                                                                                                                                                           "sfen": "ln1g4l/1ks6/1ppg2n1p/p2pp1pR1/5r3/P1P1P1P2/1P1PS3P/2K1GS3/LN1G4L w BSPbn3p 1",
@@ -369,6 +391,7 @@
                                                                                                                                                                                                                                                                     "usi": "2d2e",
                                                                                                                                                                                                                                                                     "kind": "main",
                                                                                                                                                                                                                                                                     "note": "飛車を交換します。",
+                                                                                                                                                                                                                                                                    "aim": "大駒を交換して、持ち駒として使える形にしたい。",
                                                                                                                                                                                                                                                                     "child": {
                                                                                                                                                                                                                                                                       "id": "n43",
                                                                                                                                                                                                                                                                       "sfen": "ln1g4l/1ks6/1ppg2n1p/p2pp1p2/7R1/P1P1P1P2/1P1PS3P/2K1GS3/LN1G4L w RBSPbn3p 1",
@@ -387,6 +410,7 @@
                                                                                                                                                                                                                                                                                 "usi": "R*2a",
                                                                                                                                                                                                                                                                                 "kind": "main",
                                                                                                                                                                                                                                                                                 "note": "持ち駒にした飛車を敵陣に打ち込みます。",
+                                                                                                                                                                                                                                                                                "aim": "手に入れた大駒を、相手陣の急所へ打ち込みたい。",
                                                                                                                                                                                                                                                                                 "child": {
                                                                                                                                                                                                                                                                                   "id": "n45",
                                                                                                                                                                                                                                                                                   "sfen": "ln1g3Rl/1ks6/1ppg4p/p2pp1p2/7n1/P1P1P1P2/1P1PS3P/2K1GS3/LN1G4L w BSPrbn3p 1",
@@ -403,6 +427,7 @@
                                                                                                                                                                                                                                                                                             "usi": "B*4d",
                                                                                                                                                                                                                                                                                             "kind": "main",
                                                                                                                                                                                                                                                                                             "note": "角を打って、この局面は居飛車優勢とされています。",
+                                                                                                                                                                                                                                                                                            "aim": "手持ちの大駒を打って、優位を決定づけたい。",
                                                                                                                                                                                                                                                                                             "child": {
                                                                                                                                                                                                                                                                                               "id": "n47",
                                                                                                                                                                                                                                                                                               "sfen": "ln1g3Rl/1ks6/1ppg4p/p2ppBp2/7n1/P1P1P1P2/1P1PS3P/2K1GS3/LN1G3rL w SPbn3p 1",

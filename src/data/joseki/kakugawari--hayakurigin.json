@@ -16,6 +16,7 @@
         "usi": "7g7f",
         "kind": "main",
         "note": "角道を開けます。",
+        "aim": "大駒の道を開けて、序盤の選択肢を広げたい。",
         "child": {
           "id": "n1",
           "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1",
@@ -32,6 +33,7 @@
                     "usi": "2g2f",
                     "kind": "main",
                     "note": "飛車先を突きます。",
+                    "aim": "攻めの主役の前を開けて、攻める姿勢を見せたい。",
                     "child": {
                       "id": "n3",
                       "sfen": "lnsgkgsnl/1r5b1/p1ppppppp/1p7/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL w - 1",
@@ -48,6 +50,7 @@
                                 "usi": "8h7g",
                                 "kind": "main",
                                 "note": "角を上がって8六を受けます。",
+                                "aim": "相手が狙っている地点を、大駒を上げて受けたい。",
                                 "child": {
                                   "id": "n5",
                                   "sfen": "lnsgkgsnl/1r5b1/p1ppppppp/9/1p7/2P4P1/PPBPPPP1P/7R1/LNSGKGSNL w - 1",
@@ -64,6 +67,7 @@
                                             "usi": "7i8h",
                                             "kind": "main",
                                             "note": "角交換に備えて銀を上げておきます。",
+                                            "aim": "大駒を交換されたときに取り返せるよう、先に備えたい。",
                                             "child": {
                                               "id": "n7",
                                               "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/6p2/1p7/2P4P1/PPBPPPP1P/1S5R1/LN1GKGSNL w - 1",
@@ -80,6 +84,7 @@
                                                         "usi": "6i7h",
                                                         "kind": "main",
                                                         "note": "金も上げて、交換後の陣形を整えます。",
+                                                        "aim": "交換後の弱点を見越して、守りの駒を上げておきたい。",
                                                         "child": {
                                                           "id": "n9",
                                                           "sfen": "lnsgk1snl/1r4gb1/p1pppp1pp/6p2/1p7/2P4P1/PPBPPPP1P/1SG4R1/LN2KGSNL w - 1",
@@ -97,6 +102,7 @@
                                                                     "usi": "8h7g",
                                                                     "kind": "main",
                                                                     "note": "銀で取り返します。角換わりの形になりました。",
+                                                                    "aim": "取り返して、大駒を持ち駒にした形にしたい。",
                                                                     "child": {
                                                                       "id": "n11",
                                                                       "sfen": "lnsgk1snl/1r4g2/p1pppp1pp/6p2/1p7/2P4P1/PPSPPPP1P/2G4R1/LN2KGSNL w Bb 1",
@@ -114,6 +120,7 @@
                                                                                 "usi": "3i3h",
                                                                                 "kind": "main",
                                                                                 "note": "右銀を上がります。早繰り銀では、この銀を3七→4六と早めに使っていきます。",
+                                                                                "aim": "攻めに使う駒を、早いうちに前線へ送り出したい。",
                                                                                 "child": {
                                                                                   "id": "n13",
                                                                                   "sfen": "lnsgk2nl/1r3sg2/p1pppp1pp/6p2/1p7/2P4P1/PPSPPPP1P/2G3SR1/LN2KG1NL w Bb 1",

@@ -10,6 +10,7 @@
  */
 import { writeFileSync } from "node:fs";
 import { Position, PieceType, Square, InitialPositionSFEN, parseUSIMove } from "tsshogi";
+import { AIM_BY_NOTE } from "./aims.mjs";
 
 const KANJI_RANK = { 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9 };
 const GLYPH_TO_TYPE = {
@@ -122,8 +123,9 @@ export function buildCourse({ id, title, myStrategy, opponentStrategy, mySide, s
     if (!position.doMove(move)) throw new Error(`${i + 1}手目 ${usi}: 適用に失敗`);
 
     const child = { id: `n${i + 1}`, sfen: position.sfen, comment: spec.comment, branches: [] };
-    // aim は出題時に見せる「ねらい」。省略時はアプリ側が note から自動生成する。
-    nodes[i].branches.push({ usi, kind: "main", note: spec.note, ...(spec.aim ? { aim: spec.aim } : {}), child });
+    // aim は出題時に見せる「ねらい」。明示が無ければ辞書から引く。
+    const aim = spec.aim ?? (spec.note ? AIM_BY_NOTE[spec.note] : undefined);
+    nodes[i].branches.push({ usi, kind: "main", note: spec.note, ...(aim ? { aim } : {}), child });
     for (const b of devBranches) nodes[i].branches.push(b);
     nodes.push(child);
   });
@@ -187,8 +189,10 @@ export function buildCourseFromUsi({ id, title, myStrategy, opponentStrategy, my
     if (!position.isValidMove(move)) throw new Error(`${i + 1}手目 ${usi}: 非合法です`);
     if (!position.doMove(move)) throw new Error(`${i + 1}手目 ${usi}: 適用に失敗`);
     const [note, comment] = notes[i] ?? [];
+    // USI から組み立てるコース(先後を入れ替えたコースなど)にも、同じ辞書でねらいを付ける。
+    const aim = note ? AIM_BY_NOTE[note] : undefined;
     const child = { id: `n${i + 1}`, sfen: position.sfen, comment, branches: [] };
-    nodes[i].branches.push({ usi, kind: "main", note, child });
+    nodes[i].branches.push({ usi, kind: "main", note, ...(aim ? { aim } : {}), child });
     nodes.push(child);
   });
 

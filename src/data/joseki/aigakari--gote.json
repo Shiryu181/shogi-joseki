@@ -24,6 +24,7 @@
               "usi": "8c8d",
               "kind": "main",
               "note": "こちらも飛車先を突いて受けて立ちます。",
+              "aim": "相手に合わせて攻めの主役の前を突き、同じ形で受けて立ちたい。",
               "child": {
                 "id": "n2",
                 "sfen": "lnsgkgsnl/1r5b1/p1ppppppp/1p7/9/7P1/PPPPPPP1P/1B5R1/LNSGKGSNL b - 1",
@@ -40,6 +41,7 @@
                           "usi": "8d8e",
                           "kind": "main",
                           "note": "お互いに飛車先を伸ばし合います。",
+                          "aim": "相手に合わせて攻めの主役の前を伸ばしたい。",
                           "child": {
                             "id": "n4",
                             "sfen": "lnsgkgsnl/1r5b1/p1ppppppp/9/1p5P1/9/PPPPPPP1P/1B5R1/LNSGKGSNL b - 1",
@@ -56,6 +58,7 @@
                                       "usi": "4a3b",
                                       "kind": "main",
                                       "note": "こちらも金で2四を受けます。同じ形の指し合いになります。",
+                                      "aim": "相手と同じように、狙われている地点を守り駒で受けたい。",
                                       "child": {
                                         "id": "n6",
                                         "sfen": "lnsgk1snl/1r4gb1/p1ppppppp/9/1p5P1/9/PPPPPPP1P/1BG4R1/LNS1KGSNL b - 1",
@@ -73,6 +76,7 @@
                                                   "usi": "2c2d",
                                                   "kind": "main",
                                                   "note": "歩で取り返します。",
+                                                  "aim": "取られた駒を取り返して、損得を無くしておきたい。",
                                                   "child": {
                                                     "id": "n8",
                                                     "sfen": "lnsgk1snl/1r4gb1/p1ppppp1p/7p1/1p7/9/PPPPPPP1P/1BG4R1/LNS1KGSNL b p 1",
@@ -90,6 +94,7 @@
                                                               "usi": "P*2c",
                                                               "kind": "main",
                                                               "note": "持ち駒の歩を打って飛車を追い返します。",
+                                                              "aim": "持ち駒を使って、進出してきた大駒を追い返したい。",
                                                               "child": {
                                                                 "id": "n10",
                                                                 "sfen": "lnsgk1snl/1r4gb1/p1ppppppp/7R1/1p7/9/PPPPPPP1P/1BG6/LNS1KGSNL b P 1",
@@ -106,6 +111,7 @@
                                                                           "usi": "8e8f",
                                                                           "kind": "main",
                                                                           "note": "今度はこちらから飛車先を交換します。",
+                                                                          "aim": "今度はこちらから攻めの主役の前を開通させたい。",
                                                                           "child": {
                                                                             "id": "n12",
                                                                             "sfen": "lnsgk1snl/1r4gb1/p1ppppppp/9/9/1p7/PPPPPPP1P/1BG4R1/LNS1KGSNL b P 1",
@@ -123,6 +129,7 @@
                                                                                       "usi": "8b8f",
                                                                                       "kind": "main",
                                                                                       "note": "飛車で取り返し、こちらも歩を1枚得ました。これで五分です。",
+                                                                                      "aim": "取り返して持ち駒を得て、損得を五分にしたい。",
                                                                                       "child": {
                                                                                         "id": "n14",
                                                                                         "sfen": "lnsgk1snl/6gb1/p1ppppppp/9/9/1r7/P1PPPPP1P/1BG4R1/LNS1KGSNL b 2Pp 1",
@@ -139,6 +146,7 @@
                                                                                                   "usi": "8f8d",
                                                                                                   "kind": "main",
                                                                                                   "note": "飛車を8四へ引きます。浮き飛車の形で、横にも利くのが特長です。",
+                                                                                                  "aim": "大駒を一段浮かせて、横の利きも使える形にしたい。",
                                                                                                   "child": {
                                                                                                     "id": "n16",
                                                                                                     "sfen": "lnsgk1snl/6gb1/p1ppppppp/1r7/9/9/PPPPPPP1P/1BG4R1/LNS1KGSNL b Pp 1",
@@ -155,6 +163,7 @@
                                                                                                               "usi": "3c3d",
                                                                                                               "kind": "main",
                                                                                                               "note": "角道を開けて、駒組みが一段落しました。",
+                                                                                                              "aim": "大駒の道を開けて、駒組みを一段落させたい。",
                                                                                                               "child": {
                                                                                                                 "id": "n18",
                                                                                                                 "sfen": "lnsgk1snl/6gb1/p1pppp1pp/1r4p2/9/9/PPPPPPP1P/1BG3SR1/LNS1KG1NL b Pp 1",

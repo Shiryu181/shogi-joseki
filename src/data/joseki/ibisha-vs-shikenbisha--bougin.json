@@ -112,6 +112,7 @@
                                                                           "usi": "9c9d",
                                                                           "kind": "main",
                                                                           "note": "端歩を突いて様子を見ます。",
+                                                                          "aim": "端に一手入れて、相手の出方を見たい。",
                                                                           "child": {
                                                                             "id": "n12",
                                                                             "sfen": "ln1gkg1nl/2s2rsb1/1pppp2pp/p4pp2/9/2P1P2P1/PP1P1PP1P/1BK2S1R1/LNSG1G1NL b - 1",
@@ -165,6 +166,7 @@
                                                                                                               "usi": "2b3c",
                                                                                                               "kind": "main",
                                                                                                               "note": "角を上がって飛車先を受けます。",
+                                                                                                              "aim": "相手の飛車先の攻めを、大駒を上げて受け止めたい。",
                                                                                                               "child": {
                                                                                                                 "id": "n18",
                                                                                                                 "sfen": "lnkg1g1nl/2s2rs2/1pppp1bpp/p4pp2/7P1/P1P1P4/1P1P1PP1P/1BK1GS1R1/LNSG3NL b - 1",

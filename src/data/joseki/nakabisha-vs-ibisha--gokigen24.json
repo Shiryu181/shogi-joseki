@@ -25,6 +25,7 @@
               "usi": "3c3d",
               "kind": "main",
               "note": "こちらも角道を開けます。",
+              "aim": "相手に合わせて大駒の道を開け、遅れを取らないようにしたい。",
               "child": {
                 "id": "n2",
                 "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
@@ -41,6 +42,7 @@
                           "usi": "5c5d",
                           "kind": "main",
                           "note": "5筋の歩を突きます。中飛車の合図です。",
+                          "aim": "主戦場にしたい筋の歩を突いて、戦法の方針を決めたい。",
                           "child": {
                             "id": "n4",
                             "sfen": "lnsgkgsnl/1r5b1/pppp1p1pp/4p1p2/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL b - 1",
@@ -57,6 +59,7 @@
                                       "usi": "8b5b",
                                       "kind": "main",
                                       "note": "飛車を5筋へ。ゴキゲン中飛車の基本形です。角道を止めないのが特徴で、相手が2筋を攻めてきたら角交換から反撃します。",
+                                      "aim": "大駒の道を開けたまま攻めの主役を中央へ移し、反撃できる形にしたい。",
                                       "child": {
                                         "id": "n6",
                                         "sfen": "lnsgkgsnl/4r2b1/pppp1p1pp/4p1p2/7P1/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL b - 1",
@@ -75,6 +78,7 @@
                                                   "usi": "2c2d",
                                                   "kind": "main",
                                                   "note": "歩で取ります。相手は飛車で取り返してきます。",
+                                                  "aim": "突かれた歩を取って、損をしないようにしたい。",
                                                   "child": {
                                                     "id": "n8",
                                                     "sfen": "lnsgkgsnl/4r2b1/pppp1p2p/4p1pp1/9/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL b p 1",
@@ -93,6 +97,7 @@
                                                               "usi": "2b8h+",
                                                               "kind": "main",
                                                               "note": "ここで角交換。飛車先を切られたら角を換えて反撃するのが、角交換振り飛車の常套手段です。",
+                                                              "aim": "攻めの主役の前を破られた代わりに、大駒を交換して反撃したい。",
                                                               "child": {
                                                                 "id": "n10",
                                                                 "sfen": "lnsgkgsnl/4r4/pppp1p2p/4p1pR1/9/2P6/PP1PPPP1P/1+b7/LNSGKGSNL b Pbp 1",
@@ -111,6 +116,7 @@
                                                                           "usi": "B*3c",
                                                                           "kind": "main",
                                                                           "note": "持ち駒の角を3三へ打ちます。飛車取りを見せながら、積極的に咎めにいく一手です。",
+                                                                          "aim": "手持ちの大駒を打ち、相手の大駒に当てながら攻めたい。",
                                                                           "child": {
                                                                             "id": "n12",
                                                                             "sfen": "lnsgkgsnl/4r4/pppp1pb1p/4p1pR1/9/2P6/PP1PPPP1P/1S7/LN1GKGSNL b BPp 1",
@@ -128,6 +134,7 @@
                                                                                       "usi": "P*2f",
                                                                                       "kind": "main",
                                                                                       "note": "2六に歩を垂らします。次に△2七歩成と成られると痛いので、相手は受けなければなりません。",
+                                                                                      "aim": "相手陣の近くに歩を打って、成り込みを狙う拠点を作りたい。",
                                                                                       "child": {
                                                                                         "id": "n14",
                                                                                         "sfen": "lnsgkgsnl/4r4/pppp1pb1p/4p1p2/9/2P4p1/PP1PPPP1P/1S5R1/LN1GKGSNL b BP 1",
@@ -145,6 +152,7 @@
                                                                                                   "usi": "5b2b",
                                                                                                   "kind": "main",
                                                                                                   "note": "飛車を2筋へ回し、垂らした歩と連携させます。",
+                                                                                                  "aim": "打った歩と大駒を同じ筋に並べて、攻めを繋げたい。",
                                                                                                   "child": {
                                                                                                     "id": "n16",
                                                                                                     "sfen": "lnsgkgsnl/7r1/pppp1pb1p/4p1p2/9/2P4p1/PPSPPPP1P/7R1/LN1GKGSNL b BP 1",
@@ -163,6 +171,7 @@
                                                                                                               "usi": "3c7g+",
                                                                                                               "kind": "main",
                                                                                                               "note": "角を切ります。銀を手に入れるための、思い切った一手です。",
+                                                                                                              "aim": "大駒を切ってでも、相手の守り駒を手に入れたい。",
                                                                                                               "child": {
                                                                                                                 "id": "n18",
                                                                                                                 "sfen": "lnsgkgsnl/7r1/pppp1p2p/4p1p2/9/2P4p1/PP+bPPPP1P/6SR1/LN1GKG1NL b BPs 1",
@@ -181,6 +190,7 @@
                                                                                                                           "usi": "S*2g",
                                                                                                                           "kind": "main",
                                                                                                                           "note": "手に入れた銀を2七へ打ち込みます。",
+                                                                                                                          "aim": "手に入れた駒を、相手陣の急所へ打ち込みたい。",
                                                                                                                           "child": {
                                                                                                                             "id": "n20",
                                                                                                                             "sfen": "lnsgkgsnl/7r1/pppp1p2p/4p1p2/9/2P4p1/PPNPPPPsP/6SR1/L2GKG1NL b 2BP 1",
@@ -198,6 +208,7 @@
                                                                                                                                       "usi": "2f2g+",
                                                                                                                                       "kind": "main",
                                                                                                                                       "note": "垂らしておいた歩で取り返し、と金ができました。",
+                                                                                                                                      "aim": "打っておいた歩で取り返して、と金を作りたい。",
                                                                                                                                       "child": {
                                                                                                                                         "id": "n22",
                                                                                                                                         "sfen": "lnsgkgsnl/7r1/pppp1p2p/4p1p2/9/2P6/PPNPPPP+pP/7R1/L2GKG1NL b 2BSPs 1",
@@ -216,6 +227,7 @@
                                                                                                                                                   "usi": "3a4b",
                                                                                                                                                   "kind": "main",
                                                                                                                                                   "note": "ここで落ち着いて銀を上がるのが好手です。5三の地点と玉のコビンを守っておきます。",
+                                                                                                                                                  "aim": "攻め合いの前に、玉の斜め前の弱点を守っておきたい。",
                                                                                                                                                   "child": {
                                                                                                                                                     "id": "n24",
                                                                                                                                                     "sfen": "lnsgkg1nl/5s1r1/pppp1p2p/4p1p2/9/2P6/PPNPPPP+pP/4R4/L2GKG1NL b 2BSPs 1",

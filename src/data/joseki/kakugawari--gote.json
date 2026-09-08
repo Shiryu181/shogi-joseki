@@ -24,6 +24,7 @@
               "usi": "8c8d",
               "kind": "main",
               "note": "飛車先の歩を突きます。居飛車の意思表示です。",
+              "aim": "攻めの主役の前を開けて、居飛車で戦う姿勢を示したい。",
               "child": {
                 "id": "n2",
                 "sfen": "lnsgkgsnl/1r5b1/p1ppppppp/1p7/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
@@ -40,6 +41,7 @@
                           "usi": "8d8e",
                           "kind": "main",
                           "note": "さらに伸ばします。相手は8六の地点を受ける必要があります。",
+                          "aim": "同じ筋にもう一歩進めて、相手に受けを強要したい。",
                           "child": {
                             "id": "n4",
                             "sfen": "lnsgkgsnl/1r5b1/p1ppppppp/9/1p7/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL b - 1",
@@ -56,6 +58,7 @@
                                       "usi": "4a3b",
                                       "kind": "main",
                                       "note": "金を上げて守りを固めます。",
+                                      "aim": "玉の周りに守り駒を足して、囲いを固めたい。",
                                       "child": {
                                         "id": "n6",
                                         "sfen": "lnsgk1snl/1r4gb1/p1ppppppp/9/1p7/2P4P1/PPBPPPP1P/7R1/LNSGKGSNL b - 1",
@@ -72,6 +75,7 @@
                                                   "usi": "3c3d",
                                                   "kind": "main",
                                                   "note": "角道を開けます。これで角の交換が可能になります。",
+                                                  "aim": "大駒の道を開けて、交換できる形にしたい。",
                                                   "child": {
                                                     "id": "n8",
                                                     "sfen": "lnsgk1snl/1r4gb1/p1pppp1pp/6p2/1p5P1/2P6/PPBPPPP1P/7R1/LNSGKGSNL b - 1",
@@ -88,6 +92,7 @@
                                                               "usi": "2b7g+",
                                                               "kind": "main",
                                                               "note": "こちらから角を交換します。後手から換えると1手得になります。",
+                                                              "aim": "こちらから大駒を交換して、手得を主張したい。",
                                                               "child": {
                                                                 "id": "n10",
                                                                 "sfen": "lnsgk1snl/1r4g2/p1pppp1pp/6p2/1p5P1/2P6/PP+bPPPP1P/1S5R1/LN1GKGSNL b b 1",
@@ -106,6 +111,7 @@
                                                                           "usi": "3a2b",
                                                                           "kind": "main",
                                                                           "note": "銀を上げて陣形を整えます。",
+                                                                          "aim": "守りの駒を上げて、陣形の隙を無くしたい。",
                                                                           "child": {
                                                                             "id": "n12",
                                                                             "sfen": "lnsgk2nl/1r4gs1/p1pppp1pp/6p2/1p5P1/2P6/PPSPPPP1P/7R1/LN1GKGSNL b Bb 1",
@@ -122,6 +128,7 @@
                                                                                       "usi": "2b3c",
                                                                                       "kind": "main",
                                                                                       "note": "銀をさらに上げて厚みを作ります。",
+                                                                                      "aim": "守り駒をもう一歩前に出して、厚みを作りたい。",
                                                                                       "child": {
                                                                                         "id": "n14",
                                                                                         "sfen": "lnsgk2nl/1r4g2/p1ppppspp/6p2/1p5P1/2P6/PPSPPPP1P/2G4R1/LN2KGSNL b Bb 1",
@@ -138,6 +145,7 @@
                                                                                                   "usi": "7a7b",
                                                                                                   "kind": "main",
                                                                                                   "note": "こちらも銀を上げて駒組みが一段落しました。",
+                                                                                                  "aim": "相手に合わせて守り駒を上げ、駒組みを一段落させたい。",
                                                                                                   "child": {
                                                                                                     "id": "n16",
                                                                                                     "sfen": "ln1gk2nl/1rs3g2/p1ppppspp/6p2/1p5P1/2P6/PPSPPPP1P/2G3SR1/LN2KG1NL b Bb 1",

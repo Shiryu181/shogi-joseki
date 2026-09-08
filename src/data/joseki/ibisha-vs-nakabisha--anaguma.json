@@ -16,6 +16,7 @@
         "usi": "7g7f",
         "kind": "main",
         "note": "角道を開けます。",
+        "aim": "大駒の道を開けて、序盤の選択肢を広げたい。",
         "child": {
           "id": "n1",
           "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1",
@@ -32,6 +33,7 @@
                     "usi": "2g2f",
                     "kind": "main",
                     "note": "飛車先を突きます。",
+                    "aim": "攻めの主役の前を開けて、攻める姿勢を見せたい。",
                     "child": {
                       "id": "n3",
                       "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL w - 1",
@@ -48,6 +50,7 @@
                                 "usi": "3i4h",
                                 "kind": "main",
                                 "note": "右銀を上がります。",
+                                "aim": "攻めに使う駒を一枚、前へ送り出す準備をしたい。",
                                 "child": {
                                   "id": "n5",
                                   "sfen": "lnsgkgsnl/1r5b1/ppppp2pp/5pp2/9/2P4P1/PP1PPPP1P/1B3S1R1/LNSGKG1NL w - 1",
@@ -64,6 +67,7 @@
                                             "usi": "5g5f",
                                             "kind": "main",
                                             "note": "中央を突きます。",
+                                            "aim": "中央に厚みを作って、相手の攻めに備えたい。",
                                             "child": {
                                               "id": "n7",
                                               "sfen": "lnsgkg1nl/1r3s1b1/ppppp2pp/5pp2/9/2P1P2P1/PP1P1PP1P/1B3S1R1/LNSGKG1NL w - 1",
@@ -80,6 +84,7 @@
                                                         "usi": "4i5h",
                                                         "kind": "main",
                                                         "note": "金を上げて陣形を整えます。",
+                                                        "aim": "守りの駒を前に出して、陣形の隙を無くしたい。",
                                                         "child": {
                                                           "id": "n9",
                                                           "sfen": "lnsgkg1nl/1r3s1b1/pppp3pp/4ppp2/9/2P1P2P1/PP1P1PP1P/1B2GS1R1/LNSGK2NL w - 1",
@@ -98,6 +103,7 @@
                                                                     "usi": "5i6h",
                                                                     "kind": "main",
                                                                     "note": "玉を左へ運び始めます。",
+                                                                    "aim": "玉を戦場から遠い左側へ運び始めたい。",
                                                                     "child": {
                                                                       "id": "n11",
                                                                       "sfen": "lnsgkg1nl/4rs1b1/pppp3pp/4ppp2/9/2P1P2P1/PP1P1PP1P/1B1KGS1R1/LNSG3NL w - 1",
@@ -113,7 +119,8 @@
                                                                               {
                                                                                 "usi": "6h7h",
                                                                                 "kind": "main",
-                                                                                "note": null,
+                                                                                "note": "玉を囲いへ向かわせます。",
+                                                                                "aim": "戦いが始まる前に、玉を戦場から遠ざけたい。",
                                                                                 "child": {
                                                                                   "id": "n13",
                                                                                   "sfen": "lnsg1g1nl/3krs1b1/pppp3pp/4ppp2/9/2P1P2P1/PP1P1PP1P/1BK1GS1R1/LNSG3NL w - 1",
@@ -130,6 +137,7 @@
                                                                                             "usi": "4h5g",
                                                                                             "kind": "main",
                                                                                             "note": "銀を5七へ。中央から来る攻めに備えます。",
+                                                                                            "aim": "中央から来る攻めに備えて、守り駒を利かせたい。",
                                                                                             "child": {
                                                                                               "id": "n15",
                                                                                               "sfen": "lnsg1g1nl/2k1rs1b1/pppp3pp/4ppp2/9/2P1P2P1/PP1PSPP1P/1BK1G2R1/LNSG3NL w - 1",
@@ -147,6 +155,7 @@
                                                                                                         "usi": "2f2e",
                                                                                                         "kind": "main",
                                                                                                         "note": "飛車先を伸ばしておきます。",
+                                                                                                        "aim": "攻めの主役の前を伸ばして、仕掛けに含みを持たせたい。",
                                                                                                         "child": {
                                                                                                           "id": "n17",
                                                                                                           "sfen": "lnsg1g1nl/2k1r2b1/pppp1s1pp/4ppp2/7P1/2P1P4/PP1PSPP1P/1BK1G2R1/LNSG3NL w - 1",
@@ -163,6 +172,7 @@
                                                                                                                     "usi": "8h7g",
                                                                                                                     "kind": "main",
                                                                                                                     "note": "角を引いて、玉が8八へ入る道を空けます。穴熊に組む合図です。",
+                                                                                                                    "aim": "大駒をどかして、玉が隅へ入る道を空けたい。",
                                                                                                                     "child": {
                                                                                                                       "id": "n19",
                                                                                                                       "sfen": "lnsg1g1nl/2k1r4/pppp1sbpp/4ppp2/7P1/2P1P4/PPBPSPP1P/2K1G2R1/LNSG3NL w - 1",
@@ -179,6 +189,7 @@
                                                                                                                                 "usi": "7h8h",
                                                                                                                                 "kind": "main",
                                                                                                                                 "note": "玉が8八へ。ここから隅に潜っていきます。",
+                                                                                                                                "aim": "玉を隅へ潜らせる一歩を進めたい。",
                                                                                                                                 "child": {
                                                                                                                                   "id": "n21",
                                                                                                                                   "sfen": "lnsg1g1nl/1k2r4/pppp1sbpp/4ppp2/7P1/2P1P4/PPBPSPP1P/1K2G2R1/LNSG3NL w - 1",
@@ -195,6 +206,7 @@
                                                                                                                                             "usi": "9i9h",
                                                                                                                                             "kind": "main",
                                                                                                                                             "note": "香を上げて、玉が9九へ入る場所を作ります。",
+                                                                                                                                            "aim": "端の駒を上げて、玉が隅に入る場所を作りたい。",
                                                                                                                                             "child": {
                                                                                                                                               "id": "n23",
                                                                                                                                               "sfen": "ln1g1g1nl/1ks1r4/pppp1sbpp/4ppp2/7P1/2P1P4/PPBPSPP1P/LK2G2R1/1NSG3NL w - 1",
@@ -212,6 +224,7 @@
                                                                                                                                                         "usi": "8h9i",
                                                                                                                                                         "kind": "main",
                                                                                                                                                         "note": "玉が隅に到着。居飛車穴熊の完成です。中飛車の攻めは中央に集中するので、玉を端まで遠ざけるのが有効な対策になります。",
+                                                                                                                                                        "aim": "玉を盤の隅まで運んで、中央に集中する攻めから遠ざけたい。",
                                                                                                                                                         "child": {
                                                                                                                                                           "id": "n25",
                                                                                                                                                           "sfen": "ln1g3nl/1ks1r1g2/pppp1sbpp/4ppp2/7P1/2P1P4/PPBPSPP1P/L3G2R1/KNSG3NL w - 1",

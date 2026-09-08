@@ -16,6 +16,7 @@
         "usi": "7g7f",
         "kind": "main",
         "note": "角道を開けます。",
+        "aim": "大駒の道を開けて、序盤の選択肢を広げたい。",
         "child": {
           "id": "n1",
           "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1",
@@ -32,6 +33,7 @@
                     "usi": "8h2b+",
                     "kind": "main",
                     "note": "自分から角を交換します。1手損しますが、次に角を打つ狙いがあります。",
+                    "aim": "一手損しても、大駒を持ち駒にして打ち込みを狙いたい。",
                     "child": {
                       "id": "n3",
                       "sfen": "lnsgkgsnl/1r5+B1/pppppp1pp/6p2/9/2P6/PP1PPPPPP/7R1/LNSGKGSNL w B 1",
@@ -50,6 +52,7 @@
                                 "usi": "B*4e",
                                 "kind": "main",
                                 "note": "持ち駒の角を4五へ打ちます。本来の角とは違う色の筋に打つので「筋違い角」と呼ばれます。3四の歩と6三の地点を同時に狙っています。ただしこの角は元の角と違う色の筋しか通らず、1手損もしているため、将棋ソフトはこの時点で先手やや不利と見ます。相手が対応を知らないことに賭ける戦法です。",
+                                "aim": "手持ちの大駒を打って、2つの地点を同時に狙いたい。",
                                 "child": {
                                   "id": "n5",
                                   "sfen": "lnsgkg1nl/1r5s1/pppppp1pp/6p2/5B3/2P6/PP1PPPPPP/7R1/LNSGKGSNL w b 1",
@@ -67,6 +70,7 @@
                                             "usi": "4e3d",
                                             "kind": "main",
                                             "note": "角で歩を取ります。これで歩を1枚得しました。1手損した代わりの成果です。",
+                                            "aim": "狙っていた歩を取って、損した手数の代わりを得たい。",
                                             "child": {
                                               "id": "n7",
                                               "sfen": "lnsgkg1nl/3r3s1/pppppp1pp/6B2/9/2P6/PP1PPPPPP/7R1/LNSGKGSNL w Pb 1",
@@ -83,6 +87,7 @@
                                                         "usi": "3d5f",
                                                         "kind": "main",
                                                         "note": "角を5六へ引きます。ここなら安全で、盤全体に利きます。",
+                                                        "aim": "取られない位置まで大駒を引いて、盤全体に利かせたい。",
                                                         "child": {
                                                           "id": "n9",
                                                           "sfen": "lnsgkg1nl/5r1s1/pppppp1pp/9/9/2P1B4/PP1PPPPPP/7R1/LNSGKGSNL w Pb 1",
@@ -99,6 +104,7 @@
                                                                     "usi": "7i8h",
                                                                     "kind": "main",
                                                                     "note": "銀を上がります。ここから飛車を8筋へ回す準備です。",
+                                                                    "aim": "大駒を回すための道を、守り駒を動かして空けたい。",
                                                                     "child": {
                                                                       "id": "n11",
                                                                       "sfen": "ln1gkg1nl/2s2r1s1/pppppp1pp/9/9/2P1B4/PP1PPPPPP/1S5R1/LN1GKGSNL w Pb 1",
@@ -115,6 +121,7 @@
                                                                                 "usi": "8h7g",
                                                                                 "kind": "main",
                                                                                 "note": "銀を7七へ。8八を空けます。",
+                                                                                "aim": "大駒が入る場所を空けるために、駒をどかしたい。",
                                                                                 "child": {
                                                                                   "id": "n13",
                                                                                   "sfen": "ln1g1g1nl/2sk1r1s1/pppppp1pp/9/9/2P1B4/PPSPPPPPP/7R1/LN1GKGSNL w Pb 1",
@@ -132,6 +139,7 @@
                                                                                             "usi": "2h8h",
                                                                                             "kind": "main",
                                                                                             "note": "飛車を8筋へ回します。向かい飛車の形で、8筋から攻める狙いです。",
+                                                                                            "aim": "攻めの主役を移して、狙いの筋から攻める形にしたい。",
                                                                                             "child": {
                                                                                               "id": "n15",
                                                                                               "sfen": "ln3g1nl/2skgr1s1/pppppp1pp/9/9/2P1B4/PPSPPPPPP/1R7/LN1GKGSNL w Pb 1",
@@ -148,6 +156,7 @@
                                                                                                         "usi": "8g8f",
                                                                                                         "kind": "main",
                                                                                                         "note": "8筋の歩を伸ばして攻めの準備をします。",
+                                                                                                        "aim": "攻めたい筋の歩を伸ばして、仕掛けの準備をしたい。",
                                                                                                         "child": {
                                                                                                           "id": "n17",
                                                                                                           "sfen": "lnk2g1nl/2s1gr1s1/pppppp1pp/9/9/1PP1B4/P1SPPPPPP/1R7/LN1GKGSNL w Pb 1",
@@ -164,6 +173,7 @@
                                                                                                                     "usi": "8f8e",
                                                                                                                     "kind": "main",
                                                                                                                     "note": "さらに歩を伸ばします。",
+                                                                                                                    "aim": "同じ筋にもう一歩進めて、相手陣に迫りたい。",
                                                                                                                     "child": {
                                                                                                                       "id": "n19",
                                                                                                                       "sfen": "ln3g1nl/1ks1gr1s1/pppppp1pp/9/1P7/2P1B4/P1SPPPPPP/1R7/LN1GKGSNL w Pb 1",
@@ -180,6 +190,7 @@
                                                                                                                                 "usi": "7g6f",
                                                                                                                                 "kind": "main",
                                                                                                                                 "note": "銀を6六へ。次に7五へ進める形です。",
+                                                                                                                                "aim": "攻めの駒を前へ運んで、次に進める形にしたい。",
                                                                                                                                 "child": {
                                                                                                                                   "id": "n21",
                                                                                                                                   "sfen": "ln3g1nl/1ks1gr1s1/pppp1p1pp/4p4/1P7/2PSB4/P2PPPPPP/1R7/LN1GKGSNL w Pb 1",
@@ -196,6 +207,7 @@
                                                                                                                                             "usi": "8i7g",
                                                                                                                                             "kind": "main",
                                                                                                                                             "note": "桂を跳ねて攻めの駒を増やします。飛車・角・銀・桂がすべて8筋方面に働く形になりました。",
+                                                                                                                                            "aim": "跳ねる駒を足して、攻めの戦力をすべて同じ方面に働かせたい。",
                                                                                                                                             "child": {
                                                                                                                                               "id": "n23",
                                                                                                                                               "sfen": "ln3g1nl/1ks1gr1s1/pppp3pp/4pp3/1P7/2PSB4/P1NPPPPPP/1R7/L2GKGSNL w Pb 1",

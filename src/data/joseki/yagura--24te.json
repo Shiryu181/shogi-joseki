@@ -16,6 +16,7 @@
         "usi": "7g7f",
         "kind": "main",
         "note": "角道を開けます。",
+        "aim": "大駒の道を開けて、序盤の選択肢を広げたい。",
         "child": {
           "id": "n1",
           "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1",
@@ -32,6 +33,7 @@
                     "usi": "7i6h",
                     "kind": "main",
                     "note": "左銀を上がります。次に8五歩と来られたとき、7七に銀を上げて受けるための準備です。",
+                    "aim": "相手の飛車先の攻めに備えて、受けに使う駒を用意したい。",
                     "child": {
                       "id": "n3",
                       "sfen": "lnsgkgsnl/1r5b1/p1ppppppp/1p7/9/2P6/PP1PPPPPP/1B1S3R1/LN1GKGSNL w - 1",
@@ -48,6 +50,7 @@
                                 "usi": "6g6f",
                                 "kind": "main",
                                 "note": "角道を止めます。矢倉は角を交換せず、じっくり組み合う戦型です。",
+                                "aim": "大駒の交換を避けて、じっくり組み合う形にしたい。",
                                 "child": {
                                   "id": "n5",
                                   "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/1p4p2/9/2PP5/PP2PPPPP/1B1S3R1/LN1GKGSNL w - 1",
@@ -64,6 +67,7 @@
                                             "usi": "5g5f",
                                             "kind": "main",
                                             "note": "中央を伸ばします。",
+                                            "aim": "中央に厚みを作り、駒の進む道も開けておきたい。",
                                             "child": {
                                               "id": "n7",
                                               "sfen": "ln1gkgsnl/1r1s3b1/p1pppp1pp/1p4p2/9/2PPP4/PP3PPPP/1B1S3R1/LN1GKGSNL w - 1",
@@ -80,6 +84,7 @@
                                                         "usi": "3i4h",
                                                         "kind": "main",
                                                         "note": "右銀を上がります。",
+                                                        "aim": "攻めに使う駒を一枚、前へ送り出す準備をしたい。",
                                                         "child": {
                                                           "id": "n9",
                                                           "sfen": "ln1gkgsnl/1r1s3b1/p1pp1p1pp/1p2p1p2/9/2PPP4/PP3PPPP/1B1S1S1R1/LN1GKG1NL w - 1",
@@ -96,6 +101,7 @@
                                                                     "usi": "4i5h",
                                                                     "kind": "main",
                                                                     "note": "金を5八へ。矢倉の骨格になる金銀の配置を作っていきます。",
+                                                                    "aim": "囲いの骨格になる守り駒を、決まった位置へ動かしたい。",
                                                                     "child": {
                                                                       "id": "n11",
                                                                       "sfen": "ln1gkg1nl/1r1s1s1b1/p1pp1p1pp/1p2p1p2/9/2PPP4/PP3PPPP/1B1SGS1R1/LN1GK2NL w - 1",
@@ -113,6 +119,7 @@
                                                                                 "usi": "6i7h",
                                                                                 "kind": "main",
                                                                                 "note": "もう一枚の金も上げます。",
+                                                                                "aim": "もう一枚の守り駒も前に出して、囲いを厚くしたい。",
                                                                                 "child": {
                                                                                   "id": "n13",
                                                                                   "sfen": "ln1gk2nl/1r1s1sgb1/p1pp1p1pp/1p2p1p2/9/2PPP4/PP3PPPP/1BGSGS1R1/LN2K2NL w - 1",
@@ -129,6 +136,7 @@
                                                                                             "usi": "5i6i",
                                                                                             "kind": "main",
                                                                                             "note": "玉を囲いへ向かわせます。矢倉囲いは最後に8八へ入ります。",
+                                                                                            "aim": "完成した囲いの中へ、玉を入れる準備をしたい。",
                                                                                             "child": {
                                                                                               "id": "n15",
                                                                                               "sfen": "ln1g1k1nl/1r1s1sgb1/p1pp1p1pp/1p2p1p2/9/2PPP4/PP3PPPP/1BGSGS1R1/LN1K3NL w - 1",
@@ -145,6 +153,7 @@
                                                                                                         "usi": "5h6g",
                                                                                                         "kind": "main",
                                                                                                         "note": "金を6七へ。7八金と合わせて、矢倉囲いの金2枚が揃います。",
+                                                                                                        "aim": "守りの金を2枚並べて、囲いの形を整えたい。",
                                                                                                         "child": {
                                                                                                           "id": "n17",
                                                                                                           "sfen": "ln1g1k1nl/1r1s1sgb1/p2p1p1pp/1pp1p1p2/9/2PPP4/PP1G1PPPP/1BGS1S1R1/LN1K3NL w - 1",
@@ -162,6 +171,7 @@
                                                                                                                     "usi": "6h7g",
                                                                                                                     "kind": "main",
                                                                                                                     "note": "銀を7七へ。金2枚と銀1枚で玉を守るのが矢倉囲いの形です。",
+                                                                                                                    "aim": "金2枚と銀1枚が並ぶ、囲いの完成形を作りたい。",
                                                                                                                     "child": {
                                                                                                                       "id": "n19",
                                                                                                                       "sfen": "ln3k1nl/1r1sgsgb1/p2p1p1pp/1pp1p1p2/9/2PPP4/PPSG1PPPP/1BG2S1R1/LN1K3NL w - 1",
@@ -178,6 +188,7 @@
                                                                                                                                 "usi": "8h7i",
                                                                                                                                 "kind": "main",
                                                                                                                                 "note": "角を引いて、玉が8八へ入る道を空けます。",
+                                                                                                                                "aim": "大駒を移動させて、玉が囲いに入る道を空けたい。",
                                                                                                                                 "child": {
                                                                                                                                   "id": "n21",
                                                                                                                                   "sfen": "ln3k1nl/1r1sg1gb1/p2p1pspp/1pp1p1p2/9/2PPP4/PPSG1PPPP/2G2S1R1/LNBK3NL w - 1",
@@ -194,6 +205,7 @@
                                                                                                                                             "usi": "3g3f",
                                                                                                                                             "kind": "main",
                                                                                                                                             "note": "攻めの準備として3筋の歩を伸ばします。",
+                                                                                                                                            "aim": "攻めたい筋の歩を伸ばして、仕掛けの準備をしたい。",
                                                                                                                                             "child": {
                                                                                                                                               "id": "n23",
                                                                                                                                               "sfen": "ln3kbnl/1r1sg1g2/p2p1pspp/1pp1p1p2/9/2PPP1P2/PPSG1P1PP/2G2S1R1/LNBK3NL w - 1",

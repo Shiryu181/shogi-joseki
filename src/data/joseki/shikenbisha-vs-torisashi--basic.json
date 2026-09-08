@@ -26,6 +26,7 @@
               "usi": "3c3d",
               "kind": "main",
               "note": "角道を開けます。",
+              "aim": "大駒の道を開けて、序盤の選択肢を広げたい。",
               "child": {
                 "id": "n2",
                 "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL b - 1",
@@ -42,6 +43,7 @@
                           "usi": "8b4b",
                           "kind": "main",
                           "note": "飛車を4筋へ。四間飛車です。",
+                          "aim": "攻めの主役を左側へ移して、振り飛車の形を決めたい。",
                           "child": {
                             "id": "n4",
                             "sfen": "lnsgkgsnl/5r1b1/pppppp1pp/6p2/9/4P4/PPPP1PPPP/1B1S3R1/LN1GKGSNL b - 1",
@@ -59,6 +61,7 @@
                                       "usi": "5a6b",
                                       "kind": "main",
                                       "note": "玉を囲いへ運びます。",
+                                      "aim": "戦いが始まる前に、玉を戦場から遠ざけたい。",
                                       "child": {
                                         "id": "n6",
                                         "sfen": "lnsg1gsnl/3k1r1b1/pppppp1pp/6p2/9/4P4/PPPPSPPPP/1B5R1/LN1GKGSNL b - 1",
@@ -75,6 +78,7 @@
                                                   "usi": "7a7b",
                                                   "kind": "main",
                                                   "note": "美濃囲いへ向かいます。",
+                                                  "aim": "玉の右側に守り駒を足して、囲いを作り始めたい。",
                                                   "child": {
                                                     "id": "n8",
                                                     "sfen": "ln1g1gsnl/2sk1r1b1/pppppp1pp/6p2/9/4P2P1/PPPPSPP1P/1B5R1/LN1GKGSNL b - 1",
@@ -91,6 +95,7 @@
                                                               "usi": "2b3c",
                                                               "kind": "main",
                                                               "note": "角を上げて飛車先を受けます。",
+                                                              "aim": "相手の飛車先の攻めを、大駒を上げて受け止めたい。",
                                                               "child": {
                                                                 "id": "n10",
                                                                 "sfen": "ln1g1gsnl/2sk1r3/ppppppbpp/6p2/7P1/4P4/PPPPSPP1P/1B5R1/LN1GKGSNL b - 1",
@@ -108,6 +113,7 @@
                                                                           "usi": "4c4d",
                                                                           "kind": "main",
                                                                           "note": "角道を止めます。",
+                                                                          "aim": "大駒の道を止めて、交換を避けたい。",
                                                                           "child": {
                                                                             "id": "n12",
                                                                             "sfen": "ln1g1gsnl/2sk1r3/ppppp1bpp/5pp2/7P1/4P4/PPPPSPP1P/7R1/LNBGKGSNL b - 1",
@@ -124,6 +130,7 @@
                                                                                       "usi": "6b7a",
                                                                                       "kind": "main",
                                                                                       "note": "玉を寄せます。",
+                                                                                      "aim": "玉をもう一歩だけ安全な場所へ近づけたい。",
                                                                                       "child": {
                                                                                         "id": "n14",
                                                                                         "sfen": "lnkg1gsnl/2s2r3/ppppp1bpp/5pp2/7P1/4P4/PPPPSPP1P/3K3R1/LNBG1GSNL b - 1",
@@ -140,6 +147,7 @@
                                                                                                   "usi": "3a3b",
                                                                                                   "kind": "main",
                                                                                                   "note": "右銀を上がります。",
+                                                                                                  "aim": "攻めに使う駒を一枚、前へ送り出す準備をしたい。",
                                                                                                   "child": {
                                                                                                     "id": "n16",
                                                                                                     "sfen": "lnkg1g1nl/2s2rs2/ppppp1bpp/5pp2/7P1/4P4/PPPPSPP1P/2K4R1/LNBG1GSNL b - 1",
@@ -157,6 +165,7 @@
                                                                                                               "usi": "7a8b",
                                                                                                               "kind": "main",
                                                                                                               "note": "玉が美濃囲いの定位置に入ります。",
+                                                                                                              "aim": "玉を囲いの定位置に収めて、守りを完成させたい。",
                                                                                                               "child": {
                                                                                                                 "id": "n18",
                                                                                                                 "sfen": "ln1g1g1nl/1ks2rs2/ppppp1bpp/5pp2/7P1/4P4/PPPPSPP1P/2K2S1R1/LNBG1G1NL b - 1",
@@ -174,6 +183,7 @@
                                                                                                                           "usi": "3b4c",
                                                                                                                           "kind": "main",
                                                                                                                           "note": "△4三銀と上がるのが本筋です。手厚く受け止める方針にします。",
+                                                                                                                          "aim": "軽く捌かず、守り駒を上げて手厚く受け止めたい。",
                                                                                                                           "child": {
                                                                                                                             "id": "n20",
                                                                                                                             "sfen": "ln1g1g1nl/1ks2r3/pppppsbpp/5pp2/7P1/4P1P2/PPPPSP2P/2K2S1R1/LNBG1G1NL b - 1",
@@ -192,6 +202,7 @@
                                                                                                                                       "usi": "4b3b",
                                                                                                                                       "kind": "main",
                                                                                                                                       "note": "飛車を3筋へ振り直して受けます。三間飛車の形になりました。",
+                                                                                                                                      "aim": "攻められている筋へ大駒を振り直して受けたい。",
                                                                                                                                       "child": {
                                                                                                                                         "id": "n22",
                                                                                                                                         "sfen": "ln1g1g1nl/1ks3r2/pppppsbpp/5pp2/7P1/4PSP2/PPPP1P2P/2K2S1R1/LNBG1G1NL b - 1",
