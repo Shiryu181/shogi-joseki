@@ -102,7 +102,19 @@
  * ここを基準に .files / .ranks / .board が同じ値を使う。
  */
 .board-panel {
-  --c: clamp(32px, calc((min(100vw, 560px) - 40px) / 9), 56px);
+  /*
+   * マスの大きさ。画面(vw)ではなく「盤を置く枠の幅」を基準にする。
+   * vw 基準にすると、埋め込み表示など viewport が実際の描画幅と一致しない環境で
+   * 計算が狂う(実際に幅0と評価されて最小値に張り付いた)。
+   * container query が使えない環境では下の 36px がそのまま使われる。
+   */
+  container-type: inline-size;
+  --c: 36px;
+}
+@supports (container-type: inline-size) {
+  .board-panel {
+    --c: clamp(32px, calc((100cqw - 34px) / 9), 56px);
+  }
 }
 .files {
   display: grid;
