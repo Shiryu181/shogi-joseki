@@ -59,6 +59,13 @@ export interface JosekiMove {
    * もっと良い言い方がある場合にコース側で明示する。
    */
   aim?: string;
+  /**
+   * この手は出題しない(ガイドを出してなぞってもらう)。
+   * 中盤には「どれを指しても大差ない」局面があり、そこで一手に限定して出題すると、
+   * 同じくらい良い別の手を指したユーザーに不正解と表示してしまう。
+   * エンジンで測った「次善手との差」が小さい手に付ける。
+   */
+  noQuiz?: boolean;
   punishNote?: string; // deviation のとき「どう咎めるか」の要点
   child: JosekiNode | null; // null = 末端 or エンジンに委譲
 }

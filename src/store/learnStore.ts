@@ -301,6 +301,9 @@ export const useLearnStore = create<LearnState>((set, get) => {
     if (position.color !== myColorOf(course)) { set({ bookQuiz: null, moveDests: new Map(), dropDests: new Map(), selected: null }); return; }
     const move = mainBranchOf(currentNode);
     if (!move || !move.child) { set({ bookQuiz: null, moveDests: new Map(), dropDests: new Map(), selected: null }); return; }
+    // 「どれを指しても大差ない」と分かっている手は出題しない(なぞってもらう)。
+    // ここで出題すると、同じくらい良い別の手を不正解と表示してしまう。
+    if (move.noQuiz) { set({ bookQuiz: null, moveDests: new Map(), dropDests: new Map(), selected: null }); return; }
     set({ bookQuiz: { wrong: null, revealed: false }, ...questDests(position), selected: null });
   }
 

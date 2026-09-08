@@ -125,7 +125,12 @@ export function buildCourse({ id, title, myStrategy, opponentStrategy, mySide, s
     const child = { id: `n${i + 1}`, sfen: position.sfen, comment: spec.comment, branches: [] };
     // aim は出題時に見せる「ねらい」。明示が無ければ辞書から引く。
     const aim = spec.aim ?? (spec.note ? AIM_BY_NOTE[spec.note] : undefined);
-    nodes[i].branches.push({ usi, kind: "main", note: spec.note, ...(aim ? { aim } : {}), child });
+    nodes[i].branches.push({
+      usi, kind: "main", note: spec.note,
+      ...(aim ? { aim } : {}),
+      ...(spec.noQuiz ? { noQuiz: true } : {}),
+      child,
+    });
     for (const b of devBranches) nodes[i].branches.push(b);
     nodes.push(child);
   });
