@@ -113,13 +113,14 @@
 }
 @supports (container-type: inline-size) {
   .board-panel {
-    --c: clamp(32px, calc((100cqw - 34px) / 9), 56px);
+    /* 34px は段のラベル列(約14px)＋左右の余白ぶん。狭い画面ほど1マスの差が効くので切り詰める。 */
+    --c: clamp(32px, calc((100cqw - 18px) / 9), 56px);
   }
 }
 .files {
   display: grid;
   grid-template-columns: repeat(9, var(--c));
-  padding-right: 15px;
+  padding-right: 14px;
 }
 .files div {
   text-align: center;
@@ -182,13 +183,16 @@
  * 枠の点滅ではなく落ち着いた丸印にして、どこを押せばよいかを分かりやすくする。
  * 駒がいる升(取れる升)は丸ではなくリングにして、取る手だと分かるようにする。
  */
+.cell.dest {
+  background: rgba(110, 74, 37, 0.13);
+}
 .cell.dest::after {
   content: "";
   position: absolute;
-  width: 34%;
-  height: 34%;
+  width: 42%;
+  height: 42%;
   border-radius: 50%;
-  background: rgba(110, 74, 37, 0.38);
+  background: rgba(110, 74, 37, 0.42);
   pointer-events: none;
 }
 .cell.dest.occupied::after {

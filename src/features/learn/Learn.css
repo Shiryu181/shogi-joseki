@@ -236,3 +236,10 @@
   border-radius: 20px;
   text-align: center;
 }
+
+/* 狭い画面では左右の余白を削って、そのぶん盤を大きくする。 */
+@media (max-width: 480px) {
+  .learn-wrap {
+    padding: 16px 5px;
+  }
+}
