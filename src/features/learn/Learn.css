@@ -301,3 +301,13 @@
     padding: 10px;
   }
 }
+
+/* 出題パネルの先頭に出す「相手が指した手＋その解説」。 */
+.opp-move {
+  background: var(--card-2);
+  border-radius: 10px;
+  padding: 8px 10px;
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  line-height: 1.6;
+}

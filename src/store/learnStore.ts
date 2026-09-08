@@ -122,6 +122,12 @@ interface LearnState {
    * 盤のガイドを出さず、自動進行も止めて、ユーザーが読み終えるのを待つ。
    */
   pendingAck: AckMove | null;
+  /**
+   * 直前に相手が指した手の情報。次の一手クイズでは確認待ち(pendingAck)で
+   * 止めず、この情報を出題パネルに並べて表示することで「相手の手を読む → 次を考える」を
+   * 1画面・1アクションで進められるようにする。
+   */
+  lastOpponent: AckMove | null;
   /** 「次へ」で確認待ちを解除する。解除後にまた自動進行の判定を行う。 */
   acknowledgeMove: () => void;
   /**
@@ -216,6 +222,7 @@ function initial() {
     autoAdvanceOpponent: true,
     bookQuizEnabled: true,
     pendingAck: null as AckMove | null,
+    lastOpponent: null as AckMove | null,
     quiz: null as QuizState | null,
     askedQuizIds: [] as string[],
     bookQuiz: null as BookQuizState | null,
@@ -269,9 +276,11 @@ export const useLearnStore = create<LearnState>((set, get) => {
         punishNote: move.punishNote,
         comment: before.currentNode.comment,
       };
-      // 先に立てておくことで、goToChild 内の scheduleAutoAdvance が
-      // (相手の手が連続する局面でも)そのまま先へ進んでしまうのを防ぐ。
-      set({ pendingAck: ack });
+      // 次の一手クイズが有効なら、確認待ちで止めずに相手の手の情報だけ残す。
+      // ユーザーは「相手の手の解説」と「次の一手」を同じ画面で見て、そのまま指せる。
+      // クイズを切っている(なぞる)ときは従来どおり確認待ちで止める。
+      if (get().bookQuizEnabled) set({ lastOpponent: ack });
+      else set({ pendingAck: ack, lastOpponent: null });
       goToChild(move);
     }, OPPONENT_MOVE_DELAY_MS);
   }
@@ -490,7 +499,7 @@ export const useLearnStore = create<LearnState>((set, get) => {
       const applied = tryMovePreview(position, from, square, answer?.usi);
       if (!applied.ok) { set({ selected: null }); return; }
       if (answer && applied.move.usi === answer.usi) {
-        set({ bookQuiz: null, selected: null, moveDests: new Map(), dropDests: new Map() });
+        set({ bookQuiz: null, selected: null, moveDests: new Map(), dropDests: new Map(), lastOpponent: null });
         goToChild(answer);
         return;
       }
@@ -591,6 +600,7 @@ export const useLearnStore = create<LearnState>((set, get) => {
         position: positionFromNode(prev),
         selectedBranchIndex: 0,
         pendingAck: null,
+        lastOpponent: null,
         lastMoveUsi: null,
       });
       scheduleAutoAdvance();
@@ -605,6 +615,7 @@ export const useLearnStore = create<LearnState>((set, get) => {
         position: positionFromNode(course.root),
         selectedBranchIndex: 0,
         pendingAck: null,
+        lastOpponent: null,
         lastMoveUsi: null,
       });
       scheduleAutoAdvance();
@@ -619,6 +630,7 @@ export const useLearnStore = create<LearnState>((set, get) => {
         selectedBranchIndex: 0,
         position: positionFromNode(course.root),
         pendingAck: null,
+        lastOpponent: null,
         lastMoveUsi: null,
       });
       scheduleAutoAdvance();

@@ -37,6 +37,7 @@ export function Learn({ course, onBack }: LearnProps) {
   const quizSelectSquare = useLearnStore((s) => s.quizSelectSquare);
   const quizSelectHand = useLearnStore((s) => s.quizSelectHand);
   const bookQuiz = useLearnStore((s) => s.bookQuiz);
+  const lastOpponent = useLearnStore((s) => s.lastOpponent);
   const bookQuizEnabled = useLearnStore((s) => s.bookQuizEnabled);
   const setBookQuizEnabled = useLearnStore((s) => s.setBookQuizEnabled);
   const bookSelectSquare = useLearnStore((s) => s.bookSelectSquare);
@@ -252,6 +253,13 @@ export function Learn({ course, onBack }: LearnProps) {
         )}
         {bookQuiz ? (
           <div className="quizpanel">
+            {lastOpponent && (
+              <p className="opp-move">
+                <span className="quiz-no">{lastOpponent.moveNumber}手目</span>
+                相手 {lastOpponent.moveText}
+                {lastOpponent.note ? ` — ${lastOpponent.note}` : ""}
+              </p>
+            )}
             <p className="quiz-head">
               <span className="quiz-no">{moveNumber}手目</span>
               ここでの定跡の一手は？
