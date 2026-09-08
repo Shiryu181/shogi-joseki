@@ -289,6 +289,25 @@ export const useLearnStore = create<LearnState>((set, get) => {
     set({ bookQuiz: { wrong: null, revealed: false }, ...questDests(position), selected: null });
   }
 
+  /**
+   * 「行き先だけをタップ」したときに、その升へ行ける自分の駒を探す。
+   * 候補がちょうど1枚のときだけ移動元を返す(2枚以上なら駒を選んでもらう)。
+   * タップ回数が半分になるので、盤が小さい端末での誤操作が減る。
+   */
+  function soleMoverTo(square: Square): Square | null {
+    const { moveDests, position } = get();
+    let found: Square | null = null;
+    for (const [fromUsi, dests] of moveDests) {
+      if (!dests.some((d) => d.usi === square.usi)) continue;
+      const from = Square.newByUSI(fromUsi);
+      if (!from) continue;
+      if (position.board.at(from)?.color !== position.color) continue;
+      if (found) return null; // 2枚以上が行ける升なので、どれを動かすかは選んでもらう
+      found = from;
+    }
+    return found;
+  }
+
   /** 出題中に自分が指せる合法手を計算する。 */
   function questDests(position: Position) {
     return {
@@ -399,11 +418,16 @@ export const useLearnStore = create<LearnState>((set, get) => {
 
       // 1回目のクリックで駒を選び、2回目で着手する(sandbox/practice と同じ操作)。
       if (!selected || selected.kind === "hand") {
-        if (position.board.at(square)?.color === position.color) set({ selected: { kind: "board", square } });
-        else set({ selected: null });
-        return;
+        if (position.board.at(square)?.color === position.color) { set({ selected: { kind: "board", square } }); return; }
+        // 自分の駒がない升をいきなり押したときは、そこへ行ける自分の駒が
+        // 1枚だけなら着手として扱う(タップ回数が半分になり、誤操作が減る)。
+        const sole = soleMoverTo(square);
+        if (!sole) { set({ selected: null }); return; }
+        set({ selected: { kind: "board", square: sole } });
       }
-      const from = selected.square;
+      const cur = get().selected;
+      if (!cur || cur.kind !== "board") { set({ selected: null }); return; }
+      const from = cur.square;
       if (from.usi === square.usi) { set({ selected: null }); return; }
       if (!moveDests.get(from.usi)?.some((d) => d.usi === square.usi)) {
         if (position.board.at(square)?.color === position.color) set({ selected: { kind: "board", square } });
@@ -446,11 +470,16 @@ export const useLearnStore = create<LearnState>((set, get) => {
       if (position.color !== myColorOf(course)) return;
 
       if (!selected || selected.kind === "hand") {
-        if (position.board.at(square)?.color === position.color) set({ selected: { kind: "board", square } });
-        else set({ selected: null });
-        return;
+        if (position.board.at(square)?.color === position.color) { set({ selected: { kind: "board", square } }); return; }
+        // 自分の駒がない升をいきなり押したときは、そこへ行ける自分の駒が
+        // 1枚だけなら着手として扱う(タップ回数が半分になり、誤操作が減る)。
+        const sole = soleMoverTo(square);
+        if (!sole) { set({ selected: null }); return; }
+        set({ selected: { kind: "board", square: sole } });
       }
-      const from = selected.square;
+      const cur = get().selected;
+      if (!cur || cur.kind !== "board") { set({ selected: null }); return; }
+      const from = cur.square;
       if (from.usi === square.usi) { set({ selected: null }); return; }
       if (!moveDests.get(from.usi)?.some((d) => d.usi === square.usi)) {
         if (position.board.at(square)?.color === position.color) set({ selected: { kind: "board", square } });
