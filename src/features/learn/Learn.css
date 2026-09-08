@@ -13,7 +13,8 @@
   border-radius: 20px;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
   overflow: hidden;
-  padding-bottom: 18px;
+  /* 画面下に固定されたタブバーと解説が重ならないよう、そのぶんの余白を空ける。 */
+  padding-bottom: calc(58px + env(safe-area-inset-bottom, 0px));
 }
 
 .abar {
