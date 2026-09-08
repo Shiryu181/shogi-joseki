@@ -53,6 +53,12 @@ export interface JosekiMove {
   //  alt      = 定石内の有力な別手順
   //  deviation= 相手のよくある逸れ手(咎め方を持つ)
   note?: string; // この手の意味 / 逸れ手なら「なぜ悪いか」
+  /**
+   * 出題時に先に見せる「ねらい」。省略時は note から升を伏せて自動生成する
+   * (src/domain/hint.ts)。自動生成では答えが分かってしまう場合や、
+   * もっと良い言い方がある場合にコース側で明示する。
+   */
+  aim?: string;
   punishNote?: string; // deviation のとき「どう咎めるか」の要点
   child: JosekiNode | null; // null = 末端 or エンジンに委譲
 }

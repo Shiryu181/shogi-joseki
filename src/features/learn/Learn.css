@@ -312,3 +312,13 @@
   font-size: 12.5px;
   line-height: 1.6;
 }
+
+/* 出題時に見せる「ねらい」。答えの手の解説を升だけ伏せたもの。 */
+.quiz-aim {
+  background: var(--gold-soft);
+  color: var(--gold);
+  border-radius: 10px;
+  padding: 9px 11px;
+  font-size: 12.5px;
+  line-height: 1.65;
+}

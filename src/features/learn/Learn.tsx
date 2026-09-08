@@ -5,6 +5,7 @@ import type { JosekiCourse, JosekiNode } from "../../domain/types";
 import { Board } from "../../ui/Board";
 import type { GhostPiece, HandHighlight } from "../../ui/Board";
 import { CommentPanel } from "../../ui/CommentPanel";
+import { buildHint } from "../../domain/hint";
 import { BranchNav } from "../../ui/BranchNav";
 import "./Learn.css";
 
@@ -266,9 +267,15 @@ export function Learn({ course, onBack }: LearnProps) {
                 {lastOpponent.note ? ` — ${lastOpponent.note}` : ""}
               </p>
             )}
+            {(() => {
+              // 「なぜその手なのか」から逆算して考えられるよう、答えの手の解説を
+              // 升だけ伏せて『ねらい』として先に見せる。
+              const hint = guide?.aim ?? buildHint(guide?.note, moveInfo?.displayText);
+              return hint ? <p className="quiz-aim">ねらい: {hint}</p> : null;
+            })()}
             <p className="quiz-head">
               <span className="quiz-no">{moveNumber}手目</span>
-              ここでの定跡の一手は？
+              このねらいを果たす一手は？
             </p>
             {currentNode.comment && <p className="quiz-comment">{currentNode.comment}</p>}
             {bookQuiz.wrong && (
