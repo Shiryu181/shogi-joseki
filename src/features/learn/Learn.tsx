@@ -212,6 +212,45 @@ export function Learn({ course, onBack }: LearnProps) {
           <div className="guidepill">光っているマスへ動かして次の手をなぞる</div>
         )}
         {bookQuiz ? (
+          <div className="learn-navrow">
+            <button type="button" onClick={bookRetry} disabled={!bookQuiz.wrong}>
+              もう一度
+            </button>
+            <button type="button" onClick={bookReveal}>
+              答えを見る
+            </button>
+          </div>
+        ) : quiz ? (
+          <div className="learn-navrow">
+            {quiz.solved ? (
+              <button type="button" className="primary" onClick={quizReturnToMainLine}>
+                本線に戻って続ける ▶
+              </button>
+            ) : (
+              <>
+                <button type="button" onClick={quizRetry} disabled={!quiz.wrong}>
+                  もう一度
+                </button>
+                <button type="button" onClick={quizReveal}>
+                  答えを見る
+                </button>
+              </>
+            )}
+          </div>
+        ) : (
+        <div className="learn-navrow">
+          <button type="button" onClick={goToStart} disabled={nodeHistory.length === 0} aria-label="最初へ">
+            ⏮
+          </button>
+          <button type="button" onClick={goBack} disabled={nodeHistory.length === 0} aria-label="1手戻る">
+            ◀
+          </button>
+          <button type="button" className="primary" onClick={advance} disabled={isGoal && !pendingAck}>
+            {pendingAck ? "次へ ▶" : "なぞって次へ ▶"}
+          </button>
+        </div>
+        )}
+        {bookQuiz ? (
           <div className="quizpanel">
             <p className="quiz-head">
               <span className="quiz-no">{moveNumber}手目</span>
@@ -270,45 +309,6 @@ export function Learn({ course, onBack }: LearnProps) {
         )}
         {!pendingAck && !quiz && !bookQuiz && (
           <BranchNav branches={currentNode.branches} activeIndex={selectedBranchIndex} onSelect={chooseBranch} />
-        )}
-        {bookQuiz ? (
-          <div className="learn-navrow">
-            <button type="button" onClick={bookRetry} disabled={!bookQuiz.wrong}>
-              もう一度
-            </button>
-            <button type="button" onClick={bookReveal}>
-              答えを見る
-            </button>
-          </div>
-        ) : quiz ? (
-          <div className="learn-navrow">
-            {quiz.solved ? (
-              <button type="button" className="primary" onClick={quizReturnToMainLine}>
-                本線に戻って続ける ▶
-              </button>
-            ) : (
-              <>
-                <button type="button" onClick={quizRetry} disabled={!quiz.wrong}>
-                  もう一度
-                </button>
-                <button type="button" onClick={quizReveal}>
-                  答えを見る
-                </button>
-              </>
-            )}
-          </div>
-        ) : (
-        <div className="learn-navrow">
-          <button type="button" onClick={goToStart} disabled={nodeHistory.length === 0} aria-label="最初へ">
-            ⏮
-          </button>
-          <button type="button" onClick={goBack} disabled={nodeHistory.length === 0} aria-label="1手戻る">
-            ◀
-          </button>
-          <button type="button" className="primary" onClick={advance} disabled={isGoal && !pendingAck}>
-            {pendingAck ? "次へ ▶" : "なぞって次へ ▶"}
-          </button>
-        </div>
         )}
       </div>
     </div>

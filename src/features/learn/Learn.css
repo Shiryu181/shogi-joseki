@@ -243,3 +243,61 @@
     padding: 16px 5px;
   }
 }
+
+/*
+ * 盤と操作ボタンが1画面に収まらないという指摘を受けた圧縮レイアウト。
+ * ヘッダー(タイトル・バッジ)が縦を占めていたので、狭い画面では小さくする。
+ * 操作ボタン(⏮ ◀ 次へ)は盤の直後に置き、解説はその下にスクロールさせる。
+ */
+@media (max-width: 480px) {
+  .learn-wrap {
+    padding: 8px 5px;
+  }
+  .abar {
+    padding: 10px 12px 2px;
+    gap: 8px;
+  }
+  .abar .back {
+    width: 30px;
+    height: 30px;
+  }
+  .learn-head .tl {
+    display: none; /* 「JOSEKI DOJO ・ 学習」はタブでも分かるので省く */
+  }
+  .learn-head h1 {
+    font-size: 16px;
+    margin: 0;
+    /* 長い戦法名で2行になり、そのぶん盤が下がるのを防ぐ */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .binfo {
+    margin: 4px 10px 2px !important;
+    gap: 5px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .binfo::-webkit-scrollbar {
+    display: none;
+  }
+  .binfo .badge {
+    font-size: 10.5px;
+    padding: 3px 7px;
+    white-space: nowrap;
+  }
+  .board-block {
+    margin: 4px auto !important;
+  }
+  .tray {
+    min-height: 24px;
+    padding: 3px 6px;
+  }
+  .learn-navrow {
+    margin: 8px 10px 10px;
+  }
+  .learn-navrow button {
+    padding: 10px;
+  }
+}
