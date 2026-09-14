@@ -1,7 +1,7 @@
 /**
- * 「相手が定石を外し、それを咎める」クイズの候補をエンジンで探す開発用スクリプト。
+ * 「相手が定跡を外し、それを咎める」クイズの候補をエンジンで探す開発用スクリプト。
  *
- * 前提(2026-08 の実測): 駒組みの範囲では、定石手を逃しても損は±30点程度しかなく
+ * 前提(2026-08 の実測): 駒組みの範囲では、定跡手を逃しても損は±30点程度しかなく
  * 「必ず見つけるべき手」が存在しない(analyze-critical.cjs 参照)。急所は
  * 相手がミスした直後にできる。そこを出題する。
  *
@@ -100,7 +100,7 @@ const sideToMove = (sfen) => (sfen.split(" ")[1] === "w" ? "gote" : "sente");
     if (list.length < 2) continue;
     const best = list[0].cp;
     for (const cand of list) {
-      // 定石手そのものは逸れ手ではない。エンジンの最善手と定石手が食い違うことは
+      // 定跡手そのものは逸れ手ではない。エンジンの最善手と定跡手が食い違うことは
       // 普通にあるので、順位ではなく指し手そのもので除外する。
       if (cand.usi === moves[i].usi) continue;
       const loss = best - cand.cp;
@@ -112,7 +112,7 @@ const sideToMove = (sfen) => (sfen.split(" ")[1] === "w" ? "gote" : "sente");
       const sharp = reply[0].cp - reply[1].cp;
       if (sharp < SHARP_MIN) continue;
       found.push({ n: i+1, joseki: moves[i].usi, dev: cand.usi, loss, punish: reply[0].usi, sharp });
-      console.log(`  ${String(i+1).padStart(2)}手目: 定石は ${moves[i].usi} / 相手が ${cand.usi} と指すと ${loss}点の損`);
+      console.log(`  ${String(i+1).padStart(2)}手目: 定跡は ${moves[i].usi} / 相手が ${cand.usi} と指すと ${loss}点の損`);
       console.log(`         → 咎め手 ${reply[0].usi} (次善手より ${sharp}点良い)`);
       // 咎めの手順を書き起こすための読み筋。これをそのまま採用するのではなく、
       // 手順として自然かどうかは人が見て判断する。

@@ -1,12 +1,12 @@
 /**
- * 「その局面で定石手を逃すと、どれくらい損をするか」を測る開発用スクリプト。
+ * 「その局面で定跡手を逃すと、どれくらい損をするか」を測る開発用スクリプト。
  *
  * 目的: 学習を「指しこなす本」形式にするため、どの手をクイズにすべきかを決める。
- * 定石から外れたこと自体は咎める理由にならない。駒がぶつかっていない序盤なら、
+ * 定跡から外れたこと自体は咎める理由にならない。駒がぶつかっていない序盤なら、
  * 多少違う手でも成立する。咎めるべきなのは「その手を逃すと劣勢になる」局面だけ。
  *
  * 測り方: 各局面で MultiPV で上位の手を出し、
- *   critical = (定石手の評価) - (定石手以外で最善の手の評価)
+ *   critical = (定跡手の評価) - (定跡手以外で最善の手の評価)
  * とする。この差が大きいほど「その手でなければいけない」局面。
  *
  * 使い方: node scripts/analyze-critical.cjs <コースid> [--ms 1200] [--pv 5]
@@ -87,11 +87,11 @@ const sideToMove = (sfen) => (sfen.split(" ")[1] === "w" ? "gote" : "sente");
     const joseki = moves[i].usi;
     const hit = list.find(m => m.usi === joseki);
     const alt = list.find(m => m.usi !== joseki);
-    if (!hit || !alt) { rows.push({ n: i+1, usi: joseki, gap: null, note: hit ? "候補が1つのみ" : "定石手が上位に無い" }); continue; }
+    if (!hit || !alt) { rows.push({ n: i+1, usi: joseki, gap: null, note: hit ? "候補が1つのみ" : "定跡手が上位に無い" }); continue; }
     rows.push({ n: i+1, usi: joseki, gap: hit.cp - alt.cp, rank: list.indexOf(hit)+1, alt: alt.usi });
   }
 
-  console.log("手  定石手   順位  次善手との差   判定");
+  console.log("手  定跡手   順位  次善手との差   判定");
   console.log("-".repeat(52));
   for (const r of rows) {
     if (r.gap === null) { console.log(`${String(r.n).padStart(2)}  ${r.usi.padEnd(7)}  -     -            ${r.note}`); continue; }

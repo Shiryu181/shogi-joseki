@@ -1,5 +1,5 @@
 /**
- * 定石データ(JSON)のロード + 簡易ランタイム検証。
+ * 定跡データ(JSON)のロード + 簡易ランタイム検証。
  * DESIGN.md §3.2 の JosekiCourse/JosekiNode/JosekiMove 構造に沿った JSON を
  * import し、最低限の形状チェックをしてから返す。
  */
@@ -45,7 +45,7 @@ import ibishaVsNakabishaGoteRaw from "../data/joseki/ibisha-vs-nakabisha--gote.j
 import branchNavDemoRaw from "../data/joseki/_branchNavDemo.json?raw";
 
 /**
- * 定石 JSON は「手 → 次の局面 → 手 → …」の入れ子構造なので、手数が増えるほど
+ * 定跡 JSON は「手 → 次の局面 → 手 → …」の入れ子構造なので、手数が増えるほど
  * ネストが深くなる。JSON を ES モジュールへ変換するビルド時プラグインは、
  * 47手のコースで再帰上限に達してビルドが落ちた。
  * そこで ?raw で文字列として読み込み、実行時に JSON.parse する
@@ -78,23 +78,23 @@ function isJosekiNode(value: unknown): value is JosekiNode {
 
 function assertJosekiCourse(value: unknown, source: string): JosekiCourse {
   if (typeof value !== "object" || value === null) {
-    throw new Error(`定石データが不正です(${source}): オブジェクトではありません`);
+    throw new Error(`定跡データが不正です(${source}): オブジェクトではありません`);
   }
   const c = value as Record<string, unknown>;
   if (typeof c.id !== "string" || !c.id) {
-    throw new Error(`定石データが不正です(${source}): id がありません`);
+    throw new Error(`定跡データが不正です(${source}): id がありません`);
   }
   if (c.mySide !== "sente" && c.mySide !== "gote") {
-    throw new Error(`定石データが不正です(${source}): mySide が sente/gote ではありません`);
+    throw new Error(`定跡データが不正です(${source}): mySide が sente/gote ではありません`);
   }
   if ("goalLabel" in c && typeof c.goalLabel !== "string") {
-    throw new Error(`定石データが不正です(${source}): goalLabel は文字列である必要があります`);
+    throw new Error(`定跡データが不正です(${source}): goalLabel は文字列である必要があります`);
   }
   if ("source" in c && typeof c.source !== "string") {
-    throw new Error(`定石データが不正です(${source}): source は文字列である必要があります`);
+    throw new Error(`定跡データが不正です(${source}): source は文字列である必要があります`);
   }
   if (!isJosekiNode(c.root)) {
-    throw new Error(`定石データが不正です(${source}): root が JosekiNode の形をしていません`);
+    throw new Error(`定跡データが不正です(${source}): root が JosekiNode の形をしていません`);
   }
   return c as unknown as JosekiCourse;
 }
@@ -125,7 +125,7 @@ export interface CourseEntry {
 }
 
 /**
- * 収録済みの定石コース一覧。
+ * 収録済みの定跡コース一覧。
  * 並び順は学びやすさ順(素直な攻め → 応用 → 持久戦)にしている。
  * コースを追加したらここに足すだけで選択画面に出る。
  */

@@ -1,5 +1,6 @@
 import type { Strategy } from "../../domain/types";
 import { visualFor } from "./strategyVisuals";
+import { StrategyIcon } from "./StrategyIcon";
 
 const CATEGORY_LABEL: Record<Strategy["category"], string> = {
   ibisha: "居飛車",
@@ -39,10 +40,7 @@ export function StrategyCard({ strategy, onOpen }: StrategyCardProps) {
       }
     >
       <div className="hero" style={{ background: visual.heroColor }}>
-        <div className="grid9" aria-hidden="true" />
-        <div className="glyph" aria-hidden="true">
-          {visual.glyph}
-        </div>
+        <StrategyIcon visual={visual} />
         <div className="fam">{CATEGORY_LABEL[strategy.category]}</div>
         {!strategy.ready && <div className="soon">準備中</div>}
       </div>
@@ -60,7 +58,7 @@ export function StrategyCard({ strategy, onOpen }: StrategyCardProps) {
             <b>{strategy.lineCount}</b> ライン ・ 難易度 {strategy.level}
           </div>
         ) : (
-          <div className="sub">定石データ準備中 ・ {strategy.level}</div>
+          <div className="sub">定跡データ準備中 ・ {strategy.level}</div>
         )}
       </div>
     </div>

@@ -1,5 +1,5 @@
 /**
- * 収録する定石コースの定義。`node scripts/courses.mjs` で JSON を生成する。
+ * 収録する定跡コースの定義。`node scripts/courses.mjs` で JSON を生成する。
  *
  * 手は「駒種 + 移動先」で書き、USI と SFEN は build-joseki.mjs が tsshogi に
  * 解決させる(人間が手書きしない)。同じ駒種が複数動ける局面は from を明示する
@@ -2068,7 +2068,7 @@ const PAIRED_COURSES = [
   ["aigakari--bougin", "aigakari--gote"],
 ];
 
-console.log("定石コースを生成します:");
+console.log("定跡コースを生成します:");
 const generated = new Map();
 for (const def of COURSES) {
   const { course, usiList } = buildCourse(def);

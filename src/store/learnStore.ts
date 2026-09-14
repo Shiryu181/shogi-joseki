@@ -20,7 +20,7 @@ import { loadIbishaVsShikenbishaSente } from "../domain/josekiLoader";
  */
 const OPPONENT_MOVE_DELAY_MS = 650;
 
-function positionFromNode(node: JosekiNode): Position {
+export function positionFromNode(node: JosekiNode): Position {
   const position = new Position();
   position.resetBySFEN(node.sfen);
   return position;
@@ -55,10 +55,10 @@ export interface AckMove {
 }
 
 /**
- * 「相手が定石を外したので咎めてください」の出題状態。
+ * 「相手が定跡を外したので咎めてください」の出題状態。
  *
- * なぜこの形にしたか: 定石から外れたこと自体は咎める理由にならない。実測でも
- * 駒組みの範囲では定石手を逃しても損は±30点程度しかなく、必ず見つけるべき手は
+ * なぜこの形にしたか: 定跡から外れたこと自体は咎める理由にならない。実測でも
+ * 駒組みの範囲では定跡手を逃しても損は±30点程度しかなく、必ず見つけるべき手は
  * ほぼ存在しなかった(scripts/analyze-critical.cjs)。急所ができるのは相手が
  * 明確に損な手を指した直後なので、そこだけを出題する。
  */
@@ -189,6 +189,11 @@ interface LearnState {
   chooseBranch: (index: number) => void;
   goBack: () => void;
   goToStart: () => void;
+  /**
+   * 本線の n 手目を指す直前の局面へ移動する(n=1 で初形)。
+   * 「最初へ」ボタンは使われないという指摘を受け、代わりに手数を選んで戻れるようにした。
+   */
+  goToMove: (n: number) => void;
   /** 表示するコース自体を差し替える(本物のコース ⇔ 分岐ナビ動作確認用デモの切替に使う)。 */
   loadCourse: (course: JosekiCourse) => void;
   /** トグルUIから呼ぶ。切替時に保留中の自動進行タイマーを必ず破棄してから組み直す。 */
@@ -631,6 +636,32 @@ export const useLearnStore = create<LearnState>((set, get) => {
         lastMoveUsi: null,
       });
       scheduleAutoAdvance();
+    },
+
+    goToMove(n) {
+      clearAutoAdvanceTimer();
+      const { course } = get();
+      const history: JosekiNode[] = [];
+      let node = course.root;
+      for (let i = 1; i < n; i++) {
+        const next = mainBranchOf(node);
+        if (!next || !next.child) break;
+        history.push(node);
+        node = next.child;
+      }
+      set({
+        currentNode: node,
+        nodeHistory: history,
+        position: positionFromNode(node),
+        selectedBranchIndex: 0,
+        pendingAck: null,
+        lastOpponent: null,
+        lastMoveUsi: null,
+        quiz: null,
+        bookQuiz: null,
+        selected: null,
+      });
+      scheduleAutoAdvance(); // 自分の手番なら、この中で出題も立つ
     },
 
     goToStart() {

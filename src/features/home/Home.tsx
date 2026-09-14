@@ -45,8 +45,12 @@ export function Home({ onOpenStrategy, onOpenAbout }: HomeProps) {
     <div className="home-wrap">
       <div className="home-frame">
         <div className="home-head">
-          <div className="tl">JOSEKI DOJO</div>
-          <h1>戦法を探す</h1>
+          {/* 何ができるサイトかを最初に伝える。以前は「戦法を探す」だけが目に入り、
+              初めて開いた人には用途が分からなかった。 */}
+          <h1>定跡道場</h1>
+          <p className="lead">
+            将棋の定跡を、盤に指しながら覚えるアプリです。戦法を選ぶと、駒組みから仕掛け、その先の戦い方までを1手ずつ出題します。
+          </p>
           <SearchBar value={query} onChange={setQuery} />
         </div>
         <CategoryTabs active={activeCategory} onSelect={setActiveCategory} />

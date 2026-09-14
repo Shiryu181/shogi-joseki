@@ -55,7 +55,7 @@ export function Sandbox({ onBack }: SandboxProps) {
             </svg>
           </button>
           <div className="sandbox-head">
-            <div className="tl">JOSEKI DOJO ・ SANDBOX(開発用)</div>
+            <div className="tl">定跡道場 ・ SANDBOX(開発用)</div>
             <h1>自由対局(検証用)</h1>
           </div>
         </div>

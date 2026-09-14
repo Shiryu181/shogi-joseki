@@ -12,12 +12,12 @@
  *
  * Phase 3b: 不正解時にエンジン(src/engine/)で「A/B比較」を追加する。
  * 重要な設計判断(2026-07-31 コーディネーター確認済み):
- * エンジンの役割は「ユーザーの手 vs 定石手」の評価値を並べて見せることに限定し、
+ * エンジンの役割は「ユーザーの手 vs 定跡手」の評価値を並べて見せることに限定し、
  * エンジンの bestmove を「推奨手」として提示しない。理由: 不正解局面を評価した
  * ときの bestmove は「その局面の手番(=相手)の最善応手」であり、ユーザーが
- * 指すべきだった手ではない。推奨手は既に定石データ(正解手)が持っているため、
+ * 指すべきだった手ではない。推奨手は既に定跡データ(正解手)が持っているため、
  * エンジンに尋ねる必要が無い。同じ理由でヒント機能にもエンジンのbestmoveは
- * 使わない(定石手のハイライトのみ)。
+ * 使わない(定跡手のハイライトのみ)。
  * エンジンが使えない場合(未初期化・COOP/COEP無し・ロード失敗等)は、この
  * A/B比較を静かに省略するだけで、台本ベースの判定・進行には一切影響しない
  * (グレースフルデグレード)。
@@ -73,7 +73,7 @@ export type PracticeStatus = "userTurn" | "opponentTurn" | "goal";
 export interface WrongAttempt {
   /** ユーザーが実際に指した手の表示テキスト(例: ▲２四歩)。 */
   attemptedText: string;
-  /** この局面の正しい定石手の表示テキスト(例: ▲同歩)。 */
+  /** この局面の正しい定跡手の表示テキスト(例: ▲同歩)。 */
   correctText: string;
   /** 正解手の note(あれば)。 */
   correctNote?: string;
@@ -120,11 +120,11 @@ export interface PendingPromotion {
 }
 
 /**
- * DESIGN.md §3.3 3層目: 定石(台本)を外れても対局を続けられる状態。
+ * DESIGN.md §3.3 3層目: 定跡(台本)を外れても対局を続けられる状態。
  * null = 通常の台本ベース練習(既存のPhase3a/3bの挙動そのまま)。
  */
 export interface OffScriptState {
-  /** 台本を離れる直前のノード。「定石の局面に戻る」の復帰先。 */
+  /** 台本を離れる直前のノード。「定跡の局面に戻る」の復帰先。 */
   anchorNode: JosekiNode;
   /** anchorNode時点のmoveIndex(復帰時に戻す)。 */
   anchorMoveIndex: number;
@@ -136,7 +136,7 @@ export interface OffScriptState {
   moveCount: number;
 }
 
-/** A/B比較の片側(ユーザーの手 or 定石手)の評価。scoreCp/mateは常に先手視点。 */
+/** A/B比較の片側(ユーザーの手 or 定跡手)の評価。scoreCp/mateは常に先手視点。 */
 export interface EngineMoveEval extends SenteViewScore {
   /** 表示用の手のテキスト(例: ▲２四歩)。 */
   displayText: string;
@@ -171,7 +171,7 @@ interface PracticeState {
   /** 直近の不正解の詳細(なければ null)。次の着手・retry・restart でクリアされる。 */
   wrongAttempt: WrongAttempt | null;
   lastMove: PracticeLastMove | null;
-  /** ヒント表示中か(次の定石手の from/to を光らせる)。 */
+  /** ヒント表示中か(次の定跡手の from/to を光らせる)。 */
   hintOn: boolean;
 
   /** エンジン(src/engine/)の初期化状態。'idle' はまだロード要求していない。 */
@@ -214,7 +214,7 @@ interface PracticeState {
   continueOffScript: () => void;
   /** off-script中、成/不成の選択UIでユーザーが選んだ側を適用する。 */
   choosePromotion: (promote: boolean) => void;
-  /** 「定石の局面に戻る」。off-scriptを離脱し、台本を離れた地点の局面へ復帰する。 */
+  /** 「定跡の局面に戻る」。off-scriptを離脱し、台本を離れた地点の局面へ復帰する。 */
   returnToScript: () => void;
 }
 
@@ -303,7 +303,7 @@ function findMatchingBranch(node: JosekiNode, usi: string): JosekiMove | null {
 
 /**
  * 不正解のとき「正解手」として提示する分岐(本線優先。無ければ先頭)。
- * ヒント表示(次の定石手の from/to)にも同じ分岐を使う。
+ * ヒント表示(次の定跡手の from/to)にも同じ分岐を使う。
  */
 export function primaryBranch(node: JosekiNode): JosekiMove | null {
   return node.branches.find((b) => b.kind === "main") ?? node.branches[0] ?? null;
@@ -412,7 +412,7 @@ export const usePracticeStore = create<PracticeState>((set, get) => {
       .then((result) => {
         if (seq !== engineRequestSeq) return; // 古い結果(戻る/やり直し等で状況が変わった)
         const s = get();
-        if (!s.offScript) return; // その間に「定石の局面に戻る」等で抜けていた
+        if (!s.offScript) return; // その間に「定跡の局面に戻る」等で抜けていた
 
         const senteView = toSenteViewScore(result, opponentColor);
         const feedback: OffScriptFeedback = {
@@ -475,7 +475,7 @@ export const usePracticeStore = create<PracticeState>((set, get) => {
   }
 
   /**
-   * 不正解時、ユーザーの手と定石手のそれぞれを適用した局面をエンジンで評価し、
+   * 不正解時、ユーザーの手と定跡手のそれぞれを適用した局面をエンジンで評価し、
    * A/B比較として提示する。エンジン未準備なら何もしない(黙って省略)。
    * DESIGN確認済み方針: エンジンのbestmoveは「推奨手」として出さない
    * (ファイル冒頭のコメント参照)。あくまで2つの手の評価値比較のみに使う。
@@ -620,7 +620,7 @@ export const usePracticeStore = create<PracticeState>((set, get) => {
               });
               return;
             }
-            // 収録済みの定石手と一致しない(または一致したが台本がここで途切れている):
+            // 収録済みの定跡手と一致しない(または一致したが台本がここで途切れている):
             // 局面は進めず、正解手を提示する。何度でも再挑戦できる。
             const correct = primaryBranch(currentNode);
             const correctInfo = correct ? moveFromUSI(position, correct.usi) : null;
@@ -638,7 +638,7 @@ export const usePracticeStore = create<PracticeState>((set, get) => {
               engineComparison: null,
               engineComparisonStatus: "idle",
             });
-            // エンジンが使えるときだけ、ユーザーの手 vs 定石手のA/B比較を裏で走らせる
+            // エンジンが使えるときだけ、ユーザーの手 vs 定跡手のA/B比較を裏で走らせる
             // (非同期・エンジン未準備なら内部で何もしない)。
             triggerEngineComparison(currentNode, result.displayText, cloned.sfen, cloned.color);
             return;

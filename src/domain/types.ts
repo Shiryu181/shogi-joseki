@@ -1,6 +1,6 @@
 /**
  * DESIGN.md §3.2 / §3.4 のドメイン型。
- * Phase 0 では未使用(参照実装なし)。Phase 1 の定石データモデルで使用開始する。
+ * Phase 0 では未使用(参照実装なし)。Phase 1 の定跡データモデルで使用開始する。
  */
 
 export type StrategyId = "ibisha" | "shikenbisha" | string; // v2+ で拡張
@@ -16,7 +16,7 @@ export interface Strategy {
   popularity: number; // 人気順ソート・★表示用
   level: string; // "入門〜" 等
   lineCount: number; // 収録ライン数
-  ready: boolean; // 定石データありか
+  ready: boolean; // 定跡データありか
   description: string;
 }
 
@@ -43,14 +43,14 @@ export interface JosekiNode {
   id: string;
   sfen: string; // このノードの局面
   comment?: string; // この局面の教育的解説(自作)
-  branches: JosekiMove[]; // ここから指せる手(定石/逸れ)
+  branches: JosekiMove[]; // ここから指せる手(定跡/逸れ)
 }
 
 export interface JosekiMove {
   usi: string; // 指し手
   kind: "main" | "alt" | "deviation";
-  //  main     = 定石本線
-  //  alt      = 定石内の有力な別手順
+  //  main     = 定跡本線
+  //  alt      = 定跡内の有力な別手順
   //  deviation= 相手のよくある逸れ手(咎め方を持つ)
   note?: string; // この手の意味 / 逸れ手なら「なぜ悪いか」
   /**

@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { Color, PieceType, Square, moveFromUSI, parseUSIMove } from "../../domain/shogi";
-import { useLearnStore, branchMove } from "../../store/learnStore";
+import { useLearnStore, branchMove, positionFromNode } from "../../store/learnStore";
 import type { JosekiCourse, JosekiNode } from "../../domain/types";
 import { Board } from "../../ui/Board";
 import type { GhostPiece, HandHighlight } from "../../ui/Board";
@@ -52,7 +52,7 @@ export function Learn({ course, onBack }: LearnProps) {
   const advance = useLearnStore((s) => s.advance);
   const chooseBranch = useLearnStore((s) => s.chooseBranch);
   const goBack = useLearnStore((s) => s.goBack);
-  const goToStart = useLearnStore((s) => s.goToStart);
+  const goToMove = useLearnStore((s) => s.goToMove);
   const loadCourse = useLearnStore((s) => s.loadCourse);
   const setAutoAdvanceOpponent = useLearnStore((s) => s.setAutoAdvanceOpponent);
   const pauseAutoAdvance = useLearnStore((s) => s.pauseAutoAdvance);
@@ -82,6 +82,22 @@ export function Learn({ course, onBack }: LearnProps) {
   const guideHidden = pendingAck !== null || quiz !== null || bookQuiz !== null;
   const parsed = guide && !guideHidden ? parseUSIMove(guide.usi) : null;
   const moveInfo = guide && !guideHidden ? moveFromUSI(position, guide.usi) : null;
+
+  // 手数ジャンプ用に、本線の各手の表示テキストを作っておく(「最初へ」ボタンの代わり)。
+  const mainLine = useMemo(() => {
+    const out: { n: number; text: string }[] = [];
+    let node = course.root;
+    let pos = positionFromNode(node);
+    for (let n = 1; ; n++) {
+      const mv = node.branches.find((b) => b.kind === "main");
+      if (!mv || !mv.child) break;
+      const info = moveFromUSI(pos, mv.usi);
+      out.push({ n, text: info?.displayText ?? mv.usi });
+      node = mv.child;
+      pos = positionFromNode(node);
+    }
+    return out;
+  }, [course]);
 
   const fromKey = parsed && parsed.from instanceof Square ? parsed.from.usi : null;
   const fromHand: HandHighlight | null =
@@ -150,7 +166,7 @@ export function Learn({ course, onBack }: LearnProps) {
             </svg>
           </button>
           <div className="learn-head">
-            <div className="tl">JOSEKI DOJO ・ 学習(なぞり)</div>
+            <div className="tl">定跡道場 ・ 学習(なぞり)</div>
             <h1>{course.title}</h1>
           </div>
         </div>
@@ -158,9 +174,30 @@ export function Learn({ course, onBack }: LearnProps) {
           <span className={`badge b-turn${position.color === Color.WHITE ? " gote" : ""}`}>
             {position.color === Color.BLACK ? "▲ 先手番" : "△ 後手番"}
           </span>
-          <span className="badge b-prog">
-            {Math.min(pendingAck ? pendingAck.moveNumber : moveNumber, totalMoves)} / {totalMoves} 手
-          </span>
+          {/* 手数バッジをそのままセレクトにして、選んだ手の局面へ戻れるようにする。
+              「最初へ」ボタンは使われないという指摘を受けて置き換えた。出題中でも使える。 */}
+          <select
+            className="badge b-prog move-jump"
+            aria-label="手数を選んでその局面へ戻る"
+            value={Math.min(nodeHistory.length + 1, mainLine.length)}
+            onChange={(e) => goToMove(Number(e.target.value))}
+          >
+            {/* 戻る用途なので、これから指す手は列挙しない(出題の答えが見えてしまう)。
+                現在の手も手数だけにする。 */}
+            {mainLine
+              .filter((m) => m.n <= nodeHistory.length + 1)
+              .map((m) =>
+                m.n === nodeHistory.length + 1 ? (
+                  <option key={m.n} value={m.n}>
+                    {m.n} / {totalMoves} 手
+                  </option>
+                ) : (
+                  <option key={m.n} value={m.n}>
+                    {m.n}手目 {m.text} に戻る
+                  </option>
+                ),
+              )}
+          </select>
           <button
             type="button"
             className={`badge toggle-auto${autoAdvanceOpponent ? "" : " off"}`}
@@ -201,7 +238,7 @@ export function Learn({ course, onBack }: LearnProps) {
             {position.color !== myColor
               ? "相手が応じています…"
               : quiz.step === 0
-                ? "相手が定石を外しました。咎める手を指してください"
+                ? "相手が定跡を外しました。咎める手を指してください"
                 : "続けて咎める手を指してください"}
           </div>
         )}
@@ -211,9 +248,7 @@ export function Learn({ course, onBack }: LearnProps) {
         {showWaitPill && !quiz && <div className="waitpill">相手が指しています…</div>}
         {pendingAck && !quiz && (
           <div className="ackpill">
-            {pendingAck.by === "me"
-              ? "正解です。解説を読んで「次へ」"
-              : "相手が指しました。解説を読んで「次へ」"}
+            {pendingAck.by === "me" ? "正解です。解説を読んで「次へ」" : "相手が指しました。解説を読んで「次へ」"}
           </div>
         )}
         {!isGoal && !showWaitPill && !pendingAck && !quiz && !bookQuiz && (
@@ -247,14 +282,11 @@ export function Learn({ course, onBack }: LearnProps) {
           </div>
         ) : (
         <div className="learn-navrow">
-          <button type="button" onClick={goToStart} disabled={nodeHistory.length === 0} aria-label="最初へ">
-            ⏮
-          </button>
           <button type="button" onClick={goBack} disabled={nodeHistory.length === 0} aria-label="1手戻る">
             ◀
           </button>
           <button type="button" className="primary" onClick={advance} disabled={isGoal && !pendingAck}>
-            {pendingAck ? (pendingAck.by === "me" ? "相手の手へ ▶" : "次へ ▶") : "なぞって次へ ▶"}
+            {pendingAck ? "次へ ▶" : "なぞって次へ ▶"}
           </button>
         </div>
         )}
@@ -269,14 +301,16 @@ export function Learn({ course, onBack }: LearnProps) {
             )}
             {(() => {
               // 「なぜその手なのか」から逆算して考えられるよう、答えの手の解説を
-              // 升だけ伏せて『ねらい』として先に見せる。
+              // 升だけ伏せて『ねらい』として先に見せる。問いの文は毎回同じなので出さず、
+              // 手数だけを添える(盤の上の案内が「盤に指してください」と促している)。
               const hint = guide?.aim ?? buildHint(guide?.note, moveInfo?.displayText);
-              return hint ? <p className="quiz-aim">ねらい: {hint}</p> : null;
+              return (
+                <p className="quiz-aim">
+                  <span className="quiz-no">{moveNumber}手目</span>
+                  {hint ? `ねらい: ${hint}` : "次の一手は？"}
+                </p>
+              );
             })()}
-            <p className="quiz-head">
-              <span className="quiz-no">{moveNumber}手目</span>
-              このねらいを果たす一手は？
-            </p>
             {currentNode.comment && <p className="quiz-comment">{currentNode.comment}</p>}
             {bookQuiz.wrong && (
               <p className="quiz-wrong">
@@ -292,7 +326,7 @@ export function Learn({ course, onBack }: LearnProps) {
           <div className="quizpanel">
             <p className="quiz-head">
               <span className="quiz-no">{quiz.anchorMoveNumber}手目</span>
-              相手は {quiz.deviationText} と定石を外しました
+              相手は {quiz.deviationText} と定跡を外しました
             </p>
             {quiz.deviation.note && <p className="quiz-note">{quiz.deviation.note}</p>}
             {currentNode.comment && <p className="quiz-comment">{currentNode.comment}</p>}

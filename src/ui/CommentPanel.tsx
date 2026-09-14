@@ -32,7 +32,7 @@ function splitNote(note: string | undefined): { text: string; flagged: boolean }
 
 /**
  * 学習モードの解説カード。現在の手・解説文・(要検証なら)控えめなバッジを表示する。
- * kind:"deviation" のときは「この手は定石を外れています」+ 咎め方の要点を専用の見せ方で表示する。
+ * kind:"deviation" のときは「この手は定跡を外れています」+ 咎め方の要点を専用の見せ方で表示する。
  */
 export function CommentPanel({ isGoal, moveNumber, moveText, note, comment, kind, punishNote, goalLabel }: CommentPanelProps) {
   if (isGoal) {
@@ -64,7 +64,7 @@ export function CommentPanel({ isGoal, moveNumber, moveText, note, comment, kind
 
       {isDeviation ? (
         <div className="deviation-callout">
-          <b>この手は定石を外れています</b>
+          <b>この手は定跡を外れています</b>
           {noteText && <p>{noteText}</p>}
           {punishNote && (
             <div className="punish">

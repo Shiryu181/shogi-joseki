@@ -26,7 +26,7 @@ const IBISHA_STRATEGY = STRATEGIES.find((s) => s.id === "ibisha")!;
 function App() {
   const [screen, setScreen] = useState<Screen>("home");
   const [selectedStrategy, setSelectedStrategy] = useState<Strategy>(IBISHA_STRATEGY);
-  // 対抗形選択画面で選んだ作戦(定石コース)。学習/練習の両方に渡す。
+  // 対抗形選択画面で選んだ作戦(定跡コース)。学習/練習の両方に渡す。
   const [courseId, setCourseId] = useState<string>(COURSE_ENTRIES[0].id);
 
   // ?dev=1 のときだけ開発用画面(Sandbox/分岐デモ)への入口を出す。通常のユーザーの目には触れない。
@@ -98,7 +98,7 @@ function App() {
                   </svg>
                 </button>
                 <div>
-                  <div className="tl">JOSEKI DOJO ・ 開発用</div>
+                  <div className="tl">定跡道場 ・ 開発用</div>
                   <h1>開発メニュー</h1>
                 </div>
               </div>

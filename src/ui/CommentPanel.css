@@ -42,17 +42,20 @@
   border: 1px solid var(--red);
   white-space: nowrap;
 }
+/* 解説本文。読ませる場所なので、文字を小さくしすぎず色も薄くしない。 */
 .explain p {
-  font-size: 13px;
+  font-size: 14px;
+  color: var(--ink);
   margin: 0 0 10px;
-  line-height: 1.72;
+  line-height: 1.8;
 }
 .aim {
   background: var(--brown-soft);
   border-radius: 9px;
   padding: 9px 11px;
-  font-size: 12px;
-  color: var(--brown-ink);
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--ink);
   display: flex;
   gap: 7px;
 }
@@ -83,8 +86,8 @@
 .deviation-callout .punish {
   display: flex;
   gap: 7px;
-  font-size: 12px;
-  color: var(--ink-soft);
+  font-size: 13.5px;
+  color: var(--ink);
 }
 .deviation-callout .punish b {
   font-family: var(--disp);

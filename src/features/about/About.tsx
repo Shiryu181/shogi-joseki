@@ -26,15 +26,15 @@ export function About({ onBack }: AboutProps) {
             </svg>
           </button>
           <div>
-            <div className="tl">JOSEKI DOJO</div>
+            <div className="tl">定跡道場</div>
             <h1>このアプリについて</h1>
           </div>
         </div>
 
         <section className="about-sec">
-          <h2>定石道場</h2>
+          <h2>定跡道場</h2>
           <p>
-            特定の戦法の定石を、なぞって覚え、自分で指して確かめるための学習アプリです。
+            特定の戦法の定跡を、なぞって覚え、自分で指して確かめるための学習アプリです。
             収録している手順は公開されている定跡の解説に基づき、すべての手が将棋のルール上
             成立することを機械的に検証しています。
           </p>
@@ -69,7 +69,7 @@ export function About({ onBack }: AboutProps) {
               <span className="about-lic gpl">GPL-3.0</span>
             </div>
             <p>
-              将棋エンジン。練習モードで指した手の評価値を出したり、定石を外れた後の対局相手を
+              将棋エンジン。練習モードで指した手の評価値を出したり、定跡を外れた後の対局相手を
               務めます。<code>@mizarjp/yaneuraou.k-p</code> の WebAssembly ビルドを未改変で使用しています。
             </p>
             <ul className="about-links">
@@ -124,7 +124,7 @@ export function About({ onBack }: AboutProps) {
         </section>
 
         <section className="about-sec">
-          <h2>定石データについて</h2>
+          <h2>定跡データについて</h2>
           <p>
             手順は公開されている定跡の解説(将棋大図書館、はちみつ将棋カフェ など)に基づいて
             作成し、解説文は本アプリのために書き下ろしたものです。

@@ -1,5 +1,5 @@
 /**
- * 定石コースの JSON を生成する開発用スクリプト。
+ * 定跡コースの JSON を生成する開発用スクリプト。
  *
  * 目的は「人間が USI や SFEN を手書きしないこと」。
  * 手は「駒種 + 移動先」で書き、tsshogi に合法手を総当たりさせて一意に解決する。
@@ -112,7 +112,7 @@ export function buildCourse({ id, title, myStrategy, opponentStrategy, mySide, s
   const usiList = [];
 
   moves.forEach((spec, i) => {
-    // 逸れ手(相手が定石を外す手)は、本線を適用する前の局面から枝を伸ばす。
+    // 逸れ手(相手が定跡を外す手)は、本線を適用する前の局面から枝を伸ばす。
     // 学習画面で「相手がこう指してきたらどう咎めるか」を出題するために使う。
     // 本線を常に branches[0] に置くため、逸れ手は本線を積んでから後ろに足す。
     const devBranches = (spec.devs ?? []).map((dev) => buildDeviation(position, dev, i + 1));

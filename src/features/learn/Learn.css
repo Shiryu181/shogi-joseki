@@ -105,18 +105,19 @@
 
 .learn-navrow {
   display: flex;
-  gap: 8px;
-  margin: 12px 14px 20px;
+  gap: 6px;
+  margin: 8px 14px 12px;
 }
+/* ボタンは小さめに。大きいと盤と解説の間で場所を取りすぎる。 */
 .learn-navrow button {
   flex: 1;
   border: 1px solid var(--line-2);
   background: var(--card);
-  border-radius: 11px;
-  padding: 12px;
+  border-radius: 9px;
+  padding: 7px 8px;
   cursor: pointer;
   color: var(--ink);
-  font-size: 15px;
+  font-size: 13px;
 }
 .learn-navrow button:disabled {
   opacity: 0.4;
@@ -128,7 +129,21 @@
   color: #fff;
   border-color: var(--brown);
   font-family: var(--body);
-  font-size: 14px;
+  font-size: 13px;
+}
+/* 手数バッジ兼セレクト。選んだ手の局面へ戻れる(「最初へ」ボタンの代わり)。 */
+.move-jump {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  font-family: var(--body);
+  /* バッジの見た目に「▾」を足して、押せることを示す */
+  padding-right: 18px !important;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 10px) 55%, calc(100% - 6px) 55%;
+  background-size: 4px 4px, 4px 4px;
+  background-repeat: no-repeat;
 }
 
 .goal-banner {
@@ -148,7 +163,7 @@
 }
 
 /*
- * 出題(相手が定石を外した局面で咎め手を当てる)。
+ * 出題(相手が定跡を外した局面で咎め手を当てる)。
  * なぞりガイドと違って「答えを教えない」画面なので、金茶のガイド色ではなく
  * 赤系にして、今が問われている場面だと一目で分かるようにする。
  */
@@ -167,14 +182,15 @@
   text-align: center;
 }
 
+/* 解説は読ませる場所なので、文字は小さくしすぎず、色も薄くしない。 */
 .quizpanel {
-  margin: 10px 14px 0;
+  margin: 8px 14px 0;
   background: var(--card);
   border: 1px solid var(--line-2);
   border-radius: 14px;
-  padding: 14px 15px;
-  font-size: 13px;
-  line-height: 1.75;
+  padding: 13px 14px;
+  font-size: 14px;
+  line-height: 1.8;
   color: var(--ink);
 }
 .quizpanel p {
@@ -196,7 +212,7 @@
 }
 .quiz-note,
 .quiz-comment {
-  color: var(--ink-soft);
+  color: var(--ink);
 }
 .quiz-wrong {
   background: var(--red-soft);
@@ -263,7 +279,7 @@
     height: 30px;
   }
   .learn-head .tl {
-    display: none; /* 「JOSEKI DOJO ・ 学習」はタブでも分かるので省く */
+    display: none; /* 「定跡道場 ・ 学習」はタブでも分かるので省く */
   }
   .learn-head h1 {
     font-size: 16px;
@@ -296,10 +312,10 @@
     padding: 3px 6px;
   }
   .learn-navrow {
-    margin: 8px 10px 10px;
+    margin: 6px 10px 8px;
   }
   .learn-navrow button {
-    padding: 10px;
+    padding: 7px 6px;
   }
 }
 
@@ -307,18 +323,18 @@
 .opp-move {
   background: var(--card-2);
   border-radius: 10px;
-  padding: 8px 10px;
-  color: var(--ink-soft);
-  font-size: 12.5px;
-  line-height: 1.6;
+  padding: 9px 11px;
+  color: var(--ink);
+  font-size: 13.5px;
+  line-height: 1.7;
 }
 
 /* 出題時に見せる「ねらい」。答えの手の解説を升だけ伏せたもの。 */
 .quiz-aim {
   background: var(--gold-soft);
-  color: var(--gold);
+  color: var(--brown-ink);
   border-radius: 10px;
   padding: 9px 11px;
-  font-size: 12.5px;
-  line-height: 1.65;
+  font-size: 14px;
+  line-height: 1.7;
 }

@@ -23,7 +23,7 @@ function offScriptEndedTitle(outcome: OffScriptOutcome, myColor: Color): string 
 }
 
 function offScriptEndedDetail(outcome: OffScriptOutcome, myColor: Color): string {
-  const back = "「定石の局面に戻る」から練習を再開できます。";
+  const back = "「定跡の局面に戻る」から練習を再開できます。";
   switch (outcome.type) {
     case "checkmate":
       return outcome.loser === myColor
@@ -48,7 +48,7 @@ export interface PracticeProps {
 /**
  * 練習モード(実戦)画面。DESIGN.md §4.2 / §5.4 準拠。
  * 自分の手番だけ盤を自由に操作でき(合法手なら何でも指せる)、相手の手番は
- * コースの台本を少し間を置いて自動で指す。判定は「収録済みの定石手と一致するか」
+ * コースの台本を少し間を置いて自動で指す。判定は「収録済みの定跡手と一致するか」
  * だけで行い(エンジンなし)、不一致は評価的な断定をせず正解手を提示する。
  */
 export function Practice({ course, onBack }: PracticeProps) {
@@ -106,7 +106,7 @@ export function Practice({ course, onBack }: PracticeProps) {
     return new Set(dests.map((s) => s.usi));
   }, [selected, moveDests, dropDests]);
 
-  // ヒント: 何も選択していない自分の手番でだけ、次の定石手の from/to を光らせる。
+  // ヒント: 何も選択していない自分の手番でだけ、次の定跡手の from/to を光らせる。
   // off-script中は台本の「次の手」が存在しないため出さない。
   const hintGuide = !offScript && hintOn && status === "userTurn" && !selected ? primaryBranch(currentNode) : null;
   const hintParsed = hintGuide ? parseUSIMove(hintGuide.usi) : null;
@@ -164,7 +164,7 @@ export function Practice({ course, onBack }: PracticeProps) {
             </svg>
           </button>
           <div className="practice-head">
-            <div className="tl">JOSEKI DOJO ・ 練習(実戦)</div>
+            <div className="tl">定跡道場 ・ 練習(実戦)</div>
             <h1>{course.title}</h1>
           </div>
         </div>
@@ -172,7 +172,7 @@ export function Practice({ course, onBack }: PracticeProps) {
         <div className="binfo">
           {offScript ? (
             <>
-              <span className="badge b-line">定石を外れています</span>
+              <span className="badge b-line">定跡を外れています</span>
               {offScript.status === "userTurn" && <span className="badge b-turn">{turnMark} あなたの手番</span>}
               {offScript.status === "engineThinking" && (
                 <span className="badge b-turn waiting">相手(エンジン)の手番</span>
@@ -187,7 +187,7 @@ export function Practice({ course, onBack }: PracticeProps) {
               <span className={`badge b-turn${status === "opponentTurn" ? " waiting" : ""}`}>
                 {turnMark} {status === "userTurn" ? "あなたの手番" : "相手の手番"}
               </span>
-              {opponentDeviated && <span className="badge b-line">相手が定石を外した</span>}
+              {opponentDeviated && <span className="badge b-line">相手が定跡を外した</span>}
               <span className="badge b-prog">
                 {displayMoveNumber} / {totalMoves} 手
               </span>
@@ -220,7 +220,7 @@ export function Practice({ course, onBack }: PracticeProps) {
 
         {!offScript && status === "opponentTurn" && <div className="waitpill">相手が指しています…</div>}
         {offScript?.status === "engineThinking" && <div className="waitpill">エンジンが考えています…</div>}
-        {hintGuide && <div className="hintpill">光っているマスへ動かすと定石の手になります</div>}
+        {hintGuide && <div className="hintpill">光っているマスへ動かすと定跡の手になります</div>}
 
         {offScript ? (
           <div className="feedback-area">
@@ -271,13 +271,13 @@ export function Practice({ course, onBack }: PracticeProps) {
                 <div className="fb wrong">
                   <span className="ic">✕</span>
                   <div>
-                    <b>定石(このコース)の手ではありません</b>
+                    <b>定跡(このコース)の手ではありません</b>
                   </div>
                 </div>
                 <div className="fb right">
                   <span className="ic">✓</span>
                   <div>
-                    <b>この局面の定石手は {wrongAttempt.correctText} です</b>
+                    <b>この局面の定跡手は {wrongAttempt.correctText} です</b>
                     {wrongAttempt.correctNote && <span className="s">{wrongAttempt.correctNote}</span>}
                   </div>
                 </div>
@@ -299,7 +299,7 @@ export function Practice({ course, onBack }: PracticeProps) {
                       <span className="engine-score">{formatSenteViewScore(engineComparison.yourMove)}</span>
                     </div>
                     <div className="engine-row">
-                      <span className="engine-label">定石手 {engineComparison.josekiMove.displayText}</span>
+                      <span className="engine-label">定跡手 {engineComparison.josekiMove.displayText}</span>
                       <span className="engine-score">{formatSenteViewScore(engineComparison.josekiMove)}</span>
                     </div>
                     <div className="engine-caveat">
@@ -348,7 +348,7 @@ export function Practice({ course, onBack }: PracticeProps) {
           </button>
           {offScript ? (
             <button type="button" className="primary" onClick={returnToScript}>
-              定石の局面に戻る
+              定跡の局面に戻る
             </button>
           ) : (
             <button type="button" onClick={retry} disabled={!wrongAttempt}>
@@ -359,7 +359,7 @@ export function Practice({ course, onBack }: PracticeProps) {
             ⟲ 最初からやり直す
           </button>
         </div>
-        {offScript && <div className="offscript-hint-note">定石を外れているためヒントはありません</div>}
+        {offScript && <div className="offscript-hint-note">定跡を外れているためヒントはありません</div>}
       </div>
     </div>
   );
