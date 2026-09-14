@@ -1,0 +1,290 @@
+{
+  "id": "hayaishida--basic",
+  "title": "早石田(先手・基本の攻め)",
+  "myStrategy": "sankenbisha",
+  "opponentStrategy": "ibisha",
+  "mySide": "sente",
+  "source": "手順は日々頓死(hibitonshi.com)「早石田戦法の基本定跡と対策」と将棋ルール.com「早石田の手順とポイント」に準拠。本線は相手が△6二銀と自然に受けた形からの▲7四歩〜▲5五角。相手が△8六歩と飛車先を交換しにくる有名な失敗手は咎めクイズにした(2026-09)",
+  "goalFormation": "角交換から▲5五角を打ち、7筋を飛車と角で攻める早石田の基本の攻め形。",
+  "goalLabel": "早石田の攻めが決まりました",
+  "goalSfen": "ln1gkg1nl/1r5s1/p1sppp1pp/2R3p2/1p2B4/9/PP1PPPPPP/5K3/LNSG1GSNL w Pbp 1",
+  "root": {
+    "id": "n0",
+    "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
+    "comment": "平手の初形です。三間飛車の中でも最も速く攻める『早石田』を指します。わずか5手で攻めの形ができ、相手が受け方を知らないと一気に優勢になります。",
+    "branches": [
+      {
+        "usi": "7g7f",
+        "kind": "main",
+        "note": "角道を開ける一手。",
+        "aim": "大駒の道を開けて、序盤の選択肢を広げたい。",
+        "child": {
+          "id": "n1",
+          "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1",
+          "branches": [
+            {
+              "usi": "3c3d",
+              "kind": "main",
+              "note": "相手も角道を開けます。",
+              "child": {
+                "id": "n2",
+                "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                "branches": [
+                  {
+                    "usi": "7f7e",
+                    "kind": "main",
+                    "note": "いきなり7筋の歩を伸ばします。これが早石田の第一歩で、次に飛車を7筋へ回します。",
+                    "aim": "駒組みを省いて、いきなり攻めたい筋の歩を伸ばしたい。",
+                    "child": {
+                      "id": "n3",
+                      "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/2P6/9/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1",
+                      "comment": null,
+                      "branches": [
+                        {
+                          "usi": "8c8d",
+                          "kind": "main",
+                          "note": "相手は飛車先を突いてきました。居飛車です。",
+                          "child": {
+                            "id": "n4",
+                            "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/1p4p2/2P6/9/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                            "branches": [
+                              {
+                                "usi": "2h7h",
+                                "kind": "main",
+                                "note": "飛車を7筋へ。早石田の形ができました。7五の歩と飛車で、7筋を一気に攻める狙いです。",
+                                "aim": "伸ばした歩の後ろに大駒を回して、その筋を一気に攻める形にしたい。",
+                                "child": {
+                                  "id": "n5",
+                                  "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/1p4p2/2P6/9/PP1PPPPPP/1BR6/LNSGKGSNL w - 1",
+                                  "comment": null,
+                                  "branches": [
+                                    {
+                                      "usi": "8d8e",
+                                      "kind": "main",
+                                      "note": "相手が飛車先を伸ばしてきました。",
+                                      "child": {
+                                        "id": "n6",
+                                        "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/6p2/1pP6/9/PP1PPPPPP/1BR6/LNSGKGSNL b - 1",
+                                        "branches": [
+                                          {
+                                            "usi": "5i4h",
+                                            "kind": "main",
+                                            "note": "玉を右へ動かします。攻める前に、玉を角のラインから外しておきます。",
+                                            "aim": "攻める前に、玉を相手の大駒の利きから外しておきたい。",
+                                            "child": {
+                                              "id": "n7",
+                                              "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/6p2/1pP6/9/PP1PPPPPP/1BR2K3/LNSG1GSNL w - 1",
+                                              "comment": null,
+                                              "branches": [
+                                                {
+                                                  "usi": "7a6b",
+                                                  "kind": "main",
+                                                  "note": "相手は銀を上げて7筋を守ります。",
+                                                  "child": {
+                                                    "id": "n8",
+                                                    "sfen": "ln1gkgsnl/1r1s3b1/p1pppp1pp/6p2/1pP6/9/PP1PPPPPP/1BR2K3/LNSG1GSNL b - 1",
+                                                    "comment": null,
+                                                    "branches": [
+                                                      {
+                                                        "usi": "7e7d",
+                                                        "kind": "main",
+                                                        "note": "7筋の歩を突き捨てて仕掛けます。",
+                                                        "aim": "攻めたい筋の歩をぶつけて、戦いを起こしたい。",
+                                                        "child": {
+                                                          "id": "n9",
+                                                          "sfen": "ln1gkgsnl/1r1s3b1/p1pppp1pp/2P3p2/1p7/9/PP1PPPPPP/1BR2K3/LNSG1GSNL w - 1",
+                                                          "comment": null,
+                                                          "branches": [
+                                                            {
+                                                              "usi": "7c7d",
+                                                              "kind": "main",
+                                                              "note": "相手は歩で取ります。",
+                                                              "child": {
+                                                                "id": "n10",
+                                                                "sfen": "ln1gkgsnl/1r1s3b1/p2ppp1pp/2p3p2/1p7/9/PP1PPPPPP/1BR2K3/LNSG1GSNL b p 1",
+                                                                "comment": null,
+                                                                "branches": [
+                                                                  {
+                                                                    "usi": "8h2b+",
+                                                                    "kind": "main",
+                                                                    "note": "角を交換します。",
+                                                                    "aim": "大駒を交換して、持ち駒として使える形にしたい。",
+                                                                    "child": {
+                                                                      "id": "n11",
+                                                                      "sfen": "ln1gkgsnl/1r1s3+B1/p2ppp1pp/2p3p2/1p7/9/PP1PPPPPP/2R2K3/LNSG1GSNL w Bp 1",
+                                                                      "comment": null,
+                                                                      "branches": [
+                                                                        {
+                                                                          "usi": "3a2b",
+                                                                          "kind": "main",
+                                                                          "note": "相手は銀で取り返します。",
+                                                                          "child": {
+                                                                            "id": "n12",
+                                                                            "sfen": "ln1gkg1nl/1r1s3s1/p2ppp1pp/2p3p2/1p7/9/PP1PPPPPP/2R2K3/LNSG1GSNL b Bbp 1",
+                                                                            "comment": null,
+                                                                            "branches": [
+                                                                              {
+                                                                                "usi": "B*5e",
+                                                                                "kind": "main",
+                                                                                "note": "持ち駒の角を5五へ。7三の地点と、相手の飛車先を同時ににらみます。",
+                                                                                "aim": "手持ちの大駒を打って、2つの地点を同時に狙いたい。",
+                                                                                "child": {
+                                                                                  "id": "n13",
+                                                                                  "sfen": "ln1gkg1nl/1r1s3s1/p2ppp1pp/2p3p2/1p2B4/9/PP1PPPPPP/2R2K3/LNSG1GSNL w bp 1",
+                                                                                  "branches": [
+                                                                                    {
+                                                                                      "usi": "6b7c",
+                                                                                      "kind": "main",
+                                                                                      "note": "相手は銀を上げて7三を守ります。",
+                                                                                      "child": {
+                                                                                        "id": "n14",
+                                                                                        "sfen": "ln1gkg1nl/1r5s1/p1sppp1pp/2p3p2/1p2B4/9/PP1PPPPPP/2R2K3/LNSG1GSNL b bp 1",
+                                                                                        "comment": null,
+                                                                                        "branches": [
+                                                                                          {
+                                                                                            "usi": "7h7d",
+                                                                                            "kind": "main",
+                                                                                            "note": "飛車で歩を取ります。飛車と角が7筋に集中し、早石田の攻めの形ができました。",
+                                                                                            "aim": "大駒で歩を取り、攻めの戦力を一つの筋に集中させたい。",
+                                                                                            "child": {
+                                                                                              "id": "n15",
+                                                                                              "sfen": "ln1gkg1nl/1r5s1/p1sppp1pp/2R3p2/1p2B4/9/PP1PPPPPP/5K3/LNSG1GSNL w Pbp 1",
+                                                                                              "comment": null,
+                                                                                              "branches": []
+                                                                                            }
+                                                                                          }
+                                                                                        ]
+                                                                                      }
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              }
+                                                                            ]
+                                                                          }
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                              }
+                                                            }
+                                                          ]
+                                                        }
+                                                      }
+                                                    ]
+                                                  }
+                                                },
+                                                {
+                                                  "usi": "8e8f",
+                                                  "kind": "deviation",
+                                                  "note": "飛車先の歩を交換しにきた手。ふつうの局面なら自然ですが、早石田に対しては有名な失敗手です。",
+                                                  "punishNote": "▲同歩△同飛のあと▲7四歩△同歩▲2二角成△同銀▲9五角で王手飛車がかかります。",
+                                                  "child": {
+                                                    "id": "d8",
+                                                    "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/6p2/2P6/1p7/PP1PPPPPP/1BR2K3/LNSG1GSNL b - 1",
+                                                    "comment": "相手が飛車先を交換しにきました。ここから早石田の一番有名な筋、王手飛車が決まります。",
+                                                    "branches": [
+                                                      {
+                                                        "usi": "8g8f",
+                                                        "kind": "main",
+                                                        "note": "まず歩を取ります。",
+                                                        "child": {
+                                                          "id": "d8_1",
+                                                          "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/6p2/2P6/1P7/P2PPPPPP/1BR2K3/LNSG1GSNL w P 1",
+                                                          "branches": [
+                                                            {
+                                                              "usi": "8b8f",
+                                                              "kind": "main",
+                                                              "note": "相手は飛車で取り返します。飛車が8六に出てきました。",
+                                                              "child": {
+                                                                "id": "d8_2",
+                                                                "sfen": "lnsgkgsnl/7b1/p1pppp1pp/6p2/2P6/1r7/P2PPPPPP/1BR2K3/LNSG1GSNL b Pp 1",
+                                                                "branches": [
+                                                                  {
+                                                                    "usi": "7e7d",
+                                                                    "kind": "main",
+                                                                    "note": "7筋の歩を突き捨てます。相手が取ると角のラインが開きます。",
+                                                                    "child": {
+                                                                      "id": "d8_3",
+                                                                      "sfen": "lnsgkgsnl/7b1/p1pppp1pp/2P3p2/9/1r7/P2PPPPPP/1BR2K3/LNSG1GSNL w Pp 1",
+                                                                      "branches": [
+                                                                        {
+                                                                          "usi": "7c7d",
+                                                                          "kind": "main",
+                                                                          "note": "相手は歩で取ります。",
+                                                                          "child": {
+                                                                            "id": "d8_4",
+                                                                            "sfen": "lnsgkgsnl/7b1/p2ppp1pp/2p3p2/9/1r7/P2PPPPPP/1BR2K3/LNSG1GSNL b P2p 1",
+                                                                            "branches": [
+                                                                              {
+                                                                                "usi": "8h2b+",
+                                                                                "kind": "main",
+                                                                                "note": "角を交換します。",
+                                                                                "child": {
+                                                                                  "id": "d8_5",
+                                                                                  "sfen": "lnsgkgsnl/7+B1/p2ppp1pp/2p3p2/9/1r7/P2PPPPPP/2R2K3/LNSG1GSNL w BP2p 1",
+                                                                                  "branches": [
+                                                                                    {
+                                                                                      "usi": "3a2b",
+                                                                                      "kind": "main",
+                                                                                      "note": "相手は銀で取り返します。",
+                                                                                      "child": {
+                                                                                        "id": "d8_6",
+                                                                                        "sfen": "lnsgkg1nl/7s1/p2ppp1pp/2p3p2/9/1r7/P2PPPPPP/2R2K3/LNSG1GSNL b BPb2p 1",
+                                                                                        "branches": [
+                                                                                          {
+                                                                                            "usi": "B*9e",
+                                                                                            "kind": "main",
+                                                                                            "note": "持ち駒の角を9五へ。玉と8六の飛車に同時に当たる王手飛車です。相手は飛車を助けられません。",
+                                                                                            "child": {
+                                                                                              "id": "d8_7",
+                                                                                              "sfen": "lnsgkg1nl/7s1/p2ppp1pp/2p3p2/B8/1r7/P2PPPPPP/2R2K3/LNSG1GSNL w Pb2p 1",
+                                                                                              "comment": "王手飛車が決まりました。飛車を取れて先手が大きく優勢です。早石田を指すなら必ず覚えておきたい筋です。",
+                                                                                              "branches": []
+                                                                                            }
+                                                                                          }
+                                                                                        ]
+                                                                                      }
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              }
+                                                                            ]
+                                                                          }
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                              }
+                                                            }
+                                                          ]
+                                                        }
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

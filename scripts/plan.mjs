@@ -38,8 +38,8 @@ export const STRATEGIES = {
 export const PAIRINGS = [
   // ── 居飛車を指す ──────────────────────────────────────────────
   { mine: "居飛車", opp: "shikenbisha", priority: 10, courses: ["ibisha-vs-shikenbisha--bougin","ibisha-vs-shikenbisha--sente","ibisha-vs-shikenbisha--45hayashikake","ibisha-vs-shikenbisha--saginomiya","ibisha-vs-shikenbisha--yamada","ibisha-vs-shikenbisha--anaguma","ibisha-vs-shikenbisha--gote"] },
-  { mine: "居飛車", opp: "hayaishida",  priority: 9,  courses: [] },
-  { mine: "居飛車", opp: "gokigen",     priority: 8,  courses: ["ibisha-vs-nakabisha--anaguma","ibisha-vs-nakabisha--gote"], note: "超速▲3七銀が無い" },
+  { mine: "居飛車", opp: "hayaishida",  priority: 9,  courses: ["ibisha-vs-hayaishida--42gyoku"] },
+  { mine: "居飛車", opp: "gokigen",     priority: 8,  courses: ["ibisha-vs-nakabisha--anaguma","ibisha-vs-nakabisha--gote","ibisha-vs-gokigen--chousoku"] },
   { mine: "居飛車", opp: "sankenbisha", priority: 8,  courses: ["ibisha-vs-sankenbisha--bougin","ibisha-vs-sankenbisha--35hayashikake","ibisha-vs-sankenbisha--37kei","ibisha-vs-sankenbisha--gote"] },
   { mine: "居飛車", opp: "mukaibisha",  priority: 5,  courses: [] },
   { mine: "居飛車", opp: "kakugawari",  priority: 6,  courses: ["kakugawari--bougin","kakugawari--hayakurigin","kakugawari--gote"] },
@@ -55,9 +55,9 @@ export const PAIRINGS = [
   { mine: "三間飛車", opp: "bougin",     priority: 7, courses: ["sankenbisha-vs-ibisha--basic","sankenbisha-vs-ibisha--sente","sankenbisha-vs-bougin--53kin","sankenbisha-vs-45hayashikake--sabaki"] },
   { mine: "三間飛車", opp: "anaguma",    priority: 6, courses: ["sankenbisha-vs-anaguma--koyan"] },
   { mine: "三間飛車", opp: "aifuribisha",priority: 7, courses: [] },
-  { mine: "早石田",   opp: "bougin",     priority: 7, courses: [], note: "自分が早石田を指すコースが無い" },
+  { mine: "早石田",   opp: "bougin",     priority: 7, courses: ["hayaishida--basic"] },
   // ── 中飛車を指す ──────────────────────────────────────────────
-  { mine: "中飛車", opp: "bougin",       priority: 8, courses: ["nakabisha-vs-ibisha--gokigen24"], note: "超速▲3七銀への受けが無い" },
+  { mine: "中飛車", opp: "bougin",       priority: 8, courses: ["nakabisha-vs-ibisha--gokigen24","nakabisha-vs-chousoku--gote"] },
   { mine: "中飛車", opp: "anaguma",      priority: 6, courses: ["nakabisha-vs-anaguma--basic","nakabisha-vs-ibisha--sente"] },
   { mine: "中飛車", opp: "aifuribisha",  priority: 6, courses: [] },
   // ── 向かい飛車を指す ──────────────────────────────────────────

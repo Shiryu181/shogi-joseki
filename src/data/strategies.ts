@@ -23,7 +23,7 @@ export const STRATEGIES: Strategy[] = [
     category: "ibisha",
     popularity: 4.9,
     level: "入門〜",
-    lineCount: 17,
+    lineCount: 19,
     ready: true,
     description:
       "飛車を初期位置に構えたまま戦う、最も基本的な指し方。相手が振り飛車なら棒銀・穴熊など、相手も居飛車なら角換わり・矢倉・相掛かりへ進む。",
@@ -47,10 +47,10 @@ export const STRATEGIES: Strategy[] = [
     category: "nakabisha",
     popularity: 4.6,
     level: "入門〜",
-    lineCount: 2,
+    lineCount: 3,
     ready: true,
     description:
-      "飛車を5筋に構える振り飛車の一種。中央から攻めを組み立てる。対居飛車穴熊の指し方を収録。",
+      "飛車を5筋に構える振り飛車の一種。中央から攻めを組み立てる。対居飛車穴熊と、超速▲3七銀への受け方を収録。",
   },
   {
     id: "sankenbisha",
@@ -59,10 +59,10 @@ export const STRATEGIES: Strategy[] = [
     category: "furibisha",
     popularity: 4.3,
     level: "入門〜",
-    lineCount: 2,
+    lineCount: 3,
     ready: true,
     description:
-      "飛車を3筋(後手番なら7筋)に振る振り飛車の一種。飛車が角の頭を守るぶん、四間飛車より一手得と言われる。基本の組み方(美濃囲い)を収録。",
+      "飛車を3筋(後手番なら7筋)に振る振り飛車の一種。飛車が角の頭を守るぶん、四間飛車より一手得と言われる。基本の組み方(美濃囲い)と、速攻の早石田を収録。",
   },
   {
     id: "sujichigaikaku",

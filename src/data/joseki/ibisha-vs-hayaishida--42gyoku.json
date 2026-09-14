@@ -1,0 +1,236 @@
+{
+  "id": "ibisha-vs-hayaishida--42gyoku",
+  "title": "居飛車 vs 早石田(後手・△4二玉で罠を消す)",
+  "myStrategy": "ibisha",
+  "opponentStrategy": "sankenbisha",
+  "mySide": "gote",
+  "source": "手順は日々頓死(hibitonshi.com)「早石田戦法の基本定跡と対策」の『対策：△4二玉』に準拠。▲7五歩を見たらすぐ△4二玉と上がり、王手飛車や角交換の筋を消してから通常の石田流対策(駒組み)に入る。駒組みの続きはゼロから始める将棋研究所「vs石田流 棒金戦法」の考え方に沿う(2026-09)",
+  "goalFormation": "△4二玉で早石田の狙いを消し、相手が通常の石田流に組み替えたところで、こちらも玉を囲って戦える形。",
+  "goalLabel": "早石田の罠を消して駒組みが整いました",
+  "goalSfen": "ln3gsnl/1r2g1kb1/p1ppsp1pp/4p1p2/1pP6/3P5/PPB1PPPPP/2RS3K1/LN1G1GSNL b - 1",
+  "root": {
+    "id": "n0",
+    "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
+    "comment": "平手の初形です。相手の早石田は罠が多い戦法ですが、受け方を知っていれば怖くありません。後手番で居飛車を持ち、その受け方を覚えます。",
+    "branches": [
+      {
+        "usi": "7g7f",
+        "kind": "main",
+        "note": "相手が角道を開けました。",
+        "child": {
+          "id": "n1",
+          "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1",
+          "branches": [
+            {
+              "usi": "3c3d",
+              "kind": "main",
+              "note": "角道を開けます。",
+              "aim": "大駒の道を開けて、序盤の選択肢を広げたい。",
+              "child": {
+                "id": "n2",
+                "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                "branches": [
+                  {
+                    "usi": "7f7e",
+                    "kind": "main",
+                    "note": "相手が7筋の歩を伸ばしてきました。早石田の合図です。",
+                    "child": {
+                      "id": "n3",
+                      "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/2P6/9/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1",
+                      "comment": null,
+                      "branches": [
+                        {
+                          "usi": "5a4b",
+                          "kind": "main",
+                          "note": "ここで玉を上がるのが受け方の急所です。角のラインから玉を外しておくと、早石田の王手飛車の筋がなくなり、相手の▲7八飛にも△8八角成〜△4五角が成立するようになります。",
+                          "aim": "玉を相手の大駒の利きから外して、王手飛車などの罠を先に消しておきたい。",
+                          "child": {
+                            "id": "n4",
+                            "sfen": "lnsg1gsnl/1r3k1b1/pppppp1pp/6p2/2P6/9/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                            "comment": null,
+                            "branches": [
+                              {
+                                "usi": "6g6f",
+                                "kind": "main",
+                                "note": "相手は角道を止めました。早石田の速攻を諦め、通常の石田流に組み替えます。",
+                                "child": {
+                                  "id": "n5",
+                                  "sfen": "lnsg1gsnl/1r3k1b1/pppppp1pp/6p2/2P6/3P5/PP2PPPPP/1B5R1/LNSGKGSNL w - 1",
+                                  "branches": [
+                                    {
+                                      "usi": "8c8d",
+                                      "kind": "main",
+                                      "note": "飛車先を突きます。",
+                                      "aim": "攻めの主役の前を開けて、攻める姿勢を見せたい。",
+                                      "child": {
+                                        "id": "n6",
+                                        "sfen": "lnsg1gsnl/1r3k1b1/p1pppp1pp/1p4p2/2P6/3P5/PP2PPPPP/1B5R1/LNSGKGSNL b - 1",
+                                        "branches": [
+                                          {
+                                            "usi": "2h7h",
+                                            "kind": "main",
+                                            "note": "相手の飛車が7筋へ。三間飛車(石田流)です。",
+                                            "child": {
+                                              "id": "n7",
+                                              "sfen": "lnsg1gsnl/1r3k1b1/p1pppp1pp/1p4p2/2P6/3P5/PP2PPPPP/1BR6/LNSGKGSNL w - 1",
+                                              "comment": null,
+                                              "branches": [
+                                                {
+                                                  "usi": "8d8e",
+                                                  "kind": "main",
+                                                  "note": "飛車先を伸ばしておきます。",
+                                                  "aim": "攻めの主役の前を伸ばして、仕掛けに含みを持たせたい。",
+                                                  "child": {
+                                                    "id": "n8",
+                                                    "sfen": "lnsg1gsnl/1r3k1b1/p1pppp1pp/6p2/1pP6/3P5/PP2PPPPP/1BR6/LNSGKGSNL b - 1",
+                                                    "branches": [
+                                                      {
+                                                        "usi": "8h7g",
+                                                        "kind": "main",
+                                                        "note": "相手は角を上がって飛車先を受けます。",
+                                                        "child": {
+                                                          "id": "n9",
+                                                          "sfen": "lnsg1gsnl/1r3k1b1/p1pppp1pp/6p2/1pP6/3P5/PPB1PPPPP/2R6/LNSGKGSNL w - 1",
+                                                          "comment": null,
+                                                          "branches": [
+                                                            {
+                                                              "usi": "7a6b",
+                                                              "kind": "main",
+                                                              "note": "銀を上げて守りを固めます。",
+                                                              "aim": "守り駒を前に出して、守りの形を作りたい。",
+                                                              "child": {
+                                                                "id": "n10",
+                                                                "sfen": "ln1g1gsnl/1r1s1k1b1/p1pppp1pp/6p2/1pP6/3P5/PPB1PPPPP/2R6/LNSGKGSNL b - 1",
+                                                                "comment": null,
+                                                                "branches": [
+                                                                  {
+                                                                    "usi": "7i6h",
+                                                                    "kind": "main",
+                                                                    "note": "相手が銀を上げました。",
+                                                                    "child": {
+                                                                      "id": "n11",
+                                                                      "sfen": "ln1g1gsnl/1r1s1k1b1/p1pppp1pp/6p2/1pP6/3P5/PPB1PPPPP/2RS5/LN1GKGSNL w - 1",
+                                                                      "comment": null,
+                                                                      "branches": [
+                                                                        {
+                                                                          "usi": "4b3b",
+                                                                          "kind": "main",
+                                                                          "note": "玉をさらに右へ。",
+                                                                          "aim": "玉をもう一歩だけ安全な場所へ近づけたい。",
+                                                                          "child": {
+                                                                            "id": "n12",
+                                                                            "sfen": "ln1g1gsnl/1r1s2kb1/p1pppp1pp/6p2/1pP6/3P5/PPB1PPPPP/2RS5/LN1GKGSNL b - 1",
+                                                                            "comment": null,
+                                                                            "branches": [
+                                                                              {
+                                                                                "usi": "5i4h",
+                                                                                "kind": "main",
+                                                                                "note": "相手の玉が右へ向かいます。",
+                                                                                "child": {
+                                                                                  "id": "n13",
+                                                                                  "sfen": "ln1g1gsnl/1r1s2kb1/p1pppp1pp/6p2/1pP6/3P5/PPB1PPPPP/2RS1K3/LN1G1GSNL w - 1",
+                                                                                  "comment": null,
+                                                                                  "branches": [
+                                                                                    {
+                                                                                      "usi": "5c5d",
+                                                                                      "kind": "main",
+                                                                                      "note": "中央の歩を突いて、玉の周りを広くしておきます。",
+                                                                                      "aim": "中央に手をかけて、玉の周りを広くしておきたい。",
+                                                                                      "child": {
+                                                                                        "id": "n14",
+                                                                                        "sfen": "ln1g1gsnl/1r1s2kb1/p1pp1p1pp/4p1p2/1pP6/3P5/PPB1PPPPP/2RS1K3/LN1G1GSNL b - 1",
+                                                                                        "branches": [
+                                                                                          {
+                                                                                            "usi": "4h3h",
+                                                                                            "kind": "main",
+                                                                                            "note": "相手の玉が美濃囲いへ向かいます。",
+                                                                                            "child": {
+                                                                                              "id": "n15",
+                                                                                              "sfen": "ln1g1gsnl/1r1s2kb1/p1pp1p1pp/4p1p2/1pP6/3P5/PPB1PPPPP/2RS2K2/LN1G1GSNL w - 1",
+                                                                                              "comment": null,
+                                                                                              "branches": [
+                                                                                                {
+                                                                                                  "usi": "6a5b",
+                                                                                                  "kind": "main",
+                                                                                                  "note": "金を上げて陣形を整えます。",
+                                                                                                  "aim": "守りの駒を前に出して、陣形の隙を無くしたい。",
+                                                                                                  "child": {
+                                                                                                    "id": "n16",
+                                                                                                    "sfen": "ln3gsnl/1r1sg1kb1/p1pp1p1pp/4p1p2/1pP6/3P5/PPB1PPPPP/2RS2K2/LN1G1GSNL b - 1",
+                                                                                                    "comment": null,
+                                                                                                    "branches": [
+                                                                                                      {
+                                                                                                        "usi": "3h2h",
+                                                                                                        "kind": "main",
+                                                                                                        "note": "相手の玉が美濃囲いの定位置に入りました。",
+                                                                                                        "child": {
+                                                                                                          "id": "n17",
+                                                                                                          "sfen": "ln3gsnl/1r1sg1kb1/p1pp1p1pp/4p1p2/1pP6/3P5/PPB1PPPPP/2RS3K1/LN1G1GSNL w - 1",
+                                                                                                          "comment": null,
+                                                                                                          "branches": [
+                                                                                                            {
+                                                                                                              "usi": "6b5c",
+                                                                                                              "kind": "main",
+                                                                                                              "note": "銀を中央へ上げます。石田流の飛車と角に対して、中央を厚くして備えます。",
+                                                                                                              "aim": "相手の大駒2枚に対して、中央を厚くして備えたい。",
+                                                                                                              "child": {
+                                                                                                                "id": "n18",
+                                                                                                                "sfen": "ln3gsnl/1r2g1kb1/p1ppsp1pp/4p1p2/1pP6/3P5/PPB1PPPPP/2RS3K1/LN1G1GSNL b - 1",
+                                                                                                                "comment": null,
+                                                                                                                "branches": []
+                                                                                                              }
+                                                                                                            }
+                                                                                                          ]
+                                                                                                        }
+                                                                                                      }
+                                                                                                    ]
+                                                                                                  }
+                                                                                                }
+                                                                                              ]
+                                                                                            }
+                                                                                          }
+                                                                                        ]
+                                                                                      }
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              }
+                                                                            ]
+                                                                          }
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                              }
+                                                            }
+                                                          ]
+                                                        }
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

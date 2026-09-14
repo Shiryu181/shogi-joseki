@@ -42,6 +42,10 @@ import sankenbishaSenteRaw from "../data/joseki/sankenbisha-vs-ibisha--sente.jso
 import ibishaVsSankenbishaGoteRaw from "../data/joseki/ibisha-vs-sankenbisha--gote.json?raw";
 import nakabishaSenteRaw from "../data/joseki/nakabisha-vs-ibisha--sente.json?raw";
 import ibishaVsNakabishaGoteRaw from "../data/joseki/ibisha-vs-nakabisha--gote.json?raw";
+import ibishaVsGokigenChousokuRaw from "../data/joseki/ibisha-vs-gokigen--chousoku.json?raw";
+import nakabishaVsChousokuGoteRaw from "../data/joseki/nakabisha-vs-chousoku--gote.json?raw";
+import hayaishidaBasicRaw from "../data/joseki/hayaishida--basic.json?raw";
+import ibishaVsHayaishida42Raw from "../data/joseki/ibisha-vs-hayaishida--42gyoku.json?raw";
 import branchNavDemoRaw from "../data/joseki/_branchNavDemo.json?raw";
 
 /**
@@ -499,6 +503,46 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "急戦",
     summary: "飛車先を切られたら角交換から反撃する、ゴキゲン中飛車の主張。",
     load: () => assertJosekiCourse(parseRaw(nakabishaGokigen24Raw), "nakabisha-vs-ibisha--gokigen24.json"),
+  },
+  {
+    id: "ibisha-vs-gokigen--chousoku",
+    strategyId: "ibisha",
+    opponentLabel: "ゴキゲン中飛車",
+    sideLabel: "先手",
+    label: "超速▲3七銀",
+    kind: "急戦",
+    summary: "右銀を素早く4六へ繰り出し、2枚銀で5五の歩を狙う現代の主流対策。攻め方まで収録。",
+    load: () => assertJosekiCourse(parseRaw(ibishaVsGokigenChousokuRaw), "ibisha-vs-gokigen--chousoku.json"),
+  },
+  {
+    id: "ibisha-vs-hayaishida--42gyoku",
+    strategyId: "ibisha",
+    opponentLabel: "早石田",
+    sideLabel: "後手",
+    label: "△4二玉で罠を消す",
+    kind: "急戦",
+    summary: "▲7五歩を見たらすぐ玉を上がり、早石田の王手飛車の筋を消してから普通に組む。",
+    load: () => assertJosekiCourse(parseRaw(ibishaVsHayaishida42Raw), "ibisha-vs-hayaishida--42gyoku.json"),
+  },
+  {
+    id: "nakabisha-vs-chousoku--gote",
+    strategyId: "nakabisha",
+    opponentLabel: "超速▲3七銀",
+    sideLabel: "後手",
+    label: "銀対抗の受け方",
+    kind: "急戦",
+    summary: "相手の超速に銀を4四へ出して対抗し、▲4五桂や2筋の突き捨てを受け切る。",
+    load: () => assertJosekiCourse(parseRaw(nakabishaVsChousokuGoteRaw), "nakabisha-vs-chousoku--gote.json"),
+  },
+  {
+    id: "hayaishida--basic",
+    strategyId: "sankenbisha",
+    opponentLabel: "居飛車",
+    sideLabel: "先手",
+    label: "早石田",
+    kind: "急戦",
+    summary: "5手で攻めの形を作る三間飛車の速攻。相手が飛車先を交換すると王手飛車が決まる。",
+    load: () => assertJosekiCourse(parseRaw(hayaishidaBasicRaw), "hayaishida--basic.json"),
   },
   {
     id: "sujichigaikaku--basic",
