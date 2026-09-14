@@ -326,11 +326,11 @@
 }
 
 /* 出題パネルの先頭に出す「相手が指した手＋その解説」。 */
+/* 相手の手は地の文として置く。囲みを付けると「ねらい」と並んで見えて、
+   視線の引き付けが分散するため、色面も罫も付けない。 */
 .opp-move {
-  background: var(--card-2);
-  border-radius: 10px;
-  padding: 9px 11px;
-  color: var(--ink);
+  padding: 0 2px;
+  color: var(--ink-soft);
   font-size: 13.5px;
   line-height: 1.7;
 }
