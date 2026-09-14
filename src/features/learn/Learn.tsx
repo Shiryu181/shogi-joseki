@@ -40,7 +40,6 @@ export function Learn({ course, onBack }: LearnProps) {
   const bookQuiz = useLearnStore((s) => s.bookQuiz);
   const lastOpponent = useLearnStore((s) => s.lastOpponent);
   const bookQuizEnabled = useLearnStore((s) => s.bookQuizEnabled);
-  const setBookQuizEnabled = useLearnStore((s) => s.setBookQuizEnabled);
   const bookSelectSquare = useLearnStore((s) => s.bookSelectSquare);
   const bookSelectHand = useLearnStore((s) => s.bookSelectHand);
   const bookRetry = useLearnStore((s) => s.bookRetry);
@@ -51,10 +50,8 @@ export function Learn({ course, onBack }: LearnProps) {
   const attemptSquare = useLearnStore((s) => s.attemptSquare);
   const advance = useLearnStore((s) => s.advance);
   const chooseBranch = useLearnStore((s) => s.chooseBranch);
-  const goBack = useLearnStore((s) => s.goBack);
   const goToMove = useLearnStore((s) => s.goToMove);
   const loadCourse = useLearnStore((s) => s.loadCourse);
-  const setAutoAdvanceOpponent = useLearnStore((s) => s.setAutoAdvanceOpponent);
   const pauseAutoAdvance = useLearnStore((s) => s.pauseAutoAdvance);
   const resumeAutoAdvance = useLearnStore((s) => s.resumeAutoAdvance);
 
@@ -174,48 +171,9 @@ export function Learn({ course, onBack }: LearnProps) {
           <span className={`badge b-turn${position.color === Color.WHITE ? " gote" : ""}`}>
             {position.color === Color.BLACK ? "▲ 先手番" : "△ 後手番"}
           </span>
-          {/* 手数バッジをそのままセレクトにして、選んだ手の局面へ戻れるようにする。
-              「最初へ」ボタンは使われないという指摘を受けて置き換えた。出題中でも使える。 */}
-          <select
-            className="badge b-prog move-jump"
-            aria-label="手数を選んでその局面へ戻る"
-            value={Math.min(nodeHistory.length + 1, mainLine.length)}
-            onChange={(e) => goToMove(Number(e.target.value))}
-          >
-            {/* 戻る用途なので、これから指す手は列挙しない(出題の答えが見えてしまう)。
-                現在の手も手数だけにする。 */}
-            {mainLine
-              .filter((m) => m.n <= nodeHistory.length + 1)
-              .map((m) =>
-                m.n === nodeHistory.length + 1 ? (
-                  <option key={m.n} value={m.n}>
-                    {m.n} / {totalMoves} 手
-                  </option>
-                ) : (
-                  <option key={m.n} value={m.n}>
-                    {m.n}手目 {m.text} に戻る
-                  </option>
-                ),
-              )}
-          </select>
-          <button
-            type="button"
-            className={`badge toggle-auto${autoAdvanceOpponent ? "" : " off"}`}
-            onClick={() => setAutoAdvanceOpponent(!autoAdvanceOpponent)}
-            aria-pressed={!autoAdvanceOpponent}
-          >
-            {/* 出題は相手の手を自動で指すときだけ出る(逸れ手を相手に指させるため)。
-                切り替えるとクイズが出なくなることが分かるようラベルに明記する。 */}
-            {autoAdvanceOpponent ? "相手の手:自動" : "全部なぞる(出題なし)"}
-          </button>
-          <button
-            type="button"
-            className={`badge toggle-auto${bookQuizEnabled ? "" : " off"}`}
-            onClick={() => setBookQuizEnabled(!bookQuizEnabled)}
-            aria-pressed={bookQuizEnabled}
-          >
-            {bookQuizEnabled ? "次の一手:出題" : "次の一手:なぞる"}
-          </button>
+          <span className="badge b-prog">
+            {Math.min(nodeHistory.length + 1, totalMoves)} / {totalMoves} 手
+          </span>
         </div>
         <Board
           position={position}
@@ -256,6 +214,25 @@ export function Learn({ course, onBack }: LearnProps) {
         )}
         {bookQuiz ? (
           <div className="learn-navrow">
+          {/* 「◀ 戻る」と書いたボタン型のセレクト。開くと過去の手が並び、選ぶとその局面へ戻る。
+              バッジをセレクト化した案は気づかれないので、押せると分かる見た目にした。 */}
+          <select
+            className="back-select"
+            aria-label="戻る手を選ぶ"
+            value=""
+            disabled={nodeHistory.length === 0}
+            onChange={(e) => { if (e.target.value) goToMove(Number(e.target.value)); }}
+          >
+            <option value="">◀ 戻る</option>
+            {mainLine
+              .filter((m) => m.n <= nodeHistory.length)
+              .reverse()
+              .map((m) => (
+                <option key={m.n} value={m.n}>
+                  {m.n}手目 {m.text} の前に戻る
+                </option>
+              ))}
+          </select>
             <button type="button" onClick={bookRetry} disabled={!bookQuiz.wrong}>
               もう一度
             </button>
@@ -282,9 +259,25 @@ export function Learn({ course, onBack }: LearnProps) {
           </div>
         ) : (
         <div className="learn-navrow">
-          <button type="button" onClick={goBack} disabled={nodeHistory.length === 0} aria-label="1手戻る">
-            ◀
-          </button>
+          {/* 「◀ 戻る」と書いたボタン型のセレクト。開くと過去の手が並び、選ぶとその局面へ戻る。
+              バッジをセレクト化した案は気づかれないので、押せると分かる見た目にした。 */}
+          <select
+            className="back-select"
+            aria-label="戻る手を選ぶ"
+            value=""
+            disabled={nodeHistory.length === 0}
+            onChange={(e) => { if (e.target.value) goToMove(Number(e.target.value)); }}
+          >
+            <option value="">◀ 戻る</option>
+            {mainLine
+              .filter((m) => m.n <= nodeHistory.length)
+              .reverse()
+              .map((m) => (
+                <option key={m.n} value={m.n}>
+                  {m.n}手目 {m.text} の前に戻る
+                </option>
+              ))}
+          </select>
           <button type="button" className="primary" onClick={advance} disabled={isGoal && !pendingAck}>
             {pendingAck ? "次へ ▶" : "なぞって次へ ▶"}
           </button>
@@ -307,7 +300,7 @@ export function Learn({ course, onBack }: LearnProps) {
               return (
                 <p className="quiz-aim">
                   <span className="quiz-no">{moveNumber}手目</span>
-                  {hint ? `ねらい: ${hint}` : "次の一手は？"}
+                  {hint ?? "次の一手は？"}
                 </p>
               );
             })()}

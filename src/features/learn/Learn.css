@@ -131,19 +131,25 @@
   font-family: var(--body);
   font-size: 13px;
 }
-/* 手数バッジ兼セレクト。選んだ手の局面へ戻れる(「最初へ」ボタンの代わり)。 */
-.move-jump {
+/* 「◀ 戻る」ボタン型のセレクト。押すと過去の手が並び、選ぶとその局面へ戻る。 */
+.back-select {
+  flex: 1;
+  min-width: 0;
   appearance: none;
   -webkit-appearance: none;
-  cursor: pointer;
+  border: 1px solid var(--line-2);
+  background: var(--card);
+  border-radius: 9px;
+  padding: 7px 8px;
+  color: var(--ink);
+  font-size: 13px;
   font-family: var(--body);
-  /* バッジの見た目に「▾」を足して、押せることを示す */
-  padding-right: 18px !important;
-  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
-    linear-gradient(135deg, currentColor 50%, transparent 50%);
-  background-position: calc(100% - 10px) 55%, calc(100% - 6px) 55%;
-  background-size: 4px 4px, 4px 4px;
-  background-repeat: no-repeat;
+  text-align: center;
+  cursor: pointer;
+}
+.back-select:disabled {
+  opacity: 0.4;
+  cursor: default;
 }
 
 .goal-banner {
@@ -330,11 +336,36 @@
 }
 
 /* 出題時に見せる「ねらい」。答えの手の解説を升だけ伏せたもの。 */
+/*
+ * 次の一手の「ねらい」。ユーザーが考える手がかりで、パネルの主役。
+ * 相手の手や局面の解説より視覚的に強くする(色面・左の太罫・少し大きい文字・見出し)。
+ */
 .quiz-aim {
-  background: var(--gold-soft);
+  position: relative;
+  background: linear-gradient(135deg, #fff3d0, #fbe6b3);
   color: var(--brown-ink);
+  border-left: 5px solid var(--gold);
   border-radius: 10px;
-  padding: 9px 11px;
-  font-size: 14px;
+  padding: 10px 12px 11px 13px;
+  font-size: 15.5px;
+  font-weight: 600;
   line-height: 1.7;
+  box-shadow: 0 2px 8px rgba(120, 90, 40, 0.14);
+}
+.quiz-aim .quiz-no {
+  display: block;
+  margin: 0 0 3px;
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+.quiz-aim .quiz-no::after {
+  content: " ・ 次の一手のねらい";
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .quiz-aim {
+    background: linear-gradient(135deg, #4a3a1c, #3a2d14);
+    color: #ffe9b8;
+  }
 }
