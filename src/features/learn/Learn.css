@@ -338,34 +338,31 @@
 /* 出題時に見せる「ねらい」。答えの手の解説を升だけ伏せたもの。 */
 /*
  * 次の一手の「ねらい」。ユーザーが考える手がかりで、パネルの主役。
- * 相手の手や局面の解説より視覚的に強くする(色面・左の太罫・少し大きい文字・見出し)。
+ * 強調は装飾(グラデーション・影・色罫)ではなく、見出しと同じ明朝体と
+ * 文字の大きさで行う。色面は他の要素と同じ gold-soft の平塗りにとどめ、
+ * アプリ全体の和紙・木肌の落ち着いた調子から外れないようにする。
  */
 .quiz-aim {
-  position: relative;
-  background: linear-gradient(135deg, #fff3d0, #fbe6b3);
-  color: var(--brown-ink);
-  border-left: 5px solid var(--gold);
-  border-radius: 10px;
-  padding: 10px 12px 11px 13px;
-  font-size: 15.5px;
+  background: var(--gold-soft);
+  border: 1px solid var(--line-2);
+  border-radius: 12px;
+  padding: 11px 14px 12px;
+  color: var(--ink);
+  font-family: var(--disp);
+  font-size: 16px;
   font-weight: 600;
-  line-height: 1.7;
-  box-shadow: 0 2px 8px rgba(120, 90, 40, 0.14);
+  line-height: 1.75;
+  letter-spacing: 0.02em;
 }
 .quiz-aim .quiz-no {
   display: block;
-  margin: 0 0 3px;
-  color: var(--gold);
+  margin: 0 0 4px;
+  font-family: var(--body);
   font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-weight: 400;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
 }
 .quiz-aim .quiz-no::after {
-  content: " ・ 次の一手のねらい";
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .quiz-aim {
-    background: linear-gradient(135deg, #4a3a1c, #3a2d14);
-    color: #ffe9b8;
-  }
+  content: "のねらい";
 }
