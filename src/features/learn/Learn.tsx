@@ -310,9 +310,16 @@ export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter }:
               次の章へ ▶ {path.chapters[chapterIndex + 1]?.entry.label ?? ""}
             </button>
           ) : (
-            <button type="button" className="primary" onClick={advance} disabled={isGoal && !pendingAck}>
-              {pendingAck ? "次へ ▶" : isGoal ? "この章は修了です" : "なぞって次へ ▶"}
-            </button>
+            isGoal && !pendingAck && path ? (
+              // 最後の章まで終えた。押せないボタンで終わらせず、戻り先を示す。
+              <button type="button" className="primary" onClick={onBack}>
+                すべての章を修了 ・ 戻る
+              </button>
+            ) : (
+              <button type="button" className="primary" onClick={advance} disabled={isGoal && !pendingAck}>
+                {pendingAck ? "次へ ▶" : isGoal ? "修了" : "なぞって次へ ▶"}
+              </button>
+            )
           )}
         </div>
         )}

@@ -4,9 +4,9 @@
   "myStrategy": "kakugawari",
   "opponentStrategy": "kakugawari",
   "mySide": "sente",
-  "source": "手順は将棋大図書館(shogilounge.com)「角換わり早繰り銀の定跡」の基本図までの指し手に準拠(2026-08)",
+  "source": "基本図までは将棋大図書館(shogilounge.com)「角換わり早繰り銀の定跡」に準拠。仕掛け以降はゼロから始める将棋研究所(shogi-joutatsu.com)「角換わり早繰り銀の定跡と攻め方」の型(▲3五歩△同歩▲同銀△3四歩▲2四歩から銀交換できれば成功)に沿って構成し、エンジンで検証した(2026-09)",
   "goalFormation": "角を交換し合い、銀を3八へ。棒銀より早く銀を繰り出して、3六→4五と使っていく指し方。",
-  "goalSfen": "ln1gk2nl/1rs2sg2/p1pppp1pp/6p2/1p7/2P4P1/PPSPPPP1P/2G3SR1/LN2KG1NL b Bb 1",
+  "goalSfen": "ln1gk2nl/1r4g2/p1p1p2pp/3pspp2/1p7/2P6/PPSPPP2P/2GK3R1/LN3G1NL w BS2Pbs 1",
   "root": {
     "id": "n0",
     "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
@@ -133,7 +133,271 @@
                                                                                         "id": "n14",
                                                                                         "sfen": "ln1gk2nl/1rs2sg2/p1pppp1pp/6p2/1p7/2P4P1/PPSPPPP1P/2G3SR1/LN2KG1NL b Bb 1",
                                                                                         "comment": "角換わり早繰り銀の基本形です。棒銀が2筋を狙うのに対し、こちらは銀を3七→4六と使って幅広く攻めるのが狙いです。仕掛け以降は今後のフェーズで扱います。",
-                                                                                        "branches": []
+                                                                                        "branches": [
+                                                                                          {
+                                                                                            "usi": "3g3f",
+                                                                                            "kind": "main",
+                                                                                            "note": "3筋の歩を突きます。銀を3七→4六と繰り出す道を開ける、早繰り銀の第一歩です。",
+                                                                                            "aim": "攻めの駒が前へ出るための道を、歩を突いて空けたい。",
+                                                                                            "child": {
+                                                                                              "id": "n15",
+                                                                                              "sfen": "ln1gk2nl/1rs2sg2/p1pppp1pp/6p2/1p7/2P3PP1/PPSPPP2P/2G3SR1/LN2KG1NL w Bb 1",
+                                                                                              "comment": null,
+                                                                                              "branches": [
+                                                                                                {
+                                                                                                  "usi": "6c6d",
+                                                                                                  "kind": "main",
+                                                                                                  "note": "相手は6筋の歩を突いて、腰掛け銀を目指します。",
+                                                                                                  "child": {
+                                                                                                    "id": "n16",
+                                                                                                    "sfen": "ln1gk2nl/1rs2sg2/p1p1pp1pp/3p2p2/1p7/2P3PP1/PPSPPP2P/2G3SR1/LN2KG1NL b Bb 1",
+                                                                                                    "comment": null,
+                                                                                                    "branches": [
+                                                                                                      {
+                                                                                                        "usi": "3h3g",
+                                                                                                        "kind": "main",
+                                                                                                        "note": "銀を3七へ。次に4六へ出ます。",
+                                                                                                        "aim": "攻めの駒を一歩前へ運んで、前線に近づけたい。",
+                                                                                                        "child": {
+                                                                                                          "id": "n17",
+                                                                                                          "sfen": "ln1gk2nl/1rs2sg2/p1p1pp1pp/3p2p2/1p7/2P3PP1/PPSPPPS1P/2G4R1/LN2KG1NL w Bb 1",
+                                                                                                          "comment": null,
+                                                                                                          "branches": [
+                                                                                                            {
+                                                                                                              "usi": "7b6c",
+                                                                                                              "kind": "main",
+                                                                                                              "note": "相手の銀が6三へ。",
+                                                                                                              "child": {
+                                                                                                                "id": "n18",
+                                                                                                                "sfen": "ln1gk2nl/1r3sg2/p1pspp1pp/3p2p2/1p7/2P3PP1/PPSPPPS1P/2G4R1/LN2KG1NL b Bb 1",
+                                                                                                                "comment": null,
+                                                                                                                "branches": [
+                                                                                                                  {
+                                                                                                                    "usi": "2f2e",
+                                                                                                                    "kind": "main",
+                                                                                                                    "note": "飛車先を伸ばしておきます。仕掛けのときに▲2四歩と突けるようにする準備です。",
+                                                                                                                    "aim": "仕掛けのときに使えるよう、攻めの主役の前を伸ばしておきたい。",
+                                                                                                                    "child": {
+                                                                                                                      "id": "n19",
+                                                                                                                      "sfen": "ln1gk2nl/1r3sg2/p1pspp1pp/3p2p2/1p5P1/2P3P2/PPSPPPS1P/2G4R1/LN2KG1NL w Bb 1",
+                                                                                                                      "comment": null,
+                                                                                                                      "branches": [
+                                                                                                                        {
+                                                                                                                          "usi": "4b3c",
+                                                                                                                          "kind": "main",
+                                                                                                                          "note": "相手の銀が3三へ上がり、2筋を受けました。",
+                                                                                                                          "child": {
+                                                                                                                            "id": "n20",
+                                                                                                                            "sfen": "ln1gk2nl/1r4g2/p1psppspp/3p2p2/1p5P1/2P3P2/PPSPPPS1P/2G4R1/LN2KG1NL b Bb 1",
+                                                                                                                            "comment": null,
+                                                                                                                            "branches": [
+                                                                                                                              {
+                                                                                                                                "usi": "3g4f",
+                                                                                                                                "kind": "main",
+                                                                                                                                "note": "銀が4六に到着。早繰り銀の形ができました。次に▲3五歩と突きます。",
+                                                                                                                                "aim": "攻めの駒を前線まで運んで、仕掛けの形を作りたい。",
+                                                                                                                                "child": {
+                                                                                                                                  "id": "n21",
+                                                                                                                                  "sfen": "ln1gk2nl/1r4g2/p1psppspp/3p2p2/1p5P1/2P2SP2/PPSPPP2P/2G4R1/LN2KG1NL w Bb 1",
+                                                                                                                                  "comment": null,
+                                                                                                                                  "branches": [
+                                                                                                                                    {
+                                                                                                                                      "usi": "6c5d",
+                                                                                                                                      "kind": "main",
+                                                                                                                                      "note": "相手の銀が5四へ。腰掛け銀の形です。",
+                                                                                                                                      "child": {
+                                                                                                                                        "id": "n22",
+                                                                                                                                        "sfen": "ln1gk2nl/1r4g2/p1p1ppspp/3ps1p2/1p5P1/2P2SP2/PPSPPP2P/2G4R1/LN2KG1NL b Bb 1",
+                                                                                                                                        "comment": null,
+                                                                                                                                        "branches": [
+                                                                                                                                          {
+                                                                                                                                            "usi": "5i6h",
+                                                                                                                                            "kind": "main",
+                                                                                                                                            "note": "仕掛ける前に玉を一つ動かしておきます。",
+                                                                                                                                            "aim": "仕掛ける前に、玉を少しでも安全な位置に動かしておきたい。",
+                                                                                                                                            "openEnded": true,
+                                                                                                                                            "child": {
+                                                                                                                                              "id": "n23",
+                                                                                                                                              "sfen": "ln1gk2nl/1r4g2/p1p1ppspp/3ps1p2/1p5P1/2P2SP2/PPSPPP2P/2GK3R1/LN3G1NL w Bb 1",
+                                                                                                                                              "comment": null,
+                                                                                                                                              "branches": [
+                                                                                                                                                {
+                                                                                                                                                  "usi": "4c4d",
+                                                                                                                                                  "kind": "main",
+                                                                                                                                                  "note": "相手が4筋の歩を突きました。",
+                                                                                                                                                  "child": {
+                                                                                                                                                    "id": "n24",
+                                                                                                                                                    "sfen": "ln1gk2nl/1r4g2/p1p1p1spp/3pspp2/1p5P1/2P2SP2/PPSPPP2P/2GK3R1/LN3G1NL b Bb 1",
+                                                                                                                                                    "comment": null,
+                                                                                                                                                    "branches": [
+                                                                                                                                                      {
+                                                                                                                                                        "usi": "3f3e",
+                                                                                                                                                        "kind": "main",
+                                                                                                                                                        "note": "3筋の歩をぶつけて仕掛けます。早繰り銀の狙いの一手です。",
+                                                                                                                                                        "aim": "前線に出した銀の前の歩をぶつけて、戦いを起こしたい。",
+                                                                                                                                                        "child": {
+                                                                                                                                                          "id": "n25",
+                                                                                                                                                          "sfen": "ln1gk2nl/1r4g2/p1p1p1spp/3pspp2/1p4PP1/2P2S3/PPSPPP2P/2GK3R1/LN3G1NL w Bb 1",
+                                                                                                                                                          "comment": null,
+                                                                                                                                                          "branches": [
+                                                                                                                                                            {
+                                                                                                                                                              "usi": "3d3e",
+                                                                                                                                                              "kind": "main",
+                                                                                                                                                              "note": "相手は歩で取ります。",
+                                                                                                                                                              "child": {
+                                                                                                                                                                "id": "n26",
+                                                                                                                                                                "sfen": "ln1gk2nl/1r4g2/p1p1p1spp/3psp3/1p4pP1/2P2S3/PPSPPP2P/2GK3R1/LN3G1NL b Bbp 1",
+                                                                                                                                                                "comment": null,
+                                                                                                                                                                "branches": [
+                                                                                                                                                                  {
+                                                                                                                                                                    "usi": "4f3e",
+                                                                                                                                                                    "kind": "main",
+                                                                                                                                                                    "note": "銀で取り返します。銀が3五まで進出しました。",
+                                                                                                                                                                    "aim": "取り返して、攻めの駒をさらに前へ進めたい。",
+                                                                                                                                                                    "child": {
+                                                                                                                                                                      "id": "n27",
+                                                                                                                                                                      "sfen": "ln1gk2nl/1r4g2/p1p1p1spp/3psp3/1p4SP1/2P6/PPSPPP2P/2GK3R1/LN3G1NL w BPbp 1",
+                                                                                                                                                                      "comment": null,
+                                                                                                                                                                      "branches": [
+                                                                                                                                                                        {
+                                                                                                                                                                          "usi": "P*3d",
+                                                                                                                                                                          "kind": "main",
+                                                                                                                                                                          "note": "相手は持ち駒の歩を打って銀に当ててきました。",
+                                                                                                                                                                          "child": {
+                                                                                                                                                                            "id": "n28",
+                                                                                                                                                                            "sfen": "ln1gk2nl/1r4g2/p1p1p1spp/3pspp2/1p4SP1/2P6/PPSPPP2P/2GK3R1/LN3G1NL b BPb 1",
+                                                                                                                                                                            "branches": [
+                                                                                                                                                                              {
+                                                                                                                                                                                "usi": "2e2d",
+                                                                                                                                                                                "kind": "main",
+                                                                                                                                                                                "note": "ここで2筋の歩をぶつけるのが急所です。銀は逃げず、2筋を絡めて攻めます。",
+                                                                                                                                                                                "aim": "当てられた駒を逃げずに、別の筋の歩をぶつけて攻めを繋げたい。",
+                                                                                                                                                                                "child": {
+                                                                                                                                                                                  "id": "n29",
+                                                                                                                                                                                  "sfen": "ln1gk2nl/1r4g2/p1p1p1spp/3psppP1/1p4S2/2P6/PPSPPP2P/2GK3R1/LN3G1NL w BPb 1",
+                                                                                                                                                                                  "comment": null,
+                                                                                                                                                                                  "branches": [
+                                                                                                                                                                                    {
+                                                                                                                                                                                      "usi": "3c2d",
+                                                                                                                                                                                      "kind": "main",
+                                                                                                                                                                                      "note": "相手は銀で歩を取りました。",
+                                                                                                                                                                                      "child": {
+                                                                                                                                                                                        "id": "n30",
+                                                                                                                                                                                        "sfen": "ln1gk2nl/1r4g2/p1p1p2pp/3pspps1/1p4S2/2P6/PPSPPP2P/2GK3R1/LN3G1NL b BPbp 1",
+                                                                                                                                                                                        "comment": null,
+                                                                                                                                                                                        "branches": [
+                                                                                                                                                                                          {
+                                                                                                                                                                                            "usi": "3e2d",
+                                                                                                                                                                                            "kind": "main",
+                                                                                                                                                                                            "note": "銀で取り返します。相手の守りの銀と、こちらの攻めの銀の交換になります。",
+                                                                                                                                                                                            "aim": "攻めの銀で取り返して、相手の守りの銀と交換に持ち込みたい。",
+                                                                                                                                                                                            "child": {
+                                                                                                                                                                                              "id": "n31",
+                                                                                                                                                                                              "sfen": "ln1gk2nl/1r4g2/p1p1p2pp/3psppS1/1p7/2P6/PPSPPP2P/2GK3R1/LN3G1NL w BSPbp 1",
+                                                                                                                                                                                              "comment": null,
+                                                                                                                                                                                              "branches": [
+                                                                                                                                                                                                {
+                                                                                                                                                                                                  "usi": "2c2d",
+                                                                                                                                                                                                  "kind": "main",
+                                                                                                                                                                                                  "note": "相手は歩で取り返します。",
+                                                                                                                                                                                                  "child": {
+                                                                                                                                                                                                    "id": "n32",
+                                                                                                                                                                                                    "sfen": "ln1gk2nl/1r4g2/p1p1p3p/3psppp1/1p7/2P6/PPSPPP2P/2GK3R1/LN3G1NL b BSPbsp 1",
+                                                                                                                                                                                                    "comment": null,
+                                                                                                                                                                                                    "branches": [
+                                                                                                                                                                                                      {
+                                                                                                                                                                                                        "usi": "2h2d",
+                                                                                                                                                                                                        "kind": "main",
+                                                                                                                                                                                                        "note": "飛車で取り返します。飛車先を突破し、持ち駒に銀ができました。",
+                                                                                                                                                                                                        "aim": "大駒で取り返して、飛車先を突破したい。",
+                                                                                                                                                                                                        "openEnded": true,
+                                                                                                                                                                                                        "child": {
+                                                                                                                                                                                                          "id": "n33",
+                                                                                                                                                                                                          "sfen": "ln1gk2nl/1r4g2/p1p1p3p/3psppR1/1p7/2P6/PPSPPP2P/2GK5/LN3G1NL w BS2Pbsp 1",
+                                                                                                                                                                                                          "comment": null,
+                                                                                                                                                                                                          "branches": [
+                                                                                                                                                                                                            {
+                                                                                                                                                                                                              "usi": "P*2c",
+                                                                                                                                                                                                              "kind": "main",
+                                                                                                                                                                                                              "note": "相手は歩を打って飛車を追います。",
+                                                                                                                                                                                                              "child": {
+                                                                                                                                                                                                                "id": "n34",
+                                                                                                                                                                                                                "sfen": "ln1gk2nl/1r4g2/p1p1p2pp/3psppR1/1p7/2P6/PPSPPP2P/2GK5/LN3G1NL b BS2Pbs 1",
+                                                                                                                                                                                                                "branches": [
+                                                                                                                                                                                                                  {
+                                                                                                                                                                                                                    "usi": "2d2h",
+                                                                                                                                                                                                                    "kind": "main",
+                                                                                                                                                                                                                    "note": "飛車を引きます。銀交換に成功し、相手の守りは銀が減って薄くなりました。",
+                                                                                                                                                                                                                    "aim": "追われた大駒を引いて、持ち駒の銀を活かす次の攻めに備えたい。",
+                                                                                                                                                                                                                    "openEnded": true,
+                                                                                                                                                                                                                    "child": {
+                                                                                                                                                                                                                      "id": "n35",
+                                                                                                                                                                                                                      "sfen": "ln1gk2nl/1r4g2/p1p1p2pp/3pspp2/1p7/2P6/PPSPPP2P/2GK3R1/LN3G1NL w BS2Pbs 1",
+                                                                                                                                                                                                                      "comment": "早繰り銀の仕掛けが決まりました(先手+132)。相手の守りの銀と、こちらの攻めの銀を交換できれば早繰り銀の攻めは成功です。持ち駒の銀を使って、相手の薄くなった2筋・3筋から攻めていきます。まとめると、(1)銀を3七→4六と早く繰り出す、(2)▲3五歩から仕掛ける、(3)銀を当てられたら逃げず▲2四歩で攻めを繋げる、の3つです。",
+                                                                                                                                                                                                                      "branches": []
+                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                  }
+                                                                                                                                                                                                                ]
+                                                                                                                                                                                                              }
+                                                                                                                                                                                                            }
+                                                                                                                                                                                                          ]
+                                                                                                                                                                                                        }
+                                                                                                                                                                                                      }
+                                                                                                                                                                                                    ]
+                                                                                                                                                                                                  }
+                                                                                                                                                                                                }
+                                                                                                                                                                                              ]
+                                                                                                                                                                                            }
+                                                                                                                                                                                          }
+                                                                                                                                                                                        ]
+                                                                                                                                                                                      }
+                                                                                                                                                                                    }
+                                                                                                                                                                                  ]
+                                                                                                                                                                                }
+                                                                                                                                                                              }
+                                                                                                                                                                            ]
+                                                                                                                                                                          }
+                                                                                                                                                                        }
+                                                                                                                                                                      ]
+                                                                                                                                                                    }
+                                                                                                                                                                  }
+                                                                                                                                                                ]
+                                                                                                                                                              }
+                                                                                                                                                            }
+                                                                                                                                                          ]
+                                                                                                                                                        }
+                                                                                                                                                      }
+                                                                                                                                                    ]
+                                                                                                                                                  }
+                                                                                                                                                }
+                                                                                                                                              ]
+                                                                                                                                            }
+                                                                                                                                          }
+                                                                                                                                        ]
+                                                                                                                                      }
+                                                                                                                                    }
+                                                                                                                                  ]
+                                                                                                                                }
+                                                                                                                              }
+                                                                                                                            ]
+                                                                                                                          }
+                                                                                                                        }
+                                                                                                                      ]
+                                                                                                                    }
+                                                                                                                  }
+                                                                                                                ]
+                                                                                                              }
+                                                                                                            }
+                                                                                                          ]
+                                                                                                        }
+                                                                                                      }
+                                                                                                    ]
+                                                                                                  }
+                                                                                                }
+                                                                                              ]
+                                                                                            }
+                                                                                          }
+                                                                                        ]
                                                                                       }
                                                                                     }
                                                                                   ]
