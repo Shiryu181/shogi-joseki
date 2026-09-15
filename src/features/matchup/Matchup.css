@@ -192,3 +192,20 @@
   color: inherit;
   opacity: 0.85;
 }
+
+/* 「相手に備える」の対策一覧に付けるおすすめ順の番号。 */
+.course-rank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: var(--brown);
+  color: #fff;
+  font-size: 11px;
+  font-family: var(--disp);
+  font-weight: 600;
+  vertical-align: middle;
+}

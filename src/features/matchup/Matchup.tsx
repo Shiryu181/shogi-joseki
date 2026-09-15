@@ -1,67 +1,55 @@
 import { useMemo, useState } from "react";
-import type { Strategy } from "../../domain/types";
-import { courseEntriesFor } from "../../domain/josekiLoader";
+import { courseEntriesFor, courseEntriesForOpponent } from "../../domain/josekiLoader";
+import type { CourseEntry } from "../../domain/josekiLoader";
+import type { CardItem } from "../home/StrategyCard";
+import type { HomeMode } from "../home/Home";
 import "./Matchup.css";
 
 export type PracticeMode = "learn" | "practice";
 
 export interface MatchupProps {
-  strategy: Strategy;
+  /** どちらの入口から来たか。見出しと並べ方が変わる。 */
+  mode: HomeMode;
+  item: CardItem;
   onBack: () => void;
-  /** 「この設定で始める」。選んだ作戦(コースid)とモードを渡す。 */
+  /** 「この設定で始める」。選んだコースidとモードを渡す。 */
   onStart: (courseId: string, mode: PracticeMode) => void;
 }
 
+/** 「自分の戦法」: 分類(group)ごとにまとめる。基本の組み方を先頭に。 */
+function groupMine(entries: CourseEntry[]): { title: string; items: CourseEntry[] }[] {
+  const order = ["基本", "基本の組み方", "基本の攻め", "基本と変化", "基本と受け方"];
+  const map = new Map<string, CourseEntry[]>();
+  for (const e of entries) {
+    const g = e.group ?? "その他";
+    if (!map.has(g)) map.set(g, []);
+    map.get(g)!.push(e);
+  }
+  return [...map.entries()]
+    .sort((a, b) => {
+      const ia = order.indexOf(a[0]), ib = order.indexOf(b[0]);
+      return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+    })
+    .map(([title, items]) => ({ title, items }));
+}
+
 /**
- * 対抗形・条件選択画面。DESIGN.md §5.2 準拠。
- * 実データがあるのは「(居飛車) vs 四間飛車・先手」の1コースのみなので、
- * それ以外の相手戦法・後手は選べないことを明示し(準備中・非活性)、
- * 選べるように見せない。
+ * コース選択画面。
+ * 「自分の戦法」から来たときは、その戦法のコースを分類ごとに並べる。
+ * 「相手に備える」から来たときは、その相手への対策をおすすめ順に並べる
+ * (自分がどの戦法で戦うかがひと目で分かるように、自分の戦法名を添える)。
  */
-export function Matchup({ strategy, onBack, onStart }: MatchupProps) {
-  const [mode, setMode] = useState<PracticeMode>("learn");
-  // この戦法カードから選べるコースだけに絞る(居飛車のカードに四間飛車の作戦が出ないように)。
-  const entries = useMemo(() => courseEntriesFor(strategy.id), [strategy.id]);
-
-  // 「相手の戦法 → 自分の手番 → 作戦」の順に絞り込む。
-  // 以前は相手と手番を選択中のコースから逆算していたため、相手が四間飛車なのに
-  // 作戦一覧に「対三間飛車」が並ぶ、という食い違いが起きていた。
-  const opponents = useMemo(
-    () => Array.from(new Set(entries.map((c) => c.opponentLabel))),
-    [entries],
+export function Matchup({ mode, item, onBack, onStart }: MatchupProps) {
+  const [practiceMode, setPracticeMode] = useState<PracticeMode>("learn");
+  const entries = useMemo(
+    () => (mode === "mine" ? courseEntriesFor(item.id) : courseEntriesForOpponent(item.id)),
+    [mode, item.id],
   );
-  const [opponent, setOpponent] = useState<string>(() => entries[0]?.opponentLabel ?? "");
-  const [side, setSide] = useState<"先手" | "後手">(() => entries[0]?.sideLabel ?? "先手");
   const [courseId, setCourseId] = useState<string>(() => entries[0]?.id ?? "");
+  const selected = entries.find((c) => c.id === courseId) ?? entries[0];
 
-  // 選択の組み合わせが無くなった場合(相手を変えてその手番が無い等)は、
-  // state を書き換えずに実際に選べる値へ寄せる。表示と中身が食い違わないようにする。
-  const effectiveOpponent = opponents.includes(opponent) ? opponent : (opponents[0] ?? "");
-  const byOpponent = entries.filter((c) => c.opponentLabel === effectiveOpponent);
-  const availableSides = Array.from(new Set(byOpponent.map((c) => c.sideLabel)));
-  const effectiveSide = availableSides.includes(side) ? side : (availableSides[0] ?? "先手");
-  const sideEntries = byOpponent.filter((c) => c.sideLabel === effectiveSide);
-  const selected = sideEntries.find((c) => c.id === courseId) ?? sideEntries[0];
-
-  /** 相手の戦法を切り替える。手番と作戦も、その相手で選べるものへ寄せ直す。 */
-  function chooseOpponent(next: string) {
-    setOpponent(next);
-    const list = entries.filter((c) => c.opponentLabel === next);
-    const keepSide = list.some((c) => c.sideLabel === side);
-    const first = keepSide ? list.find((c) => c.sideLabel === side) : list[0];
-    if (first) {
-      setSide(first.sideLabel);
-      setCourseId(first.id);
-    }
-  }
-
-  /** 手番を切り替えたら、その手番の先頭コースを選び直す。 */
-  function chooseSide(next: "先手" | "後手") {
-    if (!availableSides.includes(next)) return;
-    setSide(next);
-    const first = byOpponent.find((c) => c.sideLabel === next);
-    if (first) setCourseId(first.id);
-  }
+  const sections =
+    mode === "mine" ? groupMine(entries) : [{ title: "おすすめ順の対策", items: entries }];
 
   return (
     <div className="matchup-wrap">
@@ -73,100 +61,69 @@ export function Matchup({ strategy, onBack, onStart }: MatchupProps) {
             </svg>
           </button>
           <div>
-            <h2>{strategy.name}</h2>
-            <div className="as">対戦条件を選ぶ</div>
+            <h2>{mode === "mine" ? item.name : `相手が${item.name}`}</h2>
+            <div className="as">{mode === "mine" ? "コースを選ぶ" : "対策を選ぶ"}</div>
           </div>
         </div>
         <div className="mbody">
           <div className="vshero">
             <div className="vs">
-              {strategy.name} <small>vs {effectiveOpponent || "—"}</small>
+              {mode === "mine" ? item.name : `vs ${item.name}`}
+              <small>{item.description}</small>
             </div>
           </div>
 
-          <div className="fld">
-            <h4>相手の戦法</h4>
-            {opponents.map((o) => (
-              <button
-                key={o}
-                type="button"
-                className={`opt${effectiveOpponent === o ? " sel" : ""}`}
-                onClick={() => chooseOpponent(o)}
-              >
-                {o} {effectiveOpponent === o && <span className="chk">✓</span>}
-              </button>
-            ))}
-            <div className="opt disabled">
-              その他の戦法 <span className="mini">準備中</span>
-            </div>
-          </div>
-
-          <div className="fld">
-            <h4>作戦</h4>
-            <div className="courselist">
-              {sideEntries.map((c) => (
-                <button
-                  key={c.id}
-                  type="button"
-                  className={`opt course${selected?.id === c.id ? " sel" : ""}`}
-                  onClick={() => setCourseId(c.id)}
-                >
-                  <span className="course-main">
-                    <span className="course-label">
-                      {c.label}
-                      <span className="course-kind">{c.kind}</span>
-                    </span>
-                    <span className="course-summary">{c.summary}</span>
-                  </span>
-                  {selected?.id === c.id && <span className="chk">✓</span>}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="fld">
-            <h4>自分の手番</h4>
-            <div className="pair">
-              {(["先手", "後手"] as const).map((s) => {
-                const label = s === "先手" ? "▲ 先手" : "△ 後手";
-                if (!availableSides.includes(s)) {
-                  return (
-                    <div key={s} className="opt disabled">
-                      {label} <span className="mini">準備中</span>
-                    </div>
-                  );
-                }
-                return (
+          {sections.map((sec) => (
+            <div className="fld" key={sec.title}>
+              <h4>{sec.title}</h4>
+              <div className="courselist">
+                {sec.items.map((c, i) => (
                   <button
-                    key={s}
+                    key={c.id}
                     type="button"
-                    className={`opt${effectiveSide === s ? " sel" : ""}`}
-                    onClick={() => chooseSide(s)}
+                    className={`opt course${selected?.id === c.id ? " sel" : ""}`}
+                    onClick={() => setCourseId(c.id)}
                   >
-                    {label} {effectiveSide === s && <span className="chk">✓</span>}
+                    <span className="course-main">
+                      <span className="course-label">
+                        {mode === "opponent" && <span className="course-rank">{i + 1}</span>}
+                        {c.label}
+                        <span className="course-kind">{c.sideLabel}</span>
+                        {/* 見出しが「対〇〇」のときは相手名が重複するので出さない */}
+                        {mode === "mine" && c.opponentLabel !== item.name && !(c.group ?? "").startsWith("対") && (
+                          <span className="course-kind">vs {c.opponentLabel}</span>
+                        )}
+                      </span>
+                      <span className="course-summary">{c.summary}</span>
+                    </span>
+                    {selected?.id === c.id && <span className="chk">✓</span>}
                   </button>
-                );
-              })}
+                ))}
+              </div>
             </div>
-          </div>
+          ))}
 
           <div className="fld">
             <h4>モード</h4>
             <div className="pair">
-              <button type="button" className={`opt${mode === "learn" ? " sel" : ""}`} onClick={() => setMode("learn")}>
-                学習(なぞる) {mode === "learn" && <span className="chk">✓</span>}
+              <button
+                type="button"
+                className={`opt${practiceMode === "learn" ? " sel" : ""}`}
+                onClick={() => setPracticeMode("learn")}
+              >
+                学習(出題) {practiceMode === "learn" && <span className="chk">✓</span>}
               </button>
               <button
                 type="button"
-                className={`opt${mode === "practice" ? " sel" : ""}`}
-                onClick={() => setMode("practice")}
+                className={`opt${practiceMode === "practice" ? " sel" : ""}`}
+                onClick={() => setPracticeMode("practice")}
               >
-                練習(自分で指す) {mode === "practice" && <span className="chk">✓</span>}
+                練習(自分で指す) {practiceMode === "practice" && <span className="chk">✓</span>}
               </button>
             </div>
           </div>
 
-          <button type="button" className="startbtn" onClick={() => selected && onStart(selected.id, mode)}>
+          <button type="button" className="startbtn" onClick={() => selected && onStart(selected.id, practiceMode)}>
             この設定で始める
           </button>
         </div>

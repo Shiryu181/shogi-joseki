@@ -6,16 +6,13 @@ import { Home } from "./features/home/Home";
 import { Matchup } from "./features/matchup/Matchup";
 import { About } from "./features/about/About";
 import type { PracticeMode } from "./features/matchup/Matchup";
-import { loadCourseById, loadBranchNavDemo, COURSE_ENTRIES, courseEntriesFor } from "./domain/josekiLoader";
-import type { Strategy } from "./domain/types";
-import { STRATEGIES } from "./data/strategies";
+import { loadCourseById, loadBranchNavDemo, COURSE_ENTRIES } from "./domain/josekiLoader";
+import type { HomeMode } from "./features/home/Home";
+import type { CardItem } from "./features/home/StrategyCard";
 import { BottomTabBar } from "./ui/BottomTabBar";
-import type { BottomTab } from "./ui/BottomTabBar";
 import "./App.css";
 
 type Screen = "home" | "matchup" | "learn" | "practice" | "about" | "devMenu" | "sandbox" | "branchDemo";
-
-const IBISHA_STRATEGY = STRATEGIES.find((s) => s.id === "ibisha")!;
 
 /**
  * DESIGN.md §5 のユーザー導線。
@@ -25,8 +22,10 @@ const IBISHA_STRATEGY = STRATEGIES.find((s) => s.id === "ibisha")!;
  */
 function App() {
   const [screen, setScreen] = useState<Screen>("home");
-  const [selectedStrategy, setSelectedStrategy] = useState<Strategy>(IBISHA_STRATEGY);
-  // 対抗形選択画面で選んだ作戦(定跡コース)。学習/練習の両方に渡す。
+  // どの入口(自分の戦法 / 相手に備える)から来ているか。タブのハイライトと選択画面の見せ方に使う。
+  const [homeMode, setHomeMode] = useState<HomeMode>("mine");
+  const [selectedCard, setSelectedCard] = useState<CardItem | null>(null);
+  // コース選択画面で選んだ定跡コース。学習/練習の両方に渡す。
   const [courseId, setCourseId] = useState<string>(COURSE_ENTRIES[0].id);
 
   // ?dev=1 のときだけ開発用画面(Sandbox/分岐デモ)への入口を出す。通常のユーザーの目には触れない。
@@ -35,11 +34,9 @@ function App() {
     return new URLSearchParams(window.location.search).get("dev") === "1";
   });
 
-  function openStrategy(strategy: Strategy) {
-    setSelectedStrategy(strategy);
-    // 別の戦法へ移ったとき、前の戦法のコースが選ばれたままにならないようにする。
-    const first = courseEntriesFor(strategy.id)[0];
-    if (first) setCourseId(first.id);
+  function openCard(mode: HomeMode, item: CardItem) {
+    setHomeMode(mode);
+    setSelectedCard(item);
     setScreen("matchup");
   }
 
@@ -48,9 +45,9 @@ function App() {
     setScreen(mode === "learn" ? "learn" : "practice");
   }
 
-  function openIbishaLearnDirect() {
-    setSelectedStrategy(IBISHA_STRATEGY);
-    setScreen("learn");
+  function goHome(mode: HomeMode) {
+    setHomeMode(mode);
+    setScreen("home");
   }
 
   // 画面遷移のたびにスクロール位置をリセットする(前の画面でスクロールした状態のまま
@@ -60,8 +57,6 @@ function App() {
   }, [screen]);
 
   const showTabBar = screen === "home" || screen === "matchup" || screen === "learn" || screen === "practice";
-  const activeTab: BottomTab | null =
-    screen === "home" || screen === "matchup" ? "home" : screen === "learn" || screen === "practice" ? "learn" : null;
 
   return (
     <div className="app-shell">
@@ -72,10 +67,10 @@ function App() {
       )}
 
       <div className="app-content" style={showTabBar ? { paddingBottom: 78 } : undefined}>
-        {screen === "home" && <Home onOpenStrategy={openStrategy} onOpenAbout={() => setScreen("about")} />}
+        {screen === "home" && <Home mode={homeMode} onOpenCard={openCard} onOpenAbout={() => setScreen("about")} />}
 
-        {screen === "matchup" && (
-          <Matchup strategy={selectedStrategy} onBack={() => setScreen("home")} onStart={startFromMatchup} />
+        {screen === "matchup" && selectedCard && (
+          <Matchup mode={homeMode} item={selectedCard} onBack={() => setScreen("home")} onStart={startFromMatchup} />
         )}
 
         {screen === "learn" && (
@@ -120,7 +115,9 @@ function App() {
         {screen === "branchDemo" && <Learn course={loadBranchNavDemo()} onBack={() => setScreen("devMenu")} />}
       </div>
 
-      {showTabBar && <BottomTabBar active={activeTab} onSelectHome={() => setScreen("home")} onSelectLearn={openIbishaLearnDirect} />}
+      {showTabBar && (
+        <BottomTabBar active={homeMode} onSelectMine={() => goHome("mine")} onSelectOpponent={() => goHome("opponent")} />
+      )}
     </div>
   );
 }

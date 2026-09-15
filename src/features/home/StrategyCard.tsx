@@ -1,39 +1,56 @@
-import type { Strategy } from "../../domain/types";
+import type { Category } from "../../domain/types";
 import { visualFor } from "./strategyVisuals";
 import { StrategyIcon } from "./StrategyIcon";
 
-const CATEGORY_LABEL: Record<Strategy["category"], string> = {
+const CATEGORY_LABEL: Record<Category, string> = {
   ibisha: "居飛車",
   furibisha: "振り飛車",
   nakabisha: "中飛車",
   kishu: "奇襲戦法",
 };
 
+/**
+ * ホームのカード1枚ぶんの表示データ。
+ * 「自分の戦法」(Strategy)と「相手に備える」(Opponent)のどちらも同じ見た目で出すので、
+ * 共通の形にしてから渡す。lineCount / ready はコース一覧から算出した値。
+ */
+export interface CardItem {
+  id: string;
+  name: string;
+  kana: string;
+  category: Category;
+  popularity: number;
+  level?: string;
+  description: string;
+  lineCount: number;
+  ready: boolean;
+}
+
 export interface StrategyCardProps {
-  strategy: Strategy;
-  onOpen: (strategy: Strategy) => void;
+  item: CardItem;
+  onOpen: (item: CardItem) => void;
 }
 
 /**
- * Airbnb風の戦法カード(§5.1)。ready の戦法だけタップで対抗形選択(§5.2)へ進める。
+ * 戦法カード(§5.1)。ready のものだけタップで先へ進める。
  * ready:false は準備中オーバーレイを出し、クリックしても何も起きない
  * (「選べないものを選べるように見せない」ため、onOpen 自体を割り当てない)。
  */
-export function StrategyCard({ strategy, onOpen }: StrategyCardProps) {
-  const visual = visualFor(strategy.id);
+export function StrategyCard({ item, onOpen }: StrategyCardProps) {
+  const visual = visualFor(item.id);
 
   return (
     <div
-      className={`lcard${strategy.ready ? "" : " disabled"}`}
-      role={strategy.ready ? "button" : undefined}
-      tabIndex={strategy.ready ? 0 : undefined}
-      onClick={strategy.ready ? () => onOpen(strategy) : undefined}
+      className={`lcard${item.ready ? "" : " disabled"}`}
+      role={item.ready ? "button" : undefined}
+      tabIndex={item.ready ? 0 : undefined}
+      onClick={item.ready ? () => onOpen(item) : undefined}
       onKeyDown={
-        strategy.ready
+        item.ready
           ? (e) => {
               if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
-                onOpen(strategy);
+                onOpen(item);
               }
             }
           : undefined
@@ -41,24 +58,24 @@ export function StrategyCard({ strategy, onOpen }: StrategyCardProps) {
     >
       <div className="hero" style={{ background: visual.heroColor }}>
         <StrategyIcon visual={visual} />
-        <div className="fam">{CATEGORY_LABEL[strategy.category]}</div>
-        {!strategy.ready && <div className="soon">準備中</div>}
+        <div className="fam">{CATEGORY_LABEL[item.category]}</div>
+        {!item.ready && <div className="soon">準備中</div>}
       </div>
       <div className="lmeta">
         <div className="r1">
-          <h3>{strategy.name}</h3>
+          <h3>{item.name}</h3>
           <div className="rate">
-            <span className="st">★</span> {strategy.popularity.toFixed(1)}
+            <span className="st">★</span> {item.popularity.toFixed(1)}
           </div>
         </div>
-        <div className="kana">{strategy.kana}</div>
-        <p className="desc">{strategy.description}</p>
-        {strategy.ready ? (
+        <div className="kana">{item.kana}</div>
+        <p className="desc">{item.description}</p>
+        {item.ready ? (
           <div className="sub">
-            <b>{strategy.lineCount}</b> ライン ・ 難易度 {strategy.level}
+            <b>{item.lineCount}</b> コース{item.level ? ` ・ 難易度 ${item.level}` : ""}
           </div>
         ) : (
-          <div className="sub">定跡データ準備中 ・ {strategy.level}</div>
+          <div className="sub">定跡データ準備中{item.level ? ` ・ ${item.level}` : ""}</div>
         )}
       </div>
     </div>

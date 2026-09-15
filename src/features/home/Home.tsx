@@ -1,63 +1,98 @@
 import { useMemo, useState } from "react";
-import type { Strategy } from "../../domain/types";
 import { STRATEGIES } from "../../data/strategies";
-import { courseEntriesFor } from "../../domain/josekiLoader";
+import { OPPONENTS, courseEntriesFor, courseEntriesForOpponent } from "../../domain/josekiLoader";
 import { SearchBar } from "./SearchBar";
 import { CategoryTabs } from "./CategoryTabs";
 import type { CategoryFilterKey } from "./categories";
 import { StrategyCard } from "./StrategyCard";
+import type { CardItem } from "./StrategyCard";
 import "./Home.css";
 
+/** ホームの2つの入口。「自分の戦法を学ぶ」と「相手の戦法に備える」。 */
+export type HomeMode = "mine" | "opponent";
+
 export interface HomeProps {
+  mode: HomeMode;
   /** 「このアプリについて」(ライセンス表記)を開く。 */
   onOpenAbout: () => void;
-  /** ready な戦法カードがタップされたときに呼ばれる(§5.2 対抗形選択へ進む)。 */
-  onOpenStrategy: (strategy: Strategy) => void;
+  /** カードがタップされたときに呼ばれる(コース選択へ進む)。 */
+  onOpenCard: (mode: HomeMode, item: CardItem) => void;
 }
 
-function matchesCategory(s: Strategy, key: CategoryFilterKey): boolean {
+function matchesCategory(item: CardItem, key: CategoryFilterKey): boolean {
   if (key === "popular") return true;
-  if (key === "beginner") return s.level.includes("入門");
-  return s.category === key;
+  if (key === "beginner") return (item.level ?? "").includes("入門");
+  return item.category === key;
 }
 
-/** ホーム(探す)画面。DESIGN.md §5.1 準拠。検索・カテゴリ絞り込み・カード一覧。 */
-export function Home({ onOpenStrategy, onOpenAbout }: HomeProps) {
+/** 「自分の戦法」タブのカード。コース数は一覧から数える。 */
+function myStrategyCards(): CardItem[] {
+  return STRATEGIES.map((s) => {
+    const n = courseEntriesFor(s.id).length;
+    return { ...s, lineCount: n, ready: n > 0 };
+  });
+}
+
+/** 「相手に備える」タブのカード。対策コースがある相手だけ ready。 */
+function opponentCards(): CardItem[] {
+  return OPPONENTS.map((o) => {
+    const n = courseEntriesForOpponent(o.id).length;
+    return { ...o, lineCount: n, ready: n > 0 };
+  });
+}
+
+const COPY: Record<HomeMode, { title: string; lead: string; placeholder: string }> = {
+  mine: {
+    title: "自分の戦法",
+    lead: "自分が指す戦法を選んで、基本の組み方からその戦法の型・変化までを1手ずつ出題します。",
+    placeholder: "戦法名で検索(例:四間飛車)",
+  },
+  opponent: {
+    title: "相手に備える",
+    lead: "相手がどの戦法で来るかを選ぶと、その戦法に有利に戦える対策を、おすすめ順に学べます。相手が定跡を外したときの咎め方も出題します。",
+    placeholder: "相手の戦法で検索(例:早石田)",
+  },
+};
+
+/** ホーム画面。DESIGN.md §5.1 準拠。検索・カテゴリ絞り込み・カード一覧。 */
+export function Home({ mode, onOpenCard, onOpenAbout }: HomeProps) {
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<CategoryFilterKey>("popular");
 
+  const cards = useMemo(() => (mode === "mine" ? myStrategyCards() : opponentCards()), [mode]);
+
   const list = useMemo(() => {
     const q = query.trim();
-    return STRATEGIES.filter((s) => {
-      // 戦法名・かなに加えて、そのカードに入っている作戦名でも引けるようにする。
-      // 角換わり・矢倉・相掛かりは居飛車カードの中の作戦なので、
-      // これが無いと「矢倉」で検索しても何も出てこない。
-      const matchesQuery =
-        !q ||
-        s.name.includes(q) ||
-        s.kana.includes(q) ||
-        courseEntriesFor(s.id).some((c) => c.label.includes(q) || c.opponentLabel.includes(q));
-      return matchesCategory(s, activeCategory) && matchesQuery;
-    }).sort((a, b) => b.popularity - a.popularity);
-  }, [query, activeCategory]);
+    return cards
+      .filter((s) => {
+        const entries = mode === "mine" ? courseEntriesFor(s.id) : courseEntriesForOpponent(s.id);
+        // 戦法名・かなに加えて、そのカードに入っているコース名でも引けるようにする。
+        const matchesQuery =
+          !q ||
+          s.name.includes(q) ||
+          s.kana.includes(q) ||
+          entries.some((c) => c.label.includes(q) || c.opponentLabel.includes(q));
+        return matchesCategory(s, activeCategory) && matchesQuery;
+      })
+      .sort((a, b) => b.popularity - a.popularity);
+  }, [cards, mode, query, activeCategory]);
+
+  const copy = COPY[mode];
 
   return (
     <div className="home-wrap">
       <div className="home-frame">
         <div className="home-head">
-          {/* 何ができるサイトかを最初に伝える。以前は「戦法を探す」だけが目に入り、
-              初めて開いた人には用途が分からなかった。 */}
-          <h1>定跡道場</h1>
-          <p className="lead">
-            将棋の定跡を、盤に指しながら覚えるアプリです。戦法を選ぶと、駒組みから仕掛け、その先の戦い方までを1手ずつ出題します。
-          </p>
-          <SearchBar value={query} onChange={setQuery} />
+          <div className="tl">定跡道場</div>
+          <h1>{copy.title}</h1>
+          <p className="lead">{copy.lead}</p>
+          <SearchBar value={query} onChange={setQuery} placeholder={copy.placeholder} />
         </div>
         <CategoryTabs active={activeCategory} onSelect={setActiveCategory} />
         <div className="listcount">{list.length}件の戦法</div>
         <div className="cards">
           {list.length > 0 ? (
-            list.map((s) => <StrategyCard key={s.id} strategy={s} onOpen={onOpenStrategy} />)
+            list.map((s) => <StrategyCard key={s.id} item={s} onOpen={(item) => onOpenCard(mode, item)} />)
           ) : (
             <div className="empty">「{query}」に一致する戦法はありません</div>
           )}

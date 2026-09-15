@@ -15,8 +15,6 @@ export interface Strategy {
   category: Category;
   popularity: number; // 人気順ソート・★表示用
   level: string; // "入門〜" 等
-  lineCount: number; // 収録ライン数
-  ready: boolean; // 定跡データありか
   description: string;
 }
 

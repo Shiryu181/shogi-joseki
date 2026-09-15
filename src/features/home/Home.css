@@ -28,10 +28,10 @@
 }
 .home-head h1 {
   font-family: var(--disp);
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 600;
-  margin: 2px 0 6px;
-  letter-spacing: 0.06em;
+  margin: 4px 0 6px;
+  letter-spacing: 0.04em;
 }
 .home-head .lead {
   margin: 0;

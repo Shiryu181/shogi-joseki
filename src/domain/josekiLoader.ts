@@ -117,8 +117,18 @@ export type CourseKind = "急戦" | "持久戦";
 /** 選択画面に出すコースの一覧項目。 */
 export interface CourseEntry {
   id: string;
-  /** どの戦法カードから辿れるか(Strategy.id)。選択画面はこれで絞り込む。 */
-  strategyId: string;
+  /**
+   * 「自分の戦法」タブのどのカードから辿れるか(Strategy.id)。
+   * null は「自分の戦法としては学ばない」コース(対振り急戦の細かな変化など)。
+   * そうしたコースは「相手に備える」タブからだけ辿れる。
+   */
+  strategyId: string | null;
+  /** 「相手に備える」タブのどのカードから辿れるか(OPPONENTS の id)。 */
+  opponentId: string;
+  /** 「相手に備える」で並べる順(小さいほど推奨)。1 がその相手への第一の対策。 */
+  recommend: number;
+  /** 「自分の戦法」の画面で見出しにする分類(基本の組み方 / 対四間飛車 / 相振り飛車 …)。 */
+  group?: string;
   /** 選択肢に出す短い名前。 */
   label: string;
   kind: CourseKind;
@@ -139,7 +149,10 @@ export interface CourseEntry {
 export const COURSE_ENTRIES: CourseEntry[] = [
   {
     id: "ibisha-vs-shikenbisha--bougin",
-    strategyId: "ibisha",
+    strategyId: "bougin",
+    opponentId: "shikenbisha",
+    recommend: 1,
+    group: "対四間飛車",
     opponentLabel: "四間飛車",
     sideLabel: "先手",
     label: "棒銀",
@@ -149,7 +162,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "ibisha-vs-shikenbisha--sente",
-    strategyId: "ibisha",
+    strategyId: null,
+    opponentId: "shikenbisha",
+    recommend: 3,
     opponentLabel: "四間飛車",
     sideLabel: "先手",
     label: "斜め棒銀(4六銀左)",
@@ -159,7 +174,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "ibisha-vs-shikenbisha--45hayashikake",
-    strategyId: "ibisha",
+    strategyId: null,
+    opponentId: "shikenbisha",
+    recommend: 4,
     opponentLabel: "四間飛車",
     sideLabel: "先手",
     label: "４五歩早仕掛け",
@@ -169,7 +186,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "ibisha-vs-shikenbisha--yamada",
-    strategyId: "ibisha",
+    strategyId: null,
+    opponentId: "shikenbisha",
+    recommend: 6,
     opponentLabel: "四間飛車",
     sideLabel: "先手",
     label: "山田定跡",
@@ -179,7 +198,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "ibisha-vs-shikenbisha--saginomiya",
-    strategyId: "ibisha",
+    strategyId: null,
+    opponentId: "shikenbisha",
+    recommend: 5,
     opponentLabel: "四間飛車",
     sideLabel: "先手",
     label: "鷺宮定跡",
@@ -189,7 +210,10 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "ibisha-vs-shikenbisha--anaguma",
-    strategyId: "ibisha",
+    strategyId: "anaguma",
+    opponentId: "shikenbisha",
+    recommend: 2,
+    group: "対四間飛車",
     opponentLabel: "四間飛車",
     sideLabel: "先手",
     label: "居飛車穴熊",
@@ -199,7 +223,10 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "ibisha-vs-sankenbisha--bougin",
-    strategyId: "ibisha",
+    strategyId: "bougin",
+    opponentId: "sankenbisha",
+    recommend: 1,
+    group: "対三間飛車",
     opponentLabel: "三間飛車",
     sideLabel: "先手",
     label: "急戦",
@@ -209,7 +236,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "ibisha-vs-sankenbisha--37kei",
-    strategyId: "ibisha",
+    strategyId: null,
+    opponentId: "sankenbisha",
+    recommend: 3,
     opponentLabel: "三間飛車",
     sideLabel: "先手",
     label: "▲3七桂早仕掛け",
@@ -219,7 +248,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "ibisha-vs-sankenbisha--35hayashikake",
-    strategyId: "ibisha",
+    strategyId: null,
+    opponentId: "sankenbisha",
+    recommend: 2,
     opponentLabel: "三間飛車",
     sideLabel: "先手",
     label: "▲3五歩早仕掛け",
@@ -229,7 +260,10 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "ibisha-vs-shikenbisha--gote",
-    strategyId: "ibisha",
+    strategyId: "bougin",
+    opponentId: "shikenbisha",
+    recommend: 7,
+    group: "対四間飛車",
     opponentLabel: "四間飛車",
     sideLabel: "後手",
     label: "基本の組み方",
@@ -239,7 +273,10 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "ibisha-vs-sankenbisha--gote",
-    strategyId: "ibisha",
+    strategyId: "bougin",
+    opponentId: "sankenbisha",
+    recommend: 4,
+    group: "対三間飛車",
     opponentLabel: "三間飛車",
     sideLabel: "後手",
     label: "基本の組み方",
@@ -249,7 +286,10 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "ibisha-vs-nakabisha--gote",
-    strategyId: "ibisha",
+    strategyId: "anaguma",
+    opponentId: "gokigen",
+    recommend: 3,
+    group: "対中飛車",
     opponentLabel: "中飛車",
     sideLabel: "後手",
     label: "居飛車穴熊",
@@ -259,7 +299,10 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "ibisha-vs-nakabisha--anaguma",
-    strategyId: "ibisha",
+    strategyId: "anaguma",
+    opponentId: "gokigen",
+    recommend: 2,
+    group: "対中飛車",
     opponentLabel: "中飛車",
     sideLabel: "先手",
     label: "居飛車穴熊",
@@ -270,6 +313,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   {
     id: "shikenbisha-vs-ibisha--basic",
     strategyId: "shikenbisha",
+    opponentId: "ibisha-kyusen",
+    recommend: 2,
+    group: "基本の組み方",
     opponentLabel: "居飛車",
     sideLabel: "後手",
     label: "基本の組み方",
@@ -280,6 +326,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   {
     id: "shikenbisha-vs-bougin--kuboryu",
     strategyId: "shikenbisha",
+    opponentId: "ibisha-kyusen",
+    recommend: 1,
+    group: "対棒銀",
     opponentLabel: "居飛車",
     sideLabel: "後手",
     label: "対棒銀(久保流)",
@@ -290,6 +339,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   {
     id: "shikenbisha-vs-migishiken--41kin",
     strategyId: "shikenbisha",
+    opponentId: "migishiken",
+    recommend: 1,
+    group: "対右四間飛車",
     opponentLabel: "右四間飛車",
     sideLabel: "後手",
     label: "対右四間飛車(△4一金待機型)",
@@ -300,6 +352,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   {
     id: "shikenbisha-vs-ponponkei--basic",
     strategyId: "shikenbisha",
+    opponentId: "ponponkei",
+    recommend: 1,
+    group: "対奇襲",
     opponentLabel: "居飛車",
     sideLabel: "後手",
     label: "対ポンポン桂",
@@ -310,6 +365,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   {
     id: "shikenbisha-vs-torisashi--basic",
     strategyId: "shikenbisha",
+    opponentId: "torisashi",
+    recommend: 1,
+    group: "対奇襲",
     opponentLabel: "鳥刺し(嬉野流)",
     sideLabel: "後手",
     label: "対鳥刺し",
@@ -320,6 +378,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   {
     id: "shikenbisha-vs-ibisha--sente",
     strategyId: "shikenbisha",
+    opponentId: "ibisha-kyusen",
+    recommend: 3,
+    group: "基本の組み方",
     opponentLabel: "居飛車",
     sideLabel: "先手",
     label: "先手番の組み方",
@@ -330,6 +391,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   {
     id: "shikenbisha-vs-anaguma--basic",
     strategyId: "shikenbisha",
+    opponentId: "anaguma",
+    recommend: 2,
+    group: "対居飛車穴熊",
     opponentLabel: "居飛車穴熊",
     sideLabel: "後手",
     label: "対居飛車穴熊",
@@ -340,6 +404,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   {
     id: "shikenbisha-vs-anaguma--sokkou",
     strategyId: "shikenbisha",
+    opponentId: "anaguma",
+    recommend: 1,
+    group: "対居飛車穴熊",
     opponentLabel: "居飛車穴熊",
     sideLabel: "先手",
     label: "穴熊に組ませない速攻",
@@ -350,6 +417,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   {
     id: "sankenbisha-vs-ibisha--basic",
     strategyId: "sankenbisha",
+    opponentId: "ibisha-kyusen",
+    recommend: 3,
+    group: "基本の組み方",
     opponentLabel: "居飛車",
     sideLabel: "後手",
     label: "基本の組み方",
@@ -360,6 +430,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   {
     id: "sankenbisha-vs-bougin--53kin",
     strategyId: "sankenbisha",
+    opponentId: "ibisha-kyusen",
+    recommend: 4,
+    group: "対急戦",
     opponentLabel: "居飛車",
     sideLabel: "後手",
     label: "対棒銀(△5三金型)",
@@ -370,6 +443,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   {
     id: "sankenbisha-vs-45hayashikake--sabaki",
     strategyId: "sankenbisha",
+    opponentId: "ibisha-kyusen",
+    recommend: 5,
+    group: "対急戦",
     opponentLabel: "居飛車",
     sideLabel: "後手",
     label: "対▲4五歩早仕掛け",
@@ -380,6 +456,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   {
     id: "sankenbisha-vs-anaguma--koyan",
     strategyId: "sankenbisha",
+    opponentId: "anaguma",
+    recommend: 3,
+    group: "対居飛車穴熊",
     opponentLabel: "居飛車穴熊",
     sideLabel: "先手",
     label: "コーヤン流",
@@ -390,6 +469,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   {
     id: "sankenbisha-vs-ibisha--sente",
     strategyId: "sankenbisha",
+    opponentId: "ibisha-kyusen",
+    recommend: 6,
+    group: "基本の組み方",
     opponentLabel: "居飛車",
     sideLabel: "先手",
     label: "先手番の組み方",
@@ -399,7 +481,10 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "nakabisha-vs-ibisha--sente",
-    strategyId: "nakabisha",
+    strategyId: "gokigen",
+    opponentId: "anaguma",
+    recommend: 4,
+    group: "対居飛車穴熊",
     opponentLabel: "居飛車穴熊",
     sideLabel: "先手",
     label: "先手番の組み方",
@@ -409,7 +494,10 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "kakugawari--bougin",
-    strategyId: "ibisha",
+    strategyId: "kakugawari",
+    opponentId: "kakugawari",
+    recommend: 1,
+    group: "基本と変化",
     opponentLabel: "居飛車",
     sideLabel: "先手",
     label: "角換わり・棒銀",
@@ -419,7 +507,10 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "kakugawari--hayakurigin",
-    strategyId: "ibisha",
+    strategyId: "kakugawari",
+    opponentId: "kakugawari",
+    recommend: 2,
+    group: "基本と変化",
     opponentLabel: "居飛車",
     sideLabel: "先手",
     label: "角換わり・早繰り銀",
@@ -429,7 +520,10 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "kakugawari--gote",
-    strategyId: "ibisha",
+    strategyId: "kakugawari",
+    opponentId: "kakugawari",
+    recommend: 3,
+    group: "基本と変化",
     opponentLabel: "居飛車",
     sideLabel: "後手",
     label: "角換わり・基本の駒組み",
@@ -439,7 +533,10 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "aigakari--bougin",
-    strategyId: "ibisha",
+    strategyId: "aigakari",
+    opponentId: "aigakari",
+    recommend: 1,
+    group: "基本と変化",
     opponentLabel: "居飛車",
     sideLabel: "先手",
     label: "相掛かり・棒銀",
@@ -449,7 +546,10 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "aigakari--gote",
-    strategyId: "ibisha",
+    strategyId: "aigakari",
+    opponentId: "aigakari",
+    recommend: 2,
+    group: "基本と変化",
     opponentLabel: "居飛車",
     sideLabel: "後手",
     label: "相掛かり・基本の駒組み",
@@ -459,7 +559,10 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "yagura--24te",
-    strategyId: "ibisha",
+    strategyId: "yagura",
+    opponentId: "yagura",
+    recommend: 1,
+    group: "基本と変化",
     opponentLabel: "居飛車",
     sideLabel: "先手",
     label: "矢倉・24手組",
@@ -470,6 +573,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   {
     id: "yagura--36gin37kei",
     strategyId: "yagura",
+    opponentId: "yagura",
+    recommend: 2,
+    group: "基本と変化",
     opponentLabel: "矢倉",
     sideLabel: "先手",
     label: "3六銀3七桂の攻め",
@@ -479,7 +585,10 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "yagura--gote",
-    strategyId: "ibisha",
+    strategyId: "yagura",
+    opponentId: "yagura",
+    recommend: 3,
+    group: "基本と変化",
     opponentLabel: "居飛車",
     sideLabel: "後手",
     label: "矢倉・24手組",
@@ -489,7 +598,10 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "nakabisha-vs-anaguma--basic",
-    strategyId: "nakabisha",
+    strategyId: "gokigen",
+    opponentId: "anaguma",
+    recommend: 5,
+    group: "対居飛車穴熊",
     opponentLabel: "居飛車穴熊",
     sideLabel: "後手",
     label: "対居飛車穴熊",
@@ -499,7 +611,10 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "nakabisha-vs-ibisha--gokigen24",
-    strategyId: "nakabisha",
+    strategyId: "gokigen",
+    opponentId: "ibisha-kyusen",
+    recommend: 7,
+    group: "基本と受け方",
     opponentLabel: "居飛車",
     sideLabel: "後手",
     label: "対速攻▲2四歩",
@@ -509,7 +624,10 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "ibisha-vs-gokigen--chousoku",
-    strategyId: "ibisha",
+    strategyId: "chousoku",
+    opponentId: "gokigen",
+    recommend: 1,
+    group: "基本",
     opponentLabel: "ゴキゲン中飛車",
     sideLabel: "先手",
     label: "超速▲3七銀",
@@ -519,7 +637,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "ibisha-vs-hayaishida--42gyoku",
-    strategyId: "ibisha",
+    strategyId: null,
+    opponentId: "hayaishida",
+    recommend: 1,
     opponentLabel: "早石田",
     sideLabel: "後手",
     label: "△4二玉で罠を消す",
@@ -529,7 +649,10 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "nakabisha-vs-chousoku--gote",
-    strategyId: "nakabisha",
+    strategyId: "gokigen",
+    opponentId: "chousoku",
+    recommend: 1,
+    group: "基本と受け方",
     opponentLabel: "超速▲3七銀",
     sideLabel: "後手",
     label: "銀対抗の受け方",
@@ -539,7 +662,10 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "hayaishida--basic",
-    strategyId: "sankenbisha",
+    strategyId: "hayaishida",
+    opponentId: "ibisha-kyusen",
+    recommend: 8,
+    group: "基本の攻め",
     opponentLabel: "居飛車",
     sideLabel: "先手",
     label: "早石田",
@@ -550,6 +676,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   {
     id: "sankenbisha-vs-nakabisha--aifuri",
     strategyId: "sankenbisha",
+    opponentId: "gokigen",
+    recommend: 4,
+    group: "相振り飛車",
     opponentLabel: "ゴキゲン中飛車(相振り)",
     sideLabel: "先手",
     label: "相振り飛車・石田流",
@@ -560,6 +689,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   {
     id: "sankenbisha-vs-mukaibisha--aifuri",
     strategyId: "sankenbisha",
+    opponentId: "mukaibisha",
+    recommend: 1,
+    group: "相振り飛車",
     opponentLabel: "向かい飛車(相振り)",
     sideLabel: "後手",
     label: "相振り飛車・基本手筋",
@@ -569,7 +701,10 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "nakabisha-vs-sankenbisha--aifuri",
-    strategyId: "nakabisha",
+    strategyId: "gokigen",
+    opponentId: "sankenbisha",
+    recommend: 8,
+    group: "相振り飛車",
     opponentLabel: "三間飛車(相振り)",
     sideLabel: "後手",
     label: "相振り飛車・受けと反撃",
@@ -580,6 +715,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   {
     id: "sujichigaikaku--basic",
     strategyId: "sujichigaikaku",
+    opponentId: "ibisha-kyusen",
+    recommend: 9,
+    group: "基本",
     opponentLabel: "居飛車",
     sideLabel: "先手",
     label: "基本の指し方",
@@ -589,9 +727,60 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
 ];
 
-/** 指定した戦法カードから選べるコース一覧。 */
+/** 指定した戦法カードから選べるコース一覧(「自分の戦法」タブ)。 */
 export function courseEntriesFor(strategyId: string): CourseEntry[] {
   return COURSE_ENTRIES.filter((c) => c.strategyId === strategyId);
+}
+
+/**
+ * 「相手に備える」タブのカード。相手の戦法ごとに、対策のコースを推奨順に並べて見せる。
+ * 自分の戦法カード(STRATEGIES)とは別に持つ: 相手としてしか現れないもの
+ * (ポンポン桂・鳥刺し)や、まとめて扱うもの(居飛車の急戦)があるため。
+ */
+export interface Opponent {
+  id: string;
+  name: string;
+  kana: string;
+  category: "ibisha" | "furibisha" | "nakabisha" | "kishu";
+  /** 人気順の並び。将棋ウォーズでの遭遇しやすさ(scripts/plan.mjs の採用率)を 5 点満点に見立てたもの。 */
+  popularity: number;
+  description: string;
+}
+
+export const OPPONENTS: Opponent[] = [
+  { id: "shikenbisha", name: "四間飛車", kana: "しけんびしゃ", category: "furibisha", popularity: 4.9,
+    description: "最もよく遭遇する振り飛車。棒銀で正面から攻めるか、穴熊に組んで堅さで勝負するかが基本の選択肢。" },
+  { id: "sankenbisha", name: "三間飛車", kana: "さんけんびしゃ", category: "furibisha", popularity: 4.4,
+    description: "四間飛車の次に多い振り飛車。早仕掛けで動くか、じっくり組むか。石田流に発展させてくる相手には要注意。" },
+  { id: "hayaishida", name: "早石田", kana: "はやいしだ", category: "furibisha", popularity: 4.6,
+    description: "▲7五歩から5手で攻めてくる速攻。王手飛車の罠があるので、受け方を知らないと序盤で負ける。知っていれば怖くない。" },
+  { id: "gokigen", name: "ゴキゲン中飛車", kana: "ごきげんなかびしゃ", category: "nakabisha", popularity: 4.5,
+    description: "角道を止めない現代の中飛車。超速▲3七銀で銀を素早く繰り出すのが主流の対策。穴熊に組む持久戦もある。" },
+  { id: "mukaibisha", name: "向かい飛車", kana: "むかいびしゃ", category: "furibisha", popularity: 3.8,
+    description: "こちらの飛車先を逆用してくる振り飛車。相振り飛車で現れることが多い。" },
+  { id: "anaguma", name: "居飛車穴熊", kana: "いびしゃあなぐま", category: "ibisha", popularity: 4.0,
+    description: "振り飛車を指すと高確率で遭遇する堅い囲い。組み上がる前に速攻するか、組ませてから捌くか。" },
+  { id: "ibisha-kyusen", name: "居飛車の急戦", kana: "いびしゃのきゅうせん", category: "ibisha", popularity: 4.3,
+    description: "棒銀・早仕掛け・速攻▲2四歩など、振り飛車に対して早く仕掛けてくる指し方全般。振り飛車党の基本の受け方。" },
+  { id: "chousoku", name: "超速▲3七銀", kana: "ちょうそくさんななぎん", category: "ibisha", popularity: 3.7,
+    description: "ゴキゲン中飛車に対する現代の主流対策。中飛車側は銀対抗で受け止める。" },
+  { id: "migishiken", name: "右四間飛車", kana: "みぎしけんびしゃ", category: "ibisha", popularity: 3.5,
+    description: "4五歩の一点突破を狙ってくる。級位者の対局で流行した戦法。待機して受け止める型を覚える。" },
+  { id: "kakugawari", name: "角換わり", kana: "かくがわり", category: "ibisha", popularity: 3.9,
+    description: "相手が角交換を挑んでくる相居飛車の戦型。" },
+  { id: "yagura", name: "矢倉", kana: "やぐら", category: "ibisha", popularity: 3.6,
+    description: "相手がじっくり矢倉に組んでくる相居飛車の戦型。" },
+  { id: "aigakari", name: "相掛かり", kana: "あいがかり", category: "ibisha", popularity: 3.3,
+    description: "角道を開けずに飛車先を交換してくる相居飛車の戦型。" },
+  { id: "ponponkei", name: "ポンポン桂", kana: "ぽんぽんけい", category: "kishu", popularity: 2.5,
+    description: "桂を早く跳ねて角頭を狙ってくる奇襲。四間飛車での受け方を収録。" },
+  { id: "torisashi", name: "鳥刺し(嬉野流)", kana: "とりさし", category: "kishu", popularity: 2.5,
+    description: "角と銀を斜めに使って端から攻めてくる奇襲。四間飛車での受け方を収録。" },
+];
+
+/** 指定した相手の戦法に対する対策コース一覧(「相手に備える」タブ)。推奨順。 */
+export function courseEntriesForOpponent(opponentId: string): CourseEntry[] {
+  return COURSE_ENTRIES.filter((c) => c.opponentId === opponentId).sort((a, b) => a.recommend - b.recommend);
 }
 
 /** id からコースをロードする。見つからなければ先頭のコースにフォールバックする。 */
