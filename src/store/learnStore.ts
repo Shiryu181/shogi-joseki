@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { usePointsStore, POINTS } from "./pointsStore";
 import {
   Color,
   PieceType,
@@ -485,6 +486,8 @@ export const useLearnStore = create<LearnState>((set, get) => {
       if (!applied.ok) { set({ selected: null }); return; }
       const correctText = answer ? (moveFromUSI(position, answer.usi)?.displayText ?? "") : "";
       if (answer && applied.move.usi === answer.usi) {
+        // 咎めの手は難しいので多め。ただし間違えたあとは通常の後追い正解と同じ。
+        usePointsStore.getState().award(quiz.wrong ? POINTS.bookAfterMiss : POINTS.punish);
         advanceQuizLine(answer);
         return;
       }
@@ -518,7 +521,9 @@ export const useLearnStore = create<LearnState>((set, get) => {
       if (!applied) return;
       if (!applied.ok) { set({ selected: null }); return; }
       if (answer && applied.move.usi === answer.usi) {
-        // 正解。ここで一旦止めて、自分が指した手の解説を読ませる。
+        // 正解。一発なら +10、一度間違えていたら +5。
+        usePointsStore.getState().award(bookQuiz.wrong ? POINTS.bookAfterMiss : POINTS.bookFirstTry);
+        // ここで一旦止めて、自分が指した手の解説を読ませる。
         // 「次へ」を押すと相手が指す(scheduleAutoAdvance が走る)。
         const ack: AckMove = {
           moveNumber: get().nodeHistory.length + 1,

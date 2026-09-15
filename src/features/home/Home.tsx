@@ -6,6 +6,7 @@ import { CategoryTabs } from "./CategoryTabs";
 import type { CategoryFilterKey } from "./categories";
 import { StrategyCard } from "./StrategyCard";
 import type { CardItem } from "./StrategyCard";
+import { usePointsStore } from "../../store/pointsStore";
 import "./Home.css";
 
 /** ホームの2つの入口。「自分の戦法を学ぶ」と「相手の戦法に備える」。 */
@@ -78,12 +79,20 @@ export function Home({ mode, onOpenCard, onOpenAbout }: HomeProps) {
   }, [cards, mode, query, activeCategory]);
 
   const copy = COPY[mode];
+  const total = usePointsStore((s) => s.total);
+  const today = usePointsStore((s) => s.today);
 
   return (
     <div className="home-wrap">
       <div className="home-frame">
         <div className="home-head">
-          <div className="tl">定跡道場</div>
+          <div className="home-topline">
+            <div className="tl">定跡道場</div>
+            {/* 正解で貯まるポイント。今日の獲得と累計。 */}
+            <div className="home-points" aria-label={`今日 ${today} ポイント、累計 ${total} ポイント`}>
+              今日 <b>+{today}</b> ・ 累計 <b>★ {total.toLocaleString()}</b>
+            </div>
+          </div>
           <h1>{copy.title}</h1>
           <p className="lead">{copy.lead}</p>
           <SearchBar value={query} onChange={setQuery} placeholder={copy.placeholder} />

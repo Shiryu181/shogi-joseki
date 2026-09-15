@@ -8,6 +8,7 @@ import type { GhostPiece, HandHighlight } from "../../ui/Board";
 import { CommentPanel } from "../../ui/CommentPanel";
 import { buildHint } from "../../domain/hint";
 import { BranchNav } from "../../ui/BranchNav";
+import { PointsBadge } from "../../ui/PointsBadge";
 import "./Learn.css";
 
 export interface LearnProps {
@@ -180,6 +181,7 @@ export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter }:
           </div>
           {/* 手番・手数はタイトル行の右端に置いて、行数を増やさない */}
           <div className="head-badges">
+            <PointsBadge />
             <span className={`badge b-turn${position.color === Color.WHITE ? " gote" : ""}`}>
               {position.color === Color.BLACK ? "▲ 先手" : "△ 後手"}
             </span>
