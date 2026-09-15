@@ -51,6 +51,28 @@ function BoardCell({
   );
 }
 
+/** 持ち駒のボタン。盤の升と同じタップ判定を使う(指のズレで取りこぼさない)。 */
+function HandPieceButton({
+  className,
+  label,
+  disabled,
+  onTap,
+  children,
+}: {
+  className: string;
+  label: string;
+  disabled: boolean;
+  onTap: () => void;
+  children?: React.ReactNode;
+}) {
+  const tap = useTapHandlers(onTap);
+  return (
+    <button type="button" className={className} disabled={disabled} aria-label={label} {...tap} onClick={() => {}}>
+      {children}
+    </button>
+  );
+}
+
 const FILES = ["9", "8", "7", "6", "5", "4", "3", "2", "1"];
 const RANKS = ["一", "二", "三", "四", "五", "六", "七", "八", "九"];
 
@@ -144,17 +166,16 @@ function HandTray({
       {pieces.map(({ type, count }) => {
         const isSelected = !!selected && selected.type === type && selected.color === color;
         return (
-          <button
+          <HandPieceButton
             key={type}
-            type="button"
             className={`handpiece${isSelected ? " selected" : ""}`}
             disabled={!clickable}
-            onClick={() => onHandPieceClick(type, color)}
-            aria-label={`持ち駒 ${type} ${count}枚`}
+            label={`持ち駒 ${type} ${count}枚`}
+            onTap={() => onHandPieceClick(type, color)}
           >
             {count > 1 && <span className="capn">{count}</span>}
             <PieceView type={type} color={color} flipped={flipped} />
-          </button>
+          </HandPieceButton>
         );
       })}
     </div>

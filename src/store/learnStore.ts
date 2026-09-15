@@ -331,6 +331,45 @@ export const useLearnStore = create<LearnState>((set, get) => {
     return found;
   }
 
+
+  /**
+   * 出題中に升を押したとき、選択状態から「試す手」を決める。
+   * 返り値: 試す手(局面は進めない) / null は「選び直し・解除のみ」で判定しない。
+   *
+   * 持ち駒を選んでいた場合はその駒を打つ手を試す。以前はこの分岐が無く、
+   * 持ち駒を選んでも「何も選んでいない」扱いになって打つ手が一切指せなかった。
+   */
+  function resolveAttempt(
+    square: Square,
+    preferUsi: string | undefined,
+  ): ReturnType<typeof tryMovePreview> | null {
+    const { position, selected, moveDests, dropDests } = get();
+    const own = position.board.at(square)?.color === position.color;
+
+    if (selected?.kind === "hand") {
+      const ok = (dropDests.get(selected.pieceType) ?? []).some((d) => d.usi === square.usi);
+      if (ok) return tryMovePreview(position, selected.pieceType, square, preferUsi);
+      // 打てない升: 自分の駒なら選び直し、そうでなければ解除
+      set({ selected: own ? { kind: "board", square } : null });
+      return null;
+    }
+
+    let from: Square | null = selected?.kind === "board" ? selected.square : null;
+    if (!from) {
+      if (own) { set({ selected: { kind: "board", square } }); return null; }
+      // 自分の駒がない升をいきなり押したときは、そこへ行ける自分の駒が
+      // 1枚だけなら着手として扱う(タップ回数が半分になり、誤操作が減る)。
+      from = soleMoverTo(square);
+      if (!from) { set({ selected: null }); return null; }
+    }
+    if (from.usi === square.usi) { set({ selected: null }); return null; }
+    if (!moveDests.get(from.usi)?.some((d) => d.usi === square.usi)) {
+      set({ selected: own ? { kind: "board", square } : null });
+      return null;
+    }
+    return tryMovePreview(position, from, square, preferUsi);
+  }
+
   /** 出題中に自分が指せる合法手を計算する。 */
   function questDests(position: Position) {
     return {
@@ -434,33 +473,15 @@ export const useLearnStore = create<LearnState>((set, get) => {
     },
 
     quizSelectSquare(square) {
-      const { quiz, position, selected, currentNode, moveDests } = get();
+      const { quiz, position, currentNode } = get();
       if (!quiz || quiz.solved) return;
       // 咎め手を当てるのは自分の手番のときだけ。
       if (position.color !== myColorOf(get().course)) return;
 
-      // 1回目のクリックで駒を選び、2回目で着手する(sandbox/practice と同じ操作)。
-      if (!selected || selected.kind === "hand") {
-        if (position.board.at(square)?.color === position.color) { set({ selected: { kind: "board", square } }); return; }
-        // 自分の駒がない升をいきなり押したときは、そこへ行ける自分の駒が
-        // 1枚だけなら着手として扱う(タップ回数が半分になり、誤操作が減る)。
-        const sole = soleMoverTo(square);
-        if (!sole) { set({ selected: null }); return; }
-        set({ selected: { kind: "board", square: sole } });
-      }
-      const cur = get().selected;
-      if (!cur || cur.kind !== "board") { set({ selected: null }); return; }
-      const from = cur.square;
-      if (from.usi === square.usi) { set({ selected: null }); return; }
-      if (!moveDests.get(from.usi)?.some((d) => d.usi === square.usi)) {
-        if (position.board.at(square)?.color === position.color) set({ selected: { kind: "board", square } });
-        else set({ selected: null });
-        return;
-      }
-
-      // 判定は局面を進めずに行う(不正解のときは盤をそのまま残す)。
       const answer = mainBranchOf(currentNode);
-      const applied = tryMovePreview(position, from, square, answer?.usi);
+      const applied = resolveAttempt(square, answer?.usi);
+      if (!applied) return;
+      // 判定は局面を進めずに行う(不正解のときは盤をそのまま残す)。
       if (!applied.ok) { set({ selected: null }); return; }
       const correctText = answer ? (moveFromUSI(position, answer.usi)?.displayText ?? "") : "";
       if (answer && applied.move.usi === answer.usi) {
@@ -488,29 +509,13 @@ export const useLearnStore = create<LearnState>((set, get) => {
     },
 
     bookSelectSquare(square) {
-      const { bookQuiz, position, selected, currentNode, moveDests, course } = get();
+      const { bookQuiz, position, currentNode, course } = get();
       if (!bookQuiz || bookQuiz.revealed) return;
       if (position.color !== myColorOf(course)) return;
 
-      if (!selected || selected.kind === "hand") {
-        if (position.board.at(square)?.color === position.color) { set({ selected: { kind: "board", square } }); return; }
-        // 自分の駒がない升をいきなり押したときは、そこへ行ける自分の駒が
-        // 1枚だけなら着手として扱う(タップ回数が半分になり、誤操作が減る)。
-        const sole = soleMoverTo(square);
-        if (!sole) { set({ selected: null }); return; }
-        set({ selected: { kind: "board", square: sole } });
-      }
-      const cur = get().selected;
-      if (!cur || cur.kind !== "board") { set({ selected: null }); return; }
-      const from = cur.square;
-      if (from.usi === square.usi) { set({ selected: null }); return; }
-      if (!moveDests.get(from.usi)?.some((d) => d.usi === square.usi)) {
-        if (position.board.at(square)?.color === position.color) set({ selected: { kind: "board", square } });
-        else set({ selected: null });
-        return;
-      }
       const answer = mainBranchOf(currentNode);
-      const applied = tryMovePreview(position, from, square, answer?.usi);
+      const applied = resolveAttempt(square, answer?.usi);
+      if (!applied) return;
       if (!applied.ok) { set({ selected: null }); return; }
       if (answer && applied.move.usi === answer.usi) {
         // 正解。ここで一旦止めて、自分が指した手の解説を読ませる。
