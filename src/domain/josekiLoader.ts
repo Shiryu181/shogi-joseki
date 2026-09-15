@@ -812,3 +812,88 @@ export function listMainLineNodes(course: JosekiCourse): JosekiNode[] {
   }
   return nodes;
 }
+
+/* ────────────────────────────────────────────────────────────────
+ * 学習パス: 戦法(または相手の戦法)を選んだら、盤の上で章を順に通す。
+ * 「戦法を選ぶ → コース一覧 → 盤」の3段を「戦法を選ぶ → 盤」の2段にするための仕組み。
+ * 章 = 既存のコース1本。同じ戦法のコースは序盤が共通なので、次の章へ進むときは
+ * 前の章と分かれる地点(divergeAt)まで飛んで再開する(駒組みを毎回やり直さない)。
+ * ──────────────────────────────────────────────────────────────── */
+
+export interface PathChapter {
+  entry: CourseEntry;
+  course: JosekiCourse;
+  /** 本線の何手目から前の章と違う手になるか(1始まり)。最初の章は 1。 */
+  divergeAt: number;
+}
+
+export interface LearnPath {
+  /** 見出しに出す名前(戦法名 / 「相手が四間飛車」)。 */
+  title: string;
+  side: "sente" | "gote";
+  chapters: PathChapter[];
+}
+
+/** 本線の USI 列。 */
+function mainLineUsi(course: JosekiCourse): string[] {
+  const out: string[] = [];
+  let node = course.root;
+  for (;;) {
+    const m = node.branches.find((b) => b.kind === "main");
+    if (!m || !m.child) break;
+    out.push(m.usi);
+    node = m.child;
+  }
+  return out;
+}
+
+/** 2つの本線が何手目で分かれるか(1始まり)。全一致なら短い方の長さ+1。 */
+function divergence(a: string[], b: string[]): number {
+  const n = Math.min(a.length, b.length);
+  for (let i = 0; i < n; i++) if (a[i] !== b[i]) return i + 1;
+  return n + 1;
+}
+
+/** 「自分の戦法」の章の並び順: 基本の組み方 → その他(recommend 順)。 */
+const GROUP_ORDER = ["基本", "基本の組み方", "基本の攻め", "基本と変化", "基本と受け方"];
+function chapterOrder(a: CourseEntry, b: CourseEntry): number {
+  const ga = GROUP_ORDER.indexOf(a.group ?? ""), gb = GROUP_ORDER.indexOf(b.group ?? "");
+  const ra = ga < 0 ? 99 : ga, rb = gb < 0 ? 99 : gb;
+  if (ra !== rb) return ra - rb;
+  return a.recommend - b.recommend;
+}
+
+/** そのカード(自分の戦法 / 相手の戦法)で、先手・後手それぞれに何章あるか。 */
+export function pathSidesFor(mode: "mine" | "opponent", cardId: string): { sente: number; gote: number } {
+  const entries = mode === "mine" ? courseEntriesFor(cardId) : courseEntriesForOpponent(cardId);
+  return {
+    sente: entries.filter((e) => e.sideLabel === "先手").length,
+    gote: entries.filter((e) => e.sideLabel === "後手").length,
+  };
+}
+
+/**
+ * 学習パスを組み立てる。章は同じ手番のコースだけで作る(先手と後手は別の木)。
+ * 各章の divergeAt は「前の章の本線」との比較で決める。前の章と序盤が共通なら、
+ * 次の章はその分かれ目から始められる。
+ */
+export function buildLearnPath(mode: "mine" | "opponent", cardId: string, title: string, side: "sente" | "gote"): LearnPath {
+  const sideLabel = side === "sente" ? "先手" : "後手";
+  const entries = (mode === "mine" ? courseEntriesFor(cardId) : courseEntriesForOpponent(cardId))
+    .filter((e) => e.sideLabel === sideLabel)
+    .sort(mode === "mine" ? chapterOrder : (a, b) => a.recommend - b.recommend);
+  const chapters: PathChapter[] = [];
+  const seen: string[][] = [];
+  for (const entry of entries) {
+    const course = entry.load();
+    const line = mainLineUsi(course);
+    // それまでに通った章のどれかと分かれる地点のうち、いちばん遅いもの
+    // (= 既に学んだ形をいちばん長く使い回せるもの)。共通部分が長すぎて章の終わり
+    // 近くまで飛んでしまう場合(例: 全一致)は、最終手より手前に丸める。
+    const best = seen.reduce((m, prev) => Math.max(m, divergence(prev, line)), 1);
+    const d = Math.min(best, Math.max(1, line.length - 1));
+    chapters.push({ entry, course, divergeAt: d });
+    seen.push(line);
+  }
+  return { title, side, chapters };
+}

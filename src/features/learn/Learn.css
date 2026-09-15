@@ -372,3 +372,44 @@
   background: var(--brown-soft);
   color: var(--brown-ink);
 }
+
+/* 章の帯。戦法を選んだあと盤の上で通す章の並び。今いる章を濃く、済んだ章を薄く。 */
+.chapters {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 0 14px 6px;
+  scrollbar-width: none;
+}
+.chapters::-webkit-scrollbar {
+  display: none;
+}
+.chapter {
+  flex: none;
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  border: 1px solid var(--line-2);
+  color: var(--ink-faint);
+  background: var(--card);
+  white-space: nowrap;
+}
+.chapter.on {
+  color: #fff;
+  background: var(--brown);
+  border-color: var(--brown);
+}
+.chapter.done {
+  color: var(--ink-soft);
+  background: var(--card-2);
+}
+/* 2章目以降の冒頭に出す案内。 */
+.chapter-intro {
+  margin: 4px 14px 0;
+  padding: 8px 11px;
+  border-radius: 10px;
+  background: var(--card-2);
+  color: var(--ink);
+  font-size: 12.5px;
+  line-height: 1.6;
+}

@@ -2,6 +2,7 @@ import { useEffect, useMemo } from "react";
 import { Color, PieceType, Square, moveFromUSI, parseUSIMove } from "../../domain/shogi";
 import { useLearnStore, branchMove, positionFromNode } from "../../store/learnStore";
 import type { JosekiCourse, JosekiNode } from "../../domain/types";
+import type { LearnPath } from "../../domain/josekiLoader";
 import { Board } from "../../ui/Board";
 import type { GhostPiece, HandHighlight } from "../../ui/Board";
 import { CommentPanel } from "../../ui/CommentPanel";
@@ -12,8 +13,16 @@ import "./Learn.css";
 export interface LearnProps {
   /** 表示するコース。切り替え時は都度渡し直す(本物のコース ⇔ 分岐ナビ動作確認用デモ)。 */
   course: JosekiCourse;
-  /** 戻るボタン(§5.2 対抗形選択、または開発メニュー)の遷移先。 */
+  /** 戻るボタンの遷移先。 */
   onBack: () => void;
+  /**
+   * 学習パス(章の並び)。戦法を選んだら盤の上で章を順に通す。
+   * 未指定なら単独コースとして動く(開発用の分岐デモなど)。
+   */
+  path?: LearnPath;
+  chapterIndex?: number;
+  /** 「次の章へ」。最後の章では呼ばれない。 */
+  onNextChapter?: () => void;
 }
 
 /**
@@ -22,7 +31,7 @@ export interface LearnProps {
  * 光っている升をクリックするか「なぞって次へ」ボタンで進める。
  * 分岐(本線/変化/逸れ手)がある局面では BranchNav で切替可能。
  */
-export function Learn({ course, onBack }: LearnProps) {
+export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter }: LearnProps) {
   const storeCourse = useLearnStore((s) => s.course);
   const currentNode = useLearnStore((s) => s.currentNode);
   const nodeHistory = useLearnStore((s) => s.nodeHistory);
@@ -59,8 +68,11 @@ export function Learn({ course, onBack }: LearnProps) {
   useEffect(() => {
     if (storeCourse.id !== course.id) {
       loadCourse(course);
+      // 2章目以降は、前の章と序盤が共通なので、分かれる地点まで飛んで再開する。
+      const chapter = path?.chapters[chapterIndex];
+      if (chapter && chapter.divergeAt > 1) goToMove(chapter.divergeAt);
     }
-  }, [course, storeCourse.id, loadCourse]);
+  }, [course, storeCourse.id, loadCourse, goToMove, path, chapterIndex]);
 
   // マウント中だけ相手の手の自動進行タイマーを有効にする。他画面へ移動した(アンマウントされた)
   // 間は裏で手が進み続けないよう、離脱時に必ず保留中のタイマーを破棄する。
@@ -163,10 +175,20 @@ export function Learn({ course, onBack }: LearnProps) {
             </svg>
           </button>
           <div className="learn-head">
-            <div className="tl">定跡道場 ・ 学習(なぞり)</div>
-            <h1>{course.title}</h1>
+            <div className="tl">定跡道場 ・ 学習</div>
+            <h1>{path ? path.title : course.title}</h1>
           </div>
         </div>
+        {path && (
+          // 章の帯。今いる章を濃くする。押すとその章へ移れるようにはしない(順に通すため)。
+          <div className="chapters" aria-label="章">
+            {path.chapters.map((ch, i) => (
+              <span key={ch.entry.id} className={`chapter${i === chapterIndex ? " on" : i < chapterIndex ? " done" : ""}`}>
+                {ch.entry.label}
+              </span>
+            ))}
+          </div>
+        )}
         <div className="binfo" style={{ margin: "0 14px 8px" }}>
           <span className={`badge b-turn${position.color === Color.WHITE ? " gote" : ""}`}>
             {position.color === Color.BLACK ? "▲ 先手番" : "△ 後手番"}
@@ -212,7 +234,13 @@ export function Learn({ course, onBack }: LearnProps) {
         {!isGoal && !showWaitPill && !pendingAck && !quiz && !bookQuiz && (
           <div className="guidepill">光っているマスへ動かして次の手をなぞる</div>
         )}
-        {bookQuiz ? (
+        {/* 章の冒頭(分かれ目の直後、相手の手が自動で入った直後まで)に出す */}
+        {path && chapterIndex > 0 && nodeHistory.length <= path.chapters[chapterIndex].divergeAt && (
+          <div className="chapter-intro">
+            {path.chapters[chapterIndex].divergeAt - 1}手目までは既に学んだ形と同じです。ここから「{path.chapters[chapterIndex].entry.label}」に入ります。
+          </div>
+        )}
+        {bookQuiz && !bookQuiz.revealed ? (
           <div className="learn-navrow">
           {/* 「◀ 戻る」と書いたボタン型のセレクト。開くと過去の手が並び、選ぶとその局面へ戻る。
               バッジをセレクト化した案は気づかれないので、押せると分かる見た目にした。 */}
@@ -278,9 +306,15 @@ export function Learn({ course, onBack }: LearnProps) {
                 </option>
               ))}
           </select>
-          <button type="button" className="primary" onClick={advance} disabled={isGoal && !pendingAck}>
-            {pendingAck ? "次へ ▶" : "なぞって次へ ▶"}
-          </button>
+          {isGoal && !pendingAck && path && onNextChapter ? (
+            <button type="button" className="primary" onClick={onNextChapter}>
+              次の章へ ▶ {path.chapters[chapterIndex + 1]?.entry.label ?? ""}
+            </button>
+          ) : (
+            <button type="button" className="primary" onClick={advance} disabled={isGoal && !pendingAck}>
+              {pendingAck ? "次へ ▶" : isGoal ? "この章は修了です" : "なぞって次へ ▶"}
+            </button>
+          )}
         </div>
         )}
         {bookQuiz ? (

@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
 import { Sandbox } from "./features/sandbox/Sandbox";
 import { Learn } from "./features/learn/Learn";
-import { Practice } from "./features/practice/Practice";
 import { Home } from "./features/home/Home";
-import { Matchup } from "./features/matchup/Matchup";
+import { SidePick } from "./features/matchup/SidePick";
 import { About } from "./features/about/About";
-import type { PracticeMode } from "./features/matchup/Matchup";
-import { loadCourseById, loadBranchNavDemo, COURSE_ENTRIES } from "./domain/josekiLoader";
+import { loadBranchNavDemo, buildLearnPath } from "./domain/josekiLoader";
+import type { LearnPath } from "./domain/josekiLoader";
 import type { HomeMode } from "./features/home/Home";
 import type { CardItem } from "./features/home/StrategyCard";
 import { BottomTabBar } from "./ui/BottomTabBar";
 import "./App.css";
 
-type Screen = "home" | "matchup" | "learn" | "practice" | "about" | "devMenu" | "sandbox" | "branchDemo";
+type Screen = "home" | "side" | "learn" | "about" | "devMenu" | "sandbox" | "branchDemo";
 
 /**
  * DESIGN.md §5 のユーザー導線。
@@ -25,8 +24,9 @@ function App() {
   // どの入口(自分の戦法 / 相手に備える)から来ているか。タブのハイライトと選択画面の見せ方に使う。
   const [homeMode, setHomeMode] = useState<HomeMode>("mine");
   const [selectedCard, setSelectedCard] = useState<CardItem | null>(null);
-  // コース選択画面で選んだ定跡コース。学習/練習の両方に渡す。
-  const [courseId, setCourseId] = useState<string>(COURSE_ENTRIES[0].id);
+  // 戦法と手番を選んだあとの学習パス(章の並び)と、今いる章。
+  const [path, setPath] = useState<LearnPath | null>(null);
+  const [chapterIndex, setChapterIndex] = useState(0);
 
   // ?dev=1 のときだけ開発用画面(Sandbox/分岐デモ)への入口を出す。通常のユーザーの目には触れない。
   const [devMode] = useState(() => {
@@ -37,12 +37,15 @@ function App() {
   function openCard(mode: HomeMode, item: CardItem) {
     setHomeMode(mode);
     setSelectedCard(item);
-    setScreen("matchup");
+    setScreen("side");
   }
 
-  function startFromMatchup(nextCourseId: string, mode: PracticeMode) {
-    setCourseId(nextCourseId);
-    setScreen(mode === "learn" ? "learn" : "practice");
+  function startPath(side: "sente" | "gote") {
+    if (!selectedCard) return;
+    const title = homeMode === "mine" ? selectedCard.name : `相手が${selectedCard.name}`;
+    setPath(buildLearnPath(homeMode, selectedCard.id, title, side));
+    setChapterIndex(0);
+    setScreen("learn");
   }
 
   function goHome(mode: HomeMode) {
@@ -56,7 +59,7 @@ function App() {
     window.scrollTo(0, 0);
   }, [screen]);
 
-  const showTabBar = screen === "home" || screen === "matchup" || screen === "learn" || screen === "practice";
+  const showTabBar = screen === "home" || screen === "side" || screen === "learn";
 
   return (
     <div className="app-shell">
@@ -69,16 +72,20 @@ function App() {
       <div className="app-content" style={showTabBar ? { paddingBottom: 78 } : undefined}>
         {screen === "home" && <Home mode={homeMode} onOpenCard={openCard} onOpenAbout={() => setScreen("about")} />}
 
-        {screen === "matchup" && selectedCard && (
-          <Matchup mode={homeMode} item={selectedCard} onBack={() => setScreen("home")} onStart={startFromMatchup} />
+        {screen === "side" && selectedCard && (
+          <SidePick mode={homeMode} item={selectedCard} onBack={() => setScreen("home")} onPick={startPath} />
         )}
 
-        {screen === "learn" && (
-          <Learn course={loadCourseById(courseId)} onBack={() => setScreen("matchup")} />
-        )}
-
-        {screen === "practice" && (
-          <Practice course={loadCourseById(courseId)} onBack={() => setScreen("matchup")} />
+        {screen === "learn" && path && (
+          <Learn
+            course={path.chapters[chapterIndex].course}
+            path={path}
+            chapterIndex={chapterIndex}
+            onNextChapter={
+              chapterIndex + 1 < path.chapters.length ? () => setChapterIndex(chapterIndex + 1) : undefined
+            }
+            onBack={() => setScreen("side")}
+          />
         )}
 
         {screen === "about" && <About onBack={() => setScreen("home")} />}
