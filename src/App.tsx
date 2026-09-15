@@ -59,7 +59,8 @@ function App() {
     window.scrollTo(0, 0);
   }, [screen]);
 
-  const showTabBar = screen === "home" || screen === "side" || screen === "learn";
+  // 学習画面ではタブバーを出さない(戻るボタンで足りる)。スマホの縦の場所を盤と解説に使うため。
+  const showTabBar = screen === "home" || screen === "side";
 
   return (
     <div className="app-shell">

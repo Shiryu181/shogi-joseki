@@ -178,16 +178,19 @@ export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter }:
             <div className="tl">定跡道場 ・ 学習</div>
             <h1>{path ? path.title : course.title}</h1>
           </div>
+          {/* 手番・手数はタイトル行の右端に置いて、行数を増やさない */}
+          <div className="head-badges">
+            <span className={`badge b-turn${position.color === Color.WHITE ? " gote" : ""}`}>
+              {position.color === Color.BLACK ? "▲ 先手" : "△ 後手"}
+            </span>
+            <span className="badge b-prog">
+              {Math.min(nodeHistory.length + 1, totalMoves)}/{totalMoves}手
+            </span>
+          </div>
         </div>
         {/* 手番・手数のバッジと章の帯を1行にまとめる(縦の場所を取らないように)。
             章は今いる章を濃くする。押してその章へ移ることはできない(順に通すため)。 */}
-        <div className="chapters" aria-label="進み具合">
-          <span className={`badge b-turn${position.color === Color.WHITE ? " gote" : ""}`}>
-            {position.color === Color.BLACK ? "▲ 先手" : "△ 後手"}
-          </span>
-          <span className="badge b-prog">
-            {Math.min(nodeHistory.length + 1, totalMoves)}/{totalMoves}手
-          </span>
+        <div className="chapters" aria-label="章">
           {path?.chapters.map((ch, i) => (
             <span key={ch.entry.id} className={`chapter${i === chapterIndex ? " on" : i < chapterIndex ? " done" : ""}`}>
               {ch.entry.label}

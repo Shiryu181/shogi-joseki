@@ -159,6 +159,8 @@ function HandTray({
   flipped: boolean;
 }) {
   const pieces = handCounts(position, color);
+  // 持ち駒が無いあいだは欄ごと出さない。序盤は両方空で、スマホでは縦の場所が貴重なため。
+  if (pieces.length === 0) return null;
 
   return (
     <div className="tray">

@@ -117,7 +117,10 @@
 @supports (container-type: inline-size) {
   .board-panel {
     /* 34px は段のラベル列(約14px)＋左右の余白ぶん。狭い画面ほど1マスの差が効くので切り詰める。 */
-    --c: clamp(32px, calc((100cqw - 18px) / 9), 56px);
+    /* 幅だけでなく高さでも制限する。Safari の上下バーで表示領域が 600px 程度しか無い
+       端末では、盤を少し縮めて解説がスクロールなしで読めるようにする。
+       縦に余裕がある端末では幅の計算がそのまま効く。 */
+    --c: min(clamp(32px, calc((100cqw - 18px) / 9), 56px), max(32px, calc((100dvh - 330px) / 9)));
   }
 }
 .files {
