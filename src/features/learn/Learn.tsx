@@ -306,13 +306,23 @@ export function Learn({ course, onBack }: LearnProps) {
             })()}
             {currentNode.comment && <p className="quiz-comment">{currentNode.comment}</p>}
             {bookQuiz.wrong && (
-              <p className="quiz-wrong">
-                ✕ {bookQuiz.wrong.attemptedText}
-                <span>
-                  定跡は {bookQuiz.wrong.correctText} です。この手が悪いとは限りませんが、
-                  まずは定跡の形を覚えましょう。
-                </span>
-              </p>
+              bookQuiz.wrong.openEnded ? (
+                <p className="quiz-wrong soft">
+                  △ {bookQuiz.wrong.attemptedText}
+                  <span>
+                    その手も悪くありません(差はわずかです)。この講座では {bookQuiz.wrong.correctText} と
+                    進めます。
+                  </span>
+                </p>
+              ) : (
+                <p className="quiz-wrong">
+                  ✕ {bookQuiz.wrong.attemptedText}
+                  <span>
+                    定跡は {bookQuiz.wrong.correctText} です。この手が悪いとは限りませんが、
+                    まずは定跡の形を覚えましょう。
+                  </span>
+                </p>
+              )
             )}
           </div>
         ) : quiz ? (

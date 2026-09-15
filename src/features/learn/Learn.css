@@ -366,3 +366,9 @@
 .quiz-aim .quiz-no::after {
   content: "のねらい";
 }
+
+/* 「別の手も同じくらい良い」局面で違う手を指したとき。不正解の赤ではなく落ち着いた色で返す。 */
+.quiz-wrong.soft {
+  background: var(--brown-soft);
+  color: var(--brown-ink);
+}

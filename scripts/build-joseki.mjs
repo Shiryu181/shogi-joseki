@@ -128,7 +128,7 @@ export function buildCourse({ id, title, myStrategy, opponentStrategy, mySide, s
     nodes[i].branches.push({
       usi, kind: "main", note: spec.note,
       ...(aim ? { aim } : {}),
-      ...(spec.noQuiz ? { noQuiz: true } : {}),
+      ...(spec.openEnded ? { openEnded: true } : {}),
       child,
     });
     for (const b of devBranches) nodes[i].branches.push(b);

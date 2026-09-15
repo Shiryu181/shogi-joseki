@@ -71,8 +71,11 @@ export interface AckMove {
  * 外したときの文言を強く書かない(定跡手とその理由を示すだけにする)。
  */
 export interface BookQuizState {
-  /** 直近の誤答。null なら未回答。 */
-  wrong: { attemptedText: string; correctText: string } | null;
+  /**
+   * 直近の誤答。null なら未回答。openEnded は「別の手も同じくらい良い局面」で、
+   * 不正解ではなく『この講座ではこう進める』と穏やかに返すための印。
+   */
+  wrong: { attemptedText: string; correctText: string; openEnded?: boolean } | null;
   /** 「答えを見る」が押された。以降はガイドを出してなぞらせる。 */
   revealed: boolean;
 }
@@ -306,9 +309,6 @@ export const useLearnStore = create<LearnState>((set, get) => {
     if (position.color !== myColorOf(course)) { set({ bookQuiz: null, moveDests: new Map(), dropDests: new Map(), selected: null }); return; }
     const move = mainBranchOf(currentNode);
     if (!move || !move.child) { set({ bookQuiz: null, moveDests: new Map(), dropDests: new Map(), selected: null }); return; }
-    // 「どれを指しても大差ない」と分かっている手は出題しない(なぞってもらう)。
-    // ここで出題すると、同じくらい良い別の手を不正解と表示してしまう。
-    if (move.noQuiz) { set({ bookQuiz: null, moveDests: new Map(), dropDests: new Map(), selected: null }); return; }
     set({ bookQuiz: { wrong: null, revealed: false }, ...questDests(position), selected: null });
   }
 
@@ -538,7 +538,7 @@ export const useLearnStore = create<LearnState>((set, get) => {
       const correctText = answer ? (moveFromUSI(position, answer.usi)?.displayText ?? "") : "";
       set({
         selected: null,
-        bookQuiz: { ...bookQuiz, wrong: { attemptedText: applied.displayText, correctText } },
+        bookQuiz: { ...bookQuiz, wrong: { attemptedText: applied.displayText, correctText, openEnded: !!answer?.openEnded } },
       });
     },
 

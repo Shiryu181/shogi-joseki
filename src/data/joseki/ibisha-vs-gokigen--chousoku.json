@@ -258,7 +258,7 @@
                                                                                                                                                                     "kind": "main",
                                                                                                                                                                     "note": "端歩を突いて様子を見ます。相手の美濃囲いは端が弱点です。",
                                                                                                                                                                     "aim": "相手の囲いの弱点である端に、先に手をかけておきたい。",
-                                                                                                                                                                    "noQuiz": true,
+                                                                                                                                                                    "openEnded": true,
                                                                                                                                                                     "child": {
                                                                                                                                                                       "id": "n27",
                                                                                                                                                                       "sfen": "ln1g3nl/1ks1r1g2/pppp1pbpp/5sp2/4p2P1/P1PS1SP2/1P1PPP2P/1BK1G2R1/LN1G3NL w - 1",
@@ -278,7 +278,7 @@
                                                                                                                                                                                 "kind": "main",
                                                                                                                                                                                 "note": "端の位を取ります。将来の端攻めの足がかりです。",
                                                                                                                                                                                 "aim": "端の位を取って、将来の攻めの足がかりにしたい。",
-                                                                                                                                                                                "noQuiz": true,
+                                                                                                                                                                                "openEnded": true,
                                                                                                                                                                                 "child": {
                                                                                                                                                                                   "id": "n29",
                                                                                                                                                                                   "sfen": "ln1g3nl/1ks1r1g2/ppp2pbpp/3p1sp2/P3p2P1/2PS1SP2/1P1PPP2P/1BK1G2R1/LN1G3NL w - 1",
@@ -298,7 +298,7 @@
                                                                                                                                                                                             "kind": "main",
                                                                                                                                                                                             "note": "桂を跳ねて攻めの駒を増やします。次に▲4五桂で相手の角を追う狙いです。",
                                                                                                                                                                                             "aim": "跳ねる駒を用意して、相手の大駒を追う狙いを作りたい。",
-                                                                                                                                                                                            "noQuiz": true,
+                                                                                                                                                                                            "openEnded": true,
                                                                                                                                                                                             "child": {
                                                                                                                                                                                               "id": "n31",
                                                                                                                                                                                               "sfen": "ln1gr2nl/1ks3g2/ppp2pbpp/3p1sp2/P3p2P1/2PS1SP2/1P1PPPN1P/1BK1G2R1/LN1G4L w - 1",
@@ -318,7 +318,7 @@
                                                                                                                                                                                                         "kind": "main",
                                                                                                                                                                                                         "note": "金を寄せて玉の守りを厚くします。",
                                                                                                                                                                                                         "aim": "攻める前に、玉の守りをもう一枚厚くしておきたい。",
-                                                                                                                                                                                                        "noQuiz": true,
+                                                                                                                                                                                                        "openEnded": true,
                                                                                                                                                                                                         "child": {
                                                                                                                                                                                                           "id": "n33",
                                                                                                                                                                                                           "sfen": "ln1gr2nl/1ks3g2/ppp2pbp1/3p1sp1p/P3p2P1/2PS1SP2/1P1PPPN1P/1BKG3R1/LN1G4L w - 1",
@@ -338,7 +338,7 @@
                                                                                                                                                                                                                     "kind": "main",
                                                                                                                                                                                                                     "note": "2筋の歩を突き捨てます。相手の角を2四へ呼び込むのが狙いです。",
                                                                                                                                                                                                                     "aim": "歩を捨てて、相手の大駒を狙いの地点へ呼び込みたい。",
-                                                                                                                                                                                                                    "noQuiz": true,
+                                                                                                                                                                                                                    "openEnded": true,
                                                                                                                                                                                                                     "child": {
                                                                                                                                                                                                                       "id": "n35",
                                                                                                                                                                                                                       "sfen": "ln2r2nl/1ksg2g2/ppp2pbp1/3p1spPp/P3p4/2PS1SP2/1P1PPPN1P/1BKG3R1/LN1G4L w - 1",
