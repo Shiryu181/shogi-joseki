@@ -179,23 +179,20 @@ export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter }:
             <h1>{path ? path.title : course.title}</h1>
           </div>
         </div>
-        {path && (
-          // 章の帯。今いる章を濃くする。押すとその章へ移れるようにはしない(順に通すため)。
-          <div className="chapters" aria-label="章">
-            {path.chapters.map((ch, i) => (
-              <span key={ch.entry.id} className={`chapter${i === chapterIndex ? " on" : i < chapterIndex ? " done" : ""}`}>
-                {ch.entry.label}
-              </span>
-            ))}
-          </div>
-        )}
-        <div className="binfo" style={{ margin: "0 14px 8px" }}>
+        {/* 手番・手数のバッジと章の帯を1行にまとめる(縦の場所を取らないように)。
+            章は今いる章を濃くする。押してその章へ移ることはできない(順に通すため)。 */}
+        <div className="chapters" aria-label="進み具合">
           <span className={`badge b-turn${position.color === Color.WHITE ? " gote" : ""}`}>
-            {position.color === Color.BLACK ? "▲ 先手番" : "△ 後手番"}
+            {position.color === Color.BLACK ? "▲ 先手" : "△ 後手"}
           </span>
           <span className="badge b-prog">
-            {Math.min(nodeHistory.length + 1, totalMoves)} / {totalMoves} 手
+            {Math.min(nodeHistory.length + 1, totalMoves)}/{totalMoves}手
           </span>
+          {path?.chapters.map((ch, i) => (
+            <span key={ch.entry.id} className={`chapter${i === chapterIndex ? " on" : i < chapterIndex ? " done" : ""}`}>
+              {ch.entry.label}
+            </span>
+          ))}
         </div>
         <Board
           position={position}
@@ -222,9 +219,6 @@ export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter }:
                 : "続けて咎める手を指してください"}
           </div>
         )}
-        {bookQuiz && !bookQuiz.wrong && (
-          <div className="bookpill">次の一手を考えて、盤に指してください</div>
-        )}
         {showWaitPill && !quiz && <div className="waitpill">相手が指しています…</div>}
         {pendingAck && !quiz && (
           <div className="ackpill">
@@ -237,7 +231,7 @@ export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter }:
         {/* 章の冒頭(分かれ目の直後、相手の手が自動で入った直後まで)に出す */}
         {path && chapterIndex > 0 && nodeHistory.length <= path.chapters[chapterIndex].divergeAt && (
           <div className="chapter-intro">
-            {path.chapters[chapterIndex].divergeAt - 1}手目までは既に学んだ形と同じです。ここから「{path.chapters[chapterIndex].entry.label}」に入ります。
+            {path.chapters[chapterIndex].divergeAt - 1}手目までは学んだ形と同じ。ここから {path.chapters[chapterIndex].entry.label}
           </div>
         )}
         {bookQuiz && !bookQuiz.revealed ? (
