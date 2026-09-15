@@ -46,6 +46,9 @@ import ibishaVsGokigenChousokuRaw from "../data/joseki/ibisha-vs-gokigen--chouso
 import nakabishaVsChousokuGoteRaw from "../data/joseki/nakabisha-vs-chousoku--gote.json?raw";
 import hayaishidaBasicRaw from "../data/joseki/hayaishida--basic.json?raw";
 import ibishaVsHayaishida42Raw from "../data/joseki/ibisha-vs-hayaishida--42gyoku.json?raw";
+import sankenbishaVsNakabishaAifuriRaw from "../data/joseki/sankenbisha-vs-nakabisha--aifuri.json?raw";
+import nakabishaVsSankenbishaAifuriRaw from "../data/joseki/nakabisha-vs-sankenbisha--aifuri.json?raw";
+import sankenbishaVsMukaibishaAifuriRaw from "../data/joseki/sankenbisha-vs-mukaibisha--aifuri.json?raw";
 import branchNavDemoRaw from "../data/joseki/_branchNavDemo.json?raw";
 
 /**
@@ -543,6 +546,36 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "急戦",
     summary: "5手で攻めの形を作る三間飛車の速攻。相手が飛車先を交換すると王手飛車が決まる。",
     load: () => assertJosekiCourse(parseRaw(hayaishidaBasicRaw), "hayaishida--basic.json"),
+  },
+  {
+    id: "sankenbisha-vs-nakabisha--aifuri",
+    strategyId: "sankenbisha",
+    opponentLabel: "ゴキゲン中飛車(相振り)",
+    sideLabel: "先手",
+    label: "相振り飛車・石田流",
+    kind: "急戦",
+    summary: "相手も振り飛車のとき。5筋を銀で守って石田流に組み、金無双に囲って7筋から攻める。",
+    load: () => assertJosekiCourse(parseRaw(sankenbishaVsNakabishaAifuriRaw), "sankenbisha-vs-nakabisha--aifuri.json"),
+  },
+  {
+    id: "sankenbisha-vs-mukaibisha--aifuri",
+    strategyId: "sankenbisha",
+    opponentLabel: "向かい飛車(相振り)",
+    sideLabel: "後手",
+    label: "相振り飛車・基本手筋",
+    kind: "急戦",
+    summary: "3筋の歩交換と、玉頭を狙う向かい飛車の受け方。相振り三間飛車の型を覚える。",
+    load: () => assertJosekiCourse(parseRaw(sankenbishaVsMukaibishaAifuriRaw), "sankenbisha-vs-mukaibisha--aifuri.json"),
+  },
+  {
+    id: "nakabisha-vs-sankenbisha--aifuri",
+    strategyId: "nakabisha",
+    opponentLabel: "三間飛車(相振り)",
+    sideLabel: "後手",
+    label: "相振り飛車・受けと反撃",
+    kind: "急戦",
+    summary: "相手も振り飛車のとき。5筋の位を取って銀を繰り出し、美濃囲いから反撃する。",
+    load: () => assertJosekiCourse(parseRaw(nakabishaVsSankenbishaAifuriRaw), "nakabisha-vs-sankenbisha--aifuri.json"),
   },
   {
     id: "sujichigaikaku--basic",

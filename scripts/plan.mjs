@@ -50,16 +50,16 @@ export const PAIRINGS = [
   { mine: "四間飛車", opp: "bougin",     priority: 9, courses: ["shikenbisha-vs-ibisha--basic","shikenbisha-vs-ibisha--sente","shikenbisha-vs-bougin--kuboryu","shikenbisha-vs-torisashi--basic","shikenbisha-vs-ponponkei--basic"] },
   { mine: "四間飛車", opp: "anaguma",    priority: 7, courses: ["shikenbisha-vs-anaguma--basic","shikenbisha-vs-anaguma--sokkou"] },
   { mine: "四間飛車", opp: "migishiken", priority: 6, courses: ["shikenbisha-vs-migishiken--41kin"] },
-  { mine: "四間飛車", opp: "aifuribisha",priority: 8, courses: [] },
+  { mine: "四間飛車", opp: "aifuribisha",priority: 8, courses: ["sankenbisha-vs-nakabisha--aifuri","sankenbisha-vs-mukaibisha--aifuri"], note: "相振りでは四間より三間・向かい飛車に振るのが型。四間飛車党もこの三間の相振りを学ぶ" },
   // ── 三間飛車を指す ────────────────────────────────────────────
   { mine: "三間飛車", opp: "bougin",     priority: 7, courses: ["sankenbisha-vs-ibisha--basic","sankenbisha-vs-ibisha--sente","sankenbisha-vs-bougin--53kin","sankenbisha-vs-45hayashikake--sabaki"] },
   { mine: "三間飛車", opp: "anaguma",    priority: 6, courses: ["sankenbisha-vs-anaguma--koyan"] },
-  { mine: "三間飛車", opp: "aifuribisha",priority: 7, courses: [] },
+  { mine: "三間飛車", opp: "aifuribisha",priority: 7, courses: ["sankenbisha-vs-nakabisha--aifuri","sankenbisha-vs-mukaibisha--aifuri"] },
   { mine: "早石田",   opp: "bougin",     priority: 7, courses: ["hayaishida--basic"] },
   // ── 中飛車を指す ──────────────────────────────────────────────
   { mine: "中飛車", opp: "bougin",       priority: 8, courses: ["nakabisha-vs-ibisha--gokigen24","nakabisha-vs-chousoku--gote"] },
   { mine: "中飛車", opp: "anaguma",      priority: 6, courses: ["nakabisha-vs-anaguma--basic","nakabisha-vs-ibisha--sente"] },
-  { mine: "中飛車", opp: "aifuribisha",  priority: 6, courses: [] },
+  { mine: "中飛車", opp: "aifuribisha",  priority: 6, courses: ["nakabisha-vs-sankenbisha--aifuri"] },
   // ── 向かい飛車を指す ──────────────────────────────────────────
   { mine: "向かい飛車", opp: "bougin",   priority: 5, courses: [] },
   // ── 奇襲 ─────────────────────────────────────────────────────

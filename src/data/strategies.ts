@@ -47,10 +47,10 @@ export const STRATEGIES: Strategy[] = [
     category: "nakabisha",
     popularity: 4.6,
     level: "入門〜",
-    lineCount: 3,
+    lineCount: 4,
     ready: true,
     description:
-      "飛車を5筋に構える振り飛車の一種。中央から攻めを組み立てる。対居飛車穴熊と、超速▲3七銀への受け方を収録。",
+      "飛車を5筋に構える振り飛車の一種。中央から攻めを組み立てる。対居飛車穴熊、超速▲3七銀への受け方、相振り飛車を収録。",
   },
   {
     id: "sankenbisha",
@@ -59,10 +59,10 @@ export const STRATEGIES: Strategy[] = [
     category: "furibisha",
     popularity: 4.3,
     level: "入門〜",
-    lineCount: 3,
+    lineCount: 5,
     ready: true,
     description:
-      "飛車を3筋(後手番なら7筋)に振る振り飛車の一種。飛車が角の頭を守るぶん、四間飛車より一手得と言われる。基本の組み方(美濃囲い)と、速攻の早石田を収録。",
+      "飛車を3筋(後手番なら7筋)に振る振り飛車の一種。飛車が角の頭を守るぶん、四間飛車より一手得と言われる。基本の組み方(美濃囲い)、速攻の早石田、相振り飛車を収録。",
   },
   {
     id: "sujichigaikaku",
