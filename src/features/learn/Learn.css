@@ -125,11 +125,11 @@
   flex: 1;
   border: 1px solid var(--line-2);
   background: var(--card);
-  border-radius: 9px;
-  padding: 7px 8px;
+  border-radius: 8px;
+  padding: 5px 6px;
   cursor: pointer;
   color: var(--ink);
-  font-size: 13px;
+  font-size: 12px;
 }
 .learn-navrow button:disabled {
   opacity: 0.4;
@@ -141,7 +141,7 @@
   color: #fff;
   border-color: var(--brown);
   font-family: var(--body);
-  font-size: 13px;
+  font-size: 12px;
 }
 /* 「◀ 戻る」ボタン型のセレクト。押すと過去の手が並び、選ぶとその局面へ戻る。 */
 .back-select {
@@ -151,10 +151,10 @@
   -webkit-appearance: none;
   border: 1px solid var(--line-2);
   background: var(--card);
-  border-radius: 9px;
-  padding: 7px 8px;
+  border-radius: 8px;
+  padding: 5px 6px;
   color: var(--ink);
-  font-size: 13px;
+  font-size: 12px;
   font-family: var(--body);
   text-align: center;
   cursor: pointer;
@@ -349,7 +349,7 @@
     margin-top: 6px;
   }
   .learn-navrow button {
-    padding: 7px 6px;
+    padding: 5px 4px;
   }
 }
 
@@ -373,18 +373,18 @@
 .quiz-aim {
   background: var(--gold-soft);
   border: 1px solid var(--line-2);
-  border-radius: 12px;
-  padding: 11px 14px 12px;
+  border-radius: 10px;
+  padding: 7px 11px 8px;
   color: var(--ink);
   font-family: var(--disp);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
-  line-height: 1.75;
+  line-height: 1.6;
   letter-spacing: 0.02em;
 }
 .quiz-aim .quiz-no {
   display: block;
-  margin: 0 0 4px;
+  margin: 0 0 1px;
   font-family: var(--body);
   font-size: 11px;
   font-weight: 400;
