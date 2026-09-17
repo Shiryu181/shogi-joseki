@@ -449,3 +449,47 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* 手の効果の実演。解説パネルの下に「▶ △同銀と取ると」のようなボタンを並べ、押すと盤上で再生する。 */
+.demo-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 6px 14px 0;
+}
+.demo-btn {
+  border: 1px solid var(--line-2);
+  background: var(--gold-soft);
+  color: var(--brown-ink);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 12.5px;
+  font-family: var(--body);
+  cursor: pointer;
+}
+.demo-panel .demo-title {
+  font-family: var(--disp);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--brown-ink);
+}
+.demo-moves {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px !important;
+}
+.demo-move {
+  font-family: var(--kf);
+  font-size: 15px;
+  color: var(--ink-faint);
+  transition: color 0.2s;
+}
+.demo-move.on {
+  color: var(--ink);
+}
+.demo-text {
+  margin-top: 8px !important;
+  color: var(--ink);
+  font-weight: 600;
+}

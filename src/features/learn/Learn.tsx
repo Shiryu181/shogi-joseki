@@ -1,5 +1,7 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Color, PieceType, Square, moveFromUSI, parseUSIMove } from "../../domain/shogi";
+import type { Position } from "../../domain/shogi";
+import type { MoveDemo } from "../../domain/types";
 import { useLearnStore, branchMove, positionFromNode } from "../../store/learnStore";
 import type { JosekiCourse, JosekiNode } from "../../domain/types";
 import type { LearnPath } from "../../domain/josekiLoader";
@@ -92,6 +94,38 @@ export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter }:
   const guideHidden = pendingAck !== null || quiz !== null || bookQuiz !== null;
   const parsed = guide && !guideHidden ? parseUSIMove(guide.usi) : null;
   const moveInfo = guide && !guideHidden ? moveFromUSI(position, guide.usi) : null;
+
+  // 効果の実演(盤上再生)。position は再生中の局面、step は何手目まで進んだか。
+  const [demo, setDemo] = useState<{
+    demo: MoveDemo;
+    frames: { pos: Position; text: string; lastKeys: Set<string>; lastTo: string | null }[];
+    step: number;
+  } | null>(null);
+
+  function startDemo(d: MoveDemo) {
+    // 自分の手を指した直後の局面(= 現在の局面)から手順を進めて、各コマの局面を作る。
+    const frames: { pos: Position; text: string; lastKeys: Set<string>; lastTo: string | null }[] = [];
+    let pos = position.clone();
+    frames.push({ pos, text: "", lastKeys: new Set(), lastTo: null });
+    for (const usi of d.usi) {
+      const info = moveFromUSI(pos, usi);
+      if (!info) break;
+      const next = pos.clone();
+      if (!next.doMove(info.move)) break;
+      const to = info.move.to.usi;
+      const from = info.move.from instanceof Square ? info.move.from.usi : null;
+      frames.push({ pos: next, text: info.displayText, lastKeys: new Set(from ? [from, to] : [to]), lastTo: to });
+      pos = next;
+    }
+    setDemo({ demo: d, frames, step: 0 });
+  }
+
+  // 実演は1手ずつ自動で進める(900ms)。最後まで行ったら止まる。
+  useEffect(() => {
+    if (!demo || demo.step >= demo.frames.length - 1) return;
+    const t = setTimeout(() => setDemo((d) => (d ? { ...d, step: d.step + 1 } : d)), 900);
+    return () => clearTimeout(t);
+  }, [demo]);
 
   // 手数ジャンプ用に、本線の各手の表示テキストを作っておく(「最初へ」ボタンの代わり)。
   const mainLine = useMemo(() => {
@@ -200,15 +234,15 @@ export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter }:
           ))}
         </div>
         <Board
-          position={position}
-          fromKey={inQuiz ? quizFromKey : fromKey}
-          fromHand={inQuiz ? quizFromHand : fromHand}
-          glowKeys={inQuiz ? undefined : glowKeys}
-          destKeys={inQuiz ? quizGlow : undefined}
-          ghost={inQuiz ? null : ghost}
-          lastKeys={lastKeys}
+          position={demo ? demo.frames[demo.step].pos : position}
+          fromKey={demo ? null : inQuiz ? quizFromKey : fromKey}
+          fromHand={demo ? null : inQuiz ? quizFromHand : fromHand}
+          glowKeys={demo || inQuiz ? undefined : glowKeys}
+          destKeys={demo ? undefined : inQuiz ? quizGlow : undefined}
+          ghost={demo || inQuiz ? null : ghost}
+          lastKeys={demo ? demo.frames[demo.step].lastKeys : lastKeys}
           emphasizeLast
-          lastToKey={lastToKey}
+          lastToKey={demo ? demo.frames[demo.step].lastTo : lastToKey}
           onSquareClick={handleSquareClick}
           onHandPieceClick={handleHandPieceClick}
           clickableHandColor={inQuiz ? (course.mySide === "sente" ? Color.BLACK : Color.WHITE) : "none"}
@@ -225,7 +259,7 @@ export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter }:
           </div>
         )}
         {showWaitPill && !quiz && <div className="waitpill">相手が指しています…</div>}
-        {pendingAck && !quiz && (
+        {pendingAck && !quiz && !demo && (
           <div className="ackpill">
             {pendingAck.by === "me" ? "正解です。解説を読んで「次へ」" : "相手が指しました。解説を読んで「次へ」"}
           </div>
@@ -239,7 +273,13 @@ export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter }:
             {path.chapters[chapterIndex].divergeAt - 1}手目までは学んだ形と同じ。ここから {path.chapters[chapterIndex].entry.label}
           </div>
         )}
-        {bookQuiz && !bookQuiz.revealed ? (
+        {demo ? (
+          <div className="learn-navrow">
+            <button type="button" onClick={() => setDemo(null)}>
+              実演を閉じる
+            </button>
+          </div>
+        ) : bookQuiz && !bookQuiz.revealed ? (
           <div className="learn-navrow">
           {/* 「◀ 戻る」と書いたボタン型のセレクト。開くと過去の手が並び、選ぶとその局面へ戻る。
               バッジをセレクト化した案は気づかれないので、押せると分かる見た目にした。 */}
@@ -383,16 +423,40 @@ export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter }:
               <p className="quiz-punish">{quiz.deviation.punishNote}</p>
             )}
           </div>
+        ) : demo ? (
+          <div className="quizpanel demo-panel">
+            <p className="demo-title">{demo.demo.title}</p>
+            <p className="demo-moves">
+              {demo.frames.slice(1).map((f, i) => (
+                <span key={i} className={`demo-move${i + 1 <= demo.step ? " on" : ""}`}>
+                  {f.text}
+                </span>
+              ))}
+            </p>
+            {demo.step >= demo.frames.length - 1 && <p className="demo-text">{demo.demo.text}</p>}
+          </div>
         ) : pendingAck ? (
-          <CommentPanel
-            isGoal={false}
-            moveNumber={pendingAck.moveNumber}
-            moveText={pendingAck.moveText}
-            note={pendingAck.note}
-            comment={pendingAck.comment}
-            kind={pendingAck.kind}
-            punishNote={pendingAck.punishNote}
-          />
+          <>
+            <CommentPanel
+              isGoal={false}
+              moveNumber={pendingAck.moveNumber}
+              moveText={pendingAck.moveText}
+              note={pendingAck.note}
+              comment={pendingAck.comment}
+              kind={pendingAck.kind}
+              punishNote={pendingAck.punishNote}
+            />
+            {pendingAck.by === "me" && pendingAck.demos && pendingAck.demos.length > 0 && (
+              // その手の効果を、盤上で数手動かして見せる。「なぜその手なのか」を文章でなく局面で示す。
+              <div className="demo-list">
+                {pendingAck.demos.map((d) => (
+                  <button key={d.title} type="button" className="demo-btn" onClick={() => startDemo(d)}>
+                    ▶ {d.title}
+                  </button>
+                ))}
+              </div>
+            )}
+          </>
         ) : showWaitPill && bookQuizEnabled ? (
           // 相手が指すまでの待ち時間。ここで通常の解説パネルを出すと、
           // これから相手が指す手の解説が先に見えてしまい(ネタバレ)、

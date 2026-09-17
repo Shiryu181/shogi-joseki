@@ -104,6 +104,25 @@ function resolveMove(position, spec, moveNo) {
  * 手のリストからコース JSON を組み立てる。
  * moves[i] = { piece, to, from?, note } / nodeComments[i] = そのノードの局面解説
  */
+/**
+ * 実演(demos)の手順が、その手を指した直後の局面から合法に進められるか検査する。
+ * 転記ミスをここで止める(アプリ側で再生できない実演を出さないため)。
+ */
+function checkDemos(demos, sfenAfter, label) {
+  for (const d of demos) {
+    const pos = new Position();
+    pos.resetBySFEN(sfenAfter);
+    d.usi.forEach((usi, k) => {
+      const parsed = parseUSIMove(usi);
+      if (!parsed) throw new Error(`${label} 実演「${d.title}」${k + 1}手目 ${usi}: USI が不正`);
+      let mv = pos.createMove(parsed.from, parsed.to);
+      if (mv && parsed.promote) mv = mv.withPromote();
+      if (!mv || !pos.isValidMove(mv) || !pos.doMove(mv)) throw new Error(`${label} 実演「${d.title}」${k + 1}手目 ${usi}: 非合法`);
+    });
+  }
+  return demos;
+}
+
 export function buildCourse({ id, title, myStrategy, opponentStrategy, mySide, source, goalFormation, goalLabel, rootComment, moves }) {
   const position = new Position();
   position.resetBySFEN(InitialPositionSFEN.STANDARD);
@@ -129,6 +148,7 @@ export function buildCourse({ id, title, myStrategy, opponentStrategy, mySide, s
       usi, kind: "main", note: spec.note,
       ...(aim ? { aim } : {}),
       ...(spec.openEnded ? { openEnded: true } : {}),
+      ...(spec.demos ? { demos: checkDemos(spec.demos, child.sfen, `${i + 1}手目`) } : {}),
       child,
     });
     for (const b of devBranches) nodes[i].branches.push(b);
@@ -193,11 +213,17 @@ export function buildCourseFromUsi({ id, title, myStrategy, opponentStrategy, my
     if (parsed.promote) move = move.withPromote();
     if (!position.isValidMove(move)) throw new Error(`${i + 1}手目 ${usi}: 非合法です`);
     if (!position.doMove(move)) throw new Error(`${i + 1}手目 ${usi}: 適用に失敗`);
-    const [note, comment] = notes[i] ?? [];
+    // notes[i] = [解説, 局面の解説, 実演(任意)]
+    const [note, comment, demos] = notes[i] ?? [];
     // USI から組み立てるコース(先後を入れ替えたコースなど)にも、同じ辞書でねらいを付ける。
     const aim = note ? AIM_BY_NOTE[note] : undefined;
     const child = { id: `n${i + 1}`, sfen: position.sfen, comment, branches: [] };
-    nodes[i].branches.push({ usi, kind: "main", note, ...(aim ? { aim } : {}), child });
+    nodes[i].branches.push({
+      usi, kind: "main", note,
+      ...(aim ? { aim } : {}),
+      ...(demos ? { demos: checkDemos(demos, child.sfen, `${i + 1}手目`) } : {}),
+      child,
+    });
     nodes.push(child);
   });
 

@@ -18,6 +18,16 @@ export interface Strategy {
   description: string;
 }
 
+/** 手の効果の実演。 */
+export interface MoveDemo {
+  /** 見出し(例: 「△同銀と取ると」「この後の狙い」)。 */
+  title: string;
+  /** その手を指した直後の局面から始まる手順(USI)。 */
+  usi: string[];
+  /** 再生後に示す結論(例: 「▲3二飛成で飛車が取れます」)。 */
+  text: string;
+}
+
 // コース = 1 つの対抗形 × 自分の手番
 export interface JosekiCourse {
   id: string; // "ibisha-vs-shikenbisha--sente"
@@ -65,6 +75,12 @@ export interface JosekiMove {
    * 見えてしまったため、出題を続けて返し方だけ変える形にした。
    */
   openEnded?: boolean;
+  /**
+   * その手の「効果の実演」。数手の変化を盤上で再生して、なぜその手なのかを見せる。
+   * 例: ▲4五歩に対して「△同銀と取ると▲3二飛成で飛車が取れる」。
+   * usi はこの手を指した直後の局面から始まる手順。
+   */
+  demos?: MoveDemo[];
   punishNote?: string; // deviation のとき「どう咎めるか」の要点
   child: JosekiNode | null; // null = 末端 or エンジンに委譲
 }

@@ -11,7 +11,7 @@ import {
 } from "../domain/shogi";
 import type { DropDests, MoveDests } from "../domain/legalMoves";
 import { computeDropDests, computeMoveDests } from "../domain/legalMoves";
-import type { JosekiCourse, JosekiMove, JosekiNode } from "../domain/types";
+import type { JosekiCourse, JosekiMove, JosekiNode, MoveDemo } from "../domain/types";
 import type { Selection } from "./sandboxStore";
 import { loadIbishaVsShikenbishaSente } from "../domain/josekiLoader";
 
@@ -53,6 +53,8 @@ export interface AckMove {
    * 解説を読んでから「次へ」で相手を進める(進む速さを自分で決められるように)。
    */
   by?: "me" | "opponent";
+  /** その手の効果の実演(あれば)。正解後の解説パネルから盤上で再生できる。 */
+  demos?: MoveDemo[];
 }
 
 /**
@@ -461,9 +463,25 @@ export const useLearnStore = create<LearnState>((set, get) => {
         get().acknowledgeMove();
         return;
       }
-      const { currentNode, selectedBranchIndex } = get();
+      const { currentNode, selectedBranchIndex, position, course, bookQuizEnabled } = get();
       const move = branchMove(currentNode, selectedBranchIndex);
       if (!move || !move.child) return; // 末端(理想陣形、またはダミー分岐の行き止まり)に到達済み
+      // 自分の手をなぞって進めた場合も、出題に正解したときと同じく一旦止めて解説と実演を出す。
+      // 「答えを見る」で進めた手だけ解説が飛ばされると、学びが薄くなるため。
+      if (bookQuizEnabled && move.kind === "main" && position.color === myColorOf(course)) {
+        const info = moveFromUSI(position, move.usi);
+        const ack: AckMove = {
+          moveNumber: get().nodeHistory.length + 1,
+          moveText: info?.displayText ?? move.usi,
+          note: move.note,
+          kind: move.kind,
+          punishNote: move.punishNote,
+          comment: move.child.comment,
+          by: "me",
+          demos: move.demos,
+        };
+        set({ bookQuiz: null, selected: null, moveDests: new Map(), dropDests: new Map(), lastOpponent: null, pendingAck: ack });
+      }
       goToChild(move);
     },
 
@@ -533,6 +551,7 @@ export const useLearnStore = create<LearnState>((set, get) => {
           punishNote: answer.punishNote,
           comment: answer.child?.comment,
           by: "me",
+          demos: answer.demos,
         };
         set({
           bookQuiz: null,
