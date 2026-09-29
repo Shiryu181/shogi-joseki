@@ -87,7 +87,7 @@
                                                         "usi": "5i6h",
                                                         "kind": "main",
                                                         "note": "玉を囲いへ向かわせます。",
-                                                        "aim": "戦いが始まる前に、玉を戦場から遠ざけたい。",
+                                                        "aim": "飛車と反対側へ玉を運んで、戦場から遠ざけたい。",
                                                         "child": {
                                                           "id": "n9",
                                                           "sfen": "lnsgkgsnl/4r2b1/pppp1p1pp/6p2/4p2P1/2P6/PP1PPPP1P/1B1K1S1R1/LNSG1G1NL w - 1",
@@ -162,7 +162,7 @@
                                                                                                         "usi": "6h7h",
                                                                                                         "kind": "main",
                                                                                                         "note": "玉を7八へ。舟囲いの形に近づけます。",
-                                                                                                        "aim": "戦いが始まる前に、玉を戦場から遠ざけたい。",
+                                                                                                        "aim": "飛車と反対側へ玉を運んで、戦場から遠ざけたい。",
                                                                                                         "child": {
                                                                                                           "id": "n17",
                                                                                                           "sfen": "lnsgkg1nl/4r4/pppp1pbpp/5sp2/4p2P1/2P2SP2/PP1PPP2P/1BK4R1/LNSG1G1NL w - 1",

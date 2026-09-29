@@ -49,8 +49,8 @@
                               {
                                 "usi": "7i6h",
                                 "kind": "main",
-                                "note": "左銀を上げます。",
-                                "aim": "遊んでいる駒を働く場所へ動かし始めたい。",
+                                "note": "左銀を6八へ。次に6七へ上げて、角道を止めた6六の歩と中央(5筋)を下から支えます。",
+                                "aim": "角道を止めた歩と中央を下から支えるため、左の守り駒を一つ前に出したい。",
                                 "child": {
                                   "id": "n5",
                                   "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/1p4p2/9/2PP5/PP2PPPPP/1B1S3R1/LN1GKGSNL w - 1",
@@ -102,7 +102,7 @@
                                                                     "usi": "5i4h",
                                                                     "kind": "main",
                                                                     "note": "玉を囲いへ向かわせます。",
-                                                                    "aim": "戦いが始まる前に、玉を戦場から遠ざけたい。",
+                                                                    "aim": "飛車と反対側へ玉を運んで、戦場から遠ざけたい。",
                                                                     "child": {
                                                                       "id": "n11",
                                                                       "sfen": "ln2kgsnl/1r1sg2b1/p1pp1p1pp/1p2p1p2/9/2PPP4/PP3PPPP/1B1SRK3/LN1G1GSNL w - 1",
