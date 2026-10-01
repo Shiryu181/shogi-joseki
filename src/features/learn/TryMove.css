@@ -1,0 +1,80 @@
+/* 「この手を指したらどうなるか」を試すパネル。 */
+.trypanel .try-head {
+  font-family: var(--disp);
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--brown-ink);
+}
+.try-note {
+  color: var(--ink-soft);
+  margin-top: 6px !important;
+}
+.try-verdict {
+  margin-top: 8px !important;
+  font-family: var(--disp);
+  font-size: 15px;
+  font-weight: 600;
+}
+.try-verdict.good {
+  color: var(--brown-ink);
+}
+.try-verdict.soso {
+  color: var(--gold);
+}
+.try-verdict.bad {
+  color: var(--red);
+}
+.try-line {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px !important;
+}
+.try-label {
+  font-size: 11.5px;
+  color: var(--ink-soft);
+}
+.try-move {
+  font-family: var(--kf);
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--card-2);
+  border: 1px solid var(--line-2);
+  border-radius: 8px;
+  padding: 2px 8px;
+  cursor: pointer;
+}
+.try-move.on {
+  background: var(--gold-soft);
+  border-color: var(--gold);
+}
+.try-compare {
+  margin-top: 8px !important;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+.try-compare b {
+  font-family: var(--disp);
+  color: var(--ink);
+}
+.try-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+}
+.try-actions button {
+  flex: 1;
+  border: 1px solid var(--line-2);
+  background: var(--card);
+  border-radius: 8px;
+  padding: 6px;
+  font-size: 12px;
+  font-family: var(--body);
+  color: var(--ink);
+  cursor: pointer;
+}
+.try-actions button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}

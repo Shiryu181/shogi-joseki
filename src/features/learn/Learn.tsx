@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { Color, PieceType, Square, moveFromUSI, parseUSIMove } from "../../domain/shogi";
-import type { Position } from "../../domain/shogi";
+import { Color, PieceType, Position, Square, moveFromUSI, parseUSIMove } from "../../domain/shogi";
+
 import type { MoveDemo } from "../../domain/types";
 import { useLearnStore, branchMove, positionFromNode } from "../../store/learnStore";
 import type { JosekiCourse, JosekiNode } from "../../domain/types";
@@ -11,6 +11,7 @@ import { CommentPanel } from "../../ui/CommentPanel";
 import { buildHint } from "../../domain/hint";
 import { BranchNav } from "../../ui/BranchNav";
 import { PointsBadge } from "../../ui/PointsBadge";
+import { TryMove } from "./TryMove";
 import "./Learn.css";
 
 export interface LearnProps {
@@ -26,6 +27,20 @@ export interface LearnProps {
   chapterIndex?: number;
   /** 「次の章へ」。最後の章では呼ばれない。 */
   onNextChapter?: () => void;
+}
+
+/** SFEN から局面を作る(「この手を試す」の盤表示用)。 */
+function positionFromSfen(sfen: string): Position {
+  const p = new Position();
+  p.resetBySFEN(sfen);
+  return p;
+}
+
+/** USI の移動元・移動先を強調用の集合にする。 */
+function usiKeys(usi: string | null): Set<string> {
+  if (!usi) return new Set();
+  const to = usi.slice(2, 4);
+  return usi[1] === "*" ? new Set([to]) : new Set([usi.slice(0, 2), to]);
 }
 
 /**
@@ -94,6 +109,10 @@ export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter }:
   const guideHidden = pendingAck !== null || quiz !== null || bookQuiz !== null;
   const parsed = guide && !guideHidden ? parseUSIMove(guide.usi) : null;
   const moveInfo = guide && !guideHidden ? moveFromUSI(position, guide.usi) : null;
+
+  // 「この手を試す」中に盤へ映す局面(null なら通常表示)。
+  const [tryPreview, setTryPreview] = useState<{ sfen: string; lastUsi: string | null } | null>(null);
+  const [trying, setTrying] = useState(false);
 
   // 効果の実演(盤上再生)。position は再生中の局面、step は何手目まで進んだか。
   const [demo, setDemo] = useState<{
@@ -234,15 +253,15 @@ export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter }:
           ))}
         </div>
         <Board
-          position={demo ? demo.frames[demo.step].pos : position}
+          position={tryPreview ? positionFromSfen(tryPreview.sfen) : demo ? demo.frames[demo.step].pos : position}
           fromKey={demo ? null : inQuiz ? quizFromKey : fromKey}
           fromHand={demo ? null : inQuiz ? quizFromHand : fromHand}
           glowKeys={demo || inQuiz ? undefined : glowKeys}
           destKeys={demo ? undefined : inQuiz ? quizGlow : undefined}
           ghost={demo || inQuiz ? null : ghost}
-          lastKeys={demo ? demo.frames[demo.step].lastKeys : lastKeys}
+          lastKeys={tryPreview ? usiKeys(tryPreview.lastUsi) : demo ? demo.frames[demo.step].lastKeys : lastKeys}
           emphasizeLast
-          lastToKey={demo ? demo.frames[demo.step].lastTo : lastToKey}
+          lastToKey={tryPreview ? (tryPreview.lastUsi ? tryPreview.lastUsi.slice(2, 4) : null) : demo ? demo.frames[demo.step].lastTo : lastToKey}
           onSquareClick={handleSquareClick}
           onHandPieceClick={handleHandPieceClick}
           clickableHandColor={inQuiz ? (course.mySide === "sente" ? Color.BLACK : Color.WHITE) : "none"}
@@ -273,7 +292,7 @@ export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter }:
             {path.chapters[chapterIndex].divergeAt - 1}手目までは学んだ形と同じ。ここから {path.chapters[chapterIndex].entry.label}
           </div>
         )}
-        {demo ? (
+        {trying ? null : demo ? (
           <div className="learn-navrow">
             <button type="button" onClick={() => setDemo(null)}>
               実演を閉じる
@@ -363,7 +382,20 @@ export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter }:
           )}
         </div>
         )}
-        {bookQuiz ? (
+        {trying && bookQuiz?.wrong?.attemptedUsi ? (
+          <TryMove
+            sfenBefore={currentNode.sfen}
+            attemptedUsi={bookQuiz.wrong.attemptedUsi}
+            attemptedText={bookQuiz.wrong.attemptedText}
+            correctUsi={bookQuiz.wrong.correctUsi}
+            correctText={bookQuiz.wrong.correctText}
+            onPreview={(sfen, lastUsi) => setTryPreview(sfen ? { sfen, lastUsi } : null)}
+            onClose={() => {
+              setTrying(false);
+              setTryPreview(null);
+            }}
+          />
+        ) : bookQuiz ? (
           <div className="quizpanel">
             {lastOpponent && (
               <p className="opp-move">
@@ -386,7 +418,7 @@ export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter }:
             })()}
             {currentNode.comment && <p className="quiz-comment">{currentNode.comment}</p>}
             {bookQuiz.wrong && (
-              bookQuiz.wrong.openEnded ? (
+              trying && bookQuiz.wrong.attemptedUsi ? null : bookQuiz.wrong.openEnded ? (
                 <p className="quiz-wrong soft">
                   △ {bookQuiz.wrong.attemptedText}
                   <span>
@@ -403,6 +435,14 @@ export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter }:
                   </span>
                 </p>
               )
+            )}
+            {bookQuiz.wrong?.attemptedUsi && !trying && (
+              // 「この手を指したらどうなるんだろう」に答える。盤で試し、定跡手と比べる。
+              <div className="demo-list">
+                <button type="button" className="demo-btn" onClick={() => setTrying(true)}>
+                  ▶ この手を指すとどうなる？
+                </button>
+              </div>
             )}
           </div>
         ) : quiz ? (

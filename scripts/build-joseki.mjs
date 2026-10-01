@@ -109,6 +109,7 @@ function resolveMove(position, spec, moveNo) {
  * 転記ミスをここで止める(アプリ側で再生できない実演を出さないため)。
  */
 function checkDemos(demos, sfenAfter, label) {
+  // 失敗したときに局面も出す(どのコースのどの手か特定するため)
   for (const d of demos) {
     const pos = new Position();
     pos.resetBySFEN(sfenAfter);
@@ -117,7 +118,7 @@ function checkDemos(demos, sfenAfter, label) {
       if (!parsed) throw new Error(`${label} 実演「${d.title}」${k + 1}手目 ${usi}: USI が不正`);
       let mv = pos.createMove(parsed.from, parsed.to);
       if (mv && parsed.promote) mv = mv.withPromote();
-      if (!mv || !pos.isValidMove(mv) || !pos.doMove(mv)) throw new Error(`${label} 実演「${d.title}」${k + 1}手目 ${usi}: 非合法`);
+      if (!mv || !pos.isValidMove(mv) || !pos.doMove(mv)) throw new Error(`${label} 実演「${d.title}」${k + 1}手目 ${usi}: 非合法 / 開始局面 ${sfenAfter}`);
     });
   }
   return demos;
@@ -212,9 +213,11 @@ export function buildCourseFromUsi({ id, title, myStrategy, opponentStrategy, my
     if (!move) throw new Error(`${i + 1}手目 ${usi}: 手を作れません`);
     if (parsed.promote) move = move.withPromote();
     if (!position.isValidMove(move)) throw new Error(`${i + 1}手目 ${usi}: 非合法です`);
+    // notes[i] = [解説, 局面の解説, 実演(任意), 咎めクイズ(任意)]
+    const [note, comment, demos, devs] = notes[i] ?? [];
+    // 逸れ手は本線を適用する「前」の局面から枝を伸ばす(buildCourse と同じ扱い)。
+    const devBranches = (devs ?? []).map((dev) => buildDeviation(position, dev, i + 1));
     if (!position.doMove(move)) throw new Error(`${i + 1}手目 ${usi}: 適用に失敗`);
-    // notes[i] = [解説, 局面の解説, 実演(任意)]
-    const [note, comment, demos] = notes[i] ?? [];
     // USI から組み立てるコース(先後を入れ替えたコースなど)にも、同じ辞書でねらいを付ける。
     const aim = note ? AIM_BY_NOTE[note] : undefined;
     const child = { id: `n${i + 1}`, sfen: position.sfen, comment, branches: [] };
@@ -224,6 +227,7 @@ export function buildCourseFromUsi({ id, title, myStrategy, opponentStrategy, my
       ...(demos ? { demos: checkDemos(demos, child.sfen, `${i + 1}手目`) } : {}),
       child,
     });
+    for (const b of devBranches) nodes[i].branches.push(b);
     nodes.push(child);
   });
 

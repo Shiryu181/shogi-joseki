@@ -526,6 +526,30 @@
                                                                                                             }
                                                                                                           ]
                                                                                                         }
+                                                                                                      },
+                                                                                                      {
+                                                                                                        "usi": "5i5h",
+                                                                                                        "kind": "deviation",
+                                                                                                        "note": "玉を5八へ上がる手。相振り飛車では玉が中央にいると、5筋からの攻めをまともに受けてしまいます。",
+                                                                                                        "punishNote": "△5六歩と位を伸ばせば、玉の正面から圧力をかけられます。",
+                                                                                                        "child": {
+                                                                                                          "id": "d17",
+                                                                                                          "sfen": "lnsgkg1nl/4r2b1/pppp1p1pp/6p2/2P1ps3/2RP5/PPNSPPPPP/1B2K4/L2G1GSNL w - 1",
+                                                                                                          "comment": "相手の玉が中央に出てきました。5筋の位を活かして攻めます。",
+                                                                                                          "branches": [
+                                                                                                            {
+                                                                                                              "usi": "5e5f",
+                                                                                                              "kind": "main",
+                                                                                                              "note": "5筋の歩を伸ばします。相手の玉の正面から圧力をかけます。",
+                                                                                                              "child": {
+                                                                                                                "id": "d17_1",
+                                                                                                                "sfen": "lnsgkg1nl/4r2b1/pppp1p1pp/6p2/2P2s3/2RPp4/PPNSPPPPP/1B2K4/L2G1GSNL b - 1",
+                                                                                                                "comment": "玉の正面に歩を伸ばしました。相振り飛車では、相手が囲いに入る前に攻めるのが要点です。",
+                                                                                                                "branches": []
+                                                                                                              }
+                                                                                                            }
+                                                                                                          ]
+                                                                                                        }
                                                                                                       }
                                                                                                     ]
                                                                                                   }

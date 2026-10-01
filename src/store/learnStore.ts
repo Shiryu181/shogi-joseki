@@ -78,7 +78,14 @@ export interface BookQuizState {
    * 直近の誤答。null なら未回答。openEnded は「別の手も同じくらい良い局面」で、
    * 不正解ではなく『この講座ではこう進める』と穏やかに返すための印。
    */
-  wrong: { attemptedText: string; correctText: string; openEnded?: boolean } | null;
+  wrong: {
+    attemptedText: string;
+    correctText: string;
+    openEnded?: boolean;
+    /** 指そうとした手と定跡手(USI)。「この手を試す」でエンジンに比べさせるために持つ。 */
+    attemptedUsi?: string;
+    correctUsi?: string;
+  } | null;
   /** 「答えを見る」が押された。以降はガイドを出してなぞらせる。 */
   revealed: boolean;
 }
@@ -567,7 +574,16 @@ export const useLearnStore = create<LearnState>((set, get) => {
       const correctText = answer ? (moveFromUSI(position, answer.usi)?.displayText ?? "") : "";
       set({
         selected: null,
-        bookQuiz: { ...bookQuiz, wrong: { attemptedText: applied.displayText, correctText, openEnded: !!answer?.openEnded } },
+        bookQuiz: {
+          ...bookQuiz,
+          wrong: {
+            attemptedText: applied.displayText,
+            correctText,
+            openEnded: !!answer?.openEnded,
+            attemptedUsi: applied.move.usi,
+            correctUsi: answer?.usi,
+          },
+        },
       });
     },
 
