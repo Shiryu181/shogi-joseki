@@ -88,6 +88,10 @@ export function TryMove({
     })();
   }, [sfenBefore, attemptedUsi, correctUsi]);
 
+  const diff = cp !== null && bookCp !== null ? cp - bookCp : null;
+  // 原因を出すのは「定跡より悪い」と判定したときだけ。盤の赤い強調も同じ条件に揃える。
+  const showCause = diff !== null && diff < -60 && !!explain?.cause;
+
   // 盤には「自分が指そうとした手」から読み筋を進めて見せる。
   useEffect(() => {
     const pos = new Position();
@@ -113,9 +117,6 @@ export function TryMove({
 
   useEffect(() => () => onPreview(null, null), [onPreview]);
 
-  const diff = cp !== null && bookCp !== null ? cp - bookCp : null;
-  // 原因を出すのは「定跡より悪い」と判定したときだけ。盤の赤い強調も同じ条件に揃える。
-  const showCause = diff !== null && diff < -60 && !!explain?.cause;
   const verdict =
     diff === null
       ? null
