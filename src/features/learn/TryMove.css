@@ -14,15 +14,20 @@
   font-family: var(--disp);
   font-size: 15px;
   font-weight: 600;
+  color: var(--ink);
 }
-.try-verdict.good {
-  color: var(--brown-ink);
-}
-.try-verdict.soso {
-  color: var(--gold);
-}
-.try-verdict.bad {
-  color: var(--red);
+/* 何が悪いのか(どの手で何を取られるか)。この欄が主役なので、唯一色面を持たせる。 */
+.try-cause {
+  margin-top: 8px !important;
+  background: var(--gold-soft);
+  border: 1px solid var(--line-2);
+  border-radius: 10px;
+  padding: 9px 11px;
+  font-family: var(--disp);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.7;
+  color: var(--ink);
 }
 .try-line {
   display: flex;
@@ -46,8 +51,13 @@
   cursor: pointer;
 }
 .try-move.on {
-  background: var(--gold-soft);
-  border-color: var(--gold);
+  background: var(--card);
+  border-color: var(--brown);
+}
+/* 損をする瞬間の手。 */
+.try-move.cause {
+  color: var(--red);
+  border-color: var(--red);
 }
 .try-compare {
   margin-top: 8px !important;
