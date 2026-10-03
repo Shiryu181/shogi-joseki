@@ -44,6 +44,7 @@ import nakabishaSenteRaw from "../data/joseki/nakabisha-vs-ibisha--sente.json?ra
 import ibishaVsNakabishaGoteRaw from "../data/joseki/ibisha-vs-nakabisha--gote.json?raw";
 import ibishaVsGokigenChousokuRaw from "../data/joseki/ibisha-vs-gokigen--chousoku.json?raw";
 import nakabishaVsChousokuGoteRaw from "../data/joseki/nakabisha-vs-chousoku--gote.json?raw";
+import nakabishaVsOnigoroshiRaw from "../data/joseki/nakabisha-vs-onigoroshi--gote.json?raw";
 import hayaishidaBasicRaw from "../data/joseki/hayaishida--basic.json?raw";
 import ibishaVsHayaishida42Raw from "../data/joseki/ibisha-vs-hayaishida--42gyoku.json?raw";
 import sankenbishaVsNakabishaAifuriRaw from "../data/joseki/sankenbisha-vs-nakabisha--aifuri.json?raw";
@@ -713,6 +714,19 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     load: () => assertJosekiCourse(parseRaw(nakabishaVsSankenbishaAifuriRaw), "nakabisha-vs-sankenbisha--aifuri.json"),
   },
   {
+    id: "nakabisha-vs-onigoroshi--gote",
+    strategyId: "gokigen",
+    opponentId: "onigoroshi",
+    recommend: 1,
+    group: "奇襲への備え",
+    opponentLabel: "鬼殺し",
+    sideLabel: "後手",
+    label: "鬼殺しの受け方",
+    kind: "急戦",
+    summary: "3手目▲7七桂の鬼殺し。△6二金と△6四歩の2手を知っていれば、逆に桂を取って駒得できる。",
+    load: () => assertJosekiCourse(parseRaw(nakabishaVsOnigoroshiRaw), "nakabisha-vs-onigoroshi--gote.json"),
+  },
+  {
     id: "sujichigaikaku--basic",
     strategyId: "sujichigaikaku",
     opponentId: "ibisha-kyusen",
@@ -772,6 +786,8 @@ export const OPPONENTS: Opponent[] = [
     description: "相手がじっくり矢倉に組んでくる相居飛車の戦型。" },
   { id: "aigakari", name: "相掛かり", kana: "あいがかり", category: "ibisha", popularity: 3.3,
     description: "角道を開けずに飛車先を交換してくる相居飛車の戦型。" },
+  { id: "onigoroshi", name: "鬼殺し", kana: "おにごろし", category: "kishu", popularity: 3.0,
+    description: "3手目に▲7七桂と跳ねて、こちらの飛車の頭を狙ってくる奇襲。受け方を知らないと序盤で潰されるが、知っていれば逆に桂を取って駒得できる。" },
   { id: "ponponkei", name: "ポンポン桂", kana: "ぽんぽんけい", category: "kishu", popularity: 2.5,
     description: "桂を早く跳ねて角頭を狙ってくる奇襲。四間飛車での受け方を収録。" },
   { id: "torisashi", name: "鳥刺し(嬉野流)", kana: "とりさし", category: "kishu", popularity: 2.5,

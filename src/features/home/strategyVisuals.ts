@@ -97,6 +97,10 @@ const VISUALS: Record<string, StrategyVisual> = {
   "ibisha-kyusen": { heroColor: "#E7C88A", accentFile: 2,
     pieces: [ { file: 2, rank: 8, glyph: "飛", accent: true }, { file: 2, rank: 6, glyph: "銀" },
       { file: 4, rank: 6, glyph: "銀" }, { file: 7, rank: 8, glyph: "玉" } ] },
+  // 鬼殺し: 3手目に跳ねた7七の桂と、次に跳ぶ6五。
+  onigoroshi: { heroColor: "#DCC18F",
+    pieces: [ { file: 7, rank: 7, glyph: "桂", accent: true }, { file: 6, rank: 5, glyph: "桂", accent: true },
+      { file: 8, rank: 8, glyph: "角" }, { file: 5, rank: 9, glyph: "玉" } ] },
   ponponkei: { heroColor: "#DCC18F",
     pieces: [ { file: 3, rank: 7, glyph: "桂", accent: true }, { file: 4, rank: 5, glyph: "桂", accent: true },
       { file: 2, rank: 8, glyph: "飛" }, { file: 5, rank: 9, glyph: "玉" } ] },
