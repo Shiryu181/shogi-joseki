@@ -1,0 +1,241 @@
+{
+  "id": "nakabisha-vs-chokyusen--kaihi",
+  "title": "▲5八金右超急戦を避ける(後手)",
+  "myStrategy": "nakabisha",
+  "opponentStrategy": "ibisha",
+  "mySide": "gote",
+  "source": "回避作戦は『後手ゴキゲン中飛車・超急戦回避作戦』(note.com/akihiko8103)に準拠。超急戦の本線は『5八金右超急戦の基本定跡』(hibitonshi.com)が『まだまだ未解明の分野が多く、結論は出ていません』としている。8手目の実測では △6二玉 と △5五歩 がどちらも -154 で同評価、かつエンジンの最善手も △6二玉 だった(2026-10-05)",
+  "goalFormation": "角を交換して飛車を2二へ回した向かい飛車。超急戦の激しい変化は起きない。",
+  "goalLabel": "超急戦を避けて、普通の将棋になりました",
+  "goalSfen": "lnsg1gsnl/3k3r1/pppp1p1pp/4p1p2/7P1/2P6/PP1PPPP1P/1S1KG2R1/LN1G2SNL b Bb 1",
+  "root": {
+    "id": "n0",
+    "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
+    "comment": "平手の初形です。相手が7手目に▲5八金右と上がってきたら、超急戦を狙っています。ここで△5五歩と突くと20手以上の正確な手順が必要な激しい変化に入り、しかもその結論はまだ出ていません。覚えきれないので、一手で避けます。",
+    "branches": [
+      {
+        "usi": "7g7f",
+        "kind": "main",
+        "note": "相手が角道を開けました。",
+        "child": {
+          "id": "n1",
+          "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1",
+          "branches": [
+            {
+              "usi": "5c5d",
+              "kind": "main",
+              "note": "先に5筋を突きます。ここで角道を開けると、早石田・鬼殺し・筋違い角に踏み込まれます。",
+              "aim": "相手の戦法が決まる前に、奇襲へ踏み込ませない形にしたい。",
+              "accepted": [
+                "8c8d",
+                "3c3d",
+                "4a3b",
+                "7a6b",
+                "1c1d",
+                "7a7b",
+                "6a5b",
+                "9c9d",
+                "5a4b",
+                "5c5d",
+                "5a5b",
+                "3a4b"
+              ],
+              "child": {
+                "id": "n2",
+                "sfen": "lnsgkgsnl/1r5b1/pppp1pppp/4p4/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                "branches": [
+                  {
+                    "usi": "2g2f",
+                    "kind": "main",
+                    "note": "相手が飛車先を突きました。居飛車です。",
+                    "child": {
+                      "id": "n3",
+                      "sfen": "lnsgkgsnl/1r5b1/pppp1pppp/4p4/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL w - 1",
+                      "branches": [
+                        {
+                          "usi": "3c3d",
+                          "kind": "main",
+                          "note": "相手が居飛車と分かったので、ここで角道を開けます。",
+                          "aim": "相手の作戦が決まったので、大駒の道を開けて反撃できる形にしたい。",
+                          "accepted": [
+                            "7a6b",
+                            "6a5b",
+                            "4a3b",
+                            "3c3d",
+                            "9c9d",
+                            "8c8d",
+                            "1c1d",
+                            "5a4b",
+                            "8b5b",
+                            "7c7d",
+                            "5d5e",
+                            "3a3b"
+                          ],
+                          "child": {
+                            "id": "n4",
+                            "sfen": "lnsgkgsnl/1r5b1/pppp1p1pp/4p1p2/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL b - 1",
+                            "branches": [
+                              {
+                                "usi": "2f2e",
+                                "kind": "main",
+                                "note": "相手が飛車先を伸ばしてきました。",
+                                "child": {
+                                  "id": "n5",
+                                  "sfen": "lnsgkgsnl/1r5b1/pppp1p1pp/4p1p2/7P1/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL w - 1",
+                                  "branches": [
+                                    {
+                                      "usi": "8b5b",
+                                      "kind": "main",
+                                      "note": "飛車を5筋へ。ゴキゲン中飛車の完成です。",
+                                      "aim": "攻めの主役を中央へ移して、正面から攻める形を作りたい。",
+                                      "accepted": [
+                                        "4a3b",
+                                        "8b5b",
+                                        "2b3c",
+                                        "9c9d",
+                                        "2b8h+",
+                                        "7c7d",
+                                        "7a6b",
+                                        "1c1d",
+                                        "6a5b",
+                                        "8c8d",
+                                        "8b3b",
+                                        "8b4b"
+                                      ],
+                                      "child": {
+                                        "id": "n6",
+                                        "sfen": "lnsgkgsnl/4r2b1/pppp1p1pp/4p1p2/7P1/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL b - 1",
+                                        "branches": [
+                                          {
+                                            "usi": "4i5h",
+                                            "kind": "main",
+                                            "note": "相手が▲5八金右と上がりました。超急戦を狙っています。ここで△5五歩と突くと、▲2四歩から20手以上の激しい変化に入ります。",
+                                            "child": {
+                                              "id": "n7",
+                                              "sfen": "lnsgkgsnl/4r2b1/pppp1p1pp/4p1p2/7P1/2P6/PP1PPPP1P/1B2G2R1/LNSGK1SNL w - 1",
+                                              "comment": "ここが分かれ道です。△5五歩と突けば超急戦。覚える手順が長いうえ、その先の結論もまだ出ていません。",
+                                              "branches": [
+                                                {
+                                                  "usi": "5a6b",
+                                                  "kind": "main",
+                                                  "note": "玉を6二へ上がって、超急戦を避けます。5筋の歩を突かないので、相手は▲5五桂と打つ形を作れません。",
+                                                  "aim": "相手が狙っている激しい変化に入らないよう、玉を一つ上がって避けたい。",
+                                                  "accepted": [
+                                                    "2b3c",
+                                                    "2b8h+",
+                                                    "5d5e",
+                                                    "5a6b",
+                                                    "9c9d",
+                                                    "1c1d",
+                                                    "4a3b",
+                                                    "6c6d",
+                                                    "6a6b",
+                                                    "7c7d",
+                                                    "2b5e",
+                                                    "8c8d"
+                                                  ],
+                                                  "child": {
+                                                    "id": "n8",
+                                                    "sfen": "lnsg1gsnl/3kr2b1/pppp1p1pp/4p1p2/7P1/2P6/PP1PPPP1P/1B2G2R1/LNSGK1SNL b - 1",
+                                                    "branches": [
+                                                      {
+                                                        "usi": "5i6h",
+                                                        "kind": "main",
+                                                        "note": "相手の玉も動きます。超急戦が無くなり、普通の駒組みになりました。",
+                                                        "child": {
+                                                          "id": "n9",
+                                                          "sfen": "lnsg1gsnl/3kr2b1/pppp1p1pp/4p1p2/7P1/2P6/PP1PPPP1P/1B1KG2R1/LNSG2SNL w - 1",
+                                                          "branches": [
+                                                            {
+                                                              "usi": "2b8h+",
+                                                              "kind": "main",
+                                                              "note": "角を交換します。相手の角が先に動く前に、こちらから換えておきます。",
+                                                              "aim": "自分から大駒を換えて、相手に先に換えられる形を避けたい。",
+                                                              "accepted": [
+                                                                "9c9d",
+                                                                "2b8h+",
+                                                                "1c1d",
+                                                                "4a3b",
+                                                                "5b5a",
+                                                                "6c6d",
+                                                                "6b7b",
+                                                                "5b3b",
+                                                                "7c7d",
+                                                                "7a8b",
+                                                                "5b4b",
+                                                                "3d3e"
+                                                              ],
+                                                              "child": {
+                                                                "id": "n10",
+                                                                "sfen": "lnsg1gsnl/3kr4/pppp1p1pp/4p1p2/7P1/2P6/PP1PPPP1P/1+b1KG2R1/LNSG2SNL b b 1",
+                                                                "branches": [
+                                                                  {
+                                                                    "usi": "7i8h",
+                                                                    "kind": "main",
+                                                                    "note": "相手は銀で取り返します。",
+                                                                    "child": {
+                                                                      "id": "n11",
+                                                                      "sfen": "lnsg1gsnl/3kr4/pppp1p1pp/4p1p2/7P1/2P6/PP1PPPP1P/1S1KG2R1/LN1G2SNL w Bb 1",
+                                                                      "branches": [
+                                                                        {
+                                                                          "usi": "5b2b",
+                                                                          "kind": "main",
+                                                                          "note": "飛車を2二へ回します。中飛車ではなく向かい飛車になりますが、超急戦の激しい変化は完全に消えました。",
+                                                                          "aim": "攻めの主役を相手の飛車と向かい合う筋へ移したい。",
+                                                                          "accepted": [
+                                                                            "5b2b",
+                                                                            "3a2b",
+                                                                            "1c1d",
+                                                                            "3a3b",
+                                                                            "6b7b",
+                                                                            "4a3b",
+                                                                            "9c9d",
+                                                                            "5b3b",
+                                                                            "7c7d",
+                                                                            "6a5a",
+                                                                            "5b5a",
+                                                                            "5b4b"
+                                                                          ],
+                                                                          "child": {
+                                                                            "id": "n12",
+                                                                            "sfen": "lnsg1gsnl/3k3r1/pppp1p1pp/4p1p2/7P1/2P6/PP1PPPP1P/1S1KG2R1/LN1G2SNL b Bb 1",
+                                                                            "comment": "超急戦を避けて、向かい飛車の普通の将棋になりました。相手の狙いが空振りした形です。",
+                                                                            "branches": []
+                                                                          }
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                              }
+                                                            }
+                                                          ]
+                                                        }
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

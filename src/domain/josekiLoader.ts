@@ -51,6 +51,7 @@ import nakabishaVsSankenbishaAifuriRaw from "../data/joseki/nakabisha-vs-sankenb
 import sankenbishaVsMukaibishaAifuriRaw from "../data/joseki/sankenbisha-vs-mukaibisha--aifuri.json?raw";
 import nakabishaShoteRaw from "../data/joseki/nakabisha--shote.json?raw";
 import nakabishaVsAnaguma7sujiRaw from "../data/joseki/nakabisha-vs-anaguma--7suji.json?raw";
+import nakabishaVsChokyusenRaw from "../data/joseki/nakabisha-vs-chokyusen--kaihi.json?raw";
 import nakabishaVsUreshinoRaw from "../data/joseki/nakabisha-vs-ureshino--gote.json?raw";
 import branchNavDemoRaw from "../data/joseki/_branchNavDemo.json?raw";
 
@@ -731,6 +732,19 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "駒組み",
     summary: "2手目に何を突くかは相手の初手で変わる。飛車先から来たら角道を開け、角道から来たら先に5筋を突く。",
     load: () => assertJosekiCourse(parseRaw(nakabishaShoteRaw), "nakabisha--shote.json"),
+  },
+  {
+    id: "nakabisha-vs-chokyusen--kaihi",
+    strategyId: "gokigen",
+    opponentId: "ibisha-kyusen",
+    recommend: 2,
+    group: "基本と受け方",
+    opponentLabel: "▲5八金右超急戦",
+    sideLabel: "後手",
+    label: "超急戦は一手で避ける",
+    kind: "急戦",
+    summary: "7手目▲5八金右は超急戦の狙い。△5五歩だと20手以上の激戦になるが、△6二玉なら同じ評価で避けられる。",
+    load: () => assertJosekiCourse(parseRaw(nakabishaVsChokyusenRaw), "nakabisha-vs-chokyusen--kaihi.json"),
   },
   {
     id: "nakabisha-vs-ureshino--gote",
