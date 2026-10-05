@@ -215,15 +215,30 @@ export function buildCourse({ id, title, myStrategy, opponentStrategy, mySide, s
  * dev = { piece, to, from?, drop?, promote?, note, punishNote, line: [手のspec...] }
  * line には咎め方の手順を入れる(先頭がこちらの咎め手)。
  */
+/**
+ * 逸れ手の指し手を解決する。spec.usi があればそれを使う(エンジンが出した手順を
+ * そのまま貼れるようにするため。人が駒種と升を書き写さないので転記ミスが入らない)。
+ * 無ければ従来どおり「駒種 + 移動先」から総当たりで解決する。
+ */
+function resolveDevMove(position, spec, label) {
+  if (!spec.usi) return resolveMove(position, spec, label);
+  const parsed = parseUSIMove(spec.usi);
+  if (!parsed) throw new Error(`${label} ${spec.usi}: USI として解釈できません`);
+  let move = position.createMove(parsed.from, parsed.to);
+  if (move && parsed.promote) move = move.withPromote();
+  if (!move || !position.isValidMove(move)) throw new Error(`${label} ${spec.usi}: 非合法です`);
+  return move;
+}
+
 function buildDeviation(position, dev, moveNo) {
   const work = position.clone();
-  const devMove = resolveMove(work, dev, `${moveNo}(逸れ手)`);
+  const devMove = resolveDevMove(work, dev, `${moveNo}(逸れ手)`);
   if (!work.doMove(devMove)) throw new Error(`${moveNo}手目の逸れ手 ${devMove.usi}: 適用に失敗`);
 
   const head = { id: `d${moveNo}`, sfen: work.sfen, comment: dev.comment, branches: [] };
   let cursor = head;
   (dev.line ?? []).forEach((spec, j) => {
-    const mv = resolveMove(work, spec, `${moveNo}(咎め${j + 1})`);
+    const mv = resolveDevMove(work, spec, `${moveNo}(咎め${j + 1})`);
     if (!work.doMove(mv)) throw new Error(`${moveNo}手目の咎め手 ${mv.usi}: 適用に失敗`);
     const child = { id: `d${moveNo}_${j + 1}`, sfen: work.sfen, comment: spec.comment, branches: [] };
     cursor.branches.push({ usi: mv.usi, kind: "main", note: spec.note, child });
