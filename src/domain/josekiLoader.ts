@@ -52,6 +52,7 @@ import sankenbishaVsMukaibishaAifuriRaw from "../data/joseki/sankenbisha-vs-muka
 import nakabishaShoteRaw from "../data/joseki/nakabisha--shote.json?raw";
 import nakabishaVsAnaguma7sujiRaw from "../data/joseki/nakabisha-vs-anaguma--7suji.json?raw";
 import nakabishaVsChokyusenRaw from "../data/joseki/nakabisha-vs-chokyusen--kaihi.json?raw";
+import nakabishaVsUfoginRaw from "../data/joseki/nakabisha-vs-ufogin--gote.json?raw";
 import nakabishaVsUreshinoRaw from "../data/joseki/nakabisha-vs-ureshino--gote.json?raw";
 import branchNavDemoRaw from "../data/joseki/_branchNavDemo.json?raw";
 
@@ -732,6 +733,19 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "駒組み",
     summary: "2手目に何を突くかは相手の初手で変わる。飛車先から来たら角道を開け、角道から来たら先に5筋を突く。",
     load: () => assertJosekiCourse(parseRaw(nakabishaShoteRaw), "nakabisha--shote.json"),
+  },
+  {
+    id: "nakabisha-vs-ufogin--gote",
+    strategyId: "gokigen",
+    opponentId: "ibisha-kyusen",
+    recommend: 2,
+    group: "基本と受け方",
+    opponentLabel: "UFO銀速攻",
+    sideLabel: "後手",
+    label: "UFO銀速攻の受け方",
+    kind: "急戦",
+    summary: "銀を3八→2七→3六と繰り出してくる速攻。4四に歩を突いて出てくる地点を塞げば、▲4五銀は銀損になる。",
+    load: () => assertJosekiCourse(parseRaw(nakabishaVsUfoginRaw), "nakabisha-vs-ufogin--gote.json"),
   },
   {
     id: "nakabisha-vs-chokyusen--kaihi",

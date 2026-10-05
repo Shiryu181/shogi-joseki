@@ -1,0 +1,438 @@
+{
+  "id": "nakabisha-vs-ufogin--gote",
+  "title": "UFO銀速攻の受け方(後手)",
+  "myStrategy": "nakabisha",
+  "opponentStrategy": "ibisha",
+  "mySide": "gote",
+  "source": "相手の銀の経路(3八→2七→3六→4五)と受け方は『UFO銀速攻対策』(note.com/bydriv)に準拠。同記事は『特に3切れでよく見る』としている。△4四歩で受けた場合と受けなかった場合をエンジンで比較し(0 対 +278)、▲4五銀が銀損になること(-755)も確認した(2026-10-05)",
+  "goalFormation": "4四に歩を突いて相手の銀を止め、5筋の位を取った形。",
+  "goalLabel": "UFO銀を受け止め、5筋の位を取りました",
+  "goalSfen": "lnsg1g1nl/2k1r4/1ppps1bpp/p4pp2/4p2P1/P1PP2S2/1P2PPP1P/1BSKG2R1/LN1G3NL b - 1",
+  "root": {
+    "id": "n0",
+    "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
+    "comment": "平手の初形です。相手が銀を3八→2七→3六と繰り出してきたら、UFO銀速攻です。次に▲4五銀と出られると、角頭の歩が受からないうえ飛車先にも銀が成り込んできます。先に4四へ歩を突いて、銀が出てくる地点を塞ぎます。",
+    "branches": [
+      {
+        "usi": "2g2f",
+        "kind": "main",
+        "note": "相手が飛車先を突きました。居飛車の合図です。",
+        "child": {
+          "id": "n1",
+          "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/7P1/PPPPPPP1P/1B5R1/LNSGKGSNL w - 1",
+          "branches": [
+            {
+              "usi": "3c3d",
+              "kind": "main",
+              "note": "角道を開けます。相手が角道を開けていないので、早石田も筋違い角もありません。",
+              "aim": "相手が奇襲に来られない形なので、先に大駒の道を開けておきたい。",
+              "accepted": [
+                "3c3d",
+                "4a3b",
+                "8c8d",
+                "7a6b",
+                "1c1d",
+                "7a7b",
+                "9c9d",
+                "6a5b",
+                "5a4b",
+                "5a5b",
+                "3a4b",
+                "7c7d"
+              ],
+              "child": {
+                "id": "n2",
+                "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/7P1/PPPPPPP1P/1B5R1/LNSGKGSNL b - 1",
+                "branches": [
+                  {
+                    "usi": "2f2e",
+                    "kind": "main",
+                    "note": "相手が飛車先を伸ばしてきました。",
+                    "child": {
+                      "id": "n3",
+                      "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/7P1/9/PPPPPPP1P/1B5R1/LNSGKGSNL w - 1",
+                      "branches": [
+                        {
+                          "usi": "2b3c",
+                          "kind": "main",
+                          "note": "角を上がって2筋を受けます。ここを省くと▲2四歩から飛車先を破られます。",
+                          "aim": "省くと破られてしまう筋を、大駒を上げて受けたい。",
+                          "accepted": [
+                            "2b3c",
+                            "8c8d",
+                            "4a3b",
+                            "1c1d",
+                            "9c9d",
+                            "2b4d",
+                            "5a4b",
+                            "7a6b",
+                            "6a5b",
+                            "3a3b",
+                            "2b5e",
+                            "6a6b"
+                          ],
+                          "child": {
+                            "id": "n4",
+                            "sfen": "lnsgkgsnl/1r7/ppppppbpp/6p2/7P1/9/PPPPPPP1P/1B5R1/LNSGKGSNL b - 1",
+                            "branches": [
+                              {
+                                "usi": "3i3h",
+                                "kind": "main",
+                                "note": "相手が銀を上げました。",
+                                "child": {
+                                  "id": "n5",
+                                  "sfen": "lnsgkgsnl/1r7/ppppppbpp/6p2/7P1/9/PPPPPPP1P/1B4SR1/LNSGKG1NL w - 1",
+                                  "branches": [
+                                    {
+                                      "usi": "5c5d",
+                                      "kind": "main",
+                                      "note": "5筋の歩を突きます。中飛車の合図です。",
+                                      "aim": "主戦場にしたい筋の歩を突いて、戦法の方針を決めたい。",
+                                      "accepted": [
+                                        "3a3b",
+                                        "8c8d",
+                                        "3a2b",
+                                        "7a6b",
+                                        "4a3b",
+                                        "7c7d",
+                                        "3a4b",
+                                        "1c1d",
+                                        "4c4d",
+                                        "9c9d",
+                                        "7a7b",
+                                        "6a5b"
+                                      ],
+                                      "child": {
+                                        "id": "n6",
+                                        "sfen": "lnsgkgsnl/1r7/pppp1pbpp/4p1p2/7P1/9/PPPPPPP1P/1B4SR1/LNSGKG1NL b - 1",
+                                        "branches": [
+                                          {
+                                            "usi": "3h2g",
+                                            "kind": "main",
+                                            "note": "相手の銀が2七へ。棒銀の形です。",
+                                            "child": {
+                                              "id": "n7",
+                                              "sfen": "lnsgkgsnl/1r7/pppp1pbpp/4p1p2/7P1/9/PPPPPPPSP/1B5R1/LNSGKG1NL w - 1",
+                                              "branches": [
+                                                {
+                                                  "usi": "8b5b",
+                                                  "kind": "main",
+                                                  "note": "飛車を5筋へ。ゴキゲン中飛車の完成です。",
+                                                  "aim": "攻めの主役を中央へ移して、正面から攻める形を作りたい。",
+                                                  "accepted": [
+                                                    "8c8d",
+                                                    "4c4d",
+                                                    "3a4b",
+                                                    "8b3b",
+                                                    "3a3b",
+                                                    "8b2b",
+                                                    "9c9d",
+                                                    "7a6b",
+                                                    "8b5b",
+                                                    "1c1d",
+                                                    "4a3b",
+                                                    "7c7d"
+                                                  ],
+                                                  "child": {
+                                                    "id": "n8",
+                                                    "sfen": "lnsgkgsnl/4r4/pppp1pbpp/4p1p2/7P1/9/PPPPPPPSP/1B5R1/LNSGKG1NL b - 1",
+                                                    "branches": [
+                                                      {
+                                                        "usi": "2g3f",
+                                                        "kind": "main",
+                                                        "note": "相手の銀が3六へ出ました。UFO銀速攻です。次に▲4五銀と出られると、角頭の歩が受からず、飛車先にも銀が成り込んできます。",
+                                                        "child": {
+                                                          "id": "n9",
+                                                          "sfen": "lnsgkgsnl/4r4/pppp1pbpp/4p1p2/7P1/6S2/PPPPPPP1P/1B5R1/LNSGKG1NL w - 1",
+                                                          "comment": "ここが受けの急所です。相手の銀が次に出てくる地点を、先に塞ぐ必要があります。",
+                                                          "branches": [
+                                                            {
+                                                              "usi": "4c4d",
+                                                              "kind": "main",
+                                                              "note": "4四に歩を突いて、銀が出てくる地点を塞ぎます。自分の角道も止まるのは痛いところですが、これが一番確実です。",
+                                                              "aim": "相手の攻め駒がこれから出てくる地点を、先に塞いでしまいたい。",
+                                                              "accepted": [
+                                                                "4c4d",
+                                                                "3a3b",
+                                                                "4a3b"
+                                                              ],
+                                                              "child": {
+                                                                "id": "n10",
+                                                                "sfen": "lnsgkgsnl/4r4/pppp2bpp/4ppp2/7P1/6S2/PPPPPPP1P/1B5R1/LNSGKG1NL b - 1",
+                                                                "branches": [
+                                                                  {
+                                                                    "usi": "9g9f",
+                                                                    "kind": "main",
+                                                                    "note": "相手が端の歩を突きました。銀が出られないので、攻めを組み替えています。",
+                                                                    "child": {
+                                                                      "id": "n11",
+                                                                      "sfen": "lnsgkgsnl/4r4/pppp2bpp/4ppp2/7P1/P5S2/1PPPPPP1P/1B5R1/LNSGKG1NL w - 1",
+                                                                      "comment": null,
+                                                                      "branches": [
+                                                                        {
+                                                                          "usi": "9c9d",
+                                                                          "kind": "main",
+                                                                          "note": "こちらも端を受けます。",
+                                                                          "aim": "相手に端を詰められないよう、同じだけ受けておきたい。",
+                                                                          "accepted": [
+                                                                            "9c9d",
+                                                                            "3a3b",
+                                                                            "3a4b",
+                                                                            "5a6b",
+                                                                            "5d5e",
+                                                                            "7a7b",
+                                                                            "8c8d",
+                                                                            "1c1d",
+                                                                            "6a6b",
+                                                                            "7c7d",
+                                                                            "4a3b"
+                                                                          ],
+                                                                          "child": {
+                                                                            "id": "n12",
+                                                                            "sfen": "lnsgkgsnl/4r4/1ppp2bpp/p3ppp2/7P1/P5S2/1PPPPPP1P/1B5R1/LNSGKG1NL b - 1",
+                                                                            "branches": [
+                                                                              {
+                                                                                "usi": "5i6h",
+                                                                                "kind": "main",
+                                                                                "note": "相手の玉が動きます。",
+                                                                                "child": {
+                                                                                  "id": "n13",
+                                                                                  "sfen": "lnsgkgsnl/4r4/1ppp2bpp/p3ppp2/7P1/P5S2/1PPPPPP1P/1B1K3R1/LNSG1G1NL w - 1",
+                                                                                  "branches": [
+                                                                                    {
+                                                                                      "usi": "3a4b",
+                                                                                      "kind": "main",
+                                                                                      "note": "銀を上がって陣形を整えます。",
+                                                                                      "aim": "守りの駒を上げて、陣形の隙を無くしたい。",
+                                                                                      "accepted": [
+                                                                                        "5a6b",
+                                                                                        "3a3b",
+                                                                                        "3a4b",
+                                                                                        "5d5e",
+                                                                                        "4a3b",
+                                                                                        "6a6b",
+                                                                                        "4a4b",
+                                                                                        "1c1d",
+                                                                                        "5b2b",
+                                                                                        "5b4b"
+                                                                                      ],
+                                                                                      "child": {
+                                                                                        "id": "n14",
+                                                                                        "sfen": "lnsgkg1nl/4rs3/1ppp2bpp/p3ppp2/7P1/P5S2/1PPPPPP1P/1B1K3R1/LNSG1G1NL b - 1",
+                                                                                        "branches": [
+                                                                                          {
+                                                                                            "usi": "6g6f",
+                                                                                            "kind": "main",
+                                                                                            "note": "相手が角道を止めました。",
+                                                                                            "child": {
+                                                                                              "id": "n15",
+                                                                                              "sfen": "lnsgkg1nl/4rs3/1ppp2bpp/p3ppp2/7P1/P2P2S2/1PP1PPP1P/1B1K3R1/LNSG1G1NL w - 1",
+                                                                                              "branches": [
+                                                                                                {
+                                                                                                  "usi": "5a6b",
+                                                                                                  "kind": "main",
+                                                                                                  "note": "玉を囲いへ向かわせます。",
+                                                                                                  "aim": "飛車と反対側へ玉を運んで、戦場から遠ざけたい。",
+                                                                                                  "accepted": [
+                                                                                                    "5d5e",
+                                                                                                    "5a6b",
+                                                                                                    "7a7b",
+                                                                                                    "6c6d",
+                                                                                                    "4b4c",
+                                                                                                    "1c1d",
+                                                                                                    "7a8b",
+                                                                                                    "8c8d",
+                                                                                                    "4b5c",
+                                                                                                    "7c7d",
+                                                                                                    "9a9b",
+                                                                                                    "6a6b"
+                                                                                                  ],
+                                                                                                  "child": {
+                                                                                                    "id": "n16",
+                                                                                                    "sfen": "lnsg1g1nl/3krs3/1ppp2bpp/p3ppp2/7P1/P2P2S2/1PP1PPP1P/1B1K3R1/LNSG1G1NL b - 1",
+                                                                                                    "branches": [
+                                                                                                      {
+                                                                                                        "usi": "7g7f",
+                                                                                                        "kind": "main",
+                                                                                                        "note": "相手が角道を開けました。",
+                                                                                                        "child": {
+                                                                                                          "id": "n17",
+                                                                                                          "sfen": "lnsg1g1nl/3krs3/1ppp2bpp/p3ppp2/7P1/P1PP2S2/1P2PPP1P/1B1K3R1/LNSG1G1NL w - 1",
+                                                                                                          "branches": [
+                                                                                                            {
+                                                                                                              "usi": "6b7b",
+                                                                                                              "kind": "main",
+                                                                                                              "note": "玉をさらに運びます。",
+                                                                                                              "aim": "玉を戦場から遠い場所へ、もう一歩運びたい。",
+                                                                                                              "accepted": [
+                                                                                                                "7a7b",
+                                                                                                                "5d5e",
+                                                                                                                "4b4c",
+                                                                                                                "8c8d",
+                                                                                                                "6b7b",
+                                                                                                                "4b5c",
+                                                                                                                "6c6d",
+                                                                                                                "7a8b",
+                                                                                                                "1c1d",
+                                                                                                                "9a9b",
+                                                                                                                "7c7d",
+                                                                                                                "4a3b"
+                                                                                                              ],
+                                                                                                              "child": {
+                                                                                                                "id": "n18",
+                                                                                                                "sfen": "lnsg1g1nl/2k1rs3/1ppp2bpp/p3ppp2/7P1/P1PP2S2/1P2PPP1P/1B1K3R1/LNSG1G1NL b - 1",
+                                                                                                                "branches": [
+                                                                                                                  {
+                                                                                                                    "usi": "7i7h",
+                                                                                                                    "kind": "main",
+                                                                                                                    "note": "相手が左銀を上げました。",
+                                                                                                                    "child": {
+                                                                                                                      "id": "n19",
+                                                                                                                      "sfen": "lnsg1g1nl/2k1rs3/1ppp2bpp/p3ppp2/7P1/P1PP2S2/1P2PPP1P/1BSK3R1/LN1G1G1NL w - 1",
+                                                                                                                      "branches": [
+                                                                                                                        {
+                                                                                                                          "usi": "4b5c",
+                                                                                                                          "kind": "main",
+                                                                                                                          "note": "銀を5三へ。中央を厚くします。",
+                                                                                                                          "aim": "主戦場になる中央に、守りと攻めを兼ねる駒を足したい。",
+                                                                                                                          "accepted": [
+                                                                                                                            "5d5e",
+                                                                                                                            "7b8b",
+                                                                                                                            "7a8b",
+                                                                                                                            "4b4c",
+                                                                                                                            "1c1d",
+                                                                                                                            "4b5c",
+                                                                                                                            "8c8d",
+                                                                                                                            "9a9b",
+                                                                                                                            "6c6d",
+                                                                                                                            "7a6b",
+                                                                                                                            "6a6b",
+                                                                                                                            "7c7d"
+                                                                                                                          ],
+                                                                                                                          "child": {
+                                                                                                                            "id": "n20",
+                                                                                                                            "sfen": "lnsg1g1nl/2k1r4/1ppps1bpp/p3ppp2/7P1/P1PP2S2/1P2PPP1P/1BSK3R1/LN1G1G1NL b - 1",
+                                                                                                                            "branches": [
+                                                                                                                              {
+                                                                                                                                "usi": "4i5h",
+                                                                                                                                "kind": "main",
+                                                                                                                                "note": "相手が金を上げました。",
+                                                                                                                                "child": {
+                                                                                                                                  "id": "n21",
+                                                                                                                                  "sfen": "lnsg1g1nl/2k1r4/1ppps1bpp/p3ppp2/7P1/P1PP2S2/1P2PPP1P/1BSKG2R1/LN1G3NL w - 1",
+                                                                                                                                  "branches": [
+                                                                                                                                    {
+                                                                                                                                      "usi": "5d5e",
+                                                                                                                                      "kind": "main",
+                                                                                                                                      "note": "5筋の位を取ります。中央の主導権を握る、ゴキゲン中飛車の基本の形です。",
+                                                                                                                                      "aim": "中央の位を取って、主導権を握りたい。",
+                                                                                                                                      "accepted": [
+                                                                                                                                        "5b4b",
+                                                                                                                                        "6c6d",
+                                                                                                                                        "8c8d",
+                                                                                                                                        "7a8b",
+                                                                                                                                        "7b8b",
+                                                                                                                                        "1c1d",
+                                                                                                                                        "5d5e",
+                                                                                                                                        "7c7d",
+                                                                                                                                        "6a6b",
+                                                                                                                                        "4a3b",
+                                                                                                                                        "7a6b",
+                                                                                                                                        "9a9b"
+                                                                                                                                      ],
+                                                                                                                                      "child": {
+                                                                                                                                        "id": "n22",
+                                                                                                                                        "sfen": "lnsg1g1nl/2k1r4/1ppps1bpp/p4pp2/4p2P1/P1PP2S2/1P2PPP1P/1BSKG2R1/LN1G3NL b - 1",
+                                                                                                                                        "comment": "UFO銀を受け止めて、5筋の位も取れました。相手の速攻は不発に終わり、ここからは普通の中飛車の戦いになります。",
+                                                                                                                                        "branches": []
+                                                                                                                                      }
+                                                                                                                                    }
+                                                                                                                                  ]
+                                                                                                                                }
+                                                                                                                              }
+                                                                                                                            ]
+                                                                                                                          }
+                                                                                                                        }
+                                                                                                                      ]
+                                                                                                                    }
+                                                                                                                  }
+                                                                                                                ]
+                                                                                                              }
+                                                                                                            }
+                                                                                                          ]
+                                                                                                        }
+                                                                                                      }
+                                                                                                    ]
+                                                                                                  }
+                                                                                                }
+                                                                                              ]
+                                                                                            }
+                                                                                          }
+                                                                                        ]
+                                                                                      }
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              }
+                                                                            ]
+                                                                          }
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  },
+                                                                  {
+                                                                    "usi": "3f4e",
+                                                                    "kind": "deviation",
+                                                                    "note": "それでも相手が銀を4五へ出てきました。",
+                                                                    "punishNote": "4四に歩を突いてあるので、この銀はただで取れます。",
+                                                                    "child": {
+                                                                      "id": "d11",
+                                                                      "sfen": "lnsgkgsnl/4r4/pppp2bpp/4ppp2/5S1P1/9/PPPPPPP1P/1B5R1/LNSGKG1NL w - 1",
+                                                                      "branches": [
+                                                                        {
+                                                                          "usi": "4d4e",
+                                                                          "kind": "main",
+                                                                          "note": "歩で銀を取ります。駒得になり、相手の攻めも無くなりました。",
+                                                                          "child": {
+                                                                            "id": "d11_1",
+                                                                            "sfen": "lnsgkgsnl/4r4/pppp2bpp/4p1p2/5p1P1/9/PPPPPPP1P/1B5R1/LNSGKG1NL b s 1",
+                                                                            "comment": "銀を一枚得しました。UFO銀は4四の歩を突かれると行き場が無くなります。",
+                                                                            "branches": []
+                                                                          }
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                              }
+                                                            }
+                                                          ]
+                                                        }
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
