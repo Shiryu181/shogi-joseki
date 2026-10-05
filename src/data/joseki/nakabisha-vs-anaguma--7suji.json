@@ -354,9 +354,22 @@
                                                                                                                                                     "7c7d"
                                                                                                                                                   ],
                                                                                                                                                   "sharp": true,
+                                                                                                                                                  "demos": [
+                                                                                                                                                    {
+                                                                                                                                                      "title": "次に△7五歩と仕掛けると",
+                                                                                                                                                      "usi": [
+                                                                                                                                                        "7i8h",
+                                                                                                                                                        "7d7e",
+                                                                                                                                                        "7f7e",
+                                                                                                                                                        "6d7e"
+                                                                                                                                                      ],
+                                                                                                                                                      "text": "▲同歩△同銀で7筋が開きます。飛車・銀・歩が一筋に揃っているので、穴熊の正面ではなく横から攻める形になります。5筋から攻めても穴熊には通りません(実測で△5五歩は-277)。"
+                                                                                                                                                    }
+                                                                                                                                                  ],
                                                                                                                                                   "child": {
                                                                                                                                                     "id": "n24",
                                                                                                                                                     "sfen": "lnsg1g1nl/1kr6/pp1p1pbpp/2psp1p2/7P1/2PP5/PPB1PPP1P/L3GS1R1/KNSG3NL b - 1",
+                                                                                                                                                    "comment": null,
                                                                                                                                                     "branches": [
                                                                                                                                                       {
                                                                                                                                                         "usi": "7i8h",

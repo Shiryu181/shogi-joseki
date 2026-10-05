@@ -156,9 +156,20 @@
                                                                 "3a3b",
                                                                 "4a3b"
                                                               ],
+                                                              "demos": [
+                                                                {
+                                                                  "title": "▲4五銀と出てきても",
+                                                                  "usi": [
+                                                                    "3f4e",
+                                                                    "4d4e"
+                                                                  ],
+                                                                  "text": "△同歩で銀がただで取れます。UFO銀は4五へ出られないと行き場が無く、3六に残った銀は働きません。"
+                                                                }
+                                                              ],
                                                               "child": {
                                                                 "id": "n10",
                                                                 "sfen": "lnsgkgsnl/4r4/pppp2bpp/4ppp2/7P1/6S2/PPPPPPP1P/1B5R1/LNSGKG1NL b - 1",
+                                                                "comment": null,
                                                                 "branches": [
                                                                   {
                                                                     "usi": "9g9f",
