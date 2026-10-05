@@ -22,10 +22,10 @@
           "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1",
           "branches": [
             {
-              "usi": "3c3d",
+              "usi": "5c5d",
               "kind": "main",
-              "note": "こちらも角道を開けます。",
-              "aim": "相手に合わせて大駒の道を開け、遅れを取らないようにしたい。",
+              "note": "先に5筋を突きます。ここで角道を開けると、早石田・鬼殺し・筋違い角に踏み込まれます。",
+              "aim": "相手の戦法が決まる前に、奇襲へ踏み込ませない形にしたい。",
               "accepted": [
                 "8c8d",
                 "3c3d",
@@ -42,7 +42,7 @@
               ],
               "child": {
                 "id": "n2",
-                "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                "sfen": "lnsgkgsnl/1r5b1/pppp1pppp/4p4/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
                 "branches": [
                   {
                     "usi": "2g2f",
@@ -50,26 +50,26 @@
                     "note": "相手が飛車先を突きました。",
                     "child": {
                       "id": "n3",
-                      "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL w - 1",
+                      "sfen": "lnsgkgsnl/1r5b1/pppp1pppp/4p4/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL w - 1",
                       "branches": [
                         {
-                          "usi": "5c5d",
+                          "usi": "3c3d",
                           "kind": "main",
-                          "note": "5筋の歩を突きます。中飛車の合図です。",
-                          "aim": "主戦場にしたい筋の歩を突いて、戦法の方針を決めたい。",
+                          "note": "相手が居飛車と分かったので、ここで角道を開けます。",
+                          "aim": "大駒の道を開けて、角交換から反撃できる形にしたい。",
                           "accepted": [
-                            "8c8d",
-                            "4a3b",
-                            "1c1d",
-                            "6a5b",
-                            "9c9d",
-                            "5a4b",
-                            "4c4d",
-                            "4a4b",
-                            "2b8h+",
                             "7a6b",
-                            "2b3c",
-                            "7c7d"
+                            "6a5b",
+                            "4a3b",
+                            "3c3d",
+                            "9c9d",
+                            "8c8d",
+                            "1c1d",
+                            "5a4b",
+                            "8b5b",
+                            "7c7d",
+                            "5d5e",
+                            "3a3b"
                           ],
                           "child": {
                             "id": "n4",

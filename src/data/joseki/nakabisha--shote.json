@@ -1,0 +1,129 @@
+{
+  "id": "nakabisha--shote",
+  "title": "中飛車の出だし(後手・相手が飛車先から来た場合)",
+  "myStrategy": "nakabisha",
+  "opponentStrategy": "ibisha",
+  "mySide": "gote",
+  "source": "2手目の選択はエンジン実測(2026-10-05)。▲2六歩に △3四歩 -40 / △5四歩 -118、▲7六歩に △5四歩 -86 で早石田 -55・鬼殺し -105・三間 -74 が成立しなくなることを確認した",
+  "goalFormation": "相手の飛車先に合わせて角道を開け、そのあと5筋を突いて飛車を5二へ振った形。",
+  "goalLabel": "中飛車の出だしが決まりました",
+  "goalSfen": "lnsgkgsnl/4r2b1/pppp1p1pp/4p1p2/7P1/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL b - 1",
+  "root": {
+    "id": "n0",
+    "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
+    "comment": "平手の初形です。中飛車を目指すとき、2手目に何を突くかは相手の初手で変わります。ここでは相手が飛車先から来た場合を見ます。",
+    "branches": [
+      {
+        "usi": "2g2f",
+        "kind": "main",
+        "note": "相手が飛車先を突きました。居飛車の合図です。角道はまだ開けていません。",
+        "child": {
+          "id": "n1",
+          "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/7P1/PPPPPPP1P/1B5R1/LNSGKGSNL w - 1",
+          "branches": [
+            {
+              "usi": "3c3d",
+              "kind": "main",
+              "note": "角道を開けます。相手が角道を開けていないので、早石田も筋違い角もありません。",
+              "aim": "相手が奇襲に来られない形なので、先に大駒の道を開けておきたい。",
+              "accepted": [
+                "3c3d",
+                "4a3b",
+                "8c8d",
+                "7a6b",
+                "1c1d",
+                "7a7b",
+                "9c9d",
+                "6a5b",
+                "5a4b",
+                "5a5b",
+                "3a4b",
+                "7c7d"
+              ],
+              "child": {
+                "id": "n2",
+                "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/7P1/PPPPPPP1P/1B5R1/LNSGKGSNL b - 1",
+                "branches": [
+                  {
+                    "usi": "7g7f",
+                    "kind": "main",
+                    "note": "相手も角道を開けました。",
+                    "child": {
+                      "id": "n3",
+                      "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL w - 1",
+                      "branches": [
+                        {
+                          "usi": "5c5d",
+                          "kind": "main",
+                          "note": "5筋を突いて中飛車へ向かいます。相手の戦法がもう決まっているので、安心して自分の形を作れます。",
+                          "aim": "主戦場にしたい筋の歩を突いて、戦法の方針を決めたい。",
+                          "accepted": [
+                            "8c8d",
+                            "4a3b",
+                            "1c1d",
+                            "6a5b",
+                            "9c9d",
+                            "5a4b",
+                            "4c4d",
+                            "4a4b",
+                            "2b8h+",
+                            "7a6b",
+                            "2b3c",
+                            "7c7d"
+                          ],
+                          "child": {
+                            "id": "n4",
+                            "sfen": "lnsgkgsnl/1r5b1/pppp1p1pp/4p1p2/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL b - 1",
+                            "branches": [
+                              {
+                                "usi": "2f2e",
+                                "kind": "main",
+                                "note": "相手がさらに飛車先を伸ばしてきました。",
+                                "child": {
+                                  "id": "n5",
+                                  "sfen": "lnsgkgsnl/1r5b1/pppp1p1pp/4p1p2/7P1/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL w - 1",
+                                  "branches": [
+                                    {
+                                      "usi": "8b5b",
+                                      "kind": "main",
+                                      "note": "飛車を5筋へ。ゴキゲン中飛車の完成です。",
+                                      "aim": "攻めの主役を中央へ移して、正面から攻める形を作りたい。",
+                                      "accepted": [
+                                        "4a3b",
+                                        "8b5b",
+                                        "2b3c",
+                                        "9c9d",
+                                        "2b8h+",
+                                        "7c7d",
+                                        "7a6b",
+                                        "1c1d",
+                                        "6a5b",
+                                        "8c8d",
+                                        "8b3b",
+                                        "8b4b"
+                                      ],
+                                      "child": {
+                                        "id": "n6",
+                                        "sfen": "lnsgkgsnl/4r2b1/pppp1p1pp/4p1p2/7P1/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL b - 1",
+                                        "comment": null,
+                                        "branches": []
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

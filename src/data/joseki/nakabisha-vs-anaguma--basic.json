@@ -21,10 +21,10 @@
           "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1",
           "branches": [
             {
-              "usi": "3c3d",
+              "usi": "5c5d",
               "kind": "main",
-              "note": "こちらも角道を開けます。",
-              "aim": "相手に合わせて大駒の道を開け、遅れを取らないようにしたい。",
+              "note": "先に5筋を突きます。ここで角道を開けると、早石田・鬼殺し・筋違い角に踏み込まれます。",
+              "aim": "相手の戦法が決まる前に、奇襲へ踏み込ませない形にしたい。",
               "accepted": [
                 "8c8d",
                 "3c3d",
@@ -41,7 +41,7 @@
               ],
               "child": {
                 "id": "n2",
-                "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                "sfen": "lnsgkgsnl/1r5b1/pppp1pppp/4p4/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
                 "branches": [
                   {
                     "usi": "2g2f",
@@ -49,30 +49,30 @@
                     "note": "相手は居飛車です。",
                     "child": {
                       "id": "n3",
-                      "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL w - 1",
+                      "sfen": "lnsgkgsnl/1r5b1/pppp1pppp/4p4/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL w - 1",
                       "branches": [
                         {
-                          "usi": "4c4d",
+                          "usi": "3c3d",
                           "kind": "main",
-                          "note": "角道を止めて、振り飛車へ向かいます。",
-                          "aim": "大駒の道を止めて、振り飛車の形へ進みたい。",
+                          "note": "相手が居飛車と分かったので、ここで角道を開けます。",
+                          "aim": "大駒の道を開けて、攻めの選択肢を増やしたい。",
                           "accepted": [
-                            "8c8d",
-                            "4a3b",
-                            "1c1d",
-                            "6a5b",
-                            "9c9d",
-                            "5a4b",
-                            "4c4d",
-                            "4a4b",
-                            "2b8h+",
                             "7a6b",
-                            "2b3c",
-                            "7c7d"
+                            "6a5b",
+                            "4a3b",
+                            "3c3d",
+                            "9c9d",
+                            "8c8d",
+                            "1c1d",
+                            "5a4b",
+                            "8b5b",
+                            "7c7d",
+                            "5d5e",
+                            "3a3b"
                           ],
                           "child": {
                             "id": "n4",
-                            "sfen": "lnsgkgsnl/1r5b1/ppppp2pp/5pp2/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL b - 1",
+                            "sfen": "lnsgkgsnl/1r5b1/pppp1p1pp/4p1p2/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL b - 1",
                             "branches": [
                               {
                                 "usi": "3i4h",
@@ -80,30 +80,30 @@
                                 "note": null,
                                 "child": {
                                   "id": "n5",
-                                  "sfen": "lnsgkgsnl/1r5b1/ppppp2pp/5pp2/9/2P4P1/PP1PPPP1P/1B3S1R1/LNSGKG1NL w - 1",
+                                  "sfen": "lnsgkgsnl/1r5b1/pppp1p1pp/4p1p2/9/2P4P1/PP1PPPP1P/1B3S1R1/LNSGKG1NL w - 1",
                                   "branches": [
                                     {
-                                      "usi": "3a4b",
+                                      "usi": "4c4d",
                                       "kind": "main",
-                                      "note": "銀を上がって陣形を整えます。",
-                                      "aim": "守りの駒を上げて、陣形の隙を無くしたい。",
+                                      "note": "角道を止めて、振り飛車へ向かいます。",
+                                      "aim": "大駒の道を止めて、振り飛車の形へ進みたい。",
                                       "accepted": [
-                                        "5c5d",
+                                        "4c4d",
+                                        "2b3c",
+                                        "7a6b",
                                         "8c8d",
                                         "9c9d",
-                                        "6a5b",
-                                        "7a6b",
                                         "4a3b",
-                                        "3a3b",
-                                        "2b3c",
+                                        "2b8h+",
+                                        "8b5b",
+                                        "8b3b",
                                         "1c1d",
-                                        "3a4b",
-                                        "7c7d",
-                                        "8b4b"
+                                        "4a4b",
+                                        "6a5b"
                                       ],
                                       "child": {
                                         "id": "n6",
-                                        "sfen": "lnsgkg1nl/1r3s1b1/ppppp2pp/5pp2/9/2P4P1/PP1PPPP1P/1B3S1R1/LNSGKG1NL b - 1",
+                                        "sfen": "lnsgkgsnl/1r5b1/pppp3pp/4ppp2/9/2P4P1/PP1PPPP1P/1B3S1R1/LNSGKG1NL b - 1",
                                         "branches": [
                                           {
                                             "usi": "5g5f",
@@ -111,26 +111,26 @@
                                             "note": null,
                                             "child": {
                                               "id": "n7",
-                                              "sfen": "lnsgkg1nl/1r3s1b1/ppppp2pp/5pp2/9/2P1P2P1/PP1P1PP1P/1B3S1R1/LNSGKG1NL w - 1",
+                                              "sfen": "lnsgkgsnl/1r5b1/pppp3pp/4ppp2/9/2P1P2P1/PP1P1PP1P/1B3S1R1/LNSGKG1NL w - 1",
                                               "branches": [
                                                 {
-                                                  "usi": "5c5d",
+                                                  "usi": "3a4b",
                                                   "kind": "main",
-                                                  "note": "5筋の歩を突きます。中飛車はこの筋が主戦場になります。",
-                                                  "aim": "主戦場にしたい筋の歩を突いて、戦いの場所を決めたい。",
+                                                  "note": "銀を上がって陣形を整えます。",
+                                                  "aim": "守りの駒を上げて、陣形の隙を無くしたい。",
                                                   "accepted": [
-                                                    "4a3b",
+                                                    "3a4b",
                                                     "8c8d",
-                                                    "6a5b",
-                                                    "7a6b",
-                                                    "9c9d",
-                                                    "4b4c",
-                                                    "6c6d",
-                                                    "7a7b",
-                                                    "1c1d",
+                                                    "4a3b",
+                                                    "3a3b",
                                                     "2b3c",
-                                                    "5c5d",
-                                                    "4b3c"
+                                                    "7a6b",
+                                                    "6a5b",
+                                                    "9c9d",
+                                                    "8b4b",
+                                                    "7c7d",
+                                                    "1c1d",
+                                                    "8b3b"
                                                   ],
                                                   "child": {
                                                     "id": "n8",

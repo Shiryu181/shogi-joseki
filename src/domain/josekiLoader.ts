@@ -50,6 +50,8 @@ import ibishaVsHayaishida42Raw from "../data/joseki/ibisha-vs-hayaishida--42gyok
 import sankenbishaVsNakabishaAifuriRaw from "../data/joseki/sankenbisha-vs-nakabisha--aifuri.json?raw";
 import nakabishaVsSankenbishaAifuriRaw from "../data/joseki/nakabisha-vs-sankenbisha--aifuri.json?raw";
 import sankenbishaVsMukaibishaAifuriRaw from "../data/joseki/sankenbisha-vs-mukaibisha--aifuri.json?raw";
+import nakabishaShoteRaw from "../data/joseki/nakabisha--shote.json?raw";
+import nakabishaVsUreshinoRaw from "../data/joseki/nakabisha-vs-ureshino--gote.json?raw";
 import branchNavDemoRaw from "../data/joseki/_branchNavDemo.json?raw";
 
 /**
@@ -113,7 +115,7 @@ export function loadIbishaVsShikenbishaSente(): JosekiCourse {
 }
 
 /** 収録済みコースの分類。選択画面の見出しに使う。 */
-export type CourseKind = "急戦" | "持久戦";
+export type CourseKind = "急戦" | "持久戦" | "駒組み";
 
 /** 選択画面に出すコースの一覧項目。 */
 export interface CourseEntry {
@@ -714,6 +716,32 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     load: () => assertJosekiCourse(parseRaw(nakabishaVsSankenbishaAifuriRaw), "nakabisha-vs-sankenbisha--aifuri.json"),
   },
   {
+    id: "nakabisha--shote",
+    strategyId: "gokigen",
+    opponentId: "ibisha-kyusen",
+    recommend: 1,
+    group: "出だしの選び方",
+    opponentLabel: "居飛車",
+    sideLabel: "後手",
+    label: "初手の選び方",
+    kind: "駒組み",
+    summary: "2手目に何を突くかは相手の初手で変わる。飛車先から来たら角道を開け、角道から来たら先に5筋を突く。",
+    load: () => assertJosekiCourse(parseRaw(nakabishaShoteRaw), "nakabisha--shote.json"),
+  },
+  {
+    id: "nakabisha-vs-ureshino--gote",
+    strategyId: "gokigen",
+    opponentId: "ureshino",
+    recommend: 1,
+    group: "奇襲への備え",
+    opponentLabel: "嬉野流",
+    sideLabel: "後手",
+    label: "嬉野流には中飛車にしない",
+    kind: "急戦",
+    summary: "初手▲6八銀の嬉野流。中飛車に振ると角頭を攻められるので、居飛車のまま8筋から攻める。",
+    load: () => assertJosekiCourse(parseRaw(nakabishaVsUreshinoRaw), "nakabisha-vs-ureshino--gote.json"),
+  },
+  {
     id: "nakabisha-vs-onigoroshi--gote",
     strategyId: "gokigen",
     opponentId: "onigoroshi",
@@ -786,6 +814,8 @@ export const OPPONENTS: Opponent[] = [
     description: "相手がじっくり矢倉に組んでくる相居飛車の戦型。" },
   { id: "aigakari", name: "相掛かり", kana: "あいがかり", category: "ibisha", popularity: 3.3,
     description: "角道を開けずに飛車先を交換してくる相居飛車の戦型。" },
+  { id: "ureshino", name: "嬉野流", kana: "うれしのりゅう", category: "kishu", popularity: 3.0,
+    description: "初手▲6八銀。角道を開けずに銀を繰り出し、飛車角銀で角頭を攻めてくる奇襲。級位帯でよく当たる。" },
   { id: "onigoroshi", name: "鬼殺し", kana: "おにごろし", category: "kishu", popularity: 3.0,
     description: "3手目に▲7七桂と跳ねて、こちらの飛車の頭を狙ってくる奇襲。受け方を知らないと序盤で潰されるが、知っていれば逆に桂を取って駒得できる。" },
   { id: "ponponkei", name: "ポンポン桂", kana: "ぽんぽんけい", category: "kishu", popularity: 2.5,
@@ -870,8 +900,10 @@ function divergence(a: string[], b: string[]): number {
   return n + 1;
 }
 
-/** 「自分の戦法」の章の並び順: 基本の組み方 → その他(recommend 順)。 */
-const GROUP_ORDER = ["基本", "基本の組み方", "基本の攻め", "基本と変化", "基本と受け方"];
+/** 「自分の戦法」の章の並び順: 出だし → 基本の組み方 → その他(recommend 順)。 */
+// 「出だしの選び方」を先頭に置く。2手目に何を突くかは相手の初手で変わるので、
+// 個々の戦型を見る前にそこを知っておく必要がある。
+const GROUP_ORDER = ["出だしの選び方", "基本", "基本の組み方", "基本の攻め", "基本と変化", "基本と受け方"];
 function chapterOrder(a: CourseEntry, b: CourseEntry): number {
   const ga = GROUP_ORDER.indexOf(a.group ?? ""), gb = GROUP_ORDER.indexOf(b.group ?? "");
   const ra = ga < 0 ? 99 : ga, rb = gb < 0 ? 99 : gb;

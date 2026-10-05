@@ -13,7 +13,7 @@
     "comment": "平手の初形です。先手番で中飛車を指す場合の駒組みを見ていきます。",
     "branches": [
       {
-        "usi": "7g7f",
+        "usi": "5g5f",
         "kind": "main",
         "note": "角道を開ける一手。",
         "aim": "大駒の道を開けて、序盤の選択肢を広げたい。",
@@ -33,7 +33,7 @@
         ],
         "child": {
           "id": "n1",
-          "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1",
+          "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/4P4/PPPP1PPPP/1B5R1/LNSGKGSNL w - 1",
           "branches": [
             {
               "usi": "3c3d",
@@ -41,30 +41,30 @@
               "note": "相手も角道を開けました。",
               "child": {
                 "id": "n2",
-                "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/4P4/PPPP1PPPP/1B5R1/LNSGKGSNL b - 1",
                 "branches": [
                   {
-                    "usi": "6g6f",
+                    "usi": "7g7f",
                     "kind": "main",
                     "note": "角道を止めます。振り飛車へ向かいます。",
                     "aim": "大駒の道を止めて、振り飛車の形へ進みたい。",
                     "accepted": [
-                      "6i7h",
-                      "2g2f",
-                      "3i3h",
-                      "5i6h",
-                      "1g1f",
-                      "9g9f",
-                      "4i5h",
-                      "5g5f",
-                      "3i4h",
+                      "7g7f",
                       "6g6f",
-                      "5i5h",
-                      "4i4h"
+                      "4i5h",
+                      "2g2f",
+                      "7i7h",
+                      "6i7h",
+                      "9g9f",
+                      "3i4h",
+                      "2h6h",
+                      "2h5h",
+                      "7i6h",
+                      "5i6h"
                     ],
                     "child": {
                       "id": "n3",
-                      "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2PP5/PP2PPPPP/1B5R1/LNSGKGSNL w - 1",
+                      "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P1P4/PP1P1PPPP/1B5R1/LNSGKGSNL w - 1",
                       "branches": [
                         {
                           "usi": "8c8d",
@@ -72,30 +72,30 @@
                           "note": "相手が飛車先を突きました。居飛車です。",
                           "child": {
                             "id": "n4",
-                            "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/1p4p2/9/2PP5/PP2PPPPP/1B5R1/LNSGKGSNL b - 1",
+                            "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/1p4p2/9/2P1P4/PP1P1PPPP/1B5R1/LNSGKGSNL b - 1",
                             "branches": [
                               {
-                                "usi": "7i6h",
+                                "usi": "6g6f",
                                 "kind": "main",
                                 "note": "左銀を6八へ。次に6七へ上げて、角道を止めた6六の歩と中央(5筋)を下から支えます。",
                                 "aim": "角道を止めた歩と中央を下から支えるため、左の守り駒を一つ前に出したい。",
                                 "accepted": [
-                                  "6i7h",
-                                  "3i4h",
-                                  "5g5f",
-                                  "4i5h",
-                                  "7i6h",
-                                  "2g2f",
-                                  "7i7h",
-                                  "9g9f",
+                                  "8h7g",
+                                  "6g6f",
                                   "1g1f",
-                                  "3i3h",
+                                  "6i7h",
+                                  "8h2b+",
+                                  "2g2f",
+                                  "3i4h",
+                                  "6i6h",
+                                  "3g3f",
+                                  "2h5h",
                                   "2h6h",
-                                  "3g3f"
+                                  "4i5h"
                                 ],
                                 "child": {
                                   "id": "n5",
-                                  "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/1p4p2/9/2PP5/PP2PPPPP/1B1S3R1/LN1GKGSNL w - 1",
+                                  "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/1p4p2/9/2PPP4/PP3PPPP/1B5R1/LNSGKGSNL w - 1",
                                   "branches": [
                                     {
                                       "usi": "7a6b",
@@ -103,26 +103,26 @@
                                       "note": "相手も銀を上げます。",
                                       "child": {
                                         "id": "n6",
-                                        "sfen": "ln1gkgsnl/1r1s3b1/p1pppp1pp/1p4p2/9/2PP5/PP2PPPPP/1B1S3R1/LN1GKGSNL b - 1",
+                                        "sfen": "ln1gkgsnl/1r1s3b1/p1pppp1pp/1p4p2/9/2PPP4/PP3PPPP/1B5R1/LNSGKGSNL b - 1",
                                         "branches": [
                                           {
-                                            "usi": "5g5f",
+                                            "usi": "7i6h",
                                             "kind": "main",
                                             "note": "中央の歩を突きます。中飛車ではこの筋が主戦場になります。",
                                             "aim": "主戦場にしたい筋の歩を突いて、戦いの場所を決めたい。",
                                             "accepted": [
                                               "2g2f",
                                               "6i7h",
+                                              "1g1f",
                                               "3i4h",
-                                              "5g5f",
-                                              "6h6g",
+                                              "7i7h",
+                                              "7i6h",
+                                              "3g3f",
+                                              "4i5h",
                                               "9g9f",
                                               "8h7g",
-                                              "4i5h",
-                                              "1g1f",
-                                              "4g4f",
-                                              "6i7i",
-                                              "6h7g"
+                                              "6i6h",
+                                              "4i4h"
                                             ],
                                             "child": {
                                               "id": "n7",

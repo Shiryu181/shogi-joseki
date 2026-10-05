@@ -13,12 +13,12 @@
     "comment": "平手の初形です。後手番で居飛車穴熊に組み、相手の中飛車と戦う場合の駒組みを見ていきます。",
     "branches": [
       {
-        "usi": "7g7f",
+        "usi": "5g5f",
         "kind": "main",
         "note": "相手が角道を開けました。",
         "child": {
           "id": "n1",
-          "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1",
+          "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/4P4/PPPP1PPPP/1B5R1/LNSGKGSNL w - 1",
           "branches": [
             {
               "usi": "3c3d",
@@ -26,30 +26,30 @@
               "note": "こちらも角道を開けます。",
               "aim": "相手に合わせて大駒の道を開け、遅れを取らないようにしたい。",
               "accepted": [
-                "8c8d",
-                "3c3d",
-                "4a3b",
-                "7a6b",
-                "1c1d",
-                "7a7b",
-                "6a5b",
-                "9c9d",
                 "5a4b",
-                "5c5d",
-                "5a5b",
-                "3a4b"
+                "6c6d",
+                "8c8d",
+                "7a6b",
+                "3c3d",
+                "6a5b",
+                "1c1d",
+                "9c9d",
+                "7a7b",
+                "4a3b",
+                "3a4b",
+                "5c5d"
               ],
               "child": {
                 "id": "n2",
-                "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/4P4/PPPP1PPPP/1B5R1/LNSGKGSNL b - 1",
                 "branches": [
                   {
-                    "usi": "6g6f",
+                    "usi": "7g7f",
                     "kind": "main",
                     "note": "相手が角道を止めました。振り飛車に来ます。",
                     "child": {
                       "id": "n3",
-                      "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2PP5/PP2PPPPP/1B5R1/LNSGKGSNL w - 1",
+                      "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P1P4/PP1P1PPPP/1B5R1/LNSGKGSNL w - 1",
                       "branches": [
                         {
                           "usi": "8c8d",
@@ -57,30 +57,30 @@
                           "note": "飛車先の歩を突きます。",
                           "aim": "攻めの主役の前を開けて、攻める姿勢を見せたい。",
                           "accepted": [
-                            "5a4b",
-                            "3a3b",
-                            "1c1d",
-                            "8b6b",
-                            "6c6d",
-                            "7a7b",
-                            "7a6b",
-                            "3a4b",
-                            "7c7d",
-                            "2b3c",
                             "8c8d",
+                            "7a6b",
+                            "6a5b",
+                            "5a4b",
+                            "6c6d",
+                            "1c1d",
+                            "7a7b",
+                            "7c7d",
+                            "4a3b",
+                            "9c9d",
+                            "2b3c",
                             "4c4d"
                           ],
                           "child": {
                             "id": "n4",
-                            "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/1p4p2/9/2PP5/PP2PPPPP/1B5R1/LNSGKGSNL b - 1",
+                            "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/1p4p2/9/2P1P4/PP1P1PPPP/1B5R1/LNSGKGSNL b - 1",
                             "branches": [
                               {
-                                "usi": "7i6h",
+                                "usi": "6g6f",
                                 "kind": "main",
                                 "note": "相手が銀を上げました。",
                                 "child": {
                                   "id": "n5",
-                                  "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/1p4p2/9/2PP5/PP2PPPPP/1B1S3R1/LN1GKGSNL w - 1",
+                                  "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/1p4p2/9/2PPP4/PP3PPPP/1B5R1/LNSGKGSNL w - 1",
                                   "branches": [
                                     {
                                       "usi": "7a6b",
@@ -88,25 +88,25 @@
                                       "note": "こちらも銀を上げます。",
                                       "aim": "相手に合わせて、こちらも守り駒を前に出したい。",
                                       "accepted": [
-                                        "6c6d",
                                         "7a7b",
-                                        "7a6b",
-                                        "3a3b",
+                                        "6c6d",
+                                        "8d8e",
                                         "1c1d",
-                                        "5a4b",
-                                        "2b3c",
                                         "8b6b",
-                                        "4c4d",
+                                        "7a6b",
                                         "7c7d",
                                         "6a5b",
-                                        "8d8e"
+                                        "5a4b",
+                                        "3a3b",
+                                        "2b3c",
+                                        "4c4d"
                                       ],
                                       "child": {
                                         "id": "n6",
-                                        "sfen": "ln1gkgsnl/1r1s3b1/p1pppp1pp/1p4p2/9/2PP5/PP2PPPPP/1B1S3R1/LN1GKGSNL b - 1",
+                                        "sfen": "ln1gkgsnl/1r1s3b1/p1pppp1pp/1p4p2/9/2PPP4/PP3PPPP/1B5R1/LNSGKGSNL b - 1",
                                         "branches": [
                                           {
-                                            "usi": "5g5f",
+                                            "usi": "7i6h",
                                             "kind": "main",
                                             "note": "相手が中央を突いてきました。",
                                             "child": {
