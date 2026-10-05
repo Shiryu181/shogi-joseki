@@ -409,8 +409,10 @@ export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter }:
               // 升だけ伏せて『ねらい』として先に見せる。問いの文は毎回同じなので出さず、
               // 手数だけを添える(盤の上の案内が「盤に指してください」と促している)。
               const hint = guide?.aim ?? buildHint(guide?.note, moveInfo?.displayText);
+              // 急所(最善手と次善手の差が100点以上)はラベルの文言だけを変える。
+              // 色面を足すとねらいへの視線が散るので、文字で示す。
               return (
-                <p className="quiz-aim">
+                <p className={`quiz-aim${guide?.sharp ? " sharp" : ""}`}>
                   <span className="quiz-no">{moveNumber}手目</span>
                   {hint ?? "次の一手は？"}
                 </p>
@@ -418,7 +420,15 @@ export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter }:
             })()}
             {currentNode.comment && <p className="quiz-comment">{currentNode.comment}</p>}
             {bookQuiz.wrong && (
-              trying && bookQuiz.wrong.attemptedUsi ? null : bookQuiz.wrong.openEnded ? (
+              trying && bookQuiz.wrong.attemptedUsi ? null : bookQuiz.wrong.accepted ? (
+                // エンジンが「最善から100点以内」と判定した手。咎められないので赤で返さない。
+                <p className="quiz-wrong soft">
+                  △ {bookQuiz.wrong.attemptedText}
+                  <span>
+                    その手も咎められません。ただしこの講座では {bookQuiz.wrong.correctText} と進めます。
+                  </span>
+                </p>
+              ) : bookQuiz.wrong.openEnded ? (
                 <p className="quiz-wrong soft">
                   △ {bookQuiz.wrong.attemptedText}
                   <span>

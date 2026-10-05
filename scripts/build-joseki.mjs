@@ -8,9 +8,52 @@
  *
  * 使い方: node scripts/build-joseki.mjs
  */
-import { writeFileSync } from "node:fs";
+import { writeFileSync, readFileSync, existsSync } from "node:fs";
 import { Position, PieceType, Square, InitialPositionSFEN, parseUSIMove } from "tsshogi";
 import { AIM_BY_NOTE } from "./aims.mjs";
+
+/**
+ * 許容手のキャッシュ(scripts/annotate-accepted.cjs が作る)。
+ * 無くてもビルドは通る。その場合 accepted / sharp が付かないだけ。
+ */
+const ACCEPTED_CACHE = (() => {
+  const file = new URL("./accepted-cache.json", import.meta.url);
+  if (!existsSync(file)) {
+    console.log("  (許容手のキャッシュが無いので accepted / sharp は付けません)");
+    return { positions: {} };
+  }
+  return JSON.parse(readFileSync(file, "utf-8"));
+})();
+
+/** 急所と見なす「最善手と次善手の差」。実測で駒組みは 3〜39点、仕掛け以降に 100点超が現れる。 */
+const SHARP_MIN = 100;
+const annotateWarnings = [];
+
+/**
+ * 自分の手に accepted(咎められない手)と sharp(急所)を付ける。
+ * 正解は常に本線なので、accepted は反応の文言を変えるためだけに使う。
+ */
+function annotate(sfenBefore, usi, mySide, label) {
+  const sideToMove = sfenBefore.split(" ")[1] === "b" ? "sente" : "gote";
+  if (sideToMove !== mySide) return {};
+  const hit = ACCEPTED_CACHE.positions[sfenBefore.split(" ").slice(0, 3).join(" ")];
+  if (!hit) return {};
+  // 定跡手がエンジンの許容範囲から外れている場合は、出典とエンジンの食い違いなので報告する。
+  if (!hit.accepted.includes(usi)) {
+    annotateWarnings.push(`${label}: 定跡手 ${usi} が許容手(最善 ${hit.best})に入っていません`);
+  }
+  return {
+    accepted: hit.accepted,
+    ...(hit.gap !== null && hit.gap >= SHARP_MIN ? { sharp: true } : {}),
+  };
+}
+
+/** ビルドの最後に、出典とエンジンが食い違った手をまとめて出す。 */
+export function reportAnnotateWarnings() {
+  if (annotateWarnings.length === 0) return;
+  console.log(`\n⚠ 定跡手がエンジンの許容手に入っていない手 ${annotateWarnings.length} 件:`);
+  for (const w of annotateWarnings) console.log(`   ${w}`);
+}
 
 const KANJI_RANK = { 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9 };
 const GLYPH_TO_TYPE = {
@@ -149,6 +192,7 @@ export function buildCourse({ id, title, myStrategy, opponentStrategy, mySide, s
       usi, kind: "main", note: spec.note,
       ...(aim ? { aim } : {}),
       ...(spec.openEnded ? { openEnded: true } : {}),
+      ...annotate(nodes[i].sfen, usi, mySide, `${id} ${i + 1}手目`),
       ...(spec.demos ? { demos: checkDemos(spec.demos, child.sfen, `${i + 1}手目`) } : {}),
       child,
     });
@@ -224,6 +268,7 @@ export function buildCourseFromUsi({ id, title, myStrategy, opponentStrategy, my
     nodes[i].branches.push({
       usi, kind: "main", note,
       ...(aim ? { aim } : {}),
+      ...annotate(nodes[i].sfen, usi, mySide, `${id} ${i + 1}手目`),
       ...(demos ? { demos: checkDemos(demos, child.sfen, `${i + 1}手目`) } : {}),
       child,
     });

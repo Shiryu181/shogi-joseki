@@ -18,6 +18,20 @@
         "kind": "main",
         "note": "角道を開けます。",
         "aim": "大駒の道を開けて、序盤の選択肢を広げたい。",
+        "accepted": [
+          "7g7f",
+          "2g2f",
+          "1g1f",
+          "6i7h",
+          "3i3h",
+          "4i5h",
+          "5i5h",
+          "9g9f",
+          "6g6f",
+          "3i4h",
+          "5g5f",
+          "5i6h"
+        ],
         "child": {
           "id": "n1",
           "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1",
@@ -35,6 +49,20 @@
                     "kind": "main",
                     "note": "角道を止めて振り飛車へ向かいます。",
                     "aim": "大駒の道を止めて、振り飛車の形へ進みたい。",
+                    "accepted": [
+                      "6i7h",
+                      "2g2f",
+                      "3i3h",
+                      "5i6h",
+                      "1g1f",
+                      "9g9f",
+                      "4i5h",
+                      "5g5f",
+                      "3i4h",
+                      "6g6f",
+                      "5i5h",
+                      "4i4h"
+                    ],
                     "child": {
                       "id": "n3",
                       "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2PP5/PP2PPPPP/1B5R1/LNSGKGSNL w - 1",
@@ -52,6 +80,20 @@
                                 "kind": "main",
                                 "note": "飛車を7筋へ。先手番の三間飛車です。",
                                 "aim": "攻めの主役を右側へ移して、振り飛車の形を決めたい。",
+                                "accepted": [
+                                  "6i7h",
+                                  "3i4h",
+                                  "5g5f",
+                                  "4i5h",
+                                  "7i6h",
+                                  "2g2f",
+                                  "7i7h",
+                                  "9g9f",
+                                  "1g1f",
+                                  "3i3h",
+                                  "2h6h",
+                                  "3g3f"
+                                ],
                                 "child": {
                                   "id": "n5",
                                   "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/1p4p2/9/2PP5/PP2PPPPP/1BR6/LNSGKGSNL w - 1",
@@ -69,6 +111,10 @@
                                             "kind": "main",
                                             "note": "角を上がって飛車先を受けます。この角が後で相手玉をにらむ主役になります。",
                                             "aim": "相手の飛車先を受けつつ、後で相手玉をにらむ位置に大駒を置きたい。",
+                                            "accepted": [
+                                              "8h7g",
+                                              "7h6h"
+                                            ],
                                             "child": {
                                               "id": "n7",
                                               "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/6p2/1p7/2PP5/PPB1PPPPP/2R6/LNSGKGSNL w - 1",
@@ -87,6 +133,20 @@
                                                         "kind": "main",
                                                         "note": "左銀を6八へ。玉を右へ囲うので、左側はこの銀と金で守ります。のちに5七へ上げて中央を厚くします。",
                                                         "aim": "玉を反対側に囲うぶん手薄になる左側を、守り駒を上げて固めたい。",
+                                                        "accepted": [
+                                                          "1g1f",
+                                                          "5i4h",
+                                                          "7i6h",
+                                                          "3i3h",
+                                                          "6i5h",
+                                                          "9g9f",
+                                                          "4g4f",
+                                                          "5g5f",
+                                                          "2g2f",
+                                                          "4i4h",
+                                                          "7h6h",
+                                                          "7h8h"
+                                                        ],
                                                         "child": {
                                                           "id": "n9",
                                                           "sfen": "ln1gkgsnl/1r1s3b1/p1pppp1pp/6p2/1p7/2PP5/PPB1PPPPP/2RS5/LN1GKGSNL w - 1",
@@ -105,6 +165,20 @@
                                                                     "kind": "main",
                                                                     "note": "こちらは玉を右へ。",
                                                                     "aim": "玉を戦場から遠い右側へ運びたい。",
+                                                                    "accepted": [
+                                                                      "6i5h",
+                                                                      "1g1f",
+                                                                      "6h6g",
+                                                                      "7f7e",
+                                                                      "9g9f",
+                                                                      "5i4h",
+                                                                      "3i3h",
+                                                                      "4g4f",
+                                                                      "5g5f",
+                                                                      "4i5h",
+                                                                      "2g2f",
+                                                                      "4i4h"
+                                                                    ],
                                                                     "child": {
                                                                       "id": "n11",
                                                                       "sfen": "ln1g1gsnl/1r1s1k1b1/p1pppp1pp/6p2/1p7/2PP5/PPB1PPPPP/2RS1K3/LN1G1GSNL w - 1",
@@ -123,6 +197,20 @@
                                                                                 "kind": "main",
                                                                                 "note": "銀を上がります。",
                                                                                 "aim": "守り駒を前に出して、陣形を整えたい。",
+                                                                                "accepted": [
+                                                                                  "6h6g",
+                                                                                  "7f7e",
+                                                                                  "6i5h",
+                                                                                  "3i3h",
+                                                                                  "1g1f",
+                                                                                  "4g4f",
+                                                                                  "9g9f",
+                                                                                  "5g5f",
+                                                                                  "4h3h",
+                                                                                  "3g3f",
+                                                                                  "7h8h",
+                                                                                  "2g2f"
+                                                                                ],
                                                                                 "child": {
                                                                                   "id": "n13",
                                                                                   "sfen": "ln1g1gsnl/1r1s2kb1/p1pppp1pp/6p2/1p7/2PP5/PPB1PPPPP/2RS1KS2/LN1G1G1NL w - 1",
@@ -141,6 +229,20 @@
                                                                                             "kind": "main",
                                                                                             "note": "金を上げて中央を厚くします。",
                                                                                             "aim": "中央に守り駒を足して、厚みを作りたい。",
+                                                                                            "accepted": [
+                                                                                              "4h3i",
+                                                                                              "1g1f",
+                                                                                              "4g4f",
+                                                                                              "6i5h",
+                                                                                              "6h6g",
+                                                                                              "3g3f",
+                                                                                              "2g2f",
+                                                                                              "7f7e",
+                                                                                              "9g9f",
+                                                                                              "5g5f",
+                                                                                              "7h8h",
+                                                                                              "7h7i"
+                                                                                            ],
                                                                                             "child": {
                                                                                               "id": "n15",
                                                                                               "sfen": "ln1g1gsnl/1r1s2k2/p1ppppbpp/6p2/1p7/2PP5/PPB1PPPPP/2RSGKS2/LN1G3NL w - 1",
@@ -159,6 +261,20 @@
                                                                                                         "kind": "main",
                                                                                                         "note": "中央の歩を伸ばします。",
                                                                                                         "aim": "中央に厚みを作って、相手の攻めに備えたい。",
+                                                                                                        "accepted": [
+                                                                                                          "6h6g",
+                                                                                                          "1g1f",
+                                                                                                          "4g4f",
+                                                                                                          "3g3f",
+                                                                                                          "2g2f",
+                                                                                                          "9g9f",
+                                                                                                          "5g5f",
+                                                                                                          "7h8h",
+                                                                                                          "4h3i",
+                                                                                                          "7h7i",
+                                                                                                          "6i7i",
+                                                                                                          "5h6g"
+                                                                                                        ],
                                                                                                         "child": {
                                                                                                           "id": "n17",
                                                                                                           "sfen": "ln1g1gsnl/1r1s3k1/p1ppppbpp/6p2/1p7/2PPP4/PPB2PPPP/2RSGKS2/LN1G3NL w - 1",
@@ -177,6 +293,20 @@
                                                                                                                     "kind": "main",
                                                                                                                     "note": "4筋の歩を伸ばします。",
                                                                                                                     "aim": "攻めたい筋の歩を伸ばして、仕掛けの準備をしたい。",
+                                                                                                                    "accepted": [
+                                                                                                                      "6h5g",
+                                                                                                                      "1g1f",
+                                                                                                                      "9g9f",
+                                                                                                                      "6h6g",
+                                                                                                                      "6i7i",
+                                                                                                                      "2g2f",
+                                                                                                                      "5h6g",
+                                                                                                                      "3g3f",
+                                                                                                                      "5h5g",
+                                                                                                                      "7h8h",
+                                                                                                                      "4g4f",
+                                                                                                                      "4h3i"
+                                                                                                                    ],
                                                                                                                     "child": {
                                                                                                                       "id": "n19",
                                                                                                                       "sfen": "ln1g1gsn1/1r1s3kl/p1ppppbpp/6p2/1p7/2PPPP3/PPB3PPP/2RSGKS2/LN1G3NL w - 1",
@@ -194,6 +324,20 @@
                                                                                                                                 "kind": "main",
                                                                                                                                 "note": "3筋の歩を伸ばし、桂の道を開けます。",
                                                                                                                                 "aim": "歩を伸ばして、跳ねたい駒の道を開けておきたい。",
+                                                                                                                                "accepted": [
+                                                                                                                                  "3g3f",
+                                                                                                                                  "9g9f",
+                                                                                                                                  "3h4g",
+                                                                                                                                  "6h5g",
+                                                                                                                                  "5h4g",
+                                                                                                                                  "4h3i",
+                                                                                                                                  "7h7i",
+                                                                                                                                  "1g1f",
+                                                                                                                                  "4h4g",
+                                                                                                                                  "6i7i",
+                                                                                                                                  "2g2f",
+                                                                                                                                  "6h6g"
+                                                                                                                                ],
                                                                                                                                 "child": {
                                                                                                                                   "id": "n21",
                                                                                                                                   "sfen": "ln1g1gsnk/1r1s4l/p1ppppbpp/6p2/1p7/2PPPPP2/PPB4PP/2RSGKS2/LN1G3NL w - 1",
@@ -212,6 +356,20 @@
                                                                                                                                             "kind": "main",
                                                                                                                                             "note": "端歩を突きます。ここが攻めの起点になります。",
                                                                                                                                             "aim": "端に一手入れて、そこを攻めの起点にしたい。",
+                                                                                                                                            "accepted": [
+                                                                                                                                              "6h6g",
+                                                                                                                                              "4f4e",
+                                                                                                                                              "3h3g",
+                                                                                                                                              "1g1f",
+                                                                                                                                              "3h4g",
+                                                                                                                                              "9g9f",
+                                                                                                                                              "6h5g",
+                                                                                                                                              "2i3g",
+                                                                                                                                              "5h4g",
+                                                                                                                                              "4h4g",
+                                                                                                                                              "7h7i",
+                                                                                                                                              "2g2f"
+                                                                                                                                            ],
                                                                                                                                             "child": {
                                                                                                                                               "id": "n23",
                                                                                                                                               "sfen": "ln1g1g1nk/1r1s3sl/p1ppppbpp/6p2/1p7/2PPPPP1P/PPB4P1/2RSGKS2/LN1G3NL w - 1",
@@ -229,6 +387,20 @@
                                                                                                                                                         "kind": "main",
                                                                                                                                                         "note": "玉を3九へ。この位置に構えるのがコーヤン流の特徴で、玉が安定します。",
                                                                                                                                                         "aim": "玉を落ち着いた位置に構えて、安定した形にしたい。",
+                                                                                                                                                        "accepted": [
+                                                                                                                                                          "6h6g",
+                                                                                                                                                          "4f4e",
+                                                                                                                                                          "7h8h",
+                                                                                                                                                          "1f1e",
+                                                                                                                                                          "5h4g",
+                                                                                                                                                          "6i7i",
+                                                                                                                                                          "2i3g",
+                                                                                                                                                          "2g2f",
+                                                                                                                                                          "6h5g",
+                                                                                                                                                          "3h4g",
+                                                                                                                                                          "9g9f",
+                                                                                                                                                          "7h7i"
+                                                                                                                                                        ],
                                                                                                                                                         "child": {
                                                                                                                                                           "id": "n25",
                                                                                                                                                           "sfen": "ln1g1g1nk/1r1s3sl/p1pp1pbpp/4p1p2/1p7/2PPPPP1P/PPB4P1/2RSG1S2/LN1G2KNL w - 1",
@@ -248,6 +420,20 @@
                                                                                                                                                                     "kind": "main",
                                                                                                                                                                     "note": "銀を上がって陣形を整えます。",
                                                                                                                                                                     "aim": "守りの駒を上げて、陣形の隙を無くしたい。",
+                                                                                                                                                                    "accepted": [
+                                                                                                                                                                      "1f1e",
+                                                                                                                                                                      "6h5g",
+                                                                                                                                                                      "6i7i",
+                                                                                                                                                                      "9g9f",
+                                                                                                                                                                      "6h6g",
+                                                                                                                                                                      "3i2h",
+                                                                                                                                                                      "5h4h",
+                                                                                                                                                                      "2g2f",
+                                                                                                                                                                      "6i5i",
+                                                                                                                                                                      "5h6g",
+                                                                                                                                                                      "4f4e",
+                                                                                                                                                                      "3h4g"
+                                                                                                                                                                    ],
                                                                                                                                                                     "child": {
                                                                                                                                                                       "id": "n27",
                                                                                                                                                                       "sfen": "ln1g2gnk/1r1s3sl/p1pp1pbpp/4p1p2/1p7/2PPPPP1P/PPB1S2P1/2R1G1S2/LN1G2KNL w - 1",
@@ -267,6 +453,20 @@
                                                                                                                                                                                 "kind": "main",
                                                                                                                                                                                 "note": "端の位を取ります。攻めの準備です。",
                                                                                                                                                                                 "aim": "端の位を取って、攻めの準備を進めたい。",
+                                                                                                                                                                                "accepted": [
+                                                                                                                                                                                  "1f1e",
+                                                                                                                                                                                  "2i3g",
+                                                                                                                                                                                  "3i2h",
+                                                                                                                                                                                  "9g9f",
+                                                                                                                                                                                  "7h7i",
+                                                                                                                                                                                  "5h4g",
+                                                                                                                                                                                  "4f4e",
+                                                                                                                                                                                  "5h4h",
+                                                                                                                                                                                  "6i5i",
+                                                                                                                                                                                  "2g2f",
+                                                                                                                                                                                  "6i6h",
+                                                                                                                                                                                  "5g4h"
+                                                                                                                                                                                ],
                                                                                                                                                                                 "child": {
                                                                                                                                                                                   "id": "n29",
                                                                                                                                                                                   "sfen": "ln2g1gnk/1r1s3sl/p1pp1pbpp/4p1p2/1p6P/2PPPPP2/PPB1S2P1/2R1G1S2/LN1G2KNL w - 1",
@@ -286,6 +486,20 @@
                                                                                                                                                                                             "kind": "main",
                                                                                                                                                                                             "note": "桂を跳ねる準備をします。",
                                                                                                                                                                                             "aim": "跳ねたい駒の道を空けて、攻めの準備をしたい。",
+                                                                                                                                                                                            "accepted": [
+                                                                                                                                                                                              "5g4h",
+                                                                                                                                                                                              "5h4g",
+                                                                                                                                                                                              "6i6h",
+                                                                                                                                                                                              "3i2h",
+                                                                                                                                                                                              "6i5i",
+                                                                                                                                                                                              "4f4e",
+                                                                                                                                                                                              "9g9f",
+                                                                                                                                                                                              "2g2f",
+                                                                                                                                                                                              "2i3g",
+                                                                                                                                                                                              "5h4h",
+                                                                                                                                                                                              "7h7i",
+                                                                                                                                                                                              "7h8h"
+                                                                                                                                                                                            ],
                                                                                                                                                                                             "child": {
                                                                                                                                                                                               "id": "n31",
                                                                                                                                                                                               "sfen": "ln3ggnk/1r1s3sl/p1pp1pbpp/4p1p2/1p6P/2PPPPP2/PPB1S1NP1/2R1G1S2/LN1G2K1L w - 1",
@@ -305,6 +519,20 @@
                                                                                                                                                                                                         "kind": "main",
                                                                                                                                                                                                         "note": "金を上げて自陣を引き締めます。理想の陣形になりました。",
                                                                                                                                                                                                         "aim": "守りの駒を上げて、理想の陣形を完成させたい。",
+                                                                                                                                                                                                        "accepted": [
+                                                                                                                                                                                                          "6i6h",
+                                                                                                                                                                                                          "6i5i",
+                                                                                                                                                                                                          "4f4e",
+                                                                                                                                                                                                          "3h4g",
+                                                                                                                                                                                                          "7h6h",
+                                                                                                                                                                                                          "5g4h",
+                                                                                                                                                                                                          "5h6g",
+                                                                                                                                                                                                          "7f7e",
+                                                                                                                                                                                                          "3i4h",
+                                                                                                                                                                                                          "2g2f",
+                                                                                                                                                                                                          "5h4g",
+                                                                                                                                                                                                          "3i2h"
+                                                                                                                                                                                                        ],
                                                                                                                                                                                                         "child": {
                                                                                                                                                                                                           "id": "n33",
                                                                                                                                                                                                           "sfen": "ln4gnk/1r1s2gsl/p1pp1pbpp/4p1p2/1p6P/2PPPPP2/PPB1SGNP1/2R3S2/LN1G2K1L w - 1",
@@ -324,6 +552,14 @@
                                                                                                                                                                                                                     "kind": "main",
                                                                                                                                                                                                                     "note": "6筋の歩を伸ばして角道を通します。",
                                                                                                                                                                                                                     "aim": "歩を伸ばして、大駒の利きを通したい。",
+                                                                                                                                                                                                                    "accepted": [
+                                                                                                                                                                                                                      "3i4h",
+                                                                                                                                                                                                                      "6i6h",
+                                                                                                                                                                                                                      "7h7i",
+                                                                                                                                                                                                                      "3i2i",
+                                                                                                                                                                                                                      "4g4h",
+                                                                                                                                                                                                                      "4f4e"
+                                                                                                                                                                                                                    ],
                                                                                                                                                                                                                     "child": {
                                                                                                                                                                                                                       "id": "n35",
                                                                                                                                                                                                                       "sfen": "ln4gnk/1r1s1bgsl/p1pp1p1pp/4p1p2/1p1P4P/2P1PPP2/PPB1SGNP1/2R3S2/LN1G2K1L w - 1",
@@ -342,6 +578,14 @@
                                                                                                                                                                                                                                 "kind": "main",
                                                                                                                                                                                                                                 "note": "ここで▲2五桂と跳ねるのがコーヤン流の端攻めです。単騎の桂跳ねですが、7七の角が相手玉をにらんでいて2二の銀が動けないので、攻めが成立します。",
                                                                                                                                                                                                                                 "aim": "相手の守り駒が大駒に縛られている隙に、跳ねて端攻めを始めたい。",
+                                                                                                                                                                                                                                "accepted": [
+                                                                                                                                                                                                                                  "7h8h",
+                                                                                                                                                                                                                                  "3i2h",
+                                                                                                                                                                                                                                  "3g4e",
+                                                                                                                                                                                                                                  "6i5h",
+                                                                                                                                                                                                                                  "5f5e",
+                                                                                                                                                                                                                                  "7h6h"
+                                                                                                                                                                                                                                ],
                                                                                                                                                                                                                                 "child": {
                                                                                                                                                                                                                                   "id": "n37",
                                                                                                                                                                                                                                   "sfen": "ln4gnk/1r1s1bgsl/p2p1p1pp/2p1p1p2/1p1P3NP/2P1PPP2/PPB1SG1P1/2R3S2/LN1G2K1L w - 1",
@@ -361,6 +605,10 @@
                                                                                                                                                                                                                                             "kind": "main",
                                                                                                                                                                                                                                             "note": "▲1三桂成が覚えておきたい好手です。7七の角が玉をにらんでいるので、△同銀と形よく取れません。",
                                                                                                                                                                                                                                             "aim": "相手が形よく取り返せないことを見越して、端に成り込みたい。",
+                                                                                                                                                                                                                                            "accepted": [
+                                                                                                                                                                                                                                              "2e1c+",
+                                                                                                                                                                                                                                              "2e1c"
+                                                                                                                                                                                                                                            ],
                                                                                                                                                                                                                                             "child": {
                                                                                                                                                                                                                                               "id": "n39",
                                                                                                                                                                                                                                               "sfen": "ln4gnk/1r3bgsl/p2psp1p+N/2p1p1p2/1p1P4P/2P1PPP2/PPB1SG1P1/2R3S2/LN1G2K1L w P 1",
@@ -380,6 +628,10 @@
                                                                                                                                                                                                                                                         "kind": "main",
                                                                                                                                                                                                                                                         "note": "歩をぶつけます。",
                                                                                                                                                                                                                                                         "aim": "歩をぶつけて、相手の守りを崩すきっかけを作りたい。",
+                                                                                                                                                                                                                                                        "accepted": [
+                                                                                                                                                                                                                                                          "1e1d"
+                                                                                                                                                                                                                                                        ],
+                                                                                                                                                                                                                                                        "sharp": true,
                                                                                                                                                                                                                                                         "child": {
                                                                                                                                                                                                                                                           "id": "n41",
                                                                                                                                                                                                                                                           "sfen": "ln4gnk/1r3bgs1/p2psp1pl/2p1p1p1P/1p1P5/2P1PPP2/PPB1SG1P1/2R3S2/LN1G2K1L w Pn 1",
@@ -399,6 +651,10 @@
                                                                                                                                                                                                                                                                     "kind": "main",
                                                                                                                                                                                                                                                                     "note": "香で取り返します。端に火が付きました。",
                                                                                                                                                                                                                                                                     "aim": "取り返して、端の攻めを続けたい。",
+                                                                                                                                                                                                                                                                    "accepted": [
+                                                                                                                                                                                                                                                                      "1i1d"
+                                                                                                                                                                                                                                                                    ],
+                                                                                                                                                                                                                                                                    "sharp": true,
                                                                                                                                                                                                                                                                     "child": {
                                                                                                                                                                                                                                                                       "id": "n43",
                                                                                                                                                                                                                                                                       "sfen": "ln4gnk/1r3bgs1/p2psp1p1/2p1p1p1L/1p1P5/2P1PPP2/PPB1SG1P1/2R3S2/LN1G2K2 w LPnp 1",
@@ -417,6 +673,10 @@
                                                                                                                                                                                                                                                                                 "kind": "main",
                                                                                                                                                                                                                                                                                 "note": "香を成ります。",
                                                                                                                                                                                                                                                                                 "aim": "駒を成り込んで、攻めを強めたい。",
+                                                                                                                                                                                                                                                                                "accepted": [
+                                                                                                                                                                                                                                                                                  "1d1c",
+                                                                                                                                                                                                                                                                                  "1d1c+"
+                                                                                                                                                                                                                                                                                ],
                                                                                                                                                                                                                                                                                 "child": {
                                                                                                                                                                                                                                                                                   "id": "n45",
                                                                                                                                                                                                                                                                                   "sfen": "ln4gnk/1r3bgs1/p2psp1p+L/2p1p1p2/1p1P5/2P1PPP2/PPB1SG1P1/2R3S2/LN1G2K2 w L2Pn 1",
@@ -436,6 +696,10 @@
                                                                                                                                                                                                                                                                                             "kind": "main",
                                                                                                                                                                                                                                                                                             "note": "桂頭に歩を打ちます。次の▲1三歩成が受かりません。",
                                                                                                                                                                                                                                                                                             "aim": "相手の弱点に歩を打って、次の成り込みを狙いたい。",
+                                                                                                                                                                                                                                                                                            "accepted": [
+                                                                                                                                                                                                                                                                                              "P*1d"
+                                                                                                                                                                                                                                                                                            ],
+                                                                                                                                                                                                                                                                                            "sharp": true,
                                                                                                                                                                                                                                                                                             "child": {
                                                                                                                                                                                                                                                                                               "id": "n47",
                                                                                                                                                                                                                                                                                               "sfen": "ln4g1k/1r3bgs1/p2psp1pn/2p1p1p1P/1p1P5/2P1PPP2/PPB1SG1P1/2R3S2/LN1G2K2 w LPnl 1",
@@ -454,6 +718,11 @@
                                                                                                                                                                                                                                                                                                         "kind": "main",
                                                                                                                                                                                                                                                                                                         "note": "歩を成ります。",
                                                                                                                                                                                                                                                                                                         "aim": "歩を成り込んで、と金を作りたい。",
+                                                                                                                                                                                                                                                                                                        "accepted": [
+                                                                                                                                                                                                                                                                                                          "2g2f",
+                                                                                                                                                                                                                                                                                                          "L*1f",
+                                                                                                                                                                                                                                                                                                          "1d1c+"
+                                                                                                                                                                                                                                                                                                        ],
                                                                                                                                                                                                                                                                                                         "child": {
                                                                                                                                                                                                                                                                                                           "id": "n49",
                                                                                                                                                                                                                                                                                                           "sfen": "ln4gk1/1r3bgs1/p2psp1p+P/2p1p1p2/1p1P5/2P1PPP2/PPB1SG1P1/2R3S2/LN1G2K2 w NLPnl 1",
@@ -473,6 +742,13 @@
                                                                                                                                                                                                                                                                                                                     "kind": "main",
                                                                                                                                                                                                                                                                                                                     "note": "3筋の歩を突き捨てます。取らないと▲3四歩が絶好の拠点になるので、相手は取るよりありません。",
                                                                                                                                                                                                                                                                                                                     "aim": "取らざるを得ない歩を突き捨てて、相手の形を崩したい。",
+                                                                                                                                                                                                                                                                                                                    "accepted": [
+                                                                                                                                                                                                                                                                                                                      "7g6f",
+                                                                                                                                                                                                                                                                                                                      "L*1h",
+                                                                                                                                                                                                                                                                                                                      "L*1i",
+                                                                                                                                                                                                                                                                                                                      "3f3e",
+                                                                                                                                                                                                                                                                                                                      "N*2f"
+                                                                                                                                                                                                                                                                                                                    ],
                                                                                                                                                                                                                                                                                                                     "child": {
                                                                                                                                                                                                                                                                                                                       "id": "n51",
                                                                                                                                                                                                                                                                                                                       "sfen": "ln4gk1/1r3bg2/p2psp1ps/2p1p1p2/1p1P2P2/2P1PP3/PPB1SG1P1/2R3S2/LN1G2K2 w NLPnlp 1",
@@ -492,6 +768,11 @@
                                                                                                                                                                                                                                                                                                                                 "kind": "main",
                                                                                                                                                                                                                                                                                                                                 "note": "歩の裏に香を打ち込みます。",
                                                                                                                                                                                                                                                                                                                                 "aim": "崩れた相手陣の急所へ、大きく利く駒を打ち込みたい。",
+                                                                                                                                                                                                                                                                                                                                "accepted": [
+                                                                                                                                                                                                                                                                                                                                  "L*3d",
+                                                                                                                                                                                                                                                                                                                                  "L*1i",
+                                                                                                                                                                                                                                                                                                                                  "P*3d"
+                                                                                                                                                                                                                                                                                                                                ],
                                                                                                                                                                                                                                                                                                                                 "child": {
                                                                                                                                                                                                                                                                                                                                   "id": "n53",
                                                                                                                                                                                                                                                                                                                                   "sfen": "ln4gk1/1r3bg2/p2psp1ps/2p1p1L2/1p1P2p2/2P1PP3/PPB1SG1P1/2R3S2/LN1G2K2 w NPnl2p 1",

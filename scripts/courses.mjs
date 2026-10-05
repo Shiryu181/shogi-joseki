@@ -7,7 +7,7 @@
  *
  * 手順の出典は各コースの source に記載。解説文は本アプリのための書き下ろし。
  */
-import { buildCourse, buildCourseFromUsi, writeCourse } from "./build-joseki.mjs";
+import { buildCourse, buildCourseFromUsi, writeCourse, reportAnnotateWarnings } from "./build-joseki.mjs";
 import { swapSides } from "./mirror-course.mjs";
 
 /**
@@ -3340,3 +3340,7 @@ for (const [a, b, shared] of PAIRED_COURSES) {
   }
   console.log(`  ✓ ペア一致: ${a} ⇔ ${b} (先頭${n}手)`);
 }
+
+// 出典どおりの手がエンジンの許容手から外れている箇所をまとめて出す。
+// 駒組みでは出典を優先するので止めはしないが、見落としたくないので必ず報告する。
+reportAnnotateWarnings();

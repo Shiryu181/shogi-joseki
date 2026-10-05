@@ -395,6 +395,18 @@
   content: "のねらい";
 }
 
+/* 急所。最善手と次善手の差が100点以上ある局面。実測で駒組みの2%・ぶつかった後の32%
+ * しかないので、ここだけは考えてほしい。色面を足すとねらいへの視線が散るため、
+ * ラベルの文言と字送りだけで示す。 */
+.quiz-aim.sharp .quiz-no {
+  color: var(--ink);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+.quiz-aim.sharp .quiz-no::after {
+  content: "の急所 — 外すと損をします";
+}
+
 /* 「別の手も同じくらい良い」局面で違う手を指したとき。不正解の赤ではなく落ち着いた色で返す。 */
 .quiz-wrong.soft {
   background: var(--brown-soft);

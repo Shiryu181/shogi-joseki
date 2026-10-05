@@ -82,6 +82,12 @@ export interface BookQuizState {
     attemptedText: string;
     correctText: string;
     openEnded?: boolean;
+    /**
+     * 指した手がエンジンの許容手(最善から100点以内)に入っていた。
+     * 「悪い手ではないが、この講座は定跡手で進める」と返すための印。
+     * openEnded(手で付けた印)より優先する。こちらは実測に基づくため。
+     */
+    accepted?: boolean;
     /** 指そうとした手と定跡手(USI)。「この手を試す」でエンジンに比べさせるために持つ。 */
     attemptedUsi?: string;
     correctUsi?: string;
@@ -546,8 +552,14 @@ export const useLearnStore = create<LearnState>((set, get) => {
       if (!applied) return;
       if (!applied.ok) { set({ selected: null }); return; }
       if (answer && applied.move.usi === answer.usi) {
-        // 正解。一発なら +10、一度間違えていたら +5。
-        usePointsStore.getState().award(bookQuiz.wrong ? POINTS.bookAfterMiss : POINTS.bookFirstTry);
+        // 正解。急所(次善手との差が100点以上)は配点を上げる。
+        // 一発なら急所 +20 / 通常 +10、一度間違えていたら急所 +10 / 通常 +5。
+        const missed = !!bookQuiz.wrong;
+        usePointsStore.getState().award(
+          answer.sharp
+            ? (missed ? POINTS.sharpAfterMiss : POINTS.sharpFirstTry)
+            : (missed ? POINTS.bookAfterMiss : POINTS.bookFirstTry)
+        );
         // ここで一旦止めて、自分が指した手の解説を読ませる。
         // 「次へ」を押すと相手が指す(scheduleAutoAdvance が走る)。
         const ack: AckMove = {
@@ -580,6 +592,7 @@ export const useLearnStore = create<LearnState>((set, get) => {
             attemptedText: applied.displayText,
             correctText,
             openEnded: !!answer?.openEnded,
+            accepted: !!answer?.accepted?.includes(applied.move.usi),
             attemptedUsi: applied.move.usi,
             correctUsi: answer?.usi,
           },

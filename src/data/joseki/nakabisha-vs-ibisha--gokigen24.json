@@ -26,6 +26,20 @@
               "kind": "main",
               "note": "こちらも角道を開けます。",
               "aim": "相手に合わせて大駒の道を開け、遅れを取らないようにしたい。",
+              "accepted": [
+                "8c8d",
+                "3c3d",
+                "4a3b",
+                "7a6b",
+                "1c1d",
+                "7a7b",
+                "6a5b",
+                "9c9d",
+                "5a4b",
+                "5c5d",
+                "5a5b",
+                "3a4b"
+              ],
               "child": {
                 "id": "n2",
                 "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
@@ -43,6 +57,20 @@
                           "kind": "main",
                           "note": "5筋の歩を突きます。中飛車の合図です。",
                           "aim": "主戦場にしたい筋の歩を突いて、戦法の方針を決めたい。",
+                          "accepted": [
+                            "8c8d",
+                            "4a3b",
+                            "1c1d",
+                            "6a5b",
+                            "9c9d",
+                            "5a4b",
+                            "4c4d",
+                            "4a4b",
+                            "2b8h+",
+                            "7a6b",
+                            "2b3c",
+                            "7c7d"
+                          ],
                           "child": {
                             "id": "n4",
                             "sfen": "lnsgkgsnl/1r5b1/pppp1p1pp/4p1p2/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL b - 1",
@@ -60,6 +88,20 @@
                                       "kind": "main",
                                       "note": "飛車を5筋へ。ゴキゲン中飛車の基本形です。角道を止めないのが特徴で、相手が2筋を攻めてきたら角交換から反撃します。",
                                       "aim": "大駒の道を開けたまま攻めの主役を中央へ移し、反撃できる形にしたい。",
+                                      "accepted": [
+                                        "4a3b",
+                                        "8b5b",
+                                        "2b3c",
+                                        "9c9d",
+                                        "2b8h+",
+                                        "7c7d",
+                                        "7a6b",
+                                        "1c1d",
+                                        "6a5b",
+                                        "8c8d",
+                                        "8b3b",
+                                        "8b4b"
+                                      ],
                                       "child": {
                                         "id": "n6",
                                         "sfen": "lnsgkgsnl/4r2b1/pppp1p1pp/4p1p2/7P1/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL b - 1",
@@ -79,6 +121,10 @@
                                                   "kind": "main",
                                                   "note": "歩で取ります。相手は飛車で取り返してきます。",
                                                   "aim": "突かれた歩を取って、損をしないようにしたい。",
+                                                  "accepted": [
+                                                    "2c2d"
+                                                  ],
+                                                  "sharp": true,
                                                   "child": {
                                                     "id": "n8",
                                                     "sfen": "lnsgkgsnl/4r2b1/pppp1p2p/4p1pp1/9/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL b p 1",
@@ -98,6 +144,10 @@
                                                               "kind": "main",
                                                               "note": "ここで角交換。飛車先を切られたら角を換えて反撃するのが、角交換振り飛車の常套手段です。",
                                                               "aim": "攻めの主役の前を破られた代わりに、大駒を交換して反撃したい。",
+                                                              "accepted": [
+                                                                "2b8h+"
+                                                              ],
+                                                              "sharp": true,
                                                               "child": {
                                                                 "id": "n10",
                                                                 "sfen": "lnsgkgsnl/4r4/pppp1p2p/4p1pR1/9/2P6/PP1PPPP1P/1+b7/LNSGKGSNL b Pbp 1",
@@ -117,6 +167,10 @@
                                                                           "kind": "main",
                                                                           "note": "持ち駒の角を3三へ打ちます。飛車取りを見せながら、積極的に咎めにいく一手です。",
                                                                           "aim": "手持ちの大駒を打ち、相手の大駒に当てながら攻めたい。",
+                                                                          "accepted": [
+                                                                            "B*3c",
+                                                                            "5b2b"
+                                                                          ],
                                                                           "demos": [
                                                                             {
                                                                               "title": "▲2一飛成と成り込むと",
@@ -155,6 +209,10 @@
                                                                                       "kind": "main",
                                                                                       "note": "2六に歩を垂らします。次に△2七歩成と成られると痛いので、相手は受けなければなりません。",
                                                                                       "aim": "相手陣の近くに歩を打って、成り込みを狙う拠点を作りたい。",
+                                                                                      "accepted": [
+                                                                                        "P*2f",
+                                                                                        "P*2g"
+                                                                                      ],
                                                                                       "demos": [
                                                                                         {
                                                                                           "title": "▲同飛と取ると",
@@ -183,6 +241,10 @@
                                                                                                   "kind": "main",
                                                                                                   "note": "飛車を2筋へ回し、垂らした歩と連携させます。",
                                                                                                   "aim": "打った歩と大駒を同じ筋に並べて、攻めを繋げたい。",
+                                                                                                  "accepted": [
+                                                                                                    "5b2b"
+                                                                                                  ],
+                                                                                                  "sharp": true,
                                                                                                   "child": {
                                                                                                     "id": "n16",
                                                                                                     "sfen": "lnsgkgsnl/7r1/pppp1pb1p/4p1p2/9/2P4p1/PPSPPPP1P/7R1/LN1GKGSNL b BP 1",
@@ -202,6 +264,10 @@
                                                                                                               "kind": "main",
                                                                                                               "note": "角を切ります。銀を手に入れるための、思い切った一手です。",
                                                                                                               "aim": "大駒を切ってでも、相手の守り駒を手に入れたい。",
+                                                                                                              "accepted": [
+                                                                                                                "3c7g+"
+                                                                                                              ],
+                                                                                                              "sharp": true,
                                                                                                               "child": {
                                                                                                                 "id": "n18",
                                                                                                                 "sfen": "lnsgkgsnl/7r1/pppp1p2p/4p1p2/9/2P4p1/PP+bPPPP1P/6SR1/LN1GKG1NL b BPs 1",
@@ -221,6 +287,10 @@
                                                                                                                           "kind": "main",
                                                                                                                           "note": "手に入れた銀を2七へ打ち込みます。",
                                                                                                                           "aim": "手に入れた駒を、相手陣の急所へ打ち込みたい。",
+                                                                                                                          "accepted": [
+                                                                                                                            "S*2g"
+                                                                                                                          ],
+                                                                                                                          "sharp": true,
                                                                                                                           "demos": [
                                                                                                                             {
                                                                                                                               "title": "▲同銀と取ると",
@@ -257,6 +327,10 @@
                                                                                                                                       "kind": "main",
                                                                                                                                       "note": "垂らしておいた歩で取り返し、と金ができました。",
                                                                                                                                       "aim": "打っておいた歩で取り返して、と金を作りたい。",
+                                                                                                                                      "accepted": [
+                                                                                                                                        "2f2g+"
+                                                                                                                                      ],
+                                                                                                                                      "sharp": true,
                                                                                                                                       "demos": [
                                                                                                                                         {
                                                                                                                                           "title": "▲同飛と取ると",
@@ -286,6 +360,15 @@
                                                                                                                                                   "kind": "main",
                                                                                                                                                   "note": "ここで落ち着いて銀を上がるのが好手です。5三の地点と玉のコビンを守っておきます。",
                                                                                                                                                   "aim": "攻め合いの前に、玉の斜め前の弱点を守っておきたい。",
+                                                                                                                                                  "accepted": [
+                                                                                                                                                    "2a3c",
+                                                                                                                                                    "2g3h",
+                                                                                                                                                    "S*3h",
+                                                                                                                                                    "3a4b",
+                                                                                                                                                    "5a5b",
+                                                                                                                                                    "4a4b",
+                                                                                                                                                    "1c1d"
+                                                                                                                                                  ],
                                                                                                                                                   "child": {
                                                                                                                                                     "id": "n24",
                                                                                                                                                     "sfen": "lnsgkg1nl/5s1r1/pppp1p2p/4p1p2/9/2P6/PPNPPPP+pP/4R4/L2GKG1NL b 2BSPs 1",
@@ -304,6 +387,10 @@
                                                                                                                                                               "kind": "main",
                                                                                                                                                               "note": "と金を3八へ寄せて、相手の飛車に当てます。ここが急所で、と金は取られても元は歩です。",
                                                                                                                                                               "aim": "作ったと金を使って、相手の大駒に当てたい。",
+                                                                                                                                                              "accepted": [
+                                                                                                                                                                "2g3h"
+                                                                                                                                                              ],
+                                                                                                                                                              "sharp": true,
                                                                                                                                                               "demos": [
                                                                                                                                                                 {
                                                                                                                                                                   "title": "▲同飛と取ると",
@@ -341,6 +428,10 @@
                                                                                                                                                                           "kind": "main",
                                                                                                                                                                           "note": "飛車を成り込んで桂を取ります。竜ができました。",
                                                                                                                                                                           "aim": "相手の大駒が動いた隙に、こちらの大駒を成り込みたい。",
+                                                                                                                                                                          "accepted": [
+                                                                                                                                                                            "2b2i+"
+                                                                                                                                                                          ],
+                                                                                                                                                                          "sharp": true,
                                                                                                                                                                           "child": {
                                                                                                                                                                             "id": "n28",
                                                                                                                                                                             "sfen": "lnsgkg1nl/5s3/pppp1p2p/4p1p2/5S3/2P6/PPNPPPP1P/6R2/L2GKG1+rL b 2B2Psn 1",
@@ -361,6 +452,11 @@
                                                                                                                                                                                       "note": "竜を2六へ引きます。相手の飛車と交換せず、竜を自陣の守りにも利かせる落ち着いた一手です。",
                                                                                                                                                                                       "aim": "成駒を引いて、攻めにも守りにも利く位置に置きたい。",
                                                                                                                                                                                       "openEnded": true,
+                                                                                                                                                                                      "accepted": [
+                                                                                                                                                                                        "2i3i",
+                                                                                                                                                                                        "2i2f",
+                                                                                                                                                                                        "2i2h"
+                                                                                                                                                                                      ],
                                                                                                                                                                                       "child": {
                                                                                                                                                                                         "id": "n30",
                                                                                                                                                                                         "sfen": "lnsgkg1nl/5s3/pppp1p2p/4p1p2/5S3/2P4+r1/PPNPPPP1P/9/L2GKGR1L b 2B2Psn 1",
@@ -381,6 +477,10 @@
                                                                                                                                                                                                   "note": "金を上がって、銀の進出を受け止めます。",
                                                                                                                                                                                                   "aim": "出てきた相手の駒を、守り駒を上げて受け止めたい。",
                                                                                                                                                                                                   "openEnded": true,
+                                                                                                                                                                                                  "accepted": [
+                                                                                                                                                                                                    "N*5e"
+                                                                                                                                                                                                  ],
+                                                                                                                                                                                                  "sharp": true,
                                                                                                                                                                                                   "child": {
                                                                                                                                                                                                     "id": "n32",
                                                                                                                                                                                                     "sfen": "lns1kg1nl/4gs3/pppp1p2p/4S1p2/9/2P4+r1/PPNPPPP1P/9/L2GKGR1L b 2B3Psn 1",
@@ -400,6 +500,12 @@
                                                                                                                                                                                                               "note": "桂を跳ねて、角の利きを止めます。",
                                                                                                                                                                                                               "aim": "跳ねる駒で、相手の大駒の利きを止めたい。",
                                                                                                                                                                                                               "openEnded": true,
+                                                                                                                                                                                                              "accepted": [
+                                                                                                                                                                                                                "2a3c",
+                                                                                                                                                                                                                "N*3e",
+                                                                                                                                                                                                                "S*4d",
+                                                                                                                                                                                                                "4b3c"
+                                                                                                                                                                                                              ],
                                                                                                                                                                                                               "demos": [
                                                                                                                                                                                                                 {
                                                                                                                                                                                                                   "title": "▲3三角不成と取ると",
@@ -430,6 +536,10 @@
                                                                                                                                                                                                                           "note": "竜を2五へ寄せて、3五の地点を守ります。",
                                                                                                                                                                                                                           "aim": "成駒を寄せて、狙われている地点を守りたい。",
                                                                                                                                                                                                                           "openEnded": true,
+                                                                                                                                                                                                                          "accepted": [
+                                                                                                                                                                                                                            "S*4d",
+                                                                                                                                                                                                                            "S*6d"
+                                                                                                                                                                                                                          ],
                                                                                                                                                                                                                           "child": {
                                                                                                                                                                                                                             "id": "n36",
                                                                                                                                                                                                                             "sfen": "lns1kg2l/4gs3/pppp1pn1p/4S1p2/4B2+r1/2P3P2/PPNPPP2P/9/L2GKGR1L b B3Psn 1",
@@ -450,6 +560,10 @@
                                                                                                                                                                                                                                       "note": "持ち駒の桂を3六に打ちます。相手の飛車と金を狙う両取りで、攻めを続けます。",
                                                                                                                                                                                                                                       "aim": "持ち駒を打ち込んで、相手の駒を2つ同時に狙いたい。",
                                                                                                                                                                                                                                       "openEnded": true,
+                                                                                                                                                                                                                                      "accepted": [
+                                                                                                                                                                                                                                        "8c8d",
+                                                                                                                                                                                                                                        "S*4d"
+                                                                                                                                                                                                                                      ],
                                                                                                                                                                                                                                       "demos": [
                                                                                                                                                                                                                                         {
                                                                                                                                                                                                                                           "title": "▲同飛と取ると",

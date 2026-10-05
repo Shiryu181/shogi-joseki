@@ -3,8 +3,11 @@ import { create } from "zustand";
 /**
  * 正解で貯まるポイント。Duolingo のように「解くたびに数字が増える」手応えを作る。
  *
- * 配点(2026-09):
+ * 配点(2026-10):
  *   次の一手に一発で正解 +10 / 一度間違えてから正解 +5 / 答えを見た手 0
+ *   急所(最善手と次善手の差が100点以上)は +20 / 間違えてから +10
+ *     — 実測で急所は駒組みの2%・ぶつかった後の32%しかなく、ここだけは
+ *       外すと確実に損をするので、配点を上げて考えさせる
  *   咎めクイズ(相手のミスを咎める手)の正解 +20
  *
  * 端末の localStorage に累計と「今日の獲得」を保存する。共有もサーバーも無い
@@ -15,6 +18,8 @@ const KEY = "joseki-dojo:points:v1";
 export const POINTS = {
   bookFirstTry: 10,
   bookAfterMiss: 5,
+  sharpFirstTry: 20,
+  sharpAfterMiss: 10,
   punish: 20,
 } as const;
 
