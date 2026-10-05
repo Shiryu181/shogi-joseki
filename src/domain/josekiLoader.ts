@@ -29,7 +29,6 @@ import kakugawariHayakuriginRaw from "../data/joseki/kakugawari--hayakurigin.jso
 import aigakariBouginRaw from "../data/joseki/aigakari--bougin.json?raw";
 import yagura24teRaw from "../data/joseki/yagura--24te.json?raw";
 import yagura36gin37keiRaw from "../data/joseki/yagura--36gin37kei.json?raw";
-import nakabishaVsAnagumaRaw from "../data/joseki/nakabisha-vs-anaguma--basic.json?raw";
 import nakabishaGokigen24Raw from "../data/joseki/nakabisha-vs-ibisha--gokigen24.json?raw";
 import sujichigaikakuBasicRaw from "../data/joseki/sujichigaikaku--basic.json?raw";
 import ibishaVsNakabishaAnagumaRaw from "../data/joseki/ibisha-vs-nakabisha--anaguma.json?raw";
@@ -51,6 +50,7 @@ import sankenbishaVsNakabishaAifuriRaw from "../data/joseki/sankenbisha-vs-nakab
 import nakabishaVsSankenbishaAifuriRaw from "../data/joseki/nakabisha-vs-sankenbisha--aifuri.json?raw";
 import sankenbishaVsMukaibishaAifuriRaw from "../data/joseki/sankenbisha-vs-mukaibisha--aifuri.json?raw";
 import nakabishaShoteRaw from "../data/joseki/nakabisha--shote.json?raw";
+import nakabishaVsAnaguma7sujiRaw from "../data/joseki/nakabisha-vs-anaguma--7suji.json?raw";
 import nakabishaVsUreshinoRaw from "../data/joseki/nakabisha-vs-ureshino--gote.json?raw";
 import branchNavDemoRaw from "../data/joseki/_branchNavDemo.json?raw";
 
@@ -600,17 +600,21 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     load: () => assertJosekiCourse(parseRaw(yaguraGoteRaw), "yagura--gote.json"),
   },
   {
-    id: "nakabisha-vs-anaguma--basic",
+    // 旧コース(nakabisha-vs-anaguma--basic)は銀を4三へ上げる形で、5筋からしか
+    // 攻められず、実測で -134 の劣勢で終わっていた(咎め手の候補もゼロ)。
+    // 銀を6四へ運んで7筋から攻めるこの形に差し替えた。旧コースは先手版コースの
+    // 変換元として残してあるが、後手の章には出さない。
+    id: "nakabisha-vs-anaguma--7suji",
     strategyId: "gokigen",
     opponentId: "anaguma",
     recommend: 5,
     group: "対居飛車穴熊",
     opponentLabel: "居飛車穴熊",
     sideLabel: "後手",
-    label: "対居飛車穴熊",
+    label: "居飛車穴熊には7筋から",
     kind: "持久戦",
-    summary: "飛車を5二へ振り、美濃囲いに収めて4五歩と位を取るまで。",
-    load: () => assertJosekiCourse(parseRaw(nakabishaVsAnagumaRaw), "nakabisha-vs-anaguma--basic.json"),
+    summary: "5筋では穴熊に通らない。銀を6四へ運び、飛車を7二へ回して守りの薄い7筋を攻める。",
+    load: () => assertJosekiCourse(parseRaw(nakabishaVsAnaguma7sujiRaw), "nakabisha-vs-anaguma--7suji.json"),
   },
   {
     id: "nakabisha-vs-ibisha--gokigen24",
