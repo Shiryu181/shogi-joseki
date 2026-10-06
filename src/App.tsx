@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Sandbox } from "./features/sandbox/Sandbox";
 import { Learn } from "./features/learn/Learn";
 import { Home } from "./features/home/Home";
 import { SidePick } from "./features/matchup/SidePick";
 import { About } from "./features/about/About";
+import { Review } from "./features/review/Review";
+import { courseEntriesFor } from "./domain/josekiLoader";
 import { loadBranchNavDemo, buildLearnPath } from "./domain/josekiLoader";
 import type { LearnPath } from "./domain/josekiLoader";
 import type { HomeMode } from "./features/home/Home";
@@ -11,7 +13,7 @@ import type { CardItem } from "./features/home/StrategyCard";
 import { BottomTabBar } from "./ui/BottomTabBar";
 import "./App.css";
 
-type Screen = "home" | "side" | "learn" | "about" | "devMenu" | "sandbox" | "branchDemo";
+type Screen = "home" | "side" | "learn" | "about" | "review" | "devMenu" | "sandbox" | "branchDemo";
 
 /**
  * DESIGN.md §5 のユーザー導線。
@@ -33,6 +35,18 @@ function App() {
     if (typeof window === "undefined") return false;
     return new URLSearchParams(window.location.search).get("dev") === "1";
   });
+
+  /**
+   * 復習の対象にするコース。いまは後手ゴキゲン中飛車の章だけ。
+   * ホーム画面を作り直す際に、学習中の戦法から決める形へ変える。
+   */
+  const reviewCourses = useMemo(
+    () =>
+      courseEntriesFor("gokigen")
+        .filter((e) => e.sideLabel === "後手")
+        .map((e) => ({ course: e.load(), label: e.label })),
+    [],
+  );
 
   function openCard(mode: HomeMode, item: CardItem) {
     setHomeMode(mode);
@@ -71,7 +85,16 @@ function App() {
       )}
 
       <div className="app-content" style={showTabBar ? { paddingBottom: 78 } : undefined}>
-        {screen === "home" && <Home mode={homeMode} onOpenCard={openCard} onOpenAbout={() => setScreen("about")} />}
+        {screen === "home" && (
+          <>
+            {/* 復習への入口。ホーム画面を作り直すまでの暫定配置。 */}
+            <div className="review-entry">
+              <button type="button" onClick={() => setScreen("review")}>今日の復習をする</button>
+            </div>
+            <Home mode={homeMode} onOpenCard={openCard} onOpenAbout={() => setScreen("about")} />
+          </>
+        )}
+        {screen === "review" && <Review courses={reviewCourses} onBack={() => setScreen("home")} />}
 
         {screen === "side" && selectedCard && (
           <SidePick mode={homeMode} item={selectedCard} onBack={() => setScreen("home")} onPick={startPath} />
