@@ -26,9 +26,19 @@ function matchesCategory(item: CardItem, key: CategoryFilterKey): boolean {
   return item.category === key;
 }
 
-/** 「自分の戦法」タブのカード。コース数は一覧から数える。 */
+/**
+ * いまの基準で作り込みが終わっている戦法。ここに無い戦法は一覧に出さない。
+ *
+ * なぜ絞るか: 「出典+エンジン検証」「許容手と急所」「相手のミスを咎める枝」
+ * 「盤上の実演」まで揃えた戦法だけを出す方針にしたため。古いコースは
+ * これらが未整備で、並べると同じ品質のものに見えてしまう。
+ * 1戦法ずつ仕上げて、仕上がった順にここへ足していく。
+ */
+const READY_STRATEGY_IDS = ["gokigen"];
+
+/** 戦法のカード。仕上がっている戦法だけを返す。 */
 function myStrategyCards(): CardItem[] {
-  return STRATEGIES.map((s) => {
+  return STRATEGIES.filter((s) => READY_STRATEGY_IDS.includes(s.id)).map((s) => {
     const n = courseEntriesFor(s.id).length;
     return { ...s, lineCount: n, ready: n > 0 };
   });
@@ -45,7 +55,7 @@ function opponentCards(): CardItem[] {
 const COPY: Record<HomeMode, { title: string; lead: string; placeholder: string }> = {
   mine: {
     title: "自分の戦法",
-    lead: "自分が指す戦法を選んで、基本の組み方からその戦法の型・変化までを1手ずつ出題します。",
+    lead: "自分が指す戦法を選んで、基本の組み方からその戦法の型・変化までを1手ずつ出題します。いまは中飛車だけを公開しています(1戦法ずつ仕上げているため)。",
     placeholder: "戦法名で検索(例:四間飛車)",
   },
   opponent: {
@@ -95,9 +105,11 @@ export function Home({ mode, onOpenCard, onOpenAbout }: HomeProps) {
           </div>
           <h1>{copy.title}</h1>
           <p className="lead">{copy.lead}</p>
-          <SearchBar value={query} onChange={setQuery} placeholder={copy.placeholder} />
+          {/* 戦法が数件しか無いうちは、検索も絞り込みも押す意味が無いので出さない。
+              公開する戦法が増えたら自動で復活する。 */}
+          {cards.length > 4 && <SearchBar value={query} onChange={setQuery} placeholder={copy.placeholder} />}
         </div>
-        <CategoryTabs active={activeCategory} onSelect={setActiveCategory} />
+        {cards.length > 4 && <CategoryTabs active={activeCategory} onSelect={setActiveCategory} />}
         <div className="listcount">{list.length}件の戦法</div>
         <div className="cards">
           {list.length > 0 ? (
