@@ -51,6 +51,7 @@ import nakabishaVsSankenbishaAifuriRaw from "../data/joseki/nakabisha-vs-sankenb
 import sankenbishaVsMukaibishaAifuriRaw from "../data/joseki/sankenbisha-vs-mukaibisha--aifuri.json?raw";
 import nakabishaShoteRaw from "../data/joseki/nakabisha--shote.json?raw";
 import nakabishaShoteSenteRaw from "../data/joseki/nakabisha--shote-sente.json?raw";
+import nakabishaVsAnagumaSenteRaw from "../data/joseki/nakabisha-vs-anaguma--sente.json?raw";
 import nakabishaVsAnaguma7sujiRaw from "../data/joseki/nakabisha-vs-anaguma--7suji.json?raw";
 import nakabishaVsChokyusenRaw from "../data/joseki/nakabisha-vs-chokyusen--kaihi.json?raw";
 import nakabishaVsUfoginRaw from "../data/joseki/nakabisha-vs-ufogin--gote.json?raw";
@@ -721,6 +722,19 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "急戦",
     summary: "相手も振り飛車のとき。5筋の位を取って銀を繰り出し、美濃囲いから反撃する。",
     load: () => assertJosekiCourse(parseRaw(nakabishaVsSankenbishaAifuriRaw), "nakabisha-vs-sankenbisha--aifuri.json"),
+  },
+  {
+    id: "nakabisha-vs-anaguma--sente",
+    strategyId: "gokigen",
+    opponentId: "anaguma",
+    recommend: 5,
+    group: "対居飛車穴熊",
+    opponentLabel: "居飛車穴熊",
+    sideLabel: "先手",
+    label: "居飛車穴熊には3筋から",
+    kind: "持久戦",
+    summary: "5筋では穴熊に通らない。銀を4六へ運び、飛車を3八へ回して守りの薄い3筋を攻める。",
+    load: () => assertJosekiCourse(parseRaw(nakabishaVsAnagumaSenteRaw), "nakabisha-vs-anaguma--sente.json"),
   },
   {
     id: "nakabisha--shote-sente",
