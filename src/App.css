@@ -101,21 +101,3 @@
   background: var(--card-2);
 }
 
-/* 復習への入口。ホーム画面を作り直すまでの暫定配置。 */
-.review-entry {
-  max-width: 560px;
-  margin: 14px auto 0;
-  padding: 0 14px;
-}
-.review-entry button {
-  width: 100%;
-  padding: 13px;
-  background: var(--gold-soft);
-  border: 1px solid var(--line-2);
-  border-radius: 12px;
-  color: var(--ink);
-  font-family: var(--disp);
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-}

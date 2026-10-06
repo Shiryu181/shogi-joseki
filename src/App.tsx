@@ -5,15 +5,17 @@ import { Home } from "./features/home/Home";
 import { SidePick } from "./features/matchup/SidePick";
 import { About } from "./features/about/About";
 import { Review } from "./features/review/Review";
-import { courseEntriesFor } from "./domain/josekiLoader";
+import { Dashboard } from "./features/home/Dashboard";
+import { Settings } from "./features/settings/Settings";
+import { applyTheme, useSettingsStore } from "./store/settingsStore";
+
 import { loadBranchNavDemo, buildLearnPath } from "./domain/josekiLoader";
 import type { LearnPath } from "./domain/josekiLoader";
 import type { HomeMode } from "./features/home/Home";
 import type { CardItem } from "./features/home/StrategyCard";
-import { BottomTabBar } from "./ui/BottomTabBar";
 import "./App.css";
 
-type Screen = "home" | "side" | "learn" | "about" | "review" | "devMenu" | "sandbox" | "branchDemo";
+type Screen = "dashboard" | "home" | "side" | "learn" | "about" | "review" | "settings" | "devMenu" | "sandbox" | "branchDemo";
 
 /**
  * DESIGN.md §5 のユーザー導線。
@@ -22,9 +24,10 @@ type Screen = "home" | "side" | "learn" | "about" | "review" | "devMenu" | "sand
  * `?dev=1` のときだけ画面右上の小さなリンクから到達できるようにする(完全削除はしない)。
  */
 function App() {
-  const [screen, setScreen] = useState<Screen>("home");
-  // どの入口(自分の戦法 / 相手に備える)から来ているか。タブのハイライトと選択画面の見せ方に使う。
-  const [homeMode, setHomeMode] = useState<HomeMode>("mine");
+  const [screen, setScreen] = useState<Screen>("dashboard");
+  // 入口は「自分の戦法」だけ。章立てがすでに相手戦型ごとなので、
+  // 「相手に備える」は同じ内容を別の切り口で並べているだけだった(2026-10 に廃止)。
+  const homeMode: HomeMode = "mine";
   const [selectedCard, setSelectedCard] = useState<CardItem | null>(null);
   // 戦法と手番を選んだあとの学習パス(章の並び)と、今いる章。
   const [path, setPath] = useState<LearnPath | null>(null);
@@ -40,16 +43,27 @@ function App() {
    * 復習の対象にするコース。いまは後手ゴキゲン中飛車の章だけ。
    * ホーム画面を作り直す際に、学習中の戦法から決める形へ変える。
    */
-  const reviewCourses = useMemo(
-    () =>
-      courseEntriesFor("gokigen")
-        .filter((e) => e.sideLabel === "後手")
-        .map((e) => ({ course: e.load(), label: e.label })),
+  /**
+   * 学習中の戦法。いまは後手ゴキゲン中飛車に固定。
+   * 章の並びは学習画面と同じ学習パスから取る(ホームと学習で順番が食い違わないように)。
+   */
+  const learningPath = useMemo(
+    () => buildLearnPath("mine", "gokigen", "ゴキゲン中飛車", "gote"),
     [],
   );
+  const reviewCourses = useMemo(
+    () => learningPath.chapters.map((c) => ({ course: c.course, label: c.entry.label })),
+    [learningPath],
+  );
 
-  function openCard(mode: HomeMode, item: CardItem) {
-    setHomeMode(mode);
+  /** ホームの「続きから」。指定の章から始める。 */
+  function continueLearning(index: number) {
+    setPath(learningPath);
+    setChapterIndex(index);
+    setScreen("learn");
+  }
+
+  function openCard(_mode: HomeMode, item: CardItem) {
     setSelectedCard(item);
     setScreen("side");
   }
@@ -62,10 +76,9 @@ function App() {
     setScreen("learn");
   }
 
-  function goHome(mode: HomeMode) {
-    setHomeMode(mode);
-    setScreen("home");
-  }
+  // 保存されたテーマを最初に一度だけ反映する。
+  const theme = useSettingsStore((s) => s.theme);
+  useEffect(() => { applyTheme(theme); }, [theme]);
 
   // 画面遷移のたびにスクロール位置をリセットする(前の画面でスクロールした状態のまま
   // 次の画面に来ると、タイトルの途中から表示される等おかしくなるため)。
@@ -74,7 +87,6 @@ function App() {
   }, [screen]);
 
   // 学習画面ではタブバーを出さない(戻るボタンで足りる)。スマホの縦の場所を盤と解説に使うため。
-  const showTabBar = screen === "home" || screen === "side";
 
   return (
     <div className="app-shell">
@@ -84,17 +96,25 @@ function App() {
         </button>
       )}
 
-      <div className="app-content" style={showTabBar ? { paddingBottom: 78 } : undefined}>
-        {screen === "home" && (
-          <>
-            {/* 復習への入口。ホーム画面を作り直すまでの暫定配置。 */}
-            <div className="review-entry">
-              <button type="button" onClick={() => setScreen("review")}>今日の復習をする</button>
-            </div>
-            <Home mode={homeMode} onOpenCard={openCard} onOpenAbout={() => setScreen("about")} />
-          </>
+      <div className="app-content">
+        {screen === "dashboard" && (
+          <Dashboard
+            chapters={learningPath.chapters}
+            strategyName="ゴキゲン中飛車"
+            sideLabel="後手"
+            onContinue={continueLearning}
+            onReview={() => setScreen("review")}
+            onPickStrategy={() => setScreen("home")}
+            onExam={() => undefined}
+            onSettings={() => setScreen("settings")}
+            onAbout={() => setScreen("about")}
+          />
         )}
-        {screen === "review" && <Review courses={reviewCourses} onBack={() => setScreen("home")} />}
+        {screen === "home" && (
+          <Home mode={homeMode} onOpenCard={openCard} onOpenAbout={() => setScreen("about")} />
+        )}
+        {screen === "review" && <Review courses={reviewCourses} onBack={() => setScreen("dashboard")} />}
+        {screen === "settings" && <Settings onBack={() => setScreen("dashboard")} />}
 
         {screen === "side" && selectedCard && (
           <SidePick mode={homeMode} item={selectedCard} onBack={() => setScreen("home")} onPick={startPath} />
@@ -108,11 +128,11 @@ function App() {
             onNextChapter={
               chapterIndex + 1 < path.chapters.length ? () => setChapterIndex(chapterIndex + 1) : undefined
             }
-            onBack={() => setScreen("side")}
+            onBack={() => setScreen("dashboard")}
           />
         )}
 
-        {screen === "about" && <About onBack={() => setScreen("home")} />}
+        {screen === "about" && <About onBack={() => setScreen("dashboard")} />}
 
         {screen === "devMenu" && (
           <div className="devmenu-wrap">
@@ -145,10 +165,6 @@ function App() {
 
         {screen === "branchDemo" && <Learn course={loadBranchNavDemo()} onBack={() => setScreen("devMenu")} />}
       </div>
-
-      {showTabBar && (
-        <BottomTabBar active={homeMode} onSelectMine={() => goHome("mine")} onSelectOpponent={() => goHome("opponent")} />
-      )}
     </div>
   );
 }

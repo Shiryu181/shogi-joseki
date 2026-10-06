@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>定跡道場 ホーム画面モック</title>
+<style>
+/* 単体で開けるように、デザイントークンはこのファイルに直書きする
+   (src/styles/tokens.css と同じ値)。 */
+:root{
+  --canvas:#c7a874; --app:#f7f1e4; --card:#ffffff; --card-2:#fbf6ec;
+  --ink:#2a2115; --ink-soft:#7c6f58; --ink-faint:#a79a80;
+  --line:#eadfc8; --line-2:#e0d2b4;
+  --brown:#6e4a25; --brown-soft:#efe3ce; --brown-ink:#523414;
+  --red:#b23a2e; --gold:#b0842e; --gold-soft:#f1e7ce; --good:#39795a;
+  --disp:"Hiragino Mincho ProN","Yu Mincho","YuMincho","Noto Serif JP",serif;
+  --body:"Hiragino Kaku Gothic ProN","Yu Gothic","YuGothic","Noto Sans JP","Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:#8f7446; font-family:var(--body); color:var(--ink);
+  min-height:100vh; display:flex; justify-content:center; align-items:flex-start;
+  padding:28px 16px;
+}
+/* スマホ幅で固定する。広い画面でも伸びないようにする。 */
+.frame{
+  width:390px; max-width:100%; background:var(--app);
+  border-radius:22px; overflow:hidden; box-shadow:0 18px 48px rgba(0,0,0,.35);
+}
+.pad{padding:0 16px 20px}
+.sec{font-size:11.5px;color:var(--ink-soft);letter-spacing:.1em;margin:16px 2px 7px}
+.card{background:var(--card);border:1px solid var(--line-2);border-radius:14px;padding:15px}
+
+/* ── 見出し: 木目の帯 ── */
+.hero{background:var(--canvas);padding:20px 16px 16px}
+.brand{font-family:var(--disp);font-size:24px;font-weight:600;letter-spacing:.1em;color:#3d2a12}
+
+/* ── カレンダー ── */
+.cal{display:flex;gap:5px;margin-top:14px}
+.day{flex:1;text-align:center;min-width:0}
+.dow{font-size:11px;color:#5a401d;opacity:.85;margin-bottom:5px}
+.cell{
+  aspect-ratio:1;border-radius:9px;background:rgba(255,255,255,.40);
+  display:grid;place-items:center;position:relative
+}
+.cell .d{font-family:var(--disp);font-size:14px;color:#6b5230}
+.cell.today{background:#fff;box-shadow:inset 0 0 0 2px #3d2a12}
+/* 学習した日の朱印。この画面で唯一の赤。 */
+.stamp{position:absolute;inset:0;display:grid;place-items:center}
+.stamp b{
+  width:34px;height:34px;border:2px solid var(--red);border-radius:7px;
+  color:var(--red);font-family:var(--disp);font-size:11px;font-weight:600;
+  line-height:1.05;display:grid;place-items:center;
+  transform:rotate(-7deg);background:rgba(255,255,255,.6)
+}
+.cal-foot{display:flex;align-items:baseline;margin-top:11px}
+.cal-streak{font-family:var(--disp);color:#3d2a12}
+.cal-streak b{font-size:23px}
+.cal-streak span{font-size:12px;font-family:var(--body);color:#5a401d;margin-left:3px}
+.cal-note{margin-left:auto;font-size:11.5px;color:#5a401d;opacity:.9}
+
+/* ── 学習中 ── */
+.st-head{display:flex;align-items:baseline;gap:7px}
+.st-name{font-family:var(--disp);font-size:18px;font-weight:600}
+.st-side{font-size:12px;color:var(--ink-soft)}
+.st-n{margin-left:auto;font-family:var(--disp);font-size:14px}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:11px 0 6px}
+.bar i{display:block;height:100%;background:var(--brown)}
+.st-sub{font-size:12.5px;color:var(--ink-soft);margin:0 0 13px}
+.btn{
+  display:block;width:100%;padding:13px;text-align:center;
+  border:1px solid var(--line-2);border-radius:11px;background:var(--card);
+  font-family:var(--body);font-size:15px;color:var(--ink);cursor:pointer
+}
+.btn.main{background:var(--brown);color:#fff;border-color:var(--brown);font-weight:600}
+
+/* ── 今日の復習 ── */
+.rv{display:flex;align-items:center;gap:12px}
+.rv-n{font-family:var(--disp);font-size:32px;font-weight:600;color:var(--brown);line-height:1}
+.rv-n span{font-size:12px;font-family:var(--body);color:var(--ink-soft)}
+.rv-t{font-size:12.5px;color:var(--ink-soft);line-height:1.6}
+.rv-t b{display:block;font-family:var(--disp);font-size:16px;color:var(--ink);font-weight:600;margin-bottom:2px}
+.rv .btn{width:auto;flex:none;margin-left:auto;padding:12px 20px}
+
+/* ── 3つ横並び ── */
+.tri{display:flex;gap:9px;margin-top:13px}
+.tri a{
+  flex:1;min-width:0;background:var(--card);border:1px solid var(--line-2);border-radius:14px;
+  padding:15px 6px 13px;text-align:center;text-decoration:none;color:var(--ink);cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:7px
+}
+.tri svg{width:26px;height:26px;stroke:var(--brown);fill:none;stroke-width:1.5}
+.tri .l{font-size:12.5px;line-height:1.45}
+.tri .s{font-size:10.5px;color:var(--ink-faint)}
+
+.foot{text-align:center;font-size:12.5px;color:var(--ink-soft);padding:15px 0 2px}
+</style>
+</head>
+<body>
+<div class="frame">
+
+  <div class="hero">
+    <div class="brand">定跡道場</div>
+    <div class="cal">
+      <div class="day"><div class="dow">月</div><div class="cell"><span class="d">29</span><span class="stamp"><b>定跡</b></span></div></div>
+      <div class="day"><div class="dow">火</div><div class="cell"><span class="d">30</span><span class="stamp"><b>定跡</b></span></div></div>
+      <div class="day"><div class="dow">水</div><div class="cell"><span class="d">1</span><span class="stamp"><b>定跡</b></span></div></div>
+      <div class="day"><div class="dow">木</div><div class="cell"><span class="d">2</span></div></div>
+      <div class="day"><div class="dow">金</div><div class="cell"><span class="d">3</span><span class="stamp"><b>定跡</b></span></div></div>
+      <div class="day"><div class="dow">土</div><div class="cell"><span class="d">4</span><span class="stamp"><b>定跡</b></span></div></div>
+      <div class="day"><div class="dow">日</div><div class="cell today"><span class="d">5</span></div></div>
+    </div>
+    <div class="cal-foot">
+      <div class="cal-streak"><b>2</b><span>日連続</span></div>
+      <div class="cal-note">今日はまだ学習していません</div>
+    </div>
+  </div>
+
+  <div class="pad">
+    <div class="sec">学習中</div>
+    <div class="card">
+      <div class="st-head">
+        <div class="st-name">ゴキゲン中飛車</div>
+        <div class="st-side">後手</div>
+        <div class="st-n">62 / 159 問</div>
+      </div>
+      <div class="bar"><i style="width:39%"></i></div>
+      <p class="st-sub">9章中4章を達成 ・ 覚えた問題が 39%</p>
+      <button class="btn main">続きから(第5章 嬉野流)</button>
+    </div>
+
+    <div class="sec">今日の復習</div>
+    <div class="card">
+      <div class="rv">
+        <div class="rv-n">23<span> 問</span></div>
+        <div class="rv-t"><b>今日の復習</b>うち急所 6問</div>
+        <button class="btn">はじめる</button>
+      </div>
+    </div>
+
+    <div class="tri">
+      <a>
+        <svg viewBox="0 0 24 24"><path d="M12 3l3 3.5-1 13.5H10L9 6.5z"/><path d="M4 20h16"/></svg>
+        <span class="l">学習する<br>戦法を選ぶ</span>
+      </a>
+      <a>
+        <svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/><path d="M9 9h6"/></svg>
+        <span class="l">認定試験</span>
+        <span class="s">2章 合格</span>
+      </a>
+      <a>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.2 5.2l2.1 2.1M16.7 16.7l2.1 2.1M18.8 5.2l-2.1 2.1M7.3 16.7l-2.1 2.1"/></svg>
+        <span class="l">設定</span>
+        <span class="s">音量など</span>
+      </a>
+    </div>
+
+    <div class="foot">このアプリについて・ライセンス</div>
+  </div>
+
+</div>
+</body>
+</html>
