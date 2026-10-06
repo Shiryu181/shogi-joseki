@@ -52,6 +52,7 @@ import sankenbishaVsMukaibishaAifuriRaw from "../data/joseki/sankenbisha-vs-muka
 import nakabishaShoteRaw from "../data/joseki/nakabisha--shote.json?raw";
 import nakabishaShoteSenteRaw from "../data/joseki/nakabisha--shote-sente.json?raw";
 import nakabishaVsAnagumaSenteRaw from "../data/joseki/nakabisha-vs-anaguma--sente.json?raw";
+import nakabishaVsSankenbishaSenteRaw from "../data/joseki/nakabisha-vs-sankenbisha--sente.json?raw";
 import nakabishaVsAnaguma7sujiRaw from "../data/joseki/nakabisha-vs-anaguma--7suji.json?raw";
 import nakabishaVsChokyusenRaw from "../data/joseki/nakabisha-vs-chokyusen--kaihi.json?raw";
 import nakabishaVsUfoginRaw from "../data/joseki/nakabisha-vs-ufogin--gote.json?raw";
@@ -722,6 +723,19 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "急戦",
     summary: "相手も振り飛車のとき。5筋の位を取って銀を繰り出し、美濃囲いから反撃する。",
     load: () => assertJosekiCourse(parseRaw(nakabishaVsSankenbishaAifuriRaw), "nakabisha-vs-sankenbisha--aifuri.json"),
+  },
+  {
+    id: "nakabisha-vs-sankenbisha--sente",
+    strategyId: "gokigen",
+    opponentId: "sankenbisha",
+    recommend: 6,
+    group: "相振り飛車",
+    opponentLabel: "三間飛車",
+    sideLabel: "先手",
+    label: "相振り飛車は先に5筋を突く",
+    kind: "急戦",
+    summary: "相振り飛車は先に動いたほうが主導権を握る。相手が桂を跳ねた瞬間に5筋を突き捨てて突破する。",
+    load: () => assertJosekiCourse(parseRaw(nakabishaVsSankenbishaSenteRaw), "nakabisha-vs-sankenbisha--sente.json"),
   },
   {
     id: "nakabisha-vs-anaguma--sente",
