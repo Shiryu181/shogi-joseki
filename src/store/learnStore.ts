@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { usePointsStore, POINTS } from "./pointsStore";
+import { useProgressStore, itemKey } from "./progressStore";
 import {
   Color,
   PieceType,
@@ -555,6 +556,11 @@ export const useLearnStore = create<LearnState>((set, get) => {
         // 正解。急所(次善手との差が100点以上)は配点を上げる。
         // 一発なら急所 +20 / 通常 +10、一度間違えていたら急所 +10 / 通常 +5。
         const missed = !!bookQuiz.wrong;
+        // 間隔反復の記録。一度でも間違えた問題は「正解」として数えない
+        // (答えを見てから当てたのと変わらないため)。
+        useProgressStore.getState().record(
+          itemKey(currentNode.sfen, answer.usi), !missed, !!answer.sharp
+        );
         usePointsStore.getState().award(
           answer.sharp
             ? (missed ? POINTS.sharpAfterMiss : POINTS.sharpFirstTry)
@@ -584,6 +590,10 @@ export const useLearnStore = create<LearnState>((set, get) => {
         return;
       }
       const correctText = answer ? (moveFromUSI(position, answer.usi)?.displayText ?? "") : "";
+      // 最初の誤答だけ記録する(「もう一度」で何度も外しても記録は1回)。
+      if (answer && !bookQuiz.wrong) {
+        useProgressStore.getState().record(itemKey(currentNode.sfen, answer.usi), false, !!answer.sharp);
+      }
       set({
         selected: null,
         bookQuiz: {
