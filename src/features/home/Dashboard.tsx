@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useProgressStore, itemKey, LEARNED_STREAK } from "../../store/progressStore";
 import { quizItemsOf } from "../../domain/reviewQueue";
+import { useExamStore } from "../../store/examStore";
 import type { PathChapter } from "../../domain/josekiLoader";
 import "./Dashboard.css";
 
@@ -47,6 +48,8 @@ export function Dashboard({
   onContinue, onReview, onPickStrategy, onExam, onSettings, onAbout,
 }: DashboardProps) {
   const items = useProgressStore((s) => s.items);
+  // 合格した章の数。認定試験のボタンに出す。
+  const examPassed = useExamStore((s) => Object.values(s.results).filter((r) => r.passed).length);
   const days = useProgressStore((s) => s.days);
   const streak = useProgressStore((s) => s.streak());
 
@@ -158,7 +161,7 @@ export function Dashboard({
             <button type="button" onClick={onExam}>
               <svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z" /><path d="M9 9h6" /></svg>
               <span className="l">認定試験</span>
-              <span className="s">準備中</span>
+              <span className="s">{examPassed > 0 ? `${examPassed}章 合格` : "章ごとに受験"}</span>
             </button>
             <button type="button" onClick={onSettings}>
               <svg viewBox="0 0 24 24">

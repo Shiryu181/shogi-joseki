@@ -1,0 +1,87 @@
+/* 認定試験。普段の学習とは別物だと分かるよう、ヒントの色面(金)は置かない。
+ * 合否だけは色で示す(合格=緑、不合格=赤)。 */
+
+.exam-wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 14px calc(20px + env(safe-area-inset-bottom, 0px));
+  gap: 10px;
+}
+.exam-head {
+  width: 430px; max-width: 100%;
+  display: flex; align-items: center; gap: 10px;
+}
+.exam-head .back {
+  background: none; border: none; color: var(--ink-soft);
+  font-family: var(--body); font-size: 13px; padding: 6px 2px; cursor: pointer;
+}
+.exam-title { font-family: var(--disp); font-size: 16px; font-weight: 600; }
+.exam-count { margin-left: auto; font-size: 13px; color: var(--ink-soft); }
+
+.exam-pad { width: 430px; max-width: 100%; }
+.exam-lead {
+  margin: 0 2px 12px; font-size: 12.5px; line-height: 1.8; color: var(--ink-soft);
+}
+.exam-lead b { color: var(--ink); }
+.exam-sec { font-size: 11.5px; color: var(--ink-soft); letter-spacing: 0.1em; margin: 16px 2px 7px; }
+
+.exam-card {
+  background: var(--card); border: 1px solid var(--line-2);
+  border-radius: 14px; padding: 2px 14px;
+}
+.exam-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 0; border-top: 1px solid var(--line);
+}
+.exam-row:first-child { border-top: none; }
+.exam-nm { flex: 1; min-width: 0; font-size: 13.5px; }
+.exam-nm small {
+  display: block; font-size: 11px; color: var(--ink-soft); margin-top: 3px; line-height: 1.5;
+}
+.exam-go {
+  flex: none; padding: 8px 14px; border: 1px solid var(--line-2);
+  border-radius: 9px; background: var(--card); color: var(--ink);
+  font-family: var(--body); font-size: 12.5px; cursor: pointer;
+}
+.exam-go.on { background: var(--brown); color: #fff; border-color: var(--brown); font-weight: 600; }
+.exam-go:disabled { color: var(--ink-faint); border-color: var(--line); cursor: default; }
+
+/* ── 受験中 ── */
+.exam-board { width: 430px; max-width: 100%; container-type: inline-size; }
+.exam-panel {
+  width: 430px; max-width: 100%;
+  background: var(--card); border: 1px solid var(--line-2);
+  border-radius: 14px; padding: 14px;
+}
+.exam-q { margin: 0; font-family: var(--disp); font-size: 16px; font-weight: 600; }
+.exam-note { margin: 5px 0 12px; font-size: 12px; color: var(--ink-soft); }
+.exam-skip {
+  width: 100%; padding: 11px; border: 1px solid var(--line-2); border-radius: 10px;
+  background: var(--card); color: var(--ink-soft);
+  font-family: var(--body); font-size: 13.5px; cursor: pointer;
+}
+
+/* ── 結果 ── */
+.exam-result {
+  background: var(--card); border: 1px solid var(--red);
+  border-radius: 14px; padding: 22px 16px 18px; text-align: center;
+}
+.exam-result.pass { border-color: var(--good); }
+.exam-verdict {
+  margin: 0; font-family: var(--disp); font-size: 20px; font-weight: 600; color: var(--red);
+}
+.exam-result.pass .exam-verdict { color: var(--good); }
+.exam-score { margin: 10px 0 0; font-family: var(--disp); font-size: 42px; font-weight: 600; line-height: 1; }
+.exam-score span { font-size: 14px; font-family: var(--body); color: var(--ink-soft); margin-left: 3px; }
+.exam-detail { margin: 8px 0 0; font-size: 13px; color: var(--ink-soft); }
+.exam-why {
+  margin: 14px 0 0; font-size: 12.5px; line-height: 1.8;
+  color: var(--ink); text-align: left;
+}
+.exam-btn {
+  width: 100%; margin-top: 16px; padding: 13px;
+  border: 1px solid var(--line-2); border-radius: 11px; background: var(--card);
+  font-family: var(--body); font-size: 15px; color: var(--ink); cursor: pointer;
+}

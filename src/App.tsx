@@ -7,6 +7,7 @@ import { About } from "./features/about/About";
 import { Review } from "./features/review/Review";
 import { Dashboard } from "./features/home/Dashboard";
 import { Settings } from "./features/settings/Settings";
+import { Exam } from "./features/exam/Exam";
 import { applyTheme, useSettingsStore } from "./store/settingsStore";
 
 import { loadBranchNavDemo, buildLearnPath } from "./domain/josekiLoader";
@@ -15,7 +16,7 @@ import type { HomeMode } from "./features/home/Home";
 import type { CardItem } from "./features/home/StrategyCard";
 import "./App.css";
 
-type Screen = "dashboard" | "home" | "side" | "learn" | "about" | "review" | "settings" | "devMenu" | "sandbox" | "branchDemo";
+type Screen = "dashboard" | "home" | "side" | "learn" | "about" | "review" | "settings" | "exam" | "devMenu" | "sandbox" | "branchDemo";
 
 /**
  * DESIGN.md §5 のユーザー導線。
@@ -105,7 +106,7 @@ function App() {
             onContinue={continueLearning}
             onReview={() => setScreen("review")}
             onPickStrategy={() => setScreen("home")}
-            onExam={() => undefined}
+            onExam={() => setScreen("exam")}
             onSettings={() => setScreen("settings")}
             onAbout={() => setScreen("about")}
           />
@@ -115,6 +116,9 @@ function App() {
         )}
         {screen === "review" && <Review courses={reviewCourses} onBack={() => setScreen("dashboard")} />}
         {screen === "settings" && <Settings onBack={() => setScreen("dashboard")} />}
+        {screen === "exam" && (
+          <Exam chapters={learningPath.chapters} onBack={() => setScreen("dashboard")} />
+        )}
 
         {screen === "side" && selectedCard && (
           <SidePick mode={homeMode} item={selectedCard} onBack={() => setScreen("home")} onPick={startPath} />
