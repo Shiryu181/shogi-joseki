@@ -50,6 +50,7 @@ import sankenbishaVsNakabishaAifuriRaw from "../data/joseki/sankenbisha-vs-nakab
 import nakabishaVsSankenbishaAifuriRaw from "../data/joseki/nakabisha-vs-sankenbisha--aifuri.json?raw";
 import sankenbishaVsMukaibishaAifuriRaw from "../data/joseki/sankenbisha-vs-mukaibisha--aifuri.json?raw";
 import nakabishaShoteRaw from "../data/joseki/nakabisha--shote.json?raw";
+import nakabishaShoteSenteRaw from "../data/joseki/nakabisha--shote-sente.json?raw";
 import nakabishaVsAnaguma7sujiRaw from "../data/joseki/nakabisha-vs-anaguma--7suji.json?raw";
 import nakabishaVsChokyusenRaw from "../data/joseki/nakabisha-vs-chokyusen--kaihi.json?raw";
 import nakabishaVsUfoginRaw from "../data/joseki/nakabisha-vs-ufogin--gote.json?raw";
@@ -720,6 +721,19 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "急戦",
     summary: "相手も振り飛車のとき。5筋の位を取って銀を繰り出し、美濃囲いから反撃する。",
     load: () => assertJosekiCourse(parseRaw(nakabishaVsSankenbishaAifuriRaw), "nakabisha-vs-sankenbisha--aifuri.json"),
+  },
+  {
+    id: "nakabisha--shote-sente",
+    strategyId: "gokigen",
+    opponentId: "ibisha-kyusen",
+    recommend: 1,
+    group: "出だしの選び方",
+    opponentLabel: "居飛車",
+    sideLabel: "先手",
+    label: "先手中飛車の出だし",
+    kind: "駒組み",
+    summary: "初手は▲5六歩。角道を開けてから飛車を振ると、角交換から△4五角で馬を作られる。",
+    load: () => assertJosekiCourse(parseRaw(nakabishaShoteSenteRaw), "nakabisha--shote-sente.json"),
   },
   {
     id: "nakabisha--shote",
