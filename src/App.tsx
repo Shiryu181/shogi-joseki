@@ -9,6 +9,8 @@ import { Dashboard } from "./features/home/Dashboard";
 import { Settings } from "./features/settings/Settings";
 import { Exam } from "./features/exam/Exam";
 import { applyTheme, useSettingsStore } from "./store/settingsStore";
+import { useLearningStore } from "./store/learningStore";
+import { STRATEGIES } from "./data/strategies";
 
 import { loadBranchNavDemo, buildLearnPath } from "./domain/josekiLoader";
 import type { LearnPath } from "./domain/josekiLoader";
@@ -44,13 +46,22 @@ function App() {
    * 復習の対象にするコース。いまは後手ゴキゲン中飛車の章だけ。
    * ホーム画面を作り直す際に、学習中の戦法から決める形へ変える。
    */
+  // いま学んでいる戦法と手番。戦法カードで手番を選ぶたびに保存される。
+  const learningId = useLearningStore((s) => s.strategyId);
+  const learningSide = useLearningStore((s) => s.side);
+  const selectLearning = useLearningStore((s) => s.select);
+  const learningName = useMemo(
+    () => STRATEGIES.find((s) => s.id === learningId)?.name ?? "中飛車",
+    [learningId],
+  );
+
   /**
-   * 学習中の戦法。いまは後手ゴキゲン中飛車に固定。
-   * 章の並びは学習画面と同じ学習パスから取る(ホームと学習で順番が食い違わないように)。
+   * 学習中の戦法の章。並びは学習画面と同じ学習パスから取る
+   * (ホームと学習で順番が食い違わないように)。
    */
   const learningPath = useMemo(
-    () => buildLearnPath("mine", "gokigen", "ゴキゲン中飛車", "gote"),
-    [],
+    () => buildLearnPath("mine", learningId, learningName, learningSide),
+    [learningId, learningName, learningSide],
   );
   const reviewCourses = useMemo(
     () => learningPath.chapters.map((c) => ({ course: c.course, label: c.entry.label })),
@@ -71,8 +82,9 @@ function App() {
 
   function startPath(side: "sente" | "gote") {
     if (!selectedCard) return;
-    const title = homeMode === "mine" ? selectedCard.name : `相手が${selectedCard.name}`;
-    setPath(buildLearnPath(homeMode, selectedCard.id, title, side));
+    // 選んだ戦法と手番を「学習中」として覚える。次にホームを開いたときはこれが出る。
+    selectLearning(selectedCard.id, side);
+    setPath(buildLearnPath(homeMode, selectedCard.id, selectedCard.name, side));
     setChapterIndex(0);
     setScreen("learn");
   }
@@ -101,8 +113,8 @@ function App() {
         {screen === "dashboard" && (
           <Dashboard
             chapters={learningPath.chapters}
-            strategyName="ゴキゲン中飛車"
-            sideLabel="後手"
+            strategyName={learningName}
+            sideLabel={learningSide === "sente" ? "先手" : "後手"}
             onContinue={continueLearning}
             onReview={() => setScreen("review")}
             onPickStrategy={() => setScreen("home")}

@@ -1,0 +1,171 @@
+/* 復習(間隔反復)の画面。
+ * 学習画面と同じ調子に揃える: 明朝＋平塗り＋細罫、色面は1パネルに1つだけ。
+ * 強調は装飾ではなく文字の大きさと太さで行う。 */
+
+.review-wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px 14px calc(18px + env(safe-area-inset-bottom, 0px));
+  gap: 10px;
+}
+
+.review-head {
+  width: 560px;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.review-head .back {
+  background: none;
+  border: none;
+  color: var(--ink-soft);
+  font-family: var(--body);
+  font-size: 13px;
+  padding: 6px 2px;
+  cursor: pointer;
+}
+/* 何問目か。進み具合が分かると最後までやりきりやすい。 */
+.review-count {
+  margin-left: auto;
+  font-family: var(--body);
+  font-size: 13px;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+}
+
+.review-board {
+  width: 560px;
+  max-width: 100%;
+  container-type: inline-size;
+}
+
+.review-panel {
+  width: 560px;
+  max-width: 100%;
+  background: var(--card);
+  border: 1px solid var(--line-2);
+  border-radius: 14px;
+  padding: 13px 14px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--ink);
+}
+
+/* どの章の問題か。文脈なしで出題するので、せめて出どころは示す。 */
+.review-chapter {
+  margin: 0 0 8px;
+  font-family: var(--body);
+  font-size: 11px;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+}
+
+/* ねらい。この画面で唯一の色面にする。 */
+.review-aim {
+  margin: 0;
+  background: var(--gold-soft);
+  border: 1px solid var(--line-2);
+  border-radius: 10px;
+  padding: 7px 11px 8px;
+  font-family: var(--disp);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+}
+.review-aim .review-label {
+  display: block;
+  margin: 0 0 1px;
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+}
+/* 急所。色面は足さず、ラベルの文字だけ強める。 */
+.review-aim.sharp .review-label {
+  color: var(--ink);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.review-result {
+  margin: 10px 0 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.review-result.ok { color: var(--ink); font-weight: 600; }
+.review-result.soft { color: var(--brown-ink); }
+.review-result.ng { color: var(--ink); }
+
+.review-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+.review-actions button {
+  flex: 1;
+  padding: 11px 12px;
+  border: 1px solid var(--line-2);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 14px;
+  cursor: pointer;
+}
+.review-btn {
+  background: var(--gold-soft) !important;
+  font-weight: 600;
+}
+
+/* 終わったあとの画面。 */
+.review-done {
+  width: 560px;
+  max-width: 100%;
+  background: var(--card);
+  border: 1px solid var(--line-2);
+  border-radius: 14px;
+  padding: 26px 18px 18px;
+  text-align: center;
+}
+.review-done-title {
+  margin: 0;
+  font-family: var(--disp);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.review-done-score {
+  margin: 14px 0 0;
+  font-family: var(--disp);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.review-done-note {
+  margin: 12px 0 0;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--ink-soft);
+  text-align: left;
+}
+.review-done-streak {
+  margin: 12px 0 0;
+  font-family: var(--disp);
+  font-size: 14px;
+  color: var(--ink);
+}
+.review-done .review-btn {
+  margin-top: 18px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--line-2);
+  border-radius: 10px;
+  font-family: var(--body);
+  font-size: 14px;
+  cursor: pointer;
+}
