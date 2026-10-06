@@ -51,7 +51,7 @@
                     "child": {
                       "id": "n3",
                       "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P6/PPNPPPPPP/1B5R1/L1SGKGSNL w - 1",
-                      "comment": null,
+                      "comment": "鬼殺しです。次の一手を間違えると序盤で潰されます。桂が6五へ跳んでくる前に、備えておく必要があります。",
                       "branches": [
                         {
                           "usi": "6a6b",
@@ -153,7 +153,7 @@
                                                   "child": {
                                                     "id": "n8",
                                                     "sfen": "lns1kgsnl/1r5b1/ppp1gp1pp/3p2p2/9/2P6/PP1PPPPPP/1B5R1/L1SGKGSNL b Pn 1",
-                                                    "comment": null,
+                                                    "comment": "鬼殺しを受け切りました。桂を取って駒得です(後手+463)。ここから先は『駒得を活かしてどう指すか』を学びます。手順は将棋ソフトの最善手で、出典はありません。",
                                                     "branches": [
                                                       {
                                                         "usi": "6i7h",
@@ -404,6 +404,62 @@
                                                                                                                                                     "sfen": "ln2k1snl/1r1s2g2/p1p1gp1pp/3p1bp2/7P1/2P3P2/PP1PPP2P/1BG2S1R1/L1SK1G1NL b Pnp 1",
                                                                                                                                                     "comment": "鬼殺しを受け切り、駒得を活かした駒組みまで進みました(後手+463)。まとめると、(1)▲7七桂には△6二金、(2)▲6五桂には△6四歩で桂を取る、(3)駒得したら無理をせず、飛車先を交換して持ち駒を増やす、の3つです。鬼殺しは受け方さえ知っていれば、むしろ有利になれる戦法です。",
                                                                                                                                                     "branches": []
+                                                                                                                                                  }
+                                                                                                                                                }
+                                                                                                                                              ]
+                                                                                                                                            }
+                                                                                                                                          }
+                                                                                                                                        ]
+                                                                                                                                      }
+                                                                                                                                    }
+                                                                                                                                  ]
+                                                                                                                                }
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                "usi": "6i6h",
+                                                                                                                                "kind": "deviation",
+                                                                                                                                "note": "相手が玉を動かしました。自然な手ですが、こちらの攻めのほうが速い局面です。",
+                                                                                                                                "punishNote": "持ち駒の桂を打ち込んで、攻めを一気に加速させます。",
+                                                                                                                                "child": {
+                                                                                                                                  "id": "d21",
+                                                                                                                                  "sfen": "ln2k1snl/3s2gb1/p1p1gp1pp/3p2p2/9/1rP3PP1/P2PPP2P/1BGK1S1R1/L1S2G1NL w 2Pnp 1",
+                                                                                                                                  "branches": [
+                                                                                                                                    {
+                                                                                                                                      "usi": "N*8g",
+                                                                                                                                      "kind": "main",
+                                                                                                                                      "note": "桂を8七へ打ち込みます。玉のすぐ近くです。",
+                                                                                                                                      "child": {
+                                                                                                                                        "id": "d21_1",
+                                                                                                                                        "sfen": "ln2k1snl/3s2gb1/p1p1gp1pp/3p2p2/9/1rP3PP1/Pn1PPP2P/1BGK1S1R1/L1S2G1NL b 2Pp 1",
+                                                                                                                                        "branches": [
+                                                                                                                                          {
+                                                                                                                                            "usi": "8h2b+",
+                                                                                                                                            "kind": "main",
+                                                                                                                                            "note": "相手は角を成って反撃してきます。",
+                                                                                                                                            "child": {
+                                                                                                                                              "id": "d21_2",
+                                                                                                                                              "sfen": "ln2k1snl/3s2g+B1/p1p1gp1pp/3p2p2/9/1rP3PP1/Pn1PPP2P/2GK1S1R1/L1S2G1NL w B2Pp 1",
+                                                                                                                                              "branches": [
+                                                                                                                                                {
+                                                                                                                                                  "usi": "3a2b",
+                                                                                                                                                  "kind": "main",
+                                                                                                                                                  "note": "銀で馬を取ります。",
+                                                                                                                                                  "child": {
+                                                                                                                                                    "id": "d21_3",
+                                                                                                                                                    "sfen": "ln2k2nl/3s2gs1/p1p1gp1pp/3p2p2/9/1rP3PP1/Pn1PPP2P/2GK1S1R1/L1S2G1NL b B2Pbp 1",
+                                                                                                                                                    "branches": [
+                                                                                                                                                      {
+                                                                                                                                                        "usi": "B*7g",
+                                                                                                                                                        "kind": "main",
+                                                                                                                                                        "note": "相手は角を打って受けます。",
+                                                                                                                                                        "child": {
+                                                                                                                                                          "id": "d21_4",
+                                                                                                                                                          "sfen": "ln2k2nl/3s2gs1/p1p1gp1pp/3p2p2/9/1rP3PP1/PnBPPP2P/2GK1S1R1/L1S2G1NL w 2Pbp 1",
+                                                                                                                                                          "comment": "角を交換したうえ、8七の桂が玉に迫っています。鬼殺しを受け切った時点で優勢でしたが、ここで緩めず攻め続けるのが勝ち方です。",
+                                                                                                                                                          "branches": []
+                                                                                                                                                        }
+                                                                                                                                                      }
+                                                                                                                                                    ]
                                                                                                                                                   }
                                                                                                                                                 }
                                                                                                                                               ]

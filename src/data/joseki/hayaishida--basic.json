@@ -98,7 +98,7 @@
                                 "child": {
                                   "id": "n5",
                                   "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/1p4p2/2P6/9/PP1PPPPPP/1BR6/LNSGKGSNL w - 1",
-                                  "comment": null,
+                                  "comment": "早石田の基本形です。相手が飛車先を交換しにくると、有名な王手飛車の筋があります。",
                                   "branches": [
                                     {
                                       "usi": "8d8e",
@@ -231,7 +231,7 @@
                                                                                             "child": {
                                                                                               "id": "n15",
                                                                                               "sfen": "ln1gkg1nl/1r5s1/p1sppp1pp/2R3p2/1p2B4/9/PP1PPPPPP/5K3/LNSG1GSNL w Pbp 1",
-                                                                                              "comment": null,
+                                                                                              "comment": "早石田の基本の攻めが決まりました。飛車と角が7筋に集中しています。相手が△6四銀なら▲同飛と取って攻めが続きます。なお、相手がここまで正しく受けた場合、将棋ソフトの評価は後手やや良し(先手-50〜-100)です。早石田は『相手が受け方を知らないと一気に優勢になるが、知っていると少し損』という奇襲寄りの戦法だと理解しておいてください。",
                                                                                               "branches": [
                                                                                                 {
                                                                                                   "usi": "B*6d",

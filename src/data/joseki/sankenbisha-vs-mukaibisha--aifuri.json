@@ -182,7 +182,7 @@
                                                                     "child": {
                                                                       "id": "n11",
                                                                       "sfen": "lnsg1gsnl/2k3rb1/pppppp1pp/9/6p2/2PP5/PPBSPPPPP/1R7/LN1GKGSNL w - 1",
-                                                                      "comment": null,
+                                                                      "comment": "先手向かい飛車 vs 後手三間飛車の基本図です。相手の飛車がこちらの玉側に来ているので、8筋の守りに気をつけながら囲います。",
                                                                       "branches": [
                                                                         {
                                                                           "usi": "7b8b",
@@ -370,7 +370,7 @@
                                                                                                                                       "child": {
                                                                                                                                         "id": "n22",
                                                                                                                                         "sfen": "ln1g3nl/1ks1g1rb1/ppppps1pp/5p3/6p2/2PP5/PPBSPPPPP/1R2GGKS1/LN5NL b - 1",
-                                                                                                                                        "comment": null,
+                                                                                                                                        "comment": "相振り飛車の基本形が完成しました。後手は三間飛車＋美濃囲い、先手は向かい飛車＋金無双です。ここから先は『3筋の歩交換』と『8筋の受け』という、相振り三間飛車の基本の手筋を実際に指しながら覚えます。手順は将棋ソフトの最善手で、出典はありません。",
                                                                                                                                         "branches": [
                                                                                                                                           {
                                                                                                                                             "usi": "7f7e",

@@ -669,6 +669,62 @@
                                                                                                                                                                         }
                                                                                                                                                                       ]
                                                                                                                                                                     }
+                                                                                                                                                                  },
+                                                                                                                                                                  {
+                                                                                                                                                                    "usi": "4i3h",
+                                                                                                                                                                    "kind": "deviation",
+                                                                                                                                                                    "note": "相手が金を上がって受けてきました。自然な受けに見えます。",
+                                                                                                                                                                    "punishNote": "受けが一手遅く、こちらの飛車が先に相手陣へ入れます。",
+                                                                                                                                                                    "child": {
+                                                                                                                                                                      "id": "d27",
+                                                                                                                                                                      "sfen": "lnsgkg1nl/5s1r1/pppp1p2p/4p1p2/5S3/2P6/PPNPPPP1P/4R1G2/L2GK2NL w 2B2Ps 1",
+                                                                                                                                                                      "branches": [
+                                                                                                                                                                        {
+                                                                                                                                                                          "usi": "2b2i+",
+                                                                                                                                                                          "kind": "main",
+                                                                                                                                                                          "note": "飛車を成り込んで桂を取ります。竜ができました。",
+                                                                                                                                                                          "child": {
+                                                                                                                                                                            "id": "d27_1",
+                                                                                                                                                                            "sfen": "lnsgkg1nl/5s3/pppp1p2p/4p1p2/5S3/2P6/PPNPPPP1P/4R1G2/L2GK2+rL b 2B2Psn 1",
+                                                                                                                                                                            "branches": [
+                                                                                                                                                                              {
+                                                                                                                                                                                "usi": "B*4i",
+                                                                                                                                                                                "kind": "main",
+                                                                                                                                                                                "note": "相手は角を打って竜を追います。",
+                                                                                                                                                                                "child": {
+                                                                                                                                                                                  "id": "d27_2",
+                                                                                                                                                                                  "sfen": "lnsgkg1nl/5s3/pppp1p2p/4p1p2/5S3/2P6/PPNPPPP1P/4R1G2/L2GKB1+rL w B2Psn 1",
+                                                                                                                                                                                  "branches": [
+                                                                                                                                                                                    {
+                                                                                                                                                                                      "usi": "2i1i",
+                                                                                                                                                                                      "kind": "main",
+                                                                                                                                                                                      "note": "竜を1九へ寄せて香も取ります。",
+                                                                                                                                                                                      "child": {
+                                                                                                                                                                                        "id": "d27_3",
+                                                                                                                                                                                        "sfen": "lnsgkg1nl/5s3/pppp1p2p/4p1p2/5S3/2P6/PPNPPPP1P/4R1G2/L2GKB2+r b B2Psnl 1",
+                                                                                                                                                                                        "branches": [
+                                                                                                                                                                                          {
+                                                                                                                                                                                            "usi": "B*2c",
+                                                                                                                                                                                            "kind": "main",
+                                                                                                                                                                                            "note": "相手は角を打って反撃してきます。",
+                                                                                                                                                                                            "child": {
+                                                                                                                                                                                              "id": "d27_4",
+                                                                                                                                                                                              "sfen": "lnsgkg1nl/5s3/pppp1p1Bp/4p1p2/5S3/2P6/PPNPPPP1P/4R1G2/L2GKB2+r w 2Psnl 1",
+                                                                                                                                                                                              "comment": "竜ができて桂と香も取りました。すでに優勢でしたが、ここで受け間違えると差がさらに開きます。勝っている将棋を落とさないための一手です。",
+                                                                                                                                                                                              "branches": []
+                                                                                                                                                                                            }
+                                                                                                                                                                                          }
+                                                                                                                                                                                        ]
+                                                                                                                                                                                      }
+                                                                                                                                                                                    }
+                                                                                                                                                                                  ]
+                                                                                                                                                                                }
+                                                                                                                                                                              }
+                                                                                                                                                                            ]
+                                                                                                                                                                          }
+                                                                                                                                                                        }
+                                                                                                                                                                      ]
+                                                                                                                                                                    }
                                                                                                                                                                   }
                                                                                                                                                                 ]
                                                                                                                                                               }

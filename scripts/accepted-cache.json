@@ -2,7 +2,7 @@
  "meta": {
   "ms": 2000,
   "tol": 100,
-  "updated": "2026-10-05"
+  "updated": "2026-10-06"
  },
  "positions": {
   "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b -": {
@@ -16000,6 +16000,52 @@
    ],
    "courses": [
     "nakabisha-vs-ureshino--gote"
+   ]
+  },
+  "lnsgkg1nl/5s1r1/pppp1p2p/4p1p2/5S3/2P6/PPNPPPP1P/4R1G2/L2GK2NL w 2B2Ps": {
+   "best": "2b2i+",
+   "cp": 1038,
+   "gap": 812,
+   "accepted": [
+    "2b2i+"
+   ],
+   "courses": [
+    "nakabisha-vs-ibisha--gokigen24"
+   ]
+  },
+  "lnsgkg1nl/5s3/pppp1p2p/4p1p2/5S3/2P6/PPNPPPP1P/4R1G2/L2GKB1+rL w B2Psn": {
+   "best": "2i1i",
+   "cp": 980,
+   "gap": 82,
+   "accepted": [
+    "2i1i",
+    "N*5e"
+   ],
+   "courses": [
+    "nakabisha-vs-ibisha--gokigen24"
+   ]
+  },
+  "ln2k1snl/3s2gb1/p1p1gp1pp/3p2p2/9/1rP3PP1/P2PPP2P/1BGK1S1R1/L1S2G1NL w 2Pnp": {
+   "best": "N*8g",
+   "cp": 857,
+   "gap": 147,
+   "accepted": [
+    "N*8g"
+   ],
+   "courses": [
+    "nakabisha-vs-onigoroshi--gote"
+   ]
+  },
+  "ln2k1snl/3s2g+B1/p1p1gp1pp/3p2p2/9/1rP3PP1/Pn1PPP2P/2GK1S1R1/L1S2G1NL w B2Pp": {
+   "best": "3a2b",
+   "cp": 818,
+   "gap": 54,
+   "accepted": [
+    "3a2b",
+    "3b2b"
+   ],
+   "courses": [
+    "nakabisha-vs-onigoroshi--gote"
    ]
   }
  }

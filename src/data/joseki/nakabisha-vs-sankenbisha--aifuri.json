@@ -147,7 +147,7 @@
                                                         "child": {
                                                           "id": "n9",
                                                           "sfen": "lnsgkgsnl/4r2b1/pppp1p1pp/6p2/4p4/2PP5/PP1SPPPPP/1BR6/LN1GKGSNL w - 1",
-                                                          "comment": null,
+                                                          "comment": "中飛車 vs 三間飛車の基本図です。相振り飛車では、相手の飛車がこちらの玉側(左)ではなく右側にいるので、囲いも攻めも対抗形とは違う考え方になります。",
                                                           "branches": [
                                                             {
                                                               "usi": "3a4b",
@@ -279,7 +279,7 @@
                                                                                                         "child": {
                                                                                                           "id": "n17",
                                                                                                           "sfen": "lnsgkg1nl/4r2b1/pppp1p1pp/6p2/2PPps3/2R6/PPNSPPPPP/1B7/L2GKGSNL w - 1",
-                                                                                                          "comment": null,
+                                                                                                          "comment": "相手の石田流が完成しました。こちらは銀が4五まで進出しています。ここから玉を囲います。",
                                                                                                           "branches": [
                                                                                                             {
                                                                                                               "usi": "5a6b",
@@ -444,7 +444,7 @@
                                                                                                                                                                     "child": {
                                                                                                                                                                       "id": "n27",
                                                                                                                                                                       "sfen": "ln1g1g1nl/1ks1r2b1/pppp1p1p1/6p1p/2PPps3/2R5P/PPNSPPPP1/1B2GGK2/L5SNL w - 1",
-                                                                                                                                                                      "comment": null,
+                                                                                                                                                                      "comment": "相振り飛車の基本形が完成しました。後手はゴキゲン中飛車＋美濃囲い、先手は石田流＋金無双です。ここから先は『相手が自然に指してきた場合の反撃の仕方』を、実際に指しながら覚えます。手順は将棋ソフトの最善手で、出典はありません。",
                                                                                                                                                                       "branches": [
                                                                                                                                                                         {
                                                                                                                                                                           "usi": "2b4d",
