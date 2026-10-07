@@ -2,7 +2,7 @@
  "meta": {
   "ms": 2000,
   "tol": 100,
-  "updated": "2026-10-06"
+  "updated": "2026-10-07"
  },
  "positions": {
   "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b -": {
@@ -16698,6 +16698,88 @@
    ],
    "courses": [
     "nakabisha-vs-sankenbisha--sente"
+   ]
+  },
+  "ln3gsnl/1r2gk1b1/p2pp2p1/2ps1pp1p/1p2P4/2P1S3P/PPBP1PPP1/4R1K2/LN1G1GSNL b -": {
+   "best": "6g6f",
+   "cp": -50,
+   "gap": 16,
+   "accepted": [
+    "6g6f",
+    "4g4f",
+    "7g5i",
+    "7g6h",
+    "3h2h",
+    "5h7h",
+    "3g3f",
+    "2g2f",
+    "9g9f",
+    "6i7h",
+    "7g9e",
+    "6i6h"
+   ],
+   "courses": [
+    "nakabisha-vs-chousoku--sente"
+   ]
+  },
+  "l4gsnl/1r2gk1b1/p1npp2p1/2ps1pp1p/1p2P4/2P1S3P/PPBP1PPP1/4R2K1/LN1G1GSNL b -": {
+   "best": "6g6f",
+   "cp": 111,
+   "gap": 78,
+   "accepted": [
+    "6g6f",
+    "4i4h",
+    "9g9f",
+    "3i3h",
+    "4i3h"
+   ],
+   "courses": [
+    "nakabisha-vs-chousoku--sente"
+   ]
+  },
+  "l4g1nl/1r2gksb1/p1npp2p1/2ps1pp1p/1p2P4/2PPS3P/PPB2PPP1/4R2K1/LN1G1GSNL b -": {
+   "best": "5h6h",
+   "cp": 56,
+   "gap": 8,
+   "accepted": [
+    "5h6h",
+    "4i3h",
+    "3i3h",
+    "4g4f",
+    "6i7h",
+    "4i4h",
+    "9g9f",
+    "3i4h",
+    "3g3f",
+    "9i9h",
+    "2g2f",
+    "5h5i"
+   ],
+   "courses": [
+    "nakabisha-vs-chousoku--sente"
+   ]
+  },
+  "l4g1nl/1r2gksb1/p1npp2p1/2ps1pp1p/4P4/1pPPS3P/PPB2PPP1/3R3K1/LN1G1GSNL b -": {
+   "best": "7g8f",
+   "cp": 67,
+   "gap": 11,
+   "accepted": [
+    "7g8f",
+    "8g8f"
+   ],
+   "courses": [
+    "nakabisha-vs-chousoku--sente"
+   ]
+  },
+  "l4gsnl/1r2gk1b1/p1npp2p1/2p2pp1p/1p1sP4/2PPS3P/PPB2PPP1/4R2K1/LN1G1GSNL b -": {
+   "best": "6f6e",
+   "cp": 875,
+   "gap": 284,
+   "accepted": [
+    "6f6e"
+   ],
+   "courses": [
+    "nakabisha-vs-chousoku--sente"
    ]
   }
  }

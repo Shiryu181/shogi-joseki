@@ -53,6 +53,7 @@ import nakabishaShoteRaw from "../data/joseki/nakabisha--shote.json?raw";
 import nakabishaShoteSenteRaw from "../data/joseki/nakabisha--shote-sente.json?raw";
 import nakabishaVsAnagumaSenteRaw from "../data/joseki/nakabisha-vs-anaguma--sente.json?raw";
 import nakabishaVsSankenbishaSenteRaw from "../data/joseki/nakabisha-vs-sankenbisha--sente.json?raw";
+import nakabishaVsChousokuSenteRaw from "../data/joseki/nakabisha-vs-chousoku--sente.json?raw";
 import nakabishaVsAnaguma7sujiRaw from "../data/joseki/nakabisha-vs-anaguma--7suji.json?raw";
 import nakabishaVsChokyusenRaw from "../data/joseki/nakabisha-vs-chokyusen--kaihi.json?raw";
 import nakabishaVsUfoginRaw from "../data/joseki/nakabisha-vs-ufogin--gote.json?raw";
@@ -723,6 +724,19 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "急戦",
     summary: "相手も振り飛車のとき。5筋の位を取って銀を繰り出し、美濃囲いから反撃する。",
     load: () => assertJosekiCourse(parseRaw(nakabishaVsSankenbishaAifuriRaw), "nakabisha-vs-sankenbisha--aifuri.json"),
+  },
+  {
+    id: "nakabisha-vs-chousoku--sente",
+    strategyId: "gokigen",
+    opponentId: "chousoku",
+    recommend: 2,
+    group: "基本と受け方",
+    opponentLabel: "超速",
+    sideLabel: "先手",
+    label: "超速は5六銀と6六歩で止める",
+    kind: "急戦",
+    summary: "超速の銀が6四へ来たら、5六銀で5五を支えたまま▲6六歩。△6五銀と突進してきたら銀がただで取れる。",
+    load: () => assertJosekiCourse(parseRaw(nakabishaVsChousokuSenteRaw), "nakabisha-vs-chousoku--sente.json"),
   },
   {
     id: "nakabisha-vs-sankenbisha--sente",
