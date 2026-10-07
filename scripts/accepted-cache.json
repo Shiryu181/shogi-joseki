@@ -16915,6 +16915,50 @@
    "courses": [
     "nakabisha-vs-anaguma--sente"
    ]
+  },
+  "ln3gsnl/1r1sgk1b1/p1pppp1pp/6p2/1p7/2P1P4/PPBP1PPPP/3SRK3/LN1G1GSNL b -": {
+   "best": "5h5i",
+   "cp": -82,
+   "gap": 0,
+   "accepted": [
+    "5h5i",
+    "6g6f",
+    "4h3h",
+    "1g1f",
+    "3i2h",
+    "9g9f",
+    "5f5e",
+    "6i7h",
+    "3g3f",
+    "7g2b+",
+    "7f7e",
+    "2g2f"
+   ],
+   "courses": [
+    "nakabisha-vs-anaguma--sente"
+   ]
+  },
+  "ln3gsnl/1r1sg1kb1/p1pppp1pp/6p2/1p7/2P1P4/PPBP1PPPP/3SR1K2/LN1G1GSNL b -": {
+   "best": "5f5e",
+   "cp": -38,
+   "gap": 2,
+   "accepted": [
+    "5f5e",
+    "1g1f",
+    "3h2h",
+    "4g4f",
+    "6g6f",
+    "4i4h",
+    "9g9f",
+    "5h5i",
+    "2g2f",
+    "3i2h",
+    "3g3f",
+    "3i4h"
+   ],
+   "courses": [
+    "nakabisha-vs-anaguma--sente"
+   ]
   }
  }
 }

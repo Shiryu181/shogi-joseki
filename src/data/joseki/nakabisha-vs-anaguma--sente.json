@@ -4,7 +4,7 @@
   "myStrategy": "nakabisha",
   "opponentStrategy": "ibisha",
   "mySide": "sente",
-  "source": "駒組み26手は、検証済みの後手コース nakabisha-vs-anaguma--7suji を手番入れ替えで機械変換したもの(scripts/mirror-course.mjs)。元コースの作戦は『ゴキゲン中飛車vs一直線穴熊』(shogi-joutatsu.com)『穴熊対策/46銀型』(note.com/bydriv)に準拠。27手目以降の仕掛けはエンジンで生成し、全38手を1手ずつ評価した(2026-10-07)。仕掛けた瞬間から先手+334、38手目で+536",
+  "source": "駒組み26手は、検証済みの後手コース nakabisha-vs-anaguma--7suji を手番入れ替えで機械変換したもの(scripts/mirror-course.mjs)。元コースの作戦は『ゴキゲン中飛車vs一直線穴熊』(shogi-joutatsu.com)『穴熊対策/46銀型』(note.com/bydriv)に準拠。ただし先手の11〜15手目は▲6八銀→▲3八玉→▲2八玉の順に入れ替えた(元は玉を囲ってから▲6八銀)。玉を先に囲って7九に銀が残ったままだと、△7七角成と角を交換されたとき▲同桂としか取り返せず大きく悪くなるため、角交換に備えて先に▲6八銀を入れる(Wikibooks『将棋/▲7六歩/△8四歩/▲5六歩』に「図の▲6八銀は、角交換に備える手」、『将棋/先手中飛車』に「△7七角成は▲同銀以下」とある。実測では6八銀・△7七角成の局面で▲同銀-83〜-98、▲同桂-174〜-207)。入れ替えても16手目後の局面は元と同一。27手目以降の仕掛けはエンジンで生成し、全38手を1手ずつ評価した(2026-10-07)。仕掛けた瞬間から先手+334、38手目で+536",
   "goalFormation": "3筋を突破して飛車を走らせ、相手の穴熊を正面から崩しにいく形。",
   "goalLabel": "3筋を破り、優勢になりました",
   "goalSfen": "ln3g1nk/1r1s3sl/p1ppp1gpp/5p1s1/1p1R4P/2P1P4/PPBP1P1P1/7K1/LN1G1GSNL b BPp 1",
@@ -169,10 +169,10 @@
                                                                 "sfen": "ln2kgsnl/1r1sg2b1/p1pppp1pp/6p2/1p7/2P1P4/PPBP1PPPP/4RK3/LNSG1GSNL b - 1",
                                                                 "branches": [
                                                                   {
-                                                                    "usi": "4h3h",
+                                                                    "usi": "7i6h",
                                                                     "kind": "main",
-                                                                    "note": "玉をさらに右へ運びます。",
-                                                                    "aim": "玉を戦場から遠い場所へ、もう一歩運びたい。",
+                                                                    "note": "左銀を6八へ。角交換に備えて、先に左銀を上げておきます。7九に銀が残ったままだと、△7七角成と角を交換されたとき、▲同桂としか取り返せません。6八に銀がいれば▲同銀で取り返せます。この銀はのちに5七→4六と運んで、3筋を攻める駒にもなります。",
+                                                                    "aim": "大駒を交換されても守りの駒で取り返せるよう、左側の駒を先に動かしておきたい。",
                                                                     "accepted": [
                                                                       "7i7h",
                                                                       "9g9f",
@@ -187,9 +187,24 @@
                                                                       "3i2h",
                                                                       "6i6h"
                                                                     ],
+                                                                    "demos": [
+                                                                      {
+                                                                        "title": "ここで角交換されても",
+                                                                        "usi": [
+                                                                          "2b7g+",
+                                                                          "6h7g",
+                                                                          "2a3c",
+                                                                          "4h3h",
+                                                                          "5a4b",
+                                                                          "5h8h"
+                                                                        ],
+                                                                        "text": "△7七角成と角を交換されても、▲同銀と取り返せます。6八に銀を上げておいたからです。以下△3三桂▲3八玉△4二玉▲8八飛と進んで、先手は少し悪いものの、普通に戦えます。同じ局面で▲同桂と取ると、△8六歩などで形を乱されます。実測では、▲同銀が先手-83〜-98(探索を変えて-58まで)、▲同桂が-174〜-207でした。桂で取るしかない形(7九に銀が残ったまま)にしないのが、この手を先に指す理由です。"
+                                                                      }
+                                                                    ],
                                                                     "child": {
                                                                       "id": "n11",
-                                                                      "sfen": "ln2kgsnl/1r1sg2b1/p1pppp1pp/6p2/1p7/2P1P4/PPBP1PPPP/4R1K2/LNSG1GSNL w - 1",
+                                                                      "sfen": "ln2kgsnl/1r1sg2b1/p1pppp1pp/6p2/1p7/2P1P4/PPBP1PPPP/3SRK3/LN1G1GSNL w - 1",
+                                                                      "comment": null,
                                                                       "branches": [
                                                                         {
                                                                           "usi": "5a4b",
@@ -197,30 +212,30 @@
                                                                           "note": "相手の玉も動きます。",
                                                                           "child": {
                                                                             "id": "n12",
-                                                                            "sfen": "ln3gsnl/1r1sgk1b1/p1pppp1pp/6p2/1p7/2P1P4/PPBP1PPPP/4R1K2/LNSG1GSNL b - 1",
+                                                                            "sfen": "ln3gsnl/1r1sgk1b1/p1pppp1pp/6p2/1p7/2P1P4/PPBP1PPPP/3SRK3/LN1G1GSNL b - 1",
                                                                             "branches": [
                                                                               {
-                                                                                "usi": "3h2h",
+                                                                                "usi": "4h3h",
                                                                                 "kind": "main",
-                                                                                "note": "玉が2八に入りました。",
-                                                                                "aim": "玉を囲いの定位置に収めて、守りを一区切りつけたい。",
+                                                                                "note": "玉をさらに右へ運びます。",
+                                                                                "aim": "玉を戦場から遠い場所へ、もう一歩運びたい。",
                                                                                 "accepted": [
-                                                                                  "5f5e",
-                                                                                  "7i7h",
+                                                                                  "5h5i",
                                                                                   "6g6f",
-                                                                                  "7i6h",
-                                                                                  "5h8h",
+                                                                                  "4h3h",
+                                                                                  "1g1f",
+                                                                                  "3i2h",
+                                                                                  "9g9f",
+                                                                                  "5f5e",
                                                                                   "6i7h",
-                                                                                  "5h7h",
-                                                                                  "6i6h",
-                                                                                  "5h6h",
-                                                                                  "7i8h",
+                                                                                  "3g3f",
                                                                                   "7g2b+",
-                                                                                  "6i5i"
+                                                                                  "7f7e",
+                                                                                  "2g2f"
                                                                                 ],
                                                                                 "child": {
                                                                                   "id": "n13",
-                                                                                  "sfen": "ln3gsnl/1r1sgk1b1/p1pppp1pp/6p2/1p7/2P1P4/PPBP1PPPP/4R2K1/LNSG1GSNL w - 1",
+                                                                                  "sfen": "ln3gsnl/1r1sgk1b1/p1pppp1pp/6p2/1p7/2P1P4/PPBP1PPPP/3SR1K2/LN1G1GSNL w - 1",
                                                                                   "branches": [
                                                                                     {
                                                                                       "usi": "4b3b",
@@ -228,22 +243,26 @@
                                                                                       "note": "相手の玉も囲いへ向かいます。",
                                                                                       "child": {
                                                                                         "id": "n14",
-                                                                                        "sfen": "ln3gsnl/1r1sg1kb1/p1pppp1pp/6p2/1p7/2P1P4/PPBP1PPPP/4R2K1/LNSG1GSNL b - 1",
+                                                                                        "sfen": "ln3gsnl/1r1sg1kb1/p1pppp1pp/6p2/1p7/2P1P4/PPBP1PPPP/3SR1K2/LN1G1GSNL b - 1",
                                                                                         "branches": [
                                                                                           {
-                                                                                            "usi": "7i6h",
+                                                                                            "usi": "3h2h",
                                                                                             "kind": "main",
-                                                                                            "note": "左銀を6八へ。この銀を5七→4六と運んで、3筋を攻めるのが狙いです。",
-                                                                                            "aim": "攻めに使う駒を、相手の守りが薄い方向へ運び始めたい。",
+                                                                                            "note": "玉が2八に入りました。",
+                                                                                            "aim": "玉を囲いの定位置に収めて、守りを一区切りつけたい。",
                                                                                             "accepted": [
-                                                                                              "7i6h",
                                                                                               "5f5e",
-                                                                                              "7i7h",
+                                                                                              "1g1f",
+                                                                                              "3h2h",
+                                                                                              "4g4f",
                                                                                               "6g6f",
-                                                                                              "5h8h",
-                                                                                              "7i8h",
-                                                                                              "6i7h",
-                                                                                              "6i6h"
+                                                                                              "4i4h",
+                                                                                              "9g9f",
+                                                                                              "5h5i",
+                                                                                              "2g2f",
+                                                                                              "3i2h",
+                                                                                              "3g3f",
+                                                                                              "3i4h"
                                                                                             ],
                                                                                             "child": {
                                                                                               "id": "n15",
