@@ -4,7 +4,7 @@
   "myStrategy": "nakabisha",
   "opponentStrategy": "ibisha",
   "mySide": "gote",
-  "source": "作戦は『ゴキゲン中飛車vs一直線穴熊』(shogi-joutatsu.com)『穴熊対策/46銀型ゴキゲン中飛車』(note.com/bydriv)に準拠。銀を6四へ運び、飛車を7二へ回して7筋を攻める。仕掛け(26手目)以降は先手にもエンジンの最善手を指させて検証した。43手すべてを1手ずつ評価済み(2026-10-05)",
+  "source": "作戦は『ゴキゲン中飛車vs一直線穴熊』(shogi-joutatsu.com)『穴熊対策/46銀型ゴキゲン中飛車』(note.com/bydriv)に準拠。銀を6四へ運び、飛車を7二へ回して7筋を攻める。仕掛け(26手目)以降は先手にもエンジンの最善手を指させて検証した。43手すべてを1手ずつ評価済み(2026-10-05)。ただし後手の10〜16手目は△4二銀→△6二玉→△7二玉→△8二玉の順に入れ替えた(元は玉を囲ってから△4二銀)。玉を先に囲って3一に銀が残ったままだと、▲3三角成と角を交換されたとき△同桂としか取り返せず大きく悪くなるため、角交換に備えて先に△4二銀を入れる(Wikibooks『将棋/▲7六歩/△8四歩/▲5六歩』に「図の▲6八銀は、角交換に備える手」とあり、後手ではその鏡の形)。実測では4二銀・▲3三角成の局面で△同銀が後手-127〜-142、△同桂が-282〜-334。入れ替えても16手目後の局面は元と同一。10〜16手目の評価は、元が12手目-241・14手目-217と振れていたのに対し、入れ替え後は-105〜-161に収まった(2026-10-08)",
   "goalFormation": "7筋を突破して銀を捌き、7六に歩の拠点を作った形。相手の穴熊は固いが、こちらは駒が働いている。",
   "goalLabel": "7筋を破り、互角以上に持ち込みました",
   "goalSfen": "lnsg1g1nl/k6r1/1p1p1pb1p/p3p1pp1/9/2p1P4/PP2BPP1P/LSPG3R1/KN1G3NL w Ss2p 1",
@@ -146,10 +146,10 @@
                                                           "sfen": "lnsgkgsnl/4r4/pppp1pbpp/4p1p2/7P1/2P6/PP1PPPP1P/1B2GS1R1/LNSGK2NL w - 1",
                                                           "branches": [
                                                             {
-                                                              "usi": "5a6b",
+                                                              "usi": "3a4b",
                                                               "kind": "main",
-                                                              "note": "玉を囲いへ向かわせます。",
-                                                              "aim": "玉を戦場から離れた場所へ運び始めたい。",
+                                                              "note": "左銀を4二へ。角交換に備えて、先に左銀を上げておきます。3一に銀が残ったままだと、▲3三角成と角を交換されたとき、△同桂としか取り返せません。4二に銀がいれば△同銀で取り返せます。この銀はのちに5三→6四と運んで、7筋を攻める駒にもなります。",
+                                                              "aim": "大駒を交換されても取り返せるよう、囲いに入る前に守りの駒を先に上げておきたい。",
                                                               "accepted": [
                                                                 "5d5e",
                                                                 "5a6b",
@@ -164,9 +164,24 @@
                                                                 "7a8b",
                                                                 "1c1d"
                                                               ],
+                                                              "demos": [
+                                                                {
+                                                                  "title": "ここで角交換されても",
+                                                                  "usi": [
+                                                                    "8h3c+",
+                                                                    "4b3c",
+                                                                    "5i6h",
+                                                                    "5a6b",
+                                                                    "4g4f",
+                                                                    "6b7b"
+                                                                  ],
+                                                                  "text": "▲3三角成と角を交換されても、△同銀と取り返せます。4二に銀を上げておいたからです。以下▲6八玉△6二玉▲4六歩△7二玉と進んで、後手は少し悪いものの、普通に戦えます。同じ局面で△同桂と取ると、▲2四歩から飛車先を破られて形を乱されます。実測では、△同銀が後手-127〜-142、△同桂が-282〜-334でした。桂で取るしかない形(3一に銀が残ったまま)にしないのが、この手を先に指す理由です。"
+                                                                }
+                                                              ],
                                                               "child": {
                                                                 "id": "n10",
-                                                                "sfen": "lnsg1gsnl/3kr4/pppp1pbpp/4p1p2/7P1/2P6/PP1PPPP1P/1B2GS1R1/LNSGK2NL b - 1",
+                                                                "sfen": "lnsgkg1nl/4rs3/pppp1pbpp/4p1p2/7P1/2P6/PP1PPPP1P/1B2GS1R1/LNSGK2NL b - 1",
+                                                                "comment": null,
                                                                 "branches": [
                                                                   {
                                                                     "usi": "5i6h",
@@ -174,28 +189,30 @@
                                                                     "note": "相手の玉も動きます。",
                                                                     "child": {
                                                                       "id": "n11",
-                                                                      "sfen": "lnsg1gsnl/3kr4/pppp1pbpp/4p1p2/7P1/2P6/PP1PPPP1P/1B1KGS1R1/LNSG3NL w - 1",
+                                                                      "sfen": "lnsgkg1nl/4rs3/pppp1pbpp/4p1p2/7P1/2P6/PP1PPPP1P/1B1KGS1R1/LNSG3NL w - 1",
                                                                       "branches": [
                                                                         {
-                                                                          "usi": "6b7b",
+                                                                          "usi": "5a6b",
                                                                           "kind": "main",
-                                                                          "note": "玉をさらに運びます。",
-                                                                          "aim": "玉を戦場から遠い場所へ、もう一歩運びたい。",
+                                                                          "note": "玉を囲いへ向かわせます。",
+                                                                          "aim": "玉を戦場から離れた場所へ運び始めたい。",
                                                                           "accepted": [
-                                                                            "5d5e",
-                                                                            "3a4b",
-                                                                            "3a3b",
                                                                             "4c4d",
-                                                                            "5b2b",
-                                                                            "3a2b",
-                                                                            "4a4b",
-                                                                            "3c8h+",
+                                                                            "5a6b",
                                                                             "4a3b",
-                                                                            "3c2b"
+                                                                            "9c9d",
+                                                                            "3c8h+",
+                                                                            "6a6b",
+                                                                            "4a3a",
+                                                                            "8c8d",
+                                                                            "7a8b",
+                                                                            "7c7d",
+                                                                            "7a7b",
+                                                                            "1c1d"
                                                                           ],
                                                                           "child": {
                                                                             "id": "n12",
-                                                                            "sfen": "lnsg1gsnl/2k1r4/pppp1pbpp/4p1p2/7P1/2P6/PP1PPPP1P/1B1KGS1R1/LNSG3NL b - 1",
+                                                                            "sfen": "lnsg1g1nl/3krs3/pppp1pbpp/4p1p2/7P1/2P6/PP1PPPP1P/1B1KGS1R1/LNSG3NL b - 1",
                                                                             "branches": [
                                                                               {
                                                                                 "usi": "6h7h",
@@ -203,29 +220,30 @@
                                                                                 "note": "相手の玉も寄ります。",
                                                                                 "child": {
                                                                                   "id": "n13",
-                                                                                  "sfen": "lnsg1gsnl/2k1r4/pppp1pbpp/4p1p2/7P1/2P6/PP1PPPP1P/1BK1GS1R1/LNSG3NL w - 1",
+                                                                                  "sfen": "lnsg1g1nl/3krs3/pppp1pbpp/4p1p2/7P1/2P6/PP1PPPP1P/1BK1GS1R1/LNSG3NL w - 1",
                                                                                   "branches": [
                                                                                     {
-                                                                                      "usi": "7b8b",
+                                                                                      "usi": "6b7b",
                                                                                       "kind": "main",
-                                                                                      "note": "玉が8二に入りました。相手の穴熊と向かい合う形になります。",
-                                                                                      "aim": "玉を囲いの定位置に収めて、守りを一区切りつけたい。",
+                                                                                      "note": "玉をさらに運びます。",
+                                                                                      "aim": "玉を戦場から遠い場所へ、もう一歩運びたい。",
                                                                                       "accepted": [
-                                                                                        "5d5e",
+                                                                                        "6b7b",
+                                                                                        "9c9d",
                                                                                         "4c4d",
-                                                                                        "3a4b",
-                                                                                        "3a3b",
-                                                                                        "5b2b",
-                                                                                        "3a2b",
+                                                                                        "1c1d",
+                                                                                        "5b5a",
+                                                                                        "7c7d",
                                                                                         "4a3b",
-                                                                                        "4a4b",
-                                                                                        "4a5a",
-                                                                                        "6a5a",
-                                                                                        "5b4b"
+                                                                                        "8c8d",
+                                                                                        "7a7b",
+                                                                                        "4a3a",
+                                                                                        "5d5e",
+                                                                                        "3c8h+"
                                                                                       ],
                                                                                       "child": {
                                                                                         "id": "n14",
-                                                                                        "sfen": "lnsg1gsnl/1k2r4/pppp1pbpp/4p1p2/7P1/2P6/PP1PPPP1P/1BK1GS1R1/LNSG3NL b - 1",
+                                                                                        "sfen": "lnsg1g1nl/2k1rs3/pppp1pbpp/4p1p2/7P1/2P6/PP1PPPP1P/1BK1GS1R1/LNSG3NL b - 1",
                                                                                         "branches": [
                                                                                           {
                                                                                             "usi": "8h7g",
@@ -233,26 +251,26 @@
                                                                                             "note": "相手が角を上がりました。穴熊に組む準備です。",
                                                                                             "child": {
                                                                                               "id": "n15",
-                                                                                              "sfen": "lnsg1gsnl/1k2r4/pppp1pbpp/4p1p2/7P1/2P6/PPBPPPP1P/2K1GS1R1/LNSG3NL w - 1",
+                                                                                              "sfen": "lnsg1g1nl/2k1rs3/pppp1pbpp/4p1p2/7P1/2P6/PPBPPPP1P/2K1GS1R1/LNSG3NL w - 1",
                                                                                               "branches": [
                                                                                                 {
-                                                                                                  "usi": "3a4b",
+                                                                                                  "usi": "7b8b",
                                                                                                   "kind": "main",
-                                                                                                  "note": "銀を上がります。この銀を5三→6四と運んで、7筋を攻めるのが狙いです。",
-                                                                                                  "aim": "攻めに使う駒を、相手の守りが薄い方向へ運び始めたい。",
+                                                                                                  "note": "玉が8二に入りました。相手の穴熊と向かい合う形になります。",
+                                                                                                  "aim": "玉を囲いの定位置に収めて、守りを一区切りつけたい。",
                                                                                                   "accepted": [
                                                                                                     "5d5e",
-                                                                                                    "3a3b",
-                                                                                                    "3a4b",
-                                                                                                    "5b2b",
-                                                                                                    "4a3b",
-                                                                                                    "4c4d",
-                                                                                                    "3a2b",
-                                                                                                    "4a4b",
-                                                                                                    "3c7g+",
-                                                                                                    "7a7b",
                                                                                                     "9c9d",
-                                                                                                    "4a5a"
+                                                                                                    "7b8b",
+                                                                                                    "4c4d",
+                                                                                                    "6c6d",
+                                                                                                    "7a6b",
+                                                                                                    "7c7d",
+                                                                                                    "5b5a",
+                                                                                                    "3c7g+",
+                                                                                                    "1c1d",
+                                                                                                    "4a3b",
+                                                                                                    "8c8d"
                                                                                                   ],
                                                                                                   "child": {
                                                                                                     "id": "n16",

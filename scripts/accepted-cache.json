@@ -16959,6 +16959,72 @@
    "courses": [
     "nakabisha-vs-anaguma--sente"
    ]
+  },
+  "lnsgkg1nl/4rs3/pppp1pbpp/4p1p2/7P1/2P6/PP1PPPP1P/1B1KGS1R1/LNSG3NL w -": {
+   "best": "4c4d",
+   "cp": -126,
+   "gap": 11,
+   "accepted": [
+    "4c4d",
+    "5a6b",
+    "4a3b",
+    "9c9d",
+    "3c8h+",
+    "6a6b",
+    "4a3a",
+    "8c8d",
+    "7a8b",
+    "7c7d",
+    "7a7b",
+    "1c1d"
+   ],
+   "courses": [
+    "nakabisha-vs-anaguma--7suji"
+   ]
+  },
+  "lnsg1g1nl/3krs3/pppp1pbpp/4p1p2/7P1/2P6/PP1PPPP1P/1BK1GS1R1/LNSG3NL w -": {
+   "best": "6b7b",
+   "cp": -105,
+   "gap": 16,
+   "accepted": [
+    "6b7b",
+    "9c9d",
+    "4c4d",
+    "1c1d",
+    "5b5a",
+    "7c7d",
+    "4a3b",
+    "8c8d",
+    "7a7b",
+    "4a3a",
+    "5d5e",
+    "3c8h+"
+   ],
+   "courses": [
+    "nakabisha-vs-anaguma--7suji"
+   ]
+  },
+  "lnsg1g1nl/2k1rs3/pppp1pbpp/4p1p2/7P1/2P6/PPBPPPP1P/2K1GS1R1/LNSG3NL w -": {
+   "best": "5d5e",
+   "cp": -96,
+   "gap": 4,
+   "accepted": [
+    "5d5e",
+    "9c9d",
+    "7b8b",
+    "4c4d",
+    "6c6d",
+    "7a6b",
+    "7c7d",
+    "5b5a",
+    "3c7g+",
+    "1c1d",
+    "4a3b",
+    "8c8d"
+   ],
+   "courses": [
+    "nakabisha-vs-anaguma--7suji"
+   ]
   }
  }
 }
