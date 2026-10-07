@@ -50,11 +50,25 @@ const unhook = () => { console.log = orig; };
   const sc = (t) => { const i = t.indexOf("score"); if (i < 0) return null;
     return t[i + 1] === "cp" ? Number(t[i + 2]) : (Number(t[i + 2]) > 0 ? 30000 : -30000); };
 
+  /**
+   * MultiPV で候補手を出す。エンジンが答えを返さないときは空配列を返し、
+   * 呼び出し側でその局面を飛ばす。以前はタイムアウトの例外がそのまま上がって
+   * 走査全体が落ちていた(1局面の失敗で、残りのコースが一切調べられなかった)。
+   */
   async function multi(sfen, pv, ms) {
     CAP.length = 0; hook();
-    send(`setoption name MultiPV value ${pv}`);
-    send(`position sfen ${sfen}`); send(`go movetime ${ms}`);
-    await waitFor((l) => l.startsWith("bestmove"), 90000);
+    try {
+      send(`setoption name MultiPV value ${pv}`);
+      send(`position sfen ${sfen}`); send(`go movetime ${ms}`);
+      await waitFor((l) => l.startsWith("bestmove"), ms + 30000);
+    } catch {
+      // 止めて同期を取り直す。それでも返らなければ、この局面は諦める。
+      send("stop");
+      try { await waitFor((l) => l.startsWith("bestmove"), 10000); } catch { /* 諦める */ }
+      unhook();
+      console.log(`  (エンジンが応答しなかったので飛ばしました: ${sfen})`);
+      return [];
+    }
     const lines = CAP.filter((l) => l.startsWith("info ") && l.includes(" multipv ") && l.includes(" pv "));
     unhook();
     const by = new Map();

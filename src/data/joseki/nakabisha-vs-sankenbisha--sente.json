@@ -316,6 +316,7 @@
                                                                                                                           "child": {
                                                                                                                             "id": "n20",
                                                                                                                             "sfen": "lnsgkg2l/7b1/pppp2npp/4spr2/6p2/2P6/PP1P1PPPP/1B2R4/LN1GKGSNL b Psp 1",
+                                                                                                                            "comment": null,
                                                                                                                             "branches": [
                                                                                                                               {
                                                                                                                                 "usi": "5h5d",
@@ -331,6 +332,62 @@
                                                                                                                                   "sfen": "lnsgkg2l/7b1/pppp2npp/4Rpr2/6p2/2P6/PP1P1PPPP/1B7/LN1GKGSNL w SPsp 1",
                                                                                                                                   "comment": "5筋を突破して、飛車が5四に出ました。中央の主導権はこちらにあります。\n\n【ここからの方針】玉はまだ5九のままなので、攻めを続けながら機会を見て囲います。相手の三間飛車は端から攻めてくるのが主力なので、端歩は受けずに中央の攻めを優先します。",
                                                                                                                                   "branches": []
+                                                                                                                                }
+                                                                                                                              }
+                                                                                                                            ]
+                                                                                                                          }
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                          "usi": "P*5g",
+                                                                                                                          "kind": "deviation",
+                                                                                                                          "note": "相手が銀を取り返さず、5七に歩を打って飛車の頭を叩いてきました。",
+                                                                                                                          "punishNote": "打たれた歩は飛車で取れます。そのあと銀を取り合っても、こちらが歩を一枚得しています。",
+                                                                                                                          "child": {
+                                                                                                                            "id": "d20",
+                                                                                                                            "sfen": "lnsgkg2l/7b1/pppp1snpp/4Spr2/6p2/2P6/PP1PpPPPP/1B2R4/LN1GKGSNL b P 1",
+                                                                                                                            "branches": [
+                                                                                                                              {
+                                                                                                                                "usi": "5h5g",
+                                                                                                                                "kind": "main",
+                                                                                                                                "note": "飛車で歩を取ります。",
+                                                                                                                                "child": {
+                                                                                                                                  "id": "d20_1",
+                                                                                                                                  "sfen": "lnsgkg2l/7b1/pppp1snpp/4Spr2/6p2/2P6/PP1PRPPPP/1B7/LN1GKGSNL w 2P 1",
+                                                                                                                                  "branches": [
+                                                                                                                                    {
+                                                                                                                                      "usi": "4c5d",
+                                                                                                                                      "kind": "main",
+                                                                                                                                      "note": "相手は銀で5四の銀を取ります。",
+                                                                                                                                      "child": {
+                                                                                                                                        "id": "d20_2",
+                                                                                                                                        "sfen": "lnsgkg2l/7b1/pppp2npp/4spr2/6p2/2P6/PP1PRPPPP/1B7/LN1GKGSNL b 2Ps 1",
+                                                                                                                                        "branches": [
+                                                                                                                                          {
+                                                                                                                                            "usi": "5g5d",
+                                                                                                                                            "kind": "main",
+                                                                                                                                            "note": "飛車で取り返します。",
+                                                                                                                                            "child": {
+                                                                                                                                              "id": "d20_3",
+                                                                                                                                              "sfen": "lnsgkg2l/7b1/pppp2npp/4Rpr2/6p2/2P6/PP1P1PPPP/1B7/LN1GKGSNL w S2Ps 1",
+                                                                                                                                              "branches": [
+                                                                                                                                                {
+                                                                                                                                                  "usi": "5a6b",
+                                                                                                                                                  "kind": "main",
+                                                                                                                                                  "note": "相手は玉を逃がします。",
+                                                                                                                                                  "child": {
+                                                                                                                                                    "id": "d20_4",
+                                                                                                                                                    "sfen": "lnsg1g2l/3k3b1/pppp2npp/4Rpr2/6p2/2P6/PP1P1PPPP/1B7/LN1GKGSNL b S2Ps 1",
+                                                                                                                                                    "comment": "銀を交換したうえ、打たれた歩を取って一枚得しました。飛車は5四に出て、中央を突破しています。",
+                                                                                                                                                    "branches": []
+                                                                                                                                                  }
+                                                                                                                                                }
+                                                                                                                                              ]
+                                                                                                                                            }
+                                                                                                                                          }
+                                                                                                                                        ]
+                                                                                                                                      }
+                                                                                                                                    }
+                                                                                                                                  ]
                                                                                                                                 }
                                                                                                                               }
                                                                                                                             ]

@@ -371,6 +371,7 @@
                                                                                                                                                   "child": {
                                                                                                                                                     "id": "n24",
                                                                                                                                                     "sfen": "ln3gsnk/1r1sg3l/p1ppp1bpp/5pp2/1p7/2P1PSP2/PPBP1P1PP/6RK1/LN1G1GSNL b - 1",
+                                                                                                                                                    "comment": null,
                                                                                                                                                     "branches": [
                                                                                                                                                       {
                                                                                                                                                         "usi": "3f3e",
@@ -437,6 +438,7 @@
                                                                                                                                                                                       "child": {
                                                                                                                                                                                         "id": "n30",
                                                                                                                                                                                         "sfen": "ln3g1nk/1r1sg2sl/p1ppp2pp/5pP2/1p4b2/2P1P4/PPBP1P1PP/6RK1/LN1G1GSNL b Ps 1",
+                                                                                                                                                                                        "comment": null,
                                                                                                                                                                                         "branches": [
                                                                                                                                                                                           {
                                                                                                                                                                                             "usi": "3h3e",
@@ -568,8 +570,131 @@
                                                                                                                                                                                           }
                                                                                                                                                                                         ]
                                                                                                                                                                                       }
+                                                                                                                                                                                    },
+                                                                                                                                                                                    {
+                                                                                                                                                                                      "usi": "4a3b",
+                                                                                                                                                                                      "kind": "deviation",
+                                                                                                                                                                                      "note": "相手が銀を取らずに、金を上がって受けてきました。",
+                                                                                                                                                                                      "punishNote": "2四の角が、3五の銀の前に取り残されています。",
+                                                                                                                                                                                      "child": {
+                                                                                                                                                                                        "id": "d30",
+                                                                                                                                                                                        "sfen": "ln5nk/1r1sg1gsl/p1ppp2pp/5pPb1/1p4S2/2P1P4/PPBP1P1PP/6RK1/LN1G1GSNL b P 1",
+                                                                                                                                                                                        "branches": [
+                                                                                                                                                                                          {
+                                                                                                                                                                                            "usi": "3e2d",
+                                                                                                                                                                                            "kind": "main",
+                                                                                                                                                                                            "note": "銀で角を取ります。",
+                                                                                                                                                                                            "child": {
+                                                                                                                                                                                              "id": "d30_1",
+                                                                                                                                                                                              "sfen": "ln5nk/1r1sg1gsl/p1ppp2pp/5pPS1/1p7/2P1P4/PPBP1P1PP/6RK1/LN1G1GSNL w BP 1",
+                                                                                                                                                                                              "branches": [
+                                                                                                                                                                                                {
+                                                                                                                                                                                                  "usi": "2c2d",
+                                                                                                                                                                                                  "kind": "main",
+                                                                                                                                                                                                  "note": "相手は歩で銀を取ります。",
+                                                                                                                                                                                                  "child": {
+                                                                                                                                                                                                    "id": "d30_2",
+                                                                                                                                                                                                    "sfen": "ln5nk/1r1sg1gsl/p1ppp3p/5pPp1/1p7/2P1P4/PPBP1P1PP/6RK1/LN1G1GSNL b BPs 1",
+                                                                                                                                                                                                    "branches": [
+                                                                                                                                                                                                      {
+                                                                                                                                                                                                        "usi": "7g4d",
+                                                                                                                                                                                                        "kind": "main",
+                                                                                                                                                                                                        "note": "角で4四の歩を取ります。盤上の角と、持ち駒の角の2枚が使える形です。",
+                                                                                                                                                                                                        "child": {
+                                                                                                                                                                                                          "id": "d30_3",
+                                                                                                                                                                                                          "sfen": "ln5nk/1r1sg1gsl/p1ppp3p/5BPp1/1p7/2P1P4/PP1P1P1PP/6RK1/LN1G1GSNL w B2Ps 1",
+                                                                                                                                                                                                          "branches": [
+                                                                                                                                                                                                            {
+                                                                                                                                                                                                              "usi": "6b5a",
+                                                                                                                                                                                                              "kind": "main",
+                                                                                                                                                                                                              "note": "相手は銀を引いて守ります。",
+                                                                                                                                                                                                              "child": {
+                                                                                                                                                                                                                "id": "d30_4",
+                                                                                                                                                                                                                "sfen": "ln2s2nk/1r2g1gsl/p1ppp3p/5BPp1/1p7/2P1P4/PP1P1P1PP/6RK1/LN1G1GSNL b B2Ps 1",
+                                                                                                                                                                                                                "comment": "銀と角の交換で駒得しました。角を2枚使えるので、穴熊を攻める手段が増えています。",
+                                                                                                                                                                                                                "branches": []
+                                                                                                                                                                                                              }
+                                                                                                                                                                                                            }
+                                                                                                                                                                                                          ]
+                                                                                                                                                                                                        }
+                                                                                                                                                                                                      }
+                                                                                                                                                                                                    ]
+                                                                                                                                                                                                  }
+                                                                                                                                                                                                }
+                                                                                                                                                                                              ]
+                                                                                                                                                                                            }
+                                                                                                                                                                                          }
+                                                                                                                                                                                        ]
+                                                                                                                                                                                      }
                                                                                                                                                                                     }
                                                                                                                                                                                   ]
+                                                                                                                                                                                }
+                                                                                                                                                                              }
+                                                                                                                                                                            ]
+                                                                                                                                                                          }
+                                                                                                                                                                        }
+                                                                                                                                                                      ]
+                                                                                                                                                                    }
+                                                                                                                                                                  }
+                                                                                                                                                                ]
+                                                                                                                                                              }
+                                                                                                                                                            }
+                                                                                                                                                          ]
+                                                                                                                                                        }
+                                                                                                                                                      }
+                                                                                                                                                    ]
+                                                                                                                                                  }
+                                                                                                                                                },
+                                                                                                                                                {
+                                                                                                                                                  "usi": "6c6d",
+                                                                                                                                                  "kind": "deviation",
+                                                                                                                                                  "note": "相手が6四に歩を突きました。4四に歩を突いて角の筋を止める手を省いています。",
+                                                                                                                                                  "punishNote": "4四に歩が無いので、こちらの角が3三の角まで通っています。角を交換すると3筋の攻めが進みます。",
+                                                                                                                                                  "child": {
+                                                                                                                                                    "id": "d24",
+                                                                                                                                                    "sfen": "ln3gsnk/1r1sg3l/p1p1ppbpp/3p2p2/1p7/2P1PSP2/PPBP1P1PP/6RK1/LN1G1GSNL b - 1",
+                                                                                                                                                    "branches": [
+                                                                                                                                                      {
+                                                                                                                                                        "usi": "7g3c+",
+                                                                                                                                                        "kind": "main",
+                                                                                                                                                        "note": "角を交換します。4四に歩が無いので、角の筋が3三まで通っています。",
+                                                                                                                                                        "child": {
+                                                                                                                                                          "id": "d24_1",
+                                                                                                                                                          "sfen": "ln3gsnk/1r1sg3l/p1p1pp+Bpp/3p2p2/1p7/2P1PSP2/PP1P1P1PP/6RK1/LN1G1GSNL w B 1",
+                                                                                                                                                          "branches": [
+                                                                                                                                                            {
+                                                                                                                                                              "usi": "2a3c",
+                                                                                                                                                              "kind": "main",
+                                                                                                                                                              "note": "相手は桂で取り返します。",
+                                                                                                                                                              "child": {
+                                                                                                                                                                "id": "d24_2",
+                                                                                                                                                                "sfen": "ln3gs1k/1r1sg3l/p1p1ppnpp/3p2p2/1p7/2P1PSP2/PP1P1P1PP/6RK1/LN1G1GSNL b Bb 1",
+                                                                                                                                                                "branches": [
+                                                                                                                                                                  {
+                                                                                                                                                                    "usi": "3f3e",
+                                                                                                                                                                    "kind": "main",
+                                                                                                                                                                    "note": "3筋の歩を突いて攻めます。",
+                                                                                                                                                                    "child": {
+                                                                                                                                                                      "id": "d24_3",
+                                                                                                                                                                      "sfen": "ln3gs1k/1r1sg3l/p1p1ppnpp/3p2p2/1p4P2/2P1PS3/PP1P1P1PP/6RK1/LN1G1GSNL w Bb 1",
+                                                                                                                                                                      "branches": [
+                                                                                                                                                                        {
+                                                                                                                                                                          "usi": "3d3e",
+                                                                                                                                                                          "kind": "main",
+                                                                                                                                                                          "note": "相手は歩で取ります。",
+                                                                                                                                                                          "child": {
+                                                                                                                                                                            "id": "d24_4",
+                                                                                                                                                                            "sfen": "ln3gs1k/1r1sg3l/p1p1ppnpp/3p5/1p4p2/2P1PS3/PP1P1P1PP/6RK1/LN1G1GSNL b Bbp 1",
+                                                                                                                                                                            "branches": [
+                                                                                                                                                                              {
+                                                                                                                                                                                "usi": "4f3e",
+                                                                                                                                                                                "kind": "main",
+                                                                                                                                                                                "note": "銀で取り返します。",
+                                                                                                                                                                                "child": {
+                                                                                                                                                                                  "id": "d24_5",
+                                                                                                                                                                                  "sfen": "ln3gs1k/1r1sg3l/p1p1ppnpp/3p5/1p4S2/2P1P4/PP1P1P1PP/6RK1/LN1G1GSNL w BPbp 1",
+                                                                                                                                                                                  "comment": "角を持ち駒にしたうえで、銀と飛車が3筋に揃いました。本線で相手が△4四歩と突いたのは、この角交換を防ぐためです。",
+                                                                                                                                                                                  "branches": []
                                                                                                                                                                                 }
                                                                                                                                                                               }
                                                                                                                                                                             ]
