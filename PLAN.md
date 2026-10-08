@@ -657,4 +657,4 @@ bydriv の推奨と独立に一致した。
 | `analyze-critical.cjs` | 「必ず指すべき手」が存在するかを調べる |
 | `demo-probe.cjs` | 盤上シミュレーション(demos)の素材を探す |
 | `coverage.mjs` / `plan.mjs` | 戦法×戦法のカバレッジ行列 |
-| `build-joseki.mjs` | `courses.mjs` から `src/data/joseki/*.json` を生成 |
+| `build-joseki.mjs` | `courses.mjs` から `src/data/joseki/*.json` を生成。章のデータは `scripts/courses/<コースID>.mjs`(1ファイル=1コース)、手の書き方 `m()`/`d()` は `scripts/courses/_helpers.mjs`。`courses.mjs` は import して並べ、生成の流れ(COURSES → SWAPPED → USI → ペア検査 → 警告)だけを持つ |
