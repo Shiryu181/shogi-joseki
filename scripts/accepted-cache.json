@@ -2,7 +2,7 @@
  "meta": {
   "ms": 2000,
   "tol": 100,
-  "updated": "2026-10-07"
+  "updated": "2026-10-08"
  },
  "positions": {
   "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b -": {
@@ -17179,6 +17179,72 @@
    ],
    "courses": [
     "nakabisha-vs-anaguma--sente"
+   ]
+  },
+  "ln3g1nk/1r1sg2sl/p1ppppbpp/6p2/1p2PS3/2P6/PPBP1PPPP/4R2K1/LN1G1GSNL b -": {
+   "best": "4e3d",
+   "cp": 183,
+   "gap": 43,
+   "accepted": [
+    "4e3d",
+    "1i1h",
+    "1g1f",
+    "6i6h",
+    "7g6f",
+    "2g2f",
+    "5h5f",
+    "4g4f",
+    "3i3h",
+    "7g5i",
+    "4i4h",
+    "5h5i"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln2bg1nk/1r1sg2sl/p1pppp1pp/6S2/1p2P4/2P6/PPBP1PPPP/4R2K1/LN1G1GSNL b P": {
+   "best": "1g1f",
+   "cp": 153,
+   "gap": 0,
+   "accepted": [
+    "1g1f",
+    "4i3h",
+    "6i5i",
+    "4g4f",
+    "3d4e",
+    "3i3h",
+    "9g9f",
+    "6g6f",
+    "1i1h",
+    "6i7h",
+    "6i6h",
+    "5h5f"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3gsnk/1r1sg2bl/p1pppp1pp/9/1p2PSp2/2P6/PPBP1PPPP/2G1R2K1/LN3GSNL b -": {
+   "best": "3i3h",
+   "cp": 92,
+   "gap": 12,
+   "accepted": [
+    "3i3h",
+    "1g1f",
+    "7g6f",
+    "7h7i",
+    "4g4f",
+    "7g6h",
+    "5h5i",
+    "3g3f",
+    "9g9f",
+    "4i3h",
+    "5h5f",
+    "7h6h"
+   ],
+   "courses": [
+    "_lab"
    ]
   }
  }
