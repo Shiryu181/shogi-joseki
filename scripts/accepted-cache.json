@@ -17246,6 +17246,640 @@
    "courses": [
     "_lab"
    ]
+  },
+  "lnsg1g1nl/1k2rs3/pppp1pbpp/6p2/4p2P1/P1P6/1PBPPPP1P/1K2GS1R1/LNSG3NL w -": {
+   "best": "9c9d",
+   "cp": -100,
+   "gap": 1,
+   "accepted": [
+    "9c9d",
+    "4b5c",
+    "7c7d",
+    "9a9b",
+    "6c6d",
+    "7a7b",
+    "6a7b",
+    "8c8d",
+    "4c4d",
+    "4a3b",
+    "1c1d",
+    "6a6b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg1g1nl/1k2rs3/1ppp1pbpp/p5p2/4p2P1/P1PP5/1PB1PPP1P/1K2GS1R1/LNSG3NL w -": {
+   "best": "4c4d",
+   "cp": -106,
+   "gap": 5,
+   "accepted": [
+    "4c4d",
+    "4b5c",
+    "6c6d",
+    "7a7b",
+    "4a3b",
+    "6a7b",
+    "8c8d",
+    "7c7d",
+    "1c1d",
+    "6a6b",
+    "9a9b",
+    "7a6b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg1g1nl/1k2rs3/1ppp2bpp/p4pp2/4p2P1/P1PP5/1PBGPPP1P/1K3S1R1/LNSG3NL w -": {
+   "best": "4b4c",
+   "cp": -77,
+   "gap": 0,
+   "accepted": [
+    "4b4c",
+    "7a7b",
+    "6c6d",
+    "4d4e",
+    "4b5c",
+    "6a7b",
+    "8c8d",
+    "7c7d",
+    "7a6b",
+    "6a6b",
+    "4a3b",
+    "1c1d"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg1g1nl/1k2r4/1ppp1sbpp/p4pp2/4p2P1/P1PP2P2/1PBGPP2P/1K3S1R1/LNSG3NL w -": {
+   "best": "7a7b",
+   "cp": -73,
+   "gap": 15,
+   "accepted": [
+    "7a7b",
+    "6a7b",
+    "4d4e",
+    "4c5d",
+    "7c7d",
+    "6a6b",
+    "3c5a",
+    "8c8d",
+    "7a6b",
+    "4a3b",
+    "4a4b",
+    "1c1d"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln1g1g1nl/1ks1r4/1ppp1sbpp/p4pp2/4p2P1/P1PP1PP2/1PBGP3P/1K3S1R1/LNSG3NL w -": {
+   "best": "7c7d",
+   "cp": -128,
+   "gap": 0,
+   "accepted": [
+    "7c7d",
+    "8c8d",
+    "4a4b",
+    "6a6b",
+    "6c6d",
+    "4c5d",
+    "6a7a",
+    "1c1d",
+    "5b5a",
+    "4a3b",
+    "3c5a",
+    "1a1b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln1g1g1nl/1ks1r4/1p1p1sbpp/p1p2pp2/4p2P1/P1PP1PP1P/1PBGP4/1K3S1R1/LNSG3NL w -": {
+   "best": "4a4b",
+   "cp": -115,
+   "gap": 0,
+   "accepted": [
+    "4a4b",
+    "6c6d",
+    "4c5d",
+    "8c8d",
+    "7b7c",
+    "5b5a",
+    "1c1d",
+    "4a3b",
+    "9a9b",
+    "6a6b",
+    "6a7a",
+    "3c4b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln1g3nl/1ks1rg3/1p1p1sbpp/p1p2pp2/4p2P1/P1PP1PP1P/1PBGPS3/1K5R1/LNSG3NL w -": {
+   "best": "6c6d",
+   "cp": -105,
+   "gap": 0,
+   "accepted": [
+    "6c6d",
+    "4b5c",
+    "8a7c",
+    "8c8d",
+    "4c5d",
+    "1c1d",
+    "6a6b",
+    "5b5a",
+    "1a1b",
+    "4b3b",
+    "7b7c",
+    "6a7a"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln1g3nl/1ks1rg3/1p3sbpp/p1pp1pp2/4p2P1/P1PP1PP1P/1PBGPS3/1K2R4/LNSG3NL w -": {
+   "best": "4b5c",
+   "cp": -92,
+   "gap": 5,
+   "accepted": [
+    "4b5c",
+    "4c5d",
+    "8a7c",
+    "1c1d",
+    "5b5a",
+    "3c2b",
+    "6a6b",
+    "4d4e",
+    "8c8d",
+    "6d6e",
+    "7b6c"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln1g3nl/1ks1r4/1p2gsbpp/p1pp1pp2/4p2P1/P1PP1PP1P/1PBGPS3/1KS1R4/LN1G3NL w -": {
+   "best": "8a7c",
+   "cp": -92,
+   "gap": 0,
+   "accepted": [
+    "8a7c",
+    "5c6c",
+    "5b2b",
+    "7b6c",
+    "4d4e",
+    "5c5d",
+    "8c8d",
+    "1c1d",
+    "5b5a",
+    "3c2b",
+    "6a6b",
+    "1a1b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "l2g3nl/1ks1r4/1pn1gsbpp/p1pp1pp2/4p2P1/P1PPPPP1P/1PBG1S3/1KS1R4/LN1G3NL w -": {
+   "best": "5e5f",
+   "cp": -36,
+   "gap": 111,
+   "accepted": [
+    "5e5f"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "l2g3nl/1ks1r4/1pn1gsbpp/p1pp1pp2/7P1/P1PPSPP1P/1PBG5/1KS1R4/LN1G3NL w Pp": {
+   "best": "5c6c",
+   "cp": -57,
+   "gap": 68,
+   "accepted": [
+    "5c6c",
+    "5b5a",
+    "3c2b",
+    "1a1b",
+    "8c8d",
+    "1c1d",
+    "6a6b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg1g1nl/1k2rs3/pppp1pbpp/6p2/4p2P1/2P6/PPBPPPP1P/LK2GS1R1/1NSG3NL w -": {
+   "best": "4b5c",
+   "cp": -2,
+   "gap": 0,
+   "accepted": [
+    "4b5c",
+    "9c9d",
+    "7c7d",
+    "6c6d",
+    "1c1d",
+    "7a7b",
+    "8c8d",
+    "6a6b",
+    "4c4d",
+    "6a7b",
+    "4a3b",
+    "5b5a"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg1g1nl/1k2r4/ppppspbpp/6p2/4p2P1/2P6/PPBPPPP1P/L3GS1R1/KNSG3NL w -": {
+   "best": "7a6b",
+   "cp": -41,
+   "gap": 3,
+   "accepted": [
+    "7a6b",
+    "6c6d",
+    "5c5d",
+    "7c7d",
+    "4c4d",
+    "9c9d",
+    "5c6d",
+    "5b7b",
+    "9a9b",
+    "6a7b",
+    "6a6b",
+    "7a7b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln1g1g1nl/1k1sr4/ppppspbpp/6p2/4p2P1/2PP5/PPB1PPP1P/L3GS1R1/KNSG3NL w -": {
+   "best": "5b4b",
+   "cp": -100,
+   "gap": 6,
+   "accepted": [
+    "5b4b",
+    "5c5d",
+    "9c9d",
+    "6a7b",
+    "6c6d",
+    "4a5a",
+    "1c1d",
+    "6a7a",
+    "7c7d",
+    "5c4d",
+    "4a3b",
+    "4c4d"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln1g1g1nl/1k1s1r3/ppppspbpp/6p2/4p2P1/2PP5/PPB1PPP1P/LS2GS1R1/KN1G3NL w -": {
+   "best": "9c9d",
+   "cp": -116,
+   "gap": 25,
+   "accepted": [
+    "9c9d",
+    "6c6d",
+    "4c4d",
+    "1a1b",
+    "7c7d",
+    "6a7b",
+    "1c1d",
+    "5c5d",
+    "4a5a",
+    "6a7a",
+    "6b7a",
+    "8c8d"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln1g1g1nl/1k1s1r3/1pppspbpp/p5p2/4p2P1/P1PP5/1PB1PPP1P/LS2GS1R1/KN1G3NL w -": {
+   "best": "4c4d",
+   "cp": -131,
+   "gap": 4,
+   "accepted": [
+    "4c4d",
+    "6a7b",
+    "6c6d",
+    "5c5d",
+    "6a7a",
+    "1c1d",
+    "4b5b",
+    "4a5b",
+    "8c8d",
+    "4b3b",
+    "4a3b",
+    "7c7d"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln1g1g1nl/1k1s1r3/1ppps1bpp/p4pp2/4p2P1/P1PP2P2/1PB1PP2P/LS2GS1R1/KN1G3NL w -": {
+   "best": "4d4e",
+   "cp": -162,
+   "gap": 0,
+   "accepted": [
+    "4d4e",
+    "6a7b",
+    "5c6d",
+    "7c7d",
+    "6c6d",
+    "6b7a",
+    "4a5a",
+    "4a5b",
+    "4a3b",
+    "1c1d",
+    "6a7a",
+    "8c8d"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln1g1g1nl/1k1s1r3/1ppps1bpp/p5p2/4pp1P1/P1PP2P2/1PBGPP2P/LS3S1R1/KN1G3NL w -": {
+   "best": "6c6d",
+   "cp": -156,
+   "gap": 0,
+   "accepted": [
+    "6c6d",
+    "6b7a",
+    "5c6d",
+    "6a7a",
+    "5c5d",
+    "6a7b",
+    "1c1d",
+    "4a3b",
+    "4e4f",
+    "4a5b",
+    "7c7d",
+    "1a1b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln1g1g1nl/1k1s1r3/1pp1s1bpp/p2p2p2/4pp1P1/P1PPP1P2/1PBG1P2P/LS3S1R1/KN1G3NL w -": {
+   "best": "5e5f",
+   "cp": -166,
+   "gap": 14,
+   "accepted": [
+    "5e5f",
+    "4e4f",
+    "6a7b",
+    "4a3b",
+    "5c4d",
+    "6a7a",
+    "4a5a",
+    "5c5d",
+    "1c1d",
+    "8c8d",
+    "7c7d",
+    "4b4c"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln1g1g1nl/1k1s1r3/1pp1s1bpp/p2p2pP1/5p3/P1PPp1P2/1PBG1P2P/LS3S1R1/KN1G3NL w p": {
+   "best": "2c2d",
+   "cp": -134,
+   "gap": 106,
+   "accepted": [
+    "2c2d"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln1g1g1nl/1k1s1r3/1pp1s1b1p/p2p2pp1/5p3/P1PPp1P2/1PBG1P2P/LSG2S1R1/KN5NL w 2p": {
+   "best": "5c5d",
+   "cp": -124,
+   "gap": 4,
+   "accepted": [
+    "5c5d",
+    "6a7b",
+    "5c4d",
+    "4a5a",
+    "4e4f",
+    "4b5b",
+    "6a7a",
+    "4a5b",
+    "4a3b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln1g1g1nl/1k1s1r3/1pp3b1p/p2ps1pp1/5p3/P1PPG1P2/1PB2P2P/LSG2S1R1/KN5NL w P2p": {
+   "best": "P*5e",
+   "cp": -146,
+   "gap": 0,
+   "accepted": [
+    "P*5e",
+    "6a7b",
+    "1c1d",
+    "4a5b",
+    "6a7a",
+    "4a5a",
+    "4a3b",
+    "2d2e",
+    "7c7d",
+    "4b5b",
+    "5d5e",
+    "6b6c"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg1g1nl/1k2r4/pppp1pbpp/3s2p2/4p2P1/2PP5/PPB1PPP1P/L3GS1R1/KNSG3NL w -": {
+   "best": "6d5c",
+   "cp": -73,
+   "gap": 14,
+   "accepted": [
+    "6d5c",
+    "7c7d",
+    "4c4d",
+    "8c8d",
+    "6a7b",
+    "3d3e",
+    "5b4b",
+    "9c9d",
+    "1c1d",
+    "7a6b",
+    "5b2b",
+    "5b7b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg1g1nl/1kr6/pppp1pbpp/3s2p2/4p2P1/2PP5/PPB1PPP1P/LS2GS1R1/KN1G3NL w -": {
+   "best": "7c7d",
+   "cp": -47,
+   "gap": 14,
+   "accepted": [
+    "7c7d",
+    "9c9d",
+    "1c1d",
+    "8c8d",
+    "6a6b",
+    "4a5a"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg1g1nl/1kr6/pp1p1pbpp/2ps2p2/3Pp2P1/2P6/PPB1PPP1P/LS2GS1R1/KN1G3NL w -": {
+   "best": "6d6e",
+   "cp": -63,
+   "gap": 140,
+   "accepted": [
+    "6d6e"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg1g1nl/1kr6/pp1p1pbpp/2p3p2/3sp2P1/2P6/PPBGPPP1P/LS3S1R1/KN1G3NL w p": {
+   "best": "7b5b",
+   "cp": -25,
+   "gap": 27,
+   "accepted": [
+    "7b5b",
+    "4a4b",
+    "6c6d",
+    "9c9d",
+    "7b3b",
+    "8a7c",
+    "6a5b",
+    "8b9b",
+    "1c1d",
+    "6e5d",
+    "7b2b",
+    "7b6b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg1g1nl/1k2r4/pp1p1pbpp/2p3p2/3sp2P1/2P6/PPBGPPP1P/LS5R1/KN1GS2NL w p": {
+   "best": "9c9d",
+   "cp": -40,
+   "gap": 0,
+   "accepted": [
+    "9c9d",
+    "8c8d",
+    "6c6d",
+    "4a4b",
+    "8a7c",
+    "6a7b",
+    "7a7b",
+    "1c1d",
+    "6a6b",
+    "4a3b",
+    "5b5a",
+    "5b5d"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg1g1nl/1k2r4/1p1p1pbpp/p1p3p2/3sp2P1/P1P6/1PBGPPP1P/LS5R1/KN1GS2NL w p": {
+   "best": "6a7b",
+   "cp": -53,
+   "gap": 5,
+   "accepted": [
+    "6a7b",
+    "4a4b",
+    "7a7b",
+    "9a9b",
+    "6a6b",
+    "7a6b",
+    "7d7e",
+    "8a7c",
+    "8c8d",
+    "4a3b",
+    "5b5d",
+    "6c6d"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lns2g1nl/1kg1r4/1p1p1pbpp/p1p3p2/3sp2P1/P1P4R1/1PBGPPP1P/LS7/KN1GS2NL w p": {
+   "best": "3c4d",
+   "cp": -47,
+   "gap": 5,
+   "accepted": [
+    "3c4d",
+    "6c6d",
+    "4a4b",
+    "5b5a",
+    "4a3a",
+    "4a3b",
+    "8c8d",
+    "1c1d",
+    "7a6b",
+    "8a7c",
+    "6e5d",
+    "4a5a"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lns2g1nl/1kg1r4/1p1p1p1pp/p1p2bp2/3sp2P1/P1P3R2/1PBGPPP1P/LS7/KN1GS2NL w p": {
+   "best": "1c1d",
+   "cp": -66,
+   "gap": 1,
+   "accepted": [
+    "1c1d",
+    "4a3b",
+    "4a4b",
+    "8c8d",
+    "6c6d",
+    "6e5d",
+    "3d3e",
+    "7b7c",
+    "7a6b",
+    "2a3c",
+    "4d3e",
+    "5b5d"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lns2g1nl/1kg1r4/1p1p1p1p1/p1p2bp1p/3sp2P1/P1P3R2/1PBGPPP1P/LS7/KNG1S2NL w p": {
+   "best": "6e5d",
+   "cp": -96,
+   "gap": 41,
+   "accepted": [
+    "6e5d",
+    "4a3b",
+    "7b7c",
+    "3d3e",
+    "1d1e",
+    "7a6b",
+    "8c8d",
+    "6c6d",
+    "4d3e",
+    "4d6b",
+    "5b5a",
+    "4a4b"
+   ],
+   "courses": [
+    "_lab"
+   ]
   }
  }
 }
