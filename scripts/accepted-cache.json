@@ -18072,6 +18072,152 @@
    "courses": [
     "_lab"
    ]
+  },
+  "lnsgkg1nl/7b1/1pppps1pp/p4pr2/3SP1p2/2P6/PP1P1PPPP/1B2R4/LN1GKGSNL b -": {
+   "best": "3i3h",
+   "cp": -37,
+   "gap": 4,
+   "accepted": [
+    "3i3h",
+    "5e5d",
+    "4i3h",
+    "8h6f",
+    "4i4h",
+    "3i2h",
+    "2g2f",
+    "5i4h",
+    "8i7g",
+    "4g4f",
+    "8g8f",
+    "1g1f"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg1g1nl/3k3b1/1pppps1pp/p4pr2/3SP1p2/2P6/PP1P1PPPP/1B2R1S2/LN1GKG1NL b -": {
+   "best": "8h6f",
+   "cp": -51,
+   "gap": 7,
+   "accepted": [
+    "8h6f",
+    "2g2f",
+    "8g8f",
+    "9g9f",
+    "4g4f",
+    "6e5f",
+    "1g1f",
+    "4i4h",
+    "5i4h",
+    "5e5d",
+    "6i6h",
+    "8h7g"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg1g1nl/3k3b1/1pppps1pp/p4pr2/3SP4/2PB2p2/PP1P1PPPP/4R1S2/LN1GKG1NL b -": {
+   "best": "4g4f",
+   "cp": -102,
+   "gap": 0,
+   "accepted": [
+    "4g4f",
+    "5i6h",
+    "9g9f",
+    "8g8f",
+    "1g1f",
+    "6f7g",
+    "3g3f",
+    "6e5f",
+    "8i7g",
+    "6i6h",
+    "5e5d",
+    "4i4h"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg1g1nl/3k3b1/1pppps1pp/p4pr2/3SP4/2PB1P3/PP1P2+pPP/4R1S2/LN1GKG1NL b p": {
+   "best": "3h3g",
+   "cp": -131,
+   "gap": 215,
+   "accepted": [
+    "3h3g"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg1g1nl/2k4b1/1pppps1pp/p4pr2/3SP4/2PB1P3/PP1P2SPP/4R4/LN1GKG1NL b Pp": {
+   "best": "8i7g",
+   "cp": -96,
+   "gap": 8,
+   "accepted": [
+    "8i7g",
+    "4i3h",
+    "6i6h",
+    "1g1f",
+    "5i6h",
+    "4i4h",
+    "P*3f",
+    "6e5f",
+    "9g9f",
+    "6i7h",
+    "6f7g",
+    "3g2f"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg1g1nl/2k4b1/1pppps1pp/p5r2/3SPp3/2PB1P3/PPNP2SPP/4R4/L2GKG1NL b Pp": {
+   "best": "4f4e",
+   "cp": -143,
+   "gap": 14,
+   "accepted": [
+    "4f4e",
+    "4i4h",
+    "P*3e",
+    "P*3f",
+    "4i3h",
+    "6e5f",
+    "5i6h"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg1g1nl/2k4b1/1ppp1s1pp/p3p1r2/3SPP3/2PB5/PPNP2SPP/4R4/L2GKG1NL b 2Pp": {
+   "best": "5e5d",
+   "cp": -163,
+   "gap": 4,
+   "accepted": [
+    "5e5d",
+    "4e4d",
+    "3g4f",
+    "6e5f",
+    "P*3e",
+    "7f7e",
+    "5i6h",
+    "P*3f",
+    "4i3h"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg1g1nl/2k6/1ppp1s1pp/p3P1r2/3S1P3/2Pb5/PPNP2SPP/4R4/L2GKG1NL b 3Pbp": {
+   "best": "6g6f",
+   "cp": -147,
+   "gap": 841,
+   "accepted": [
+    "6g6f"
+   ],
+   "courses": [
+    "_lab"
+   ]
   }
  }
 }
