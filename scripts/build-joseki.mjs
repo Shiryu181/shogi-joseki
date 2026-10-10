@@ -30,6 +30,17 @@ const SHARP_MIN = 100;
 const annotateWarnings = [];
 
 /**
+ * 許容手に入らなくても警告しない定跡手。エンジンは居飛車を好むので、
+ * 戦法そのものを選ぶ手(中飛車に振る▲5八飛など)は100点以上の差がつく。
+ * これは章の誤りではないので、理由を添えてここに並べる。
+ */
+const KNOWN_BOOK_OVER_ENGINE = new Set([
+  "nakabisha-vs-ibisha--sente 9手目", // ▲5八飛(中飛車に振る手。最善▲2六歩との差146、2026-10-09)
+  "nakabisha-vs-sankenbisha--sente 5手目", // ▲5八飛(同上。最善▲4八銀との差101)
+  "nakabisha--shote 4手目", // △5四歩(ゴキゲン中飛車を選ぶ手。最善△4二銀との差103〜106、2026-10-10)
+]);
+
+/**
  * 自分の手に accepted(咎められない手)と sharp(急所)を付ける。
  * 正解は常に本線なので、accepted は反応の文言を変えるためだけに使う。
  */
@@ -39,7 +50,7 @@ function annotate(sfenBefore, usi, mySide, label) {
   const hit = ACCEPTED_CACHE.positions[sfenBefore.split(" ").slice(0, 3).join(" ")];
   if (!hit) return {};
   // 定跡手がエンジンの許容範囲から外れている場合は、出典とエンジンの食い違いなので報告する。
-  if (!hit.accepted.includes(usi)) {
+  if (!hit.accepted.includes(usi) && !KNOWN_BOOK_OVER_ENGINE.has(label)) {
     annotateWarnings.push(`${label}: 定跡手 ${usi} が許容手(最善 ${hit.best})に入っていません`);
   }
   return {
