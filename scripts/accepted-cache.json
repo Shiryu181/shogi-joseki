@@ -18022,6 +18022,56 @@
    "courses": [
     "_lab"
    ]
+  },
+  "ln1g4l/1ks1r1gb1/1pp2pnp1/p2R4p/4Ss3/P1P2SP2/1P1PPP2P/1BK1G4/LN1G4L w 4Pn": {
+   "best": "6a6b",
+   "cp": 104,
+   "gap": 11,
+   "accepted": [
+    "6a6b",
+    "5b6b",
+    "N*8d",
+    "1d1e",
+    "6a7a",
+    "1a1b",
+    "N*6c",
+    "N*7a"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln6l/1ksgr1gb1/1pp2pnp1/p2R3Pp/4Ss3/P1P2SP2/1P1PPP2P/1BK1G4/LN1G4L w 3Pn": {
+   "best": "2b3a",
+   "cp": 131,
+   "gap": 94,
+   "accepted": [
+    "2b3a",
+    "2c2d"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln4b1l/1ksgr1g2/1pp2pnp1/p6Pp/3RSs3/P1P2SP2/1P1PPP2P/1BK1G4/LN1G4L w 3Pn": {
+   "best": "2c2d",
+   "cp": -223,
+   "gap": 7,
+   "accepted": [
+    "2c2d",
+    "7b6c",
+    "N*6c",
+    "3a2b",
+    "4e3d",
+    "4e4f",
+    "N*8d",
+    "N*5c",
+    "4e3f",
+    "1d1e"
+   ],
+   "courses": [
+    "_lab"
+   ]
   }
  }
 }
