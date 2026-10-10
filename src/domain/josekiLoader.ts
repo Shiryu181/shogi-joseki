@@ -39,7 +39,6 @@ import shikenbishaSenteRaw from "../data/joseki/shikenbisha-vs-ibisha--sente.jso
 import ibishaVsShikenbishaGoteRaw from "../data/joseki/ibisha-vs-shikenbisha--gote.json?raw";
 import sankenbishaSenteRaw from "../data/joseki/sankenbisha-vs-ibisha--sente.json?raw";
 import ibishaVsSankenbishaGoteRaw from "../data/joseki/ibisha-vs-sankenbisha--gote.json?raw";
-import nakabishaSenteRaw from "../data/joseki/nakabisha-vs-ibisha--sente.json?raw";
 import ibishaVsNakabishaGoteRaw from "../data/joseki/ibisha-vs-nakabisha--gote.json?raw";
 import ibishaVsGokigenChousokuRaw from "../data/joseki/ibisha-vs-gokigen--chousoku.json?raw";
 import nakabishaVsChousokuGoteRaw from "../data/joseki/nakabisha-vs-chousoku--gote.json?raw";
@@ -488,19 +487,8 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     summary: "先手番で三間飛車を指す場合。飛車は7八、玉は2八の美濃囲いになる。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaSenteRaw), "sankenbisha-vs-ibisha--sente.json"),
   },
-  {
-    id: "nakabisha-vs-ibisha--sente",
-    strategyId: "gokigen",
-    opponentId: "anaguma",
-    recommend: 4,
-    group: "対居飛車穴熊",
-    opponentLabel: "居飛車穴熊",
-    sideLabel: "先手",
-    label: "先手番の組み方",
-    kind: "持久戦",
-    summary: "先手番で中飛車を指す場合。飛車は5八、玉は2八の美濃囲いになる。",
-    load: () => assertJosekiCourse(parseRaw(nakabishaSenteRaw), "nakabisha-vs-ibisha--sente.json"),
-  },
+  // 「先手番の組み方」(nakabisha-vs-ibisha--sente)は 2026-10-11 に道筋から外した。
+  // 先手の対居飛車穴熊は「居飛車穴熊には3筋から」に一本化(古い章は終局 -150 前後で、最終手が相手の悪手だった)。
   {
     id: "kakugawari--bougin",
     strategyId: "kakugawari",
