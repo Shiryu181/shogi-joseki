@@ -2,7 +2,7 @@
  "meta": {
   "ms": 2000,
   "tol": 100,
-  "updated": "2026-10-08"
+  "updated": "2026-10-10"
  },
  "positions": {
   "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b -": {
@@ -17972,6 +17972,52 @@
     "4d6b",
     "5b5a",
     "4a4b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsgkg1nl/5s3/pppp1p2p/4S1p2/4n4/2P4+r1/PPNPPPP1P/3K5/L2G1GR1L w 2B3Ps": {
+   "best": "S*2h",
+   "cp": 368,
+   "gap": 132,
+   "accepted": [
+    "S*2h"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsgkg1nl/5s3/pppp1p2p/4S1p2/4n4/2P1B2+r1/PPNPPPP1P/3K3s1/L2G1GR1L w B3P": {
+   "best": "2h3i",
+   "cp": 808,
+   "gap": 0,
+   "accepted": [
+    "2h3i",
+    "2h3i+"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsgkg1nl/5s3/pppp1p2p/4S1p2/4n4/2P1B2+r1/PPNPPPP1P/3K5/L2G2G1L w BS3Pr": {
+   "best": "R*8i",
+   "cp": 946,
+   "gap": 530,
+   "accepted": [
+    "R*8i"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsgkg1nl/5s3/pppp1p2p/4S1p2/4n4/2P1BP1+r1/PPNPP1P1P/3K5/Lr1G2G1L w BS3P": {
+   "best": "8i9i+",
+   "cp": 1271,
+   "gap": 93,
+   "accepted": [
+    "8i9i+",
+    "7a6b"
    ],
    "courses": [
     "_lab"
