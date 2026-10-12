@@ -1,24 +1,25 @@
-import { useEffect, useMemo } from "react";
-import { Color, PieceType, Square } from "../../domain/shogi";
+import { useEffect, useMemo, useState } from "react";
+import { Color, PieceType, Square, parseUSIMove } from "../../domain/shogi";
+import type { GhostPiece } from "../../ui/Board";
 import { Board } from "../../ui/Board";
-import { PointsBadge } from "../../ui/PointsBadge";
+import { Screen, TopBar, ProgressLine, SubLabel } from "../../ui/DojoParts";
+import { HandChip } from "../learn/Learn";
 import { useReviewStore } from "../../store/reviewStore";
-import { useProgressStore } from "../../store/progressStore";
-import type { JosekiCourse } from "../../domain/types";
+import type { ReviewCard, ReviewCourse, ReviewWrong } from "../../store/reviewStore";
+import "../learn/Learn.css";
 import "./Review.css";
 
 export interface ReviewProps {
-  /** 復習の対象にするコースと、その章の名前。 */
-  courses: { course: JosekiCourse; label: string }[];
+  /** 復習の対象にするコースと、その章の名前・番号。 */
+  courses: ReviewCourse[];
   onBack: () => void;
 }
 
 /**
- * 復習(間隔反復)の画面。
- *
- * 学習画面との違い: コースを順に辿るのではなく、覚えていない手と急所だけを
- * 局面ごとに単独で出す。前後の文脈が無いぶん、ねらいだけを頼りに考えることになり、
- * それが「覚えているか」の確認になる。
+ * 今日の復習(確定版モック 18〜20)。
+ * 学習画面と同じ組み立て(看板 → 進み線 → 章名 → 持ち駒 → 盤 → 板のパネル)で、
+ * コースを辿らず、期日が来た手を1問ずつ単独で出す。ねらいは「ヒント」を押した人にだけ見せる。
+ * 外し方は学習画面と同じ: 1回目は赤い一行、2回目は盤の矢印で答えを示す。
  */
 export function Review({ courses, onBack }: ReviewProps) {
   const start = useReviewStore((s) => s.start);
@@ -28,22 +29,23 @@ export function Review({ courses, onBack }: ReviewProps) {
   const selected = useReviewStore((s) => s.selected);
   const moveDests = useReviewStore((s) => s.moveDests);
   const dropDests = useReviewStore((s) => s.dropDests);
-  const answer = useReviewStore((s) => s.answer);
+  const misses = useReviewStore((s) => s.misses);
+  const wrong = useReviewStore((s) => s.wrong);
+  const result = useReviewStore((s) => s.result);
   const correctCount = useReviewStore((s) => s.correctCount);
+  const leftover = useReviewStore((s) => s.leftover);
   const done = useReviewStore((s) => s.done);
   const selectSquare = useReviewStore((s) => s.selectSquare);
   const selectHand = useReviewStore((s) => s.selectHand);
   const next = useReviewStore((s) => s.next);
-  const reveal = useReviewStore((s) => s.reveal);
-  const streak = useProgressStore((s) => s.streak());
 
   useEffect(() => { start(courses); }, [start, courses]);
 
   const card = cards[index];
+  const total = cards.length;
 
   // 選んだ駒の行き先。学習画面と同じ見せ方にして操作感を揃える。
   const fromKey = selected?.kind === "board" ? selected.square.usi : null;
-  const fromHand = selected?.kind === "hand" ? { type: selected.pieceType, color: position.color } : null;
   const destKeys = useMemo(() => {
     if (!selected) return undefined;
     const list = selected.kind === "board"
@@ -52,96 +54,132 @@ export function Review({ courses, onBack }: ReviewProps) {
     return new Set(list.map((d) => d.usi));
   }, [selected, moveDests, dropDests]);
 
-  function handleSquare(sq: Square) { selectSquare(sq); }
-  function handleHand(type: PieceType, color: Color) { selectHand(type, color); }
-
+  // ── 終わり(今日はここまで / 復習なし) ──
   if (done) {
-    const total = cards.length;
+    const missed = total - correctCount;
     return (
-      <div className="review-wrap">
-        <header className="review-head">
-          <button type="button" className="back" onClick={onBack}>◀ 戻る</button>
-          <PointsBadge />
-        </header>
-        <div className="review-done">
+      <Screen className="learn-screen">
+        <TopBar backLabel="戻る" onBack={onBack} title={total === 0 ? "今日の復習" : `今日の復習 ${total} / ${total}`} />
+        {total > 0 && <ProgressLine ratio={1} label="今日の復習の進み具合" />}
+        <div className="rv-end dojo-panel">
           {total === 0 ? (
             <>
-              <p className="review-done-title">今日の復習はありません</p>
-              <p className="review-done-note">
-                出題の期日が来ている手がありません。章を進めて新しい手を覚えるか、明日またここに戻ってきてください。
-              </p>
+              <div className="rv-big">今日の復習はありません</div>
+              <p>期日が来ている手がありません。</p>
             </>
           ) : (
             <>
-              <p className="review-done-title">今日の復習が終わりました</p>
-              <p className="review-done-score">{total}問中 {correctCount}問 正解</p>
-              <p className="review-done-note">
-                間違えた手は明日もう一度出ます。連続で正解するほど、次に出るまでの間隔が延びます。
-              </p>
-              {streak > 0 && <p className="review-done-streak">{streak}日連続で学習しています</p>}
+              <div className="rv-big">今日はここまで</div>
+              <p className="rv-sum">{total}問中 {correctCount}問 正解</p>
+              {missed > 0 && <p>間違えた{missed}問は明日もう一度出ます。</p>}
+              {leftover > 0 && <p>残り{leftover}問は明日に回しました。</p>}
             </>
           )}
-          <button type="button" className="review-btn" onClick={onBack}>ホームへ戻る</button>
+          <button type="button" className="btn-primary rv-home" onClick={onBack}>ホームへ戻る</button>
         </div>
-      </div>
+      </Screen>
     );
   }
 
   if (!card) return null;
 
+  const myColor = position.color;
+  const flipped = myColor === Color.WHITE;
+  const solved = !!result;
+
+  // 答えの矢印: 2回目以降の誤答、または「悪くない手」(別の良い手)を指したとき。
+  const showAnswer = !!wrong && (wrong.kind !== "bad" || misses >= 2);
+  const answer = showAnswer && wrong?.correctUsi ? parseUSIMove(wrong.correctUsi) : null;
+  const arrow = answer
+    ? { from: answer.from instanceof Square ? answer.from.usi : null, to: answer.to.usi }
+    : null;
+  const ghost: GhostPiece | null = answer && !(answer.from instanceof Square)
+    ? { key: answer.to.usi, color: position.color, type: answer.from }
+    : null;
+
+  const selectedHandType = selected?.kind === "hand" ? selected.pieceType : null;
+  const pick = (type: PieceType, color: Color) => selectHand(type, color);
+
   return (
-    <div className="review-wrap">
-      <header className="review-head">
-        <button type="button" className="back" onClick={onBack}>◀ 戻る</button>
-        <span className="review-count">{index + 1} / {cards.length}</span>
-        <PointsBadge />
-      </header>
+    <Screen className="learn-screen">
+      <TopBar backLabel="戻る" onBack={onBack} title={`今日の復習 ${index + 1} / ${total}`} />
+      <ProgressLine ratio={(index + 1) / total} label="今日の復習の進み具合" />
+      <SubLabel>{card.chapterLabel}{card.sharp ? " ・ 急所" : ""}</SubLabel>
 
-      <div className="review-board">
-        <Board
-          position={position}
-          fromKey={fromKey}
-          fromHand={fromHand}
-          destKeys={destKeys}
-          onSquareClick={handleSquare}
-          onHandPieceClick={handleHand}
-          clickableHandColor={answer ? "none" : position.color}
-          flipped={position.color === Color.WHITE}
-        />
+      <div className="learn-hands">
+        <HandChip label="▲持駒" position={position} color={Color.BLACK} flipped={flipped}
+          canPick={!solved && myColor === Color.BLACK} selectedType={myColor === Color.BLACK ? selectedHandType : null} onPick={pick} />
+        <HandChip label="△持駒" position={position} color={Color.WHITE} flipped={flipped}
+          canPick={!solved && myColor === Color.WHITE} selectedType={myColor === Color.WHITE ? selectedHandType : null} onPick={pick} />
       </div>
 
-      <div className="review-panel">
-        <p className="review-chapter">{card.chapterLabel}</p>
-        {/* 急所は出題時に明示する。どこで考えるべきかが分かれば、
-            そうでない局面も納得して進められる。 */}
-        <p className={`review-aim${card.sharp ? " sharp" : ""}`}>
-          <span className="review-label">{card.sharp ? "急所 — 外すと損をします" : "この局面のねらい"}</span>
-          {card.aim ?? "この局面で指すべき手は？"}
-        </p>
+      <Board
+        position={position}
+        fromKey={fromKey}
+        fromHand={null}
+        destKeys={destKeys}
+        ghost={ghost}
+        onSquareClick={(sq: Square) => selectSquare(sq)}
+        onHandPieceClick={() => {}}
+        clickableHandColor="none"
+        flipped={flipped}
+        hideHands
+        arrow={arrow}
+      />
 
-        {answer?.kind === "correct" && (
-          <p className="review-result ok">正解 — {card.correctText}{card.note ? ` ${card.note}` : ""}</p>
+      <section className="dojo-panel learn-panel" aria-live="polite">
+        {result ? (
+          <ResultPanel card={card} text={result.text} last={index + 1 >= total} onNext={next} />
+        ) : (
+          // 問題が替わったらヒントの開閉も初めに戻す
+          <QuestionPanel key={index} card={card} wrong={wrong} misses={misses} />
         )}
-        {answer?.kind === "accepted" && (
-          <p className="review-result soft">
-            △ {answer.text} — その手も咎められません。ただしこの講座では {card.correctText} と進めます。
-          </p>
-        )}
-        {answer?.kind === "wrong" && (
-          <p className="review-result ng">
-            {answer.text ? `✕ ${answer.text} — ` : ""}正解は {card.correctText} です。{card.note ?? ""}
-          </p>
-        )}
+      </section>
+    </Screen>
+  );
+}
 
-        <div className="review-actions">
-          {!answer && <button type="button" onClick={reveal}>答えを見る</button>}
-          {answer && (
-            <button type="button" className="review-btn" onClick={next}>
-              {index + 1 >= cards.length ? "結果を見る" : "次の問題 ▶"}
-            </button>
-          )}
+/** 出題: 「この局面で指す手は？」+ ヒント(押すとねらい)。外したときは赤い一行 / 矢印+答え。 */
+function QuestionPanel({ card, wrong, misses }: { card: ReviewCard; wrong: ReviewWrong | null; misses: number }) {
+  const [hintOpen, setHintOpen] = useState(false);
+
+  return (
+    <>
+      <h2 className="rv-q">この局面で指す手は？</h2>
+      <p className="rv-meta">盤の駒を押して、動かす先をえらびます。</p>
+
+      {hintOpen ? (
+        <div className="aim">
+          <div className="aim-key">ヒント</div>
+          <div className="aim-t">この局面のねらい</div>
+          <p>{card.hint}</p>
         </div>
-      </div>
-    </div>
+      ) : card.hint ? (
+        <button type="button" className="btn-secondary full" onClick={() => setHintOpen(true)}>ヒント</button>
+      ) : null}
+
+      {wrong && wrong.kind !== "bad" && (
+        <p className="soft-t rv-gap">
+          {wrong.attemptedText.slice(0, 1)} その手も悪くありません。定跡は {wrong.correctText} です
+        </p>
+      )}
+      {wrong && wrong.kind === "bad" && misses === 1 && (
+        <p className="miss-l">× {wrong.attemptedText} — 定跡の手ではありません。もう一度</p>
+      )}
+      {wrong && wrong.kind === "bad" && misses >= 2 && (
+        <p className="ans-l">答えは {wrong.correctText}。矢印のとおり指してください</p>
+      )}
+    </>
+  );
+}
+
+/** 正解: 「○ 正解 △3四歩」+ ひとこと + 次の問題(主ボタン)。 */
+function ResultPanel({ card, text, last, onNext }: { card: ReviewCard; text: string; last: boolean; onNext: () => void }) {
+  return (
+    <>
+      <p className="good"><b>○ 正解 {text}</b></p>
+      {card.note && <p className="expl">{card.note}</p>}
+      <button type="button" className="btn-primary full" onClick={onNext}>{last ? "結果を見る" : "次の問題"}</button>
+    </>
   );
 }

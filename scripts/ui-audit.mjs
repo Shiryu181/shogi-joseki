@@ -34,7 +34,7 @@ const ORDER = [
   "learn-deviation", "learn-chapter-complete",
   "learn-sente-first-question", "learn-chapter-intro", "learn-all-done",
   "home-alldone",
-  "review-question", "review-wrong", "review-accepted", "review-correct", "review-result",
+  "review-question", "review-hint", "review-wrong-1", "review-wrong-2", "review-accepted", "review-correct", "review-end",
   "exam-list", "exam-question", "exam-result-pass", "exam-list-after", "exam-result-fail",
   "settings", "settings-confirm",
 ];
@@ -476,7 +476,7 @@ async function installHelpers(page) {
       st: () => {
         const s = RV.useReviewStore.getState();
         const c = s.cards[s.index];
-        return { done: s.done, n: s.cards.length, i: s.index, answered: !!s.answer, kind: s.answer?.kind || null, usi: c?.usi, accN: ((c && c.accepted) || []).filter((u) => u !== c.usi).length };
+        return { done: s.done, n: s.cards.length, i: s.index, solved: !!s.result, misses: s.misses, wrongKind: s.wrong?.kind || null, usi: c?.usi, sharp: !!c?.sharp, accN: ((c && c.accepted) || []).filter((u) => u !== c.usi).length, leftover: s.leftover };
       },
       play: () => { const c = RV.useReviewStore.getState().cards[RV.useReviewStore.getState().index]; return au.play(RV.useReviewStore.getState, "selectSquare", "selectHand", c.usi); },
       playAccepted: () => {
@@ -484,9 +484,10 @@ async function installHelpers(page) {
         const alt = (c.accepted || []).find((u) => u !== c.usi); if (!alt) return false;
         return au.play(RV.useReviewStore.getState, "selectSquare", "selectHand", alt);
       },
+      /** 定跡手でも許容手でもない手(wrong.kind が "bad")を指す。成功したら true。 */
       wrong: () => {
         const R = RV.useReviewStore;
-        const s0 = R.getState(); const c = s0.cards[s0.index];
+        const s0 = R.getState();
         const cands = [];
         for (const [fromUsi, dests] of s0.moveDests) {
           const from = SH.Square.newByUSI(fromUsi);
@@ -494,17 +495,18 @@ async function installHelpers(page) {
           for (const d of dests) cands.push({ from, to: d });
         }
         for (const cd of cands) {
-          const s = R.getState();
-          s.selectSquare(cd.from); R.getState().selectSquare(cd.to);
-          const a = R.getState().answer;
-          if (a && a.kind === "wrong") return true;
-          if (a) return false;
+          const before = R.getState().misses;
+          R.getState().selectSquare(cd.from); R.getState().selectSquare(cd.to);
+          const st = R.getState();
+          if (st.result) return false;
+          if (st.misses > before && st.wrong && st.wrong.kind === "bad") return true;
+          R.setState({ selected: null });
         }
         return false;
       },
     };
     au.exam = {
-      st: () => { const s = EX.useExamStore.getState(); return { finished: s.finished, n: s.cards.length, i: s.index }; },
+      st: () => { const s = EX.useExamStore.getState(); return { finished: s.finished, n: s.cards.length, i: s.index, sharp: !!(s.cards[s.index] && s.cards[s.index].sharp) }; },
       play: () => { const s = EX.useExamStore.getState(); const c = s.cards[s.index]; return au.play(EX.useExamStore.getState, "selectSquare", "selectHand", c.usi); },
     };
     window.__au = au;
@@ -577,7 +579,7 @@ function seedInit({ seed, theme }) {
     if (seed.learning) localStorage.setItem("joseki-dojo:learning:v1", JSON.stringify(seed.learning));
     if (seed.items) {
       const items = {};
-      for (const r of seed.items) items[r.key] = { streak: r.streak, due: utc(r.due), last: utc(r.last), misses: r.misses };
+      for (const r of seed.items) items[r.key] = { streak: r.streak, due: utc(r.due), last: utc(r.last), misses: r.misses, ...(r.examMissed ? { examMissed: true } : {}) };
       const days = [];
       for (const o of seed.days || []) { for (const d of [utc(-o), loc(-o)]) if (!days.includes(d)) days.push(d); }
       days.sort().reverse();
@@ -656,6 +658,12 @@ async function main() {
           points: { total: 1240, today: 60 },
           exams: { [chIds[0]]: { best: 100, passed: true, ago: 3, attempts: 1 }, [chIds[1]]: { best: 60, passed: false, ago: 1, attempts: 2 } },
         };
+      })(),
+      // 復習が上限(20問)を超えて溜まっている: 第1〜4章を覚え済みで、うち32問が期日。3問は試験で落とした印つき。
+      rvfull: (() => {
+        const items = learnedItems(4, 6);
+        items.slice(0, 32).forEach((it, i) => { it.due = -1; it.streak = 1; if (i % 11 === 5) it.examMissed = true; });
+        return { items, days: [0, 1, 2] };
       })(),
       alldone: { items: learnedItems(gote.chapters.length, 20), days: [0, 1, 2, 3, 4, 5, 6, 7], points: { total: 5000, today: 120 } },
     };
@@ -929,61 +937,6 @@ async function main() {
         await reload(page);
       });
 
-      // 復習
-      await step("review-question", async () => {
-        await clickText(page, /^はじめる$/);
-        await page.waitForSelector(".review-wrap");
-        await waitFor(page, () => window.__au.review.st().n > 0, 4000);
-        await capture("review-question");
-      });
-      await step("review-wrong", async () => {
-        const ok = await page.evaluate(() => window.__au.review.wrong());
-        if (!ok) throw new Error("復習で誤答を作れなかった");
-        await capture("review-wrong");
-        await page.locator(".review-actions .review-btn").click();
-      });
-      // 許容手のある問題まで進める(答えを見て次へ。最大8問)
-      let gotAccepted = false;
-      await step("review-accepted", async () => {
-        for (let i = 0; i < 25; i++) {
-          const st = await page.evaluate(() => window.__au.review.st());
-          if (st.done) break;
-          if (st.accN > 0 && !st.answered) {
-            await page.evaluate(() => window.__au.review.playAccepted());
-            await waitFor(page, () => window.__au.review.st().kind === "accepted", 2000);
-            await capture("review-accepted");
-            gotAccepted = true;
-            await page.locator(".review-actions .review-btn").click();
-            return;
-          }
-          await page.evaluate(() => window.__au.review.play());
-          await page.locator(".review-actions .review-btn").click();
-          await sleep(30);
-        }
-        throw new Error("許容手のある復習問題に当たらなかった");
-      });
-      await step("review-correct", async () => {
-        const st = await page.evaluate(() => window.__au.review.st());
-        if (st.done) throw new Error("すでに終了");
-        await page.evaluate(() => window.__au.review.play());
-        await waitFor(page, () => window.__au.review.st().kind === "correct", 2000);
-        await capture("review-correct");
-        await page.locator(".review-actions .review-btn").click();
-      });
-      await step("review-result", async () => {
-        for (let i = 0; i < 40; i++) {
-          const st = await page.evaluate(() => window.__au.review.st());
-          if (st.done) break;
-          if (!st.answered) await page.evaluate(() => window.__au.review.play());
-          await page.locator(".review-actions .review-btn").click();
-          await sleep(20);
-        }
-        await page.waitForSelector(".review-done");
-        await capture("review-result");
-        await page.getByRole("button", { name: /ホームへ戻る/ }).click();
-      });
-      if (!gotAccepted && !unreached.some((u) => u.state === "review-accepted" && u.theme === CUR.theme)) unreached.push({ state: "review-accepted", theme: CUR.theme, reason: "該当なし" });
-
       // 試験
       await step("exam-list", async () => {
         await gotoExamList(page);
@@ -992,7 +945,7 @@ async function main() {
       await step("exam-result-pass", async () => {
         const row = page.locator(".exl li", { hasText: chLabels[3] });
         await row.locator(".exl-go").click();
-        await page.waitForSelector(".exam-board");
+        await page.waitForSelector(".exam-screen .board-panel");
         await capture("exam-question");
         for (let i = 0; i < 12; i++) {
           const st = await page.evaluate(() => window.__au.exam.st());
@@ -1004,23 +957,100 @@ async function main() {
         await capture("exam-result-pass");
       });
       await step("exam-list-after", async () => {
-        await page.locator(".exam-btn").click();
+        await page.locator(".exam-back").click();
         await page.waitForSelector(".exl");
         await capture("exam-list-after");
       });
       await step("exam-result-fail", async () => {
         const row = page.locator(".exl li", { hasText: chLabels[1] });
         await row.locator(".exl-go").click();
-        await page.waitForSelector(".exam-board");
+        await page.waitForSelector(".exam-screen .board-panel");
+        // 3問を飛ばす(急所があれば最初に当たった急所も飛ばす)。7/10 で不合格になる。
+        let skipped = 0;
         for (let i = 0; i < 12; i++) {
           const st = await page.evaluate(() => window.__au.exam.st());
           if (st.finished) break;
-          await page.locator(".exam-skip").click();
+          if (skipped < 3 && (st.sharp || i === 1 || i === 3 || i === 6)) {
+            await page.getByRole("button", { name: /分からないので飛ばす/ }).click();
+            skipped++;
+          } else {
+            await page.evaluate(() => window.__au.exam.play());
+          }
           await sleep(30);
         }
         await page.waitForSelector(".exam-result");
         await capture("exam-result-fail");
       });
+    });
+
+    // ───────────── 場面5: 復習が上限を超えて溜まっている ─────────────
+    log("== review ==");
+    await scenario("review", "rvfull", async (page) => {
+      const nextBtn = () => page.locator(".learn-panel .btn-primary");
+      await step("review-question", async () => {
+        await clickText(page, /^はじめる$/);
+        await page.waitForSelector(".learn-screen .board-panel");
+        await waitFor(page, () => window.__au.review.st().n > 0, 4000);
+        await capture("review-question");
+      });
+      await step("review-hint", async () => {
+        await page.getByRole("button", { name: /^ヒント$/ }).click();
+        await page.waitForSelector(".aim");
+        await capture("review-hint");
+      });
+      await step("review-wrong-1", async () => {
+        const ok = await page.evaluate(() => window.__au.review.wrong());
+        if (!ok) throw new Error("復習で誤答を作れなかった");
+        await page.waitForSelector(".miss-l");
+        await capture("review-wrong-1");
+      });
+      await step("review-wrong-2", async () => {
+        await page.evaluate(() => window.__au.review.wrong());
+        await page.waitForSelector(".ans-l");
+        await capture("review-wrong-2");
+      });
+      await step("review-correct", async () => {
+        await page.evaluate(() => window.__au.review.play());
+        await page.waitForSelector(".good");
+        await capture("review-correct");
+        await nextBtn().click();
+      });
+      // 別の良い手のある問題を探す(なければ unreached に残す)
+      let gotAccepted = false;
+      await step("review-accepted", async () => {
+        for (let i = 0; i < 25; i++) {
+          const st = await page.evaluate(() => window.__au.review.st());
+          if (st.done) break;
+          if (st.accN > 0 && !st.solved) {
+            await page.evaluate(() => window.__au.review.playAccepted());
+            await waitFor(page, () => window.__au.review.st().wrongKind === "accepted", 2000);
+            await capture("review-accepted");
+            gotAccepted = true;
+            await page.evaluate(() => window.__au.review.play());
+            await nextBtn().click();
+            return;
+          }
+          await page.evaluate(() => window.__au.review.play());
+          await nextBtn().click();
+          await sleep(20);
+        }
+        throw new Error("許容手のある復習問題に当たらなかった");
+      });
+      await step("review-end", async () => {
+        for (let i = 0; i < 40; i++) {
+          const st = await page.evaluate(() => window.__au.review.st());
+          if (st.done) break;
+          // 2問だけ間違える(誤答を1回出してから正解)
+          if (i < 2 && !st.solved) await page.evaluate(() => window.__au.review.wrong());
+          if (!(await page.evaluate(() => window.__au.review.st().solved))) await page.evaluate(() => window.__au.review.play());
+          await nextBtn().click();
+          await sleep(20);
+        }
+        await page.waitForSelector(".rv-end");
+        await capture("review-end");
+        await page.getByRole("button", { name: /ホームへ戻る/ }).click();
+      });
+      if (!gotAccepted && !unreached.some((u) => u.state === "review-accepted" && u.theme === CUR.theme)) unreached.push({ state: "review-accepted", theme: CUR.theme, reason: "該当なし" });
     });
 
     log("== all done ==");

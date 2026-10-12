@@ -36,11 +36,16 @@ export function PieceIcon({ glyph, size = 40 }: { glyph: string; size?: number }
 }
 
 /** 看板(上の板)。左に「◀ 戻る」、中央寄せでなく左詰めの題名。 */
-export function TopBar({ backLabel, onBack, title }: { backLabel: string; onBack: () => void; title: string }) {
+export function TopBar({ backLabel, onBack, title, right }: {
+  backLabel: string; onBack: () => void; title: string;
+  /** 右端の小さな文字(「3 / 10」など)。 */
+  right?: ReactNode;
+}) {
   return (
     <header className="dojo-topbar">
       <button type="button" className="btn-secondary" onClick={onBack}>◀ {backLabel}</button>
       <h1>{title}</h1>
+      {right !== undefined && <span className="dojo-topbar__right">{right}</span>}
     </header>
   );
 }
@@ -54,4 +59,19 @@ export function Bar({ ratio }: { ratio: number }) {
 /** 画面の外枠(畳の地)。 */
 export function Screen({ className = "", children }: { className?: string; children: ReactNode }) {
   return <div className={`dojo-screen dojo-ground ${className}`.trim()}>{children}</div>;
+}
+
+/** 章の名前の小さな一行(復習・試験の盤の上)。 */
+export function SubLabel({ children }: { children: ReactNode }) {
+  return <div className="dj-sublabel">{children}</div>;
+}
+
+/** 画面上部の細い進み線(学習・復習・試験で共通)。 */
+export function ProgressLine({ ratio, label }: { ratio: number; label: string }) {
+  const pct = Math.max(0, Math.min(1, ratio)) * 100;
+  return (
+    <div className="learn-prog" role="progressbar" aria-label={label} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(pct)}>
+      <i style={{ width: `${pct}%` }} />
+    </div>
+  );
 }

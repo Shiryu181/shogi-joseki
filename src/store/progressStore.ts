@@ -36,6 +36,11 @@ export interface ItemRecord {
   last: string;
   /** これまでに間違えた回数。苦手な手を見つけるために残す。 */
   misses: number;
+  /**
+   * 認定試験で落とした問題の印。復習の先頭に出し、次に正解したら外す。
+   * 以前の保存データには無い項目なので、無いものは false として読む。
+   */
+  examMissed?: boolean;
 }
 
 interface Saved {
@@ -102,6 +107,8 @@ export function streakDays(days: string[]): number {
 export interface ProgressState extends Saved {
   /** 1問を解いた結果を記録する。sharp は急所かどうか(間隔を短くする)。 */
   record: (key: string, correct: boolean, sharp: boolean) => void;
+  /** 認定試験で落とした問題に印を付け、期日を遅くとも明日にする(復習の先頭に出す)。 */
+  markExamMissed: (keys: string[]) => void;
   /** その問題が今日出題対象か(未学習 or 期日が来ている)。 */
   isDue: (key: string) => boolean;
   /** 覚えた(連続 LEARNED_STREAK 回正解)かどうか。 */
@@ -129,8 +136,33 @@ export const useProgressStore = create<ProgressState>((set, get) => ({
       last: d,
       misses: (prev?.misses ?? 0) + (correct ? 0 : 1),
     };
+    // 試験で落とした印は、次に正解したときに外す(間違えたままなら残す)。
+    if (!correct && prev?.examMissed) item.examMissed = true;
     const days = cur.days.includes(d) ? cur.days : [d, ...cur.days].slice(0, 400);
     const next: Saved = { items: { ...cur.items, [key]: item }, days };
+    save(next);
+    set(next);
+  },
+
+  markExamMissed(list) {
+    if (list.length === 0) return;
+    const cur = get();
+    const d = today();
+    const tomorrow = addDays(d, 1);
+    const items = { ...cur.items };
+    for (const key of list) {
+      const prev = items[key];
+      // すでに今日以前が期日のものは、先送りせずそのまま(印だけ付ける)。
+      const due = prev && prev.due < tomorrow ? prev.due : tomorrow;
+      items[key] = {
+        streak: prev?.streak ?? 0,
+        due,
+        last: prev?.last ?? d,
+        misses: (prev?.misses ?? 0) + 1,
+        examMissed: true,
+      };
+    }
+    const next: Saved = { items, days: cur.days };
     save(next);
     set(next);
   },

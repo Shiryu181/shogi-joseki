@@ -55,20 +55,21 @@ function App() {
   /** 学習中の戦法×手番の章。並びは学習画面と同じ学習パスから取る。 */
   const learningPath = useMemo(() => pathFor(learningId, learningSide), [learningId, learningSide]);
 
-  /** 今日の復習の対象: 仕上がっている全戦法の先手・後手すべての章。 */
-  const allChapters = useMemo(
+  /** 今日の復習の対象: 仕上がっている全戦法の先手・後手すべての章(章の番号つき)。 */
+  const allPaths = useMemo(
     () =>
       READY_STRATEGY_IDS.flatMap((id) => {
         const n = chapterCounts(id);
         return (["gote", "sente"] as const)
           .filter((side) => n[side] > 0)
-          .flatMap((side) => pathFor(id, side).chapters);
+          .map((side) => pathFor(id, side).chapters);
       }),
     [],
   );
+  const allChapters = useMemo(() => allPaths.flat(), [allPaths]);
   const reviewCourses = useMemo(
-    () => allChapters.map((c) => ({ course: c.course, label: c.entry.label })),
-    [allChapters],
+    () => allPaths.flatMap((chs) => chs.map((c, i) => ({ course: c.course, label: c.entry.label, no: i + 1 }))),
+    [allPaths],
   );
 
   function openStrategy(strategyId: string, side: Side) {

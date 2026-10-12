@@ -11,9 +11,6 @@ import { toKanjiNumber } from "../../domain/kanjiNumber";
 import { Bar, ChevronRight, GearIcon, PieceIcon, Screen } from "../../ui/DojoParts";
 import "./Home.css";
 
-/** 復習1回の上限。実際の出題の絞り込みは復習画面側(U4)で行う。 */
-const DAILY_CAP = 20;
-
 export interface HomeProps {
   /** 今日の復習の対象にする全章(準備ができた戦法の先手・後手すべて)。 */
   allChapters: PathChapter[];
@@ -43,8 +40,8 @@ export function Home({ allChapters, onReview, onSettings, onAbout, onOpenStrateg
   const learning = strategies.find((s) => s.id === learningId) ?? strategies[0];
 
   const due = useMemo(() => dueToday(allChapters, items), [allChapters, items]);
-  const shown = Math.min(due.due, DAILY_CAP);
-  const shownSharp = Math.min(due.sharp, shown);
+  const shown = due.shown;
+  const shownSharp = due.sharp;
 
   const sum = useMemo(
     () => (learning ? summarizePath(pathFor(learning.id, learningSide).chapters, items, results) : null),

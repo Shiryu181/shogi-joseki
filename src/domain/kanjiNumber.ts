@@ -8,3 +8,8 @@ export function toKanjiNumber(n: number): string {
   const tensPart = tens === 0 ? "" : tens === 1 ? "十" : `${DIGITS[tens]}十`;
   return tensPart + DIGITS[ones];
 }
+
+/** 章の題。index は 0 始まりの章の並び。「第三章 UFO銀速攻の受け方」 */
+export function chapterTitle(index: number, label: string): string {
+  return `第${toKanjiNumber(index + 1)}章 ${label}`;
+}

@@ -19,7 +19,8 @@ import type { Selection } from "./sandboxStore";
  *
  * 間隔反復の「覚えた」判定とは独立させる。試験合格を条件にすると、
  * 受かるまで復習対象が減らず、毎日の負荷が下がらないため。
- * そのため試験の結果は progressStore に記録しない。
+ * そのため試験の結果(合否・点)は progressStore に記録しない。
+ * ただし落とした問題だけは「試験で落とした」印を付け、復習の先頭に回す。
  */
 const KEY = "joseki-dojo:exams:v1";
 
@@ -72,7 +73,7 @@ interface ExamCard extends QuizItem {
 }
 
 /** 1問の答案。 */
-interface Marked {
+export interface Marked {
   card: ExamCard;
   /** 実際に指した手。答えずに飛ばした場合は null。 */
   played: string | null;
@@ -83,6 +84,8 @@ interface Marked {
 interface ExamState {
   courseId: string | null;
   courseTitle: string;
+  /** 章の並びの何番目か(1 始まり)。「第四章」の表示に使う。 */
+  chapterNo: number;
   cards: ExamCard[];
   index: number;
   position: Position;
@@ -94,7 +97,7 @@ interface ExamState {
   finished: boolean;
   results: Saved;
 
-  start: (course: JosekiCourse, title: string) => void;
+  start: (course: JosekiCourse, title: string, chapterNo: number) => void;
   selectSquare: (square: Square) => void;
   selectHand: (type: PieceType, color: Color) => void;
   /** 分からないときに飛ばす。不正解として採点する。 */
@@ -121,6 +124,7 @@ function shuffle<T>(list: T[]): T[] {
 export const useExamStore = create<ExamState>((set, get) => ({
   courseId: null,
   courseTitle: "",
+  chapterNo: 1,
   cards: [],
   index: 0,
   position: new Position(),
@@ -131,7 +135,7 @@ export const useExamStore = create<ExamState>((set, get) => ({
   finished: false,
   results: load(),
 
-  start(course, title) {
+  start(course, title, chapterNo) {
     const all = quizItemsOf(course).map((it) => {
       const pos = positionOf(it.sfen);
       return { ...it, correctText: moveFromUSI(pos, it.usi)?.displayText ?? it.usi };
@@ -148,7 +152,7 @@ export const useExamStore = create<ExamState>((set, get) => ({
     if (cards.length === 0) return;
     const position = positionOf(cards[0].sfen);
     set({
-      courseId: course.id, courseTitle: title, cards, index: 0, position,
+      courseId: course.id, courseTitle: title, chapterNo, cards, index: 0, position,
       selected: null, marked: [], finished: false,
       moveDests: computeMoveDests(position, position.color),
       dropDests: computeDropDests(position, position.color),
@@ -228,6 +232,10 @@ function advance(played: string | null, playedText: string) {
       },
     };
     save(results);
+    // 落とした問題は、明日の復習の先頭に入れる(合否に関わらず)。
+    useProgressStore.getState().markExamMissed(
+      marked.filter((m) => !m.correct).map((m) => itemKey(m.card.sfen, m.card.usi)),
+    );
     useExamStore.setState({ marked, finished: true, selected: null, results });
     return;
   }

@@ -2,7 +2,7 @@ import { STRATEGIES } from "../data/strategies";
 import type { Strategy } from "./types";
 import { buildLearnPath, pathSidesFor } from "./josekiLoader";
 import type { PathChapter } from "./josekiLoader";
-import { quizItemsOf } from "./reviewQueue";
+import { quizItemsOf, dueQuizItems, DAILY_CAP } from "./reviewQueue";
 import { itemKey, LEARNED_STREAK } from "../store/progressStore";
 import type { ItemRecord } from "../store/progressStore";
 import type { ExamResult } from "../store/examStore";
@@ -137,23 +137,20 @@ export function stateWord(s: ChapterStat, withCount: boolean): string {
   }
 }
 
-/** 復習の対象が日付(YYYY-MM-DD, 記録と同じ UTC)で今日以前になっている問題の数。重複する局面は1問。 */
+/**
+ * 今日の復習の件数。復習画面が出す問題(上限 DAILY_CAP)と同じ数え方で、
+ * due=期日が来ている問題の総数、shown=今日出す数、sharp=今日出す中の急所、leftover=明日以降に回る数。
+ */
 export function dueToday(
   chapters: PathChapter[],
   items: Record<string, ItemRecord>,
-): { due: number; sharp: number } {
-  const today = new Date().toISOString().slice(0, 10);
-  const seen = new Set<string>();
-  let due = 0, sharp = 0;
-  for (const ch of chapters) {
-    for (const q of quizItemsOf(ch.course)) {
-      const k = itemKey(q.sfen, q.usi);
-      if (seen.has(k)) continue;
-      seen.add(k);
-      // 一度も解いていない問題は「復習」ではなく学習なので数えない。
-      const rec = items[k];
-      if (rec && rec.due <= today) { due++; if (q.sharp) sharp++; }
-    }
-  }
-  return { due, sharp };
+): { due: number; shown: number; sharp: number; leftover: number } {
+  const queue = dueQuizItems(chapters.map((c) => c.course), items);
+  const shown = queue.slice(0, DAILY_CAP);
+  return {
+    due: queue.length,
+    shown: shown.length,
+    sharp: shown.filter((q) => q.sharp).length,
+    leftover: queue.length - shown.length,
+  };
 }

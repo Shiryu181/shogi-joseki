@@ -56,7 +56,7 @@ interface DemoFrame { pos: Position; text: string; lastKeys: Set<string>; lastTo
 interface DemoState { demo: MoveDemo; frames: DemoFrame[]; step: number; auto: boolean }
 
 /** 持ち駒の行の1枠。「▲持駒 …」。空なら「なし」(盤が動かないよう必ず1枠分を取る)。 */
-function HandChip({
+export function HandChip({
   label, position, color, flipped, canPick, selectedType, onPick,
 }: {
   label: string;

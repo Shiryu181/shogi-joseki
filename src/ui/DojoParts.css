@@ -79,3 +79,6 @@ button.dj-row { cursor: pointer; min-height: 48px; }
 .dj-rows > li.is-current + li { border-top-color: transparent; }
 .is-current .dj-row__name,
 .is-current .dj-row__state { font-weight: 700; }
+
+/* 盤の上の章名の一行(復習・試験) */
+.dj-sublabel { padding: 12px 16px 0; font-size: 14px; color: var(--ink); flex: none; }
