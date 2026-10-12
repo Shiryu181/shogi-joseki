@@ -14,10 +14,7 @@
 
 /* 既存の画面枠も、色だけでなく畳の目を載せる */
 .devmenu-frame,
-.learn-frame,
-.about-frame,
-.sandbox-frame,
-.practice-frame {
+.sandbox-frame {
   background-image: var(--tx-tatami);
 }
 
@@ -52,6 +49,24 @@
   color: var(--ink);
   font-size: 15px;
   font-weight: 500;
+}
+
+/* 取り消せない操作の実行側。赤の塗り */
+.btn-danger {
+  font-family: var(--body);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  border-radius: 3px;
+  height: 46px;
+  padding: 0 16px;
+  background: var(--red);
+  border: 1.5px solid var(--red);
+  color: var(--on-mark);
+  font-size: 15px;
+  font-weight: 700;
 }
 
 .btn-primary.full,
@@ -128,12 +143,6 @@
   text-overflow: ellipsis;
 }
 
-/* 左の「◀ 戻る」用の枠。中に .btn-secondary を置く */
-.dojo-topbar__back {
-  flex: none;
-  display: inline-flex;
-}
-
 .dojo-topbar .btn-secondary {
   height: 44px;
   padding: 0 12px;
@@ -206,7 +215,3 @@
   color: var(--on-ai);
 }
 
-/* いま取り組む章 = 金の縁 */
-.chapter-plate--current {
-  box-shadow: 0 0 0 2px var(--gold);
-}

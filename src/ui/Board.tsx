@@ -113,7 +113,7 @@ export interface BoardProps {
   fromKey?: string | null;
   /** 'from' 強調を出す持ち駒(打ちの手のとき)。 */
   fromHand?: HandHighlight | null;
-  /** 'glow' 強調(なぞりガイド/合法手ハイライト)を出す升の集合。 */
+  /** 'glow' 強調(合法手ハイライトなど)を出す升の集合。 */
   glowKeys?: Set<string>;
   /**
    * 行き先の候補(クイズで駒を選んだときの着手可能マス)。
@@ -130,7 +130,7 @@ export interface BoardProps {
   emphasizeLast?: boolean;
   /** emphasizeLast のとき、特に強調する升(通常は移動先)。 */
   lastToKey?: string | null;
-  /** なぞりガイド用の半透明ゴースト駒(移動先にうっすら表示)。 */
+  /** 半透明のゴースト駒(移動先にうっすら表示)。 */
   ghost?: GhostPiece | null;
   /** 盤の升をクリックしたときのコールバック。 */
   onSquareClick: (square: Square) => void;

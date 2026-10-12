@@ -590,7 +590,6 @@ function seedInit({ seed, theme }) {
       for (const [id, r] of Object.entries(seed.exams)) ex[id] = { best: r.best, passed: r.passed, at: utc(-r.ago), attempts: r.attempts };
       localStorage.setItem("joseki-dojo:exams:v1", JSON.stringify(ex));
     }
-    if (seed.points) localStorage.setItem("joseki-dojo:points:v1", JSON.stringify({ total: seed.points.total, today: seed.points.today, todayDate: utc(0) }));
   } catch (e) { /* 種が入らなくても続ける */ }
 }
 
@@ -655,7 +654,6 @@ async function main() {
         });
         return {
           items, days: [0, 1, 2, 3, 4, 8, 9],
-          points: { total: 1240, today: 60 },
           exams: { [chIds[0]]: { best: 100, passed: true, ago: 3, attempts: 1 }, [chIds[1]]: { best: 60, passed: false, ago: 1, attempts: 2 } },
         };
       })(),
@@ -665,7 +663,7 @@ async function main() {
         items.slice(0, 32).forEach((it, i) => { it.due = -1; it.streak = 1; if (i % 11 === 5) it.examMissed = true; });
         return { items, days: [0, 1, 2] };
       })(),
-      alldone: { items: learnedItems(gote.chapters.length, 20), days: [0, 1, 2, 3, 4, 5, 6, 7], points: { total: 5000, today: 120 } },
+      alldone: { items: learnedItems(gote.chapters.length, 20), days: [0, 1, 2, 3, 4, 5, 6, 7] },
     };
 
     /** 1つの場面(新しいブラウザ文脈)を、テーマごとに実行する。 */
@@ -750,13 +748,13 @@ async function main() {
       await step("home-first", () => capture("home-first"));
       await step("settings-fresh", async () => {
         await page.locator(".home-gear").click();
-        await page.waitForSelector(".set-wrap");
+        await page.waitForSelector(".set-screen");
         await capture("settings-fresh");
         await reload(page);
       });
       await step("about", async () => {
         await page.locator(".home-foot-link").click();
-        await page.waitForSelector(".about-wrap, .about-frame, [class*=about]");
+        await page.waitForSelector(".about-screen");
         await capture("about");
         await reload(page);
       });
@@ -927,12 +925,12 @@ async function main() {
 
       await step("settings", async () => {
         await page.locator(".home-gear").click();
-        await page.waitForSelector(".set-wrap");
+        await page.waitForSelector(".set-screen");
         await capture("settings");
       });
       await step("settings-confirm", async () => {
-        await page.locator(".set-del").first().click();
-        await page.waitForSelector(".set-confirm");
+        await page.locator(".set-danger").first().click();
+        await page.waitForSelector(".dj-modal");
         await capture("settings-confirm");
         await reload(page);
       });
@@ -1160,6 +1158,14 @@ function buildSummary(states) {
     else clean.push(s);
   }
   if (clean.length) push(`- 指摘なし: ${clean.join(", ")}`);
+  push();
+
+  // ── 用語 ──
+  push("## 用語チェック(禁止語・算用数字の章番号)");
+  const BAD = /達成|修了|なぞ|★|ポイント|学習した日|連続\d*日|第\s*\d+\s*章/;
+  const badTerms = [];
+  for (const s of states) for (const t of M[s].themes.light?.strings ?? M[s].themes.dark?.strings ?? []) if (BAD.test(t)) badTerms.push(`${s}: 「${t}」`);
+  push(badTerms.length ? badTerms.map((x) => `- ${x}`).join("\n") : "- 違反なし");
   push();
 
   // ── 色 ──

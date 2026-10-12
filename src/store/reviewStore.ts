@@ -9,7 +9,6 @@ import { chapterTitle } from "../domain/kanjiNumber";
 import { plainMove, splitExplanation } from "../domain/moveText";
 import { buildHint } from "../domain/hint";
 import { useProgressStore, itemKey } from "./progressStore";
-import { usePointsStore, POINTS } from "./pointsStore";
 import type { Selection } from "./sandboxStore";
 
 /** 1日の復習の上限(ホームの件数と同じ)。 */
@@ -208,7 +207,6 @@ function judge(usi: string, text: string) {
     const firstTry = misses === 0;
     if (firstTry) {
       progress.record(key, true, card.sharp);
-      usePointsStore.getState().award(card.sharp ? POINTS.sharpFirstTry : POINTS.bookFirstTry);
     }
     useReviewStore.setState({
       result: { text: card.correctText, firstTry }, wrong: null, selected: null,

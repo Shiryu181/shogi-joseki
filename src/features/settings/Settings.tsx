@@ -1,98 +1,91 @@
 import { useState } from "react";
 import { useSettingsStore } from "../../store/settingsStore";
 import type { Theme } from "../../store/settingsStore";
-import { useProgressStore } from "../../store/progressStore";
-import { usePointsStore } from "../../store/pointsStore";
+import { useProgressStore, LEARNED_STREAK } from "../../store/progressStore";
+import { useExamStore } from "../../store/examStore";
+import { passedChapterCount } from "../../domain/courseProgress";
+import { Screen, TopBar } from "../../ui/DojoParts";
 import "./Settings.css";
 
 export interface SettingsProps {
   onBack: () => void;
+  onAbout: () => void;
 }
 
-const THEMES: { value: Theme; label: string; note: string }[] = [
-  { value: "auto", label: "端末に合わせる", note: "OS の設定に従います" },
-  { value: "light", label: "明るい", note: "" },
-  { value: "dark", label: "暗い", note: "" },
+const THEMES: { value: Theme; label: string }[] = [
+  { value: "auto", label: "端末に合わせる" },
+  { value: "light", label: "明るい" },
+  { value: "dark", label: "暗い" },
 ];
 
-/** 設定。いまはテーマと記録のリセットだけ。 */
-export function Settings({ onBack }: SettingsProps) {
+/** 設定。テーマの切り替え、学習の記録の数、記録を消す操作。 */
+export function Settings({ onBack, onAbout }: SettingsProps) {
   const theme = useSettingsStore((s) => s.theme);
   const setTheme = useSettingsStore((s) => s.setTheme);
   const items = useProgressStore((s) => s.items);
-  const days = useProgressStore((s) => s.days);
   const resetProgress = useProgressStore((s) => s.reset);
-  const total = usePointsStore((s) => s.total);
+  const results = useExamStore((s) => s.results);
   // 消す操作は取り消せないので、必ず一度確認を挟む。
   const [confirming, setConfirming] = useState(false);
 
-  const learned = Object.values(items).filter((i) => i.streak >= 2).length;
+  const solved = Object.keys(items).length;
+  const learned = Object.values(items).filter((i) => i.streak >= LEARNED_STREAK).length;
+  const passed = passedChapterCount(results);
 
   return (
-    <div className="set-wrap">
-      <header className="set-head">
-        <button type="button" className="back" onClick={onBack}>◀ 戻る</button>
-        <span className="set-title">設定</span>
-      </header>
-
-      <div className="set-pad">
-        <div className="set-sec">見た目</div>
-        <div className="set-card">
+    <Screen className="set-screen">
+      <TopBar backLabel="戻る" onBack={onBack} title="設定" />
+      <div className="dojo-body">
+        <h2 className="fuda">テーマ</h2>
+        <ul className="dojo-panel set-radios" role="radiogroup" aria-label="テーマ">
           {THEMES.map((t) => (
-            <button
-              key={t.value}
-              type="button"
-              className={`set-row${theme === t.value ? " on" : ""}`}
-              onClick={() => setTheme(t.value)}
-            >
-              <span className="set-row-l">
-                {t.label}
-                {t.note && <small>{t.note}</small>}
-              </span>
-              <span className="set-check">{theme === t.value ? "✓" : ""}</span>
-            </button>
+            <li key={t.value}>
+              <button
+                type="button"
+                role="radio"
+                aria-checked={theme === t.value}
+                className={`set-radio${theme === t.value ? " is-on" : ""}`}
+                onClick={() => setTheme(t.value)}
+              >
+                <span>{t.label}</span>
+                {theme === t.value && <b aria-hidden="true">✓</b>}
+              </button>
+            </li>
           ))}
+        </ul>
+
+        <h2 className="fuda set-fuda">学習の記録</h2>
+        <div className="dojo-panel set-stats">
+          <div><span className="set-n">{solved}</span><span className="set-l">解いた問題</span></div>
+          <div><span className="set-n">{learned}</span><span className="set-l">覚えた問題</span></div>
+          <div><span className="set-n">{passed}</span><span className="set-l">合格した章</span></div>
         </div>
 
-        <div className="set-sec">学習の記録</div>
-        <div className="set-card">
-          <div className="set-stat">
-            <div><b>{Object.keys(items).length}</b><span>解いた問題</span></div>
-            <div><b>{learned}</b><span>覚えた問題</span></div>
-            <div><b>{days.length}</b><span>学習した日</span></div>
-            <div><b>{total}</b><span>累計ポイント</span></div>
+        <button type="button" className="btn-secondary full set-about" onClick={onAbout}>このアプリについて</button>
+        <button type="button" className="btn-secondary full set-danger" onClick={() => setConfirming(true)}>
+          学習の記録を消す
+        </button>
+      </div>
+
+      {confirming && (
+        <div className="dj-modal-layer">
+          <div className="dj-modal-scrim" onClick={() => setConfirming(false)} aria-hidden="true" />
+          <div className="dojo-panel dj-modal" role="alertdialog" aria-modal="true" aria-labelledby="set-del-t">
+            <h2 id="set-del-t">学習の記録を消しますか</h2>
+            <p>{solved}問の記録がすべて無くなります。消すと元に戻せません。</p>
+            <div className="dj-modal__row">
+              <button type="button" className="btn-secondary" onClick={() => setConfirming(false)}>やめる</button>
+              <button
+                type="button"
+                className="btn-danger"
+                onClick={() => { resetProgress(); setConfirming(false); }}
+              >
+                消す
+              </button>
+            </div>
           </div>
         </div>
-
-        <div className="set-card set-danger">
-          {!confirming ? (
-            <>
-              <p className="set-note">
-                解いた記録・覚えた問題・学習した日をすべて消します。消すと元に戻せません。
-              </p>
-              <button type="button" className="set-del" onClick={() => setConfirming(true)}>
-                学習の記録を消す
-              </button>
-            </>
-          ) : (
-            <>
-              <p className="set-note">
-                本当に消しますか。{Object.keys(items).length}問の記録と{days.length}日分の学習履歴が無くなります。
-              </p>
-              <div className="set-confirm">
-                <button type="button" onClick={() => setConfirming(false)}>やめる</button>
-                <button
-                  type="button"
-                  className="set-del"
-                  onClick={() => { resetProgress(); setConfirming(false); }}
-                >
-                  消す
-                </button>
-              </div>
-            </>
-          )}
-        </div>
-      </div>
-    </div>
+      )}
+    </Screen>
   );
 }

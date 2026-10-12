@@ -9,7 +9,7 @@ export const DAILY_CAP = 20;
  * コースから「自分が答える問題」を取り出す。本線だけでなく、
  * 相手のミスを咎める枝の中の自分の手も問題として数える。
  *
- * 間隔反復と章の達成率は、どちらもこの一覧を土台にする。
+ * 間隔反復と章ごとの覚えた数は、どちらもこの一覧を土台にする。
  */
 export interface QuizItem {
   courseId: string;
@@ -70,16 +70,6 @@ export function sortForReview(
       if (ia.seen !== ib.seen) return ia.seen ? 1 : -1;          // 未学習が先
       return ia.streak - ib.streak;                               // 定着が浅いものが先
     });
-}
-
-/** 章(コース)の達成率。覚えた問題の割合。 */
-export function chapterProgress(
-  items: QuizItem[],
-  isLearned: (sfen: string, usi: string) => boolean,
-): { learned: number; total: number; ratio: number } {
-  const total = items.length;
-  const learned = items.filter((it) => isLearned(it.sfen, it.usi)).length;
-  return { learned, total, ratio: total === 0 ? 0 : learned / total };
 }
 
 /** 日付(YYYY-MM-DD, 記録と同じ UTC)。 */

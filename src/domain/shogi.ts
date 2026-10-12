@@ -144,31 +144,6 @@ export function tryMoveWithPromotionChoice(
   return { kind: "applied", move: chosen, displayText };
 }
 
-/**
- * tryMoveWithPromotionChoice() が "choice" を返した後、ユーザーが選んだ側
- * (成る/不成)を実際に適用する。
- */
-export function applyChosenPromotion(
-  position: Position,
-  from: Square | PieceType,
-  to: Square,
-  promote: boolean,
-): { ok: true; move: Move; displayText: string } | { ok: false } {
-  const move = position.createMove(from, to);
-  if (!move) return { ok: false };
-  const chosen = promote ? move.withPromote() : move;
-  if (!position.isValidMove(chosen)) return { ok: false };
-  const displayText = formatMove(position, chosen);
-  const applied = position.doMove(chosen);
-  if (!applied) return { ok: false };
-  return { ok: true, move: chosen, displayText };
-}
-
-/** Square/PieceType を dests のキーとして使う一意な文字列に変換する */
-export function squareKey(square: Square): string {
-  return square.usi;
-}
-
 /** USI文字列から Move と、その表示テキスト(▲２六歩 等)をまとめて取得する(学習モードの手表示用)。 */
 export function moveFromUSI(position: Position, usi: string): { move: Move; displayText: string } | null {
   const move = position.createMoveByUSI(usi);
@@ -199,16 +174,3 @@ export function tryMovePreview(
   return { move, ok: true, displayText: formatMove(position, move) };
 }
 
-/**
- * 指定局面(不変)に USI 形式の手を1つ適用し、適用後の SFEN と表示テキストを返す。
- * 元の position は変更しない(内部で clone する)。practiceStore がユーザーの手と
- * 定跡手を並べてエンジン評価する(A/B比較)ために使う。
- */
-export function applyUsiMove(position: Position, usi: string): { sfenAfter: string; displayText: string } | null {
-  const cloned = position.clone();
-  const parsed = moveFromUSI(cloned, usi);
-  if (!parsed) return null;
-  const applied = cloned.doMove(parsed.move);
-  if (!applied) return null;
-  return { sfenAfter: cloned.sfen, displayText: parsed.displayText };
-}

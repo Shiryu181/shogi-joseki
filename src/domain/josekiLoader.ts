@@ -905,12 +905,6 @@ export function courseEntriesForOpponent(opponentId: string): CourseEntry[] {
   return COURSE_ENTRIES.filter((c) => c.opponentId === opponentId).sort((a, b) => a.recommend - b.recommend);
 }
 
-/** id からコースをロードする。見つからなければ先頭のコースにフォールバックする。 */
-export function loadCourseById(id: string): JosekiCourse {
-  const entry = COURSE_ENTRIES.find((c) => c.id === id) ?? COURSE_ENTRIES[0];
-  return entry.load();
-}
-
 /**
  * 分岐ナビ(本線/変化/逸れ手の切替)の仕組みを動作確認するためだけのデモ用フィクスチャ。
  * 実際の定跡データではない(内容はすべて【デモ】と明記済み)。ユーザー向け画面の
@@ -918,21 +912,6 @@ export function loadCourseById(id: string): JosekiCourse {
  */
 export function loadBranchNavDemo(): JosekiCourse {
   return assertJosekiCourse(parseRaw(branchNavDemoRaw), "_branchNavDemo.json");
-}
-
-/** ノードの本線(branches[0])を辿り、末端(理想陣形)までのノード列を返す。UI外のテスト・検証にも使える。 */
-export function listMainLineNodes(course: JosekiCourse): JosekiNode[] {
-  const nodes: JosekiNode[] = [course.root];
-  let current = course.root;
-  while (current.branches.length > 0) {
-    // 逸れ手(deviation)の枝が混ざるので、必ず kind で本線を選ぶ。
-    const main = current.branches.find((b) => b.kind === "main") ?? current.branches[0];
-    const child = main.child;
-    if (!child) break;
-    nodes.push(child);
-    current = child;
-  }
-  return nodes;
 }
 
 /* ────────────────────────────────────────────────────────────────

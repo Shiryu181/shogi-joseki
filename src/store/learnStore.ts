@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { usePointsStore, POINTS } from "./pointsStore";
 import { useProgressStore, itemKey } from "./progressStore";
 import {
   Color,
@@ -30,11 +29,6 @@ export function positionFromNode(node: JosekiNode): Position {
 /** コースの mySide に対応する tsshogi の Color。 */
 function myColorOf(course: JosekiCourse): Color {
   return course.mySide === "sente" ? Color.BLACK : Color.WHITE;
-}
-
-/** 指定した分岐インデックスの手(無ければ null = 末端)。 */
-export function branchMove(node: JosekiNode, index: number): JosekiMove | null {
-  return node.branches[index] ?? null;
 }
 
 /** 自動進行・出題で使う本線の手。 */
@@ -395,17 +389,12 @@ export const useLearnStore = create<LearnState>((set, get) => {
       if (!applied) return;
       if (!applied.ok) { set({ selected: null }); return; }
       if (answer && applied.move.usi === answer.usi) {
-        // 正解。急所(次善手との差が100点以上)は配点を上げる(ポイント表示は無いが記録は従来どおり)。
+        // 正解。
         const missed = bookQuiz.misses > 0;
         // 間隔反復の記録。一度でも間違えた問題は「正解」として数えない
         // (答えを見てから当てたのと変わらないため)。咎めの手順の中の自分の手も同じ扱い。
         useProgressStore.getState().record(
           itemKey(currentNode.sfen, answer.usi), !missed, !!answer.sharp
-        );
-        usePointsStore.getState().award(
-          answer.sharp
-            ? (missed ? POINTS.sharpAfterMiss : POINTS.sharpFirstTry)
-            : (missed ? POINTS.bookAfterMiss : POINTS.bookFirstTry)
         );
         // 一旦止めて、結果(正解と理由)を読ませる。「次へ」で相手が指す。
         const { lead, rest } = splitExplanation(answer.note);

@@ -3,7 +3,7 @@ import { Color, PieceType, isPromotedType, PIECE_GLYPH } from "../domain/shogi";
 interface PieceViewProps {
   type: PieceType;
   color: Color;
-  /** なぞりガイド用の半透明ゴースト表示(移動先プレビュー)。 */
+  /** 半透明のゴースト表示(移動先プレビュー)。 */
   ghost?: boolean;
   /**
    * 盤を後手側から見ている(反転表示)か。

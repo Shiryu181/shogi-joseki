@@ -154,3 +154,16 @@ export function dueToday(
     leftover: queue.length - shown.length,
   };
 }
+
+/** 合格した章の数。仕上がっている全戦法の先手・後手の章をまとめて数える。 */
+export function passedChapterCount(results: Record<string, ExamResult>): number {
+  const ids = new Set<string>();
+  for (const id of READY_STRATEGY_IDS) {
+    const n = chapterCounts(id);
+    for (const side of ["gote", "sente"] as const) {
+      if (n[side] === 0) continue;
+      for (const c of pathFor(id, side).chapters) if (results[c.course.id]?.passed) ids.add(c.course.id);
+    }
+  }
+  return ids.size;
+}

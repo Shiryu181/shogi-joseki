@@ -36,6 +36,8 @@ function App() {
   const [learnRestart, setLearnRestart] = useState(false);
   // 章のページから認定試験をすぐ始めるときの章。一覧から入ったときは undefined。
   const [examAuto, setExamAuto] = useState<number | undefined>(undefined);
+  // 「このアプリについて」を閉じたときに戻る先(ホームの末尾のリンクから入ったか、設定から入ったか)。
+  const [aboutFrom, setAboutFrom] = useState<"home" | "settings">("home");
 
   // ?dev=1 のときだけ開発用画面(Sandbox/分岐デモ)への入口を出す。通常のユーザーの目には触れない。
   const [devMode] = useState(() => {
@@ -117,7 +119,7 @@ function App() {
             allChapters={allChapters}
             onReview={() => setScreen("review")}
             onSettings={() => setScreen("settings")}
-            onAbout={() => setScreen("about")}
+            onAbout={() => { setAboutFrom("home"); setScreen("about"); }}
             onOpenStrategy={openStrategy}
             onContinue={(index) => startLearn(index, "home", false)}
           />
@@ -143,7 +145,7 @@ function App() {
           />
         )}
         {screen === "review" && <Review courses={reviewCourses} onBack={() => setScreen("home")} />}
-        {screen === "settings" && <Settings onBack={() => setScreen("home")} />}
+        {screen === "settings" && <Settings onBack={() => setScreen("home")} onAbout={() => { setAboutFrom("settings"); setScreen("about"); }} />}
         {screen === "exam" && (
           <Exam
             chapters={learningPath.chapters}
@@ -168,7 +170,7 @@ function App() {
           />
         )}
 
-        {screen === "about" && <About onBack={() => setScreen("home")} />}
+        {screen === "about" && <About onBack={() => setScreen(aboutFrom)} />}
 
         {screen === "devMenu" && (
           <div className="devmenu-wrap">

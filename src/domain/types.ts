@@ -13,7 +13,7 @@ export interface Strategy {
   name: string; // "居飛車"
   kana: string; // "いびしゃ"
   category: Category;
-  popularity: number; // 人気順ソート・★表示用
+  popularity: number; // 人気順ソート用
   level: string; // "入門〜" 等
   description: string;
 }
@@ -43,7 +43,7 @@ export interface JosekiCourse {
    * 「仕掛けが決まりました」等に差し替えるために使う。
    */
   goalLabel?: string; // 理想陣形の説明
-  goalSfen?: string; // 理想陣形に到達した局面(達成判定用)
+  goalSfen?: string; // 理想陣形に到達した局面(終点の判定用)
   root: JosekiNode;
 }
 
@@ -71,7 +71,7 @@ export interface JosekiMove {
    * 「別の手も同じくらい良い」手(エンジンで測った次善手との差が小さい手)。
    * 出題はするが、違う手を指されたときに「不正解」ではなく
    * 「その手も悪くないが、この講座ではこう進める」と穏やかに返す。
-   * 以前はこの手を出題から外していたが、連続すると「途中からなぞりになった」ように
+   * 以前はこの手を出題から外していたが、連続すると「途中から作業になった」ように
    * 見えてしまったため、出題を続けて返し方だけ変える形にした。
    */
   openEnded?: boolean;

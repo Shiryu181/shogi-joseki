@@ -3,8 +3,8 @@ import { create } from "zustand";
 /**
  * 学習の記録。どの問題をいつ正解したか、次にいつ出すかを端末に保存する。
  *
- * なぜ必要か: これまで保存していたのは累計ポイントだけで、どの手を覚えたかが
- * 残らなかった。そのため2周目も1周目と同じ258手をなぞり直すことになり、
+ * なぜ必要か: これまでは累計の点数だけを保存していて、どの手を覚えたかが
+ * 残らなかった。そのため2周目も1周目と同じ258手を最初から繰り返すことになり、
  * 「何周もして覚える」が現実的な時間に収まらない。
  *
  * 間隔反復(SRS)の考え方: 正解するたびに次の出題を先延ばしし、間違えたら戻す。
@@ -20,7 +20,7 @@ const INTERVALS_NORMAL = [1, 3, 7, 21, 60];
 /** 急所は短めに回す。 */
 const INTERVALS_SHARP = [1, 2, 5, 14, 30];
 
-/** 連続2回正解で「覚えた」とみなす。章の達成率はこの数で数える。 */
+/** 連続2回正解で「覚えた」とみなす。章ごとの覚えた数はこの数で数える。 */
 export const LEARNED_STREAK = 2;
 
 /**
@@ -45,8 +45,6 @@ export interface ItemRecord {
 
 interface Saved {
   items: Record<string, ItemRecord>;
-  /** 学習した日(YYYY-MM-DD)の並び。連続日数の計算に使う。新しい順。 */
-  days: string[];
 }
 
 /** 問題のキー。局面(手数は落とす)と、その局面で指すべき手。 */
@@ -66,15 +64,18 @@ function addDays(from: string, n: number): string {
 
 function load(): Saved {
   try {
+    // 廃止したポイントの保存は、読まれないまま残さず消す。
+    localStorage.removeItem("joseki-dojo:points:v1");
     const raw = localStorage.getItem(KEY);
     if (raw) {
+      // 以前の保存には学習した日の並び(days)も入っている。使わないので読み捨てる。
       const s = JSON.parse(raw) as Saved;
-      if (s && typeof s === "object" && s.items) return { items: s.items, days: s.days ?? [] };
+      if (s && typeof s === "object" && s.items) return { items: s.items };
     }
   } catch {
     /* 読めない環境(プライベートモード等)では記録なしで始める */
   }
-  return { items: {}, days: [] };
+  return { items: {} };
 }
 
 function save(s: Saved) {
@@ -83,25 +84,6 @@ function save(s: Saved) {
   } catch {
     /* 保存できなくても学習は続けられるようにする */
   }
-}
-
-/**
- * 連続日数。今日か昨日から遡って、日付が途切れるまで数える。
- * 「今日まだ学習していない」場合でも、昨日やっていれば連続は途切れていないので
- * 昨日を起点にも数える(その日のうちに再開できる猶予を持たせる)。
- */
-export function streakDays(days: string[]): number {
-  if (days.length === 0) return 0;
-  const set = new Set(days);
-  const start = set.has(today()) ? today() : addDays(today(), -1);
-  if (!set.has(start)) return 0;
-  let n = 0;
-  let cur = start;
-  while (set.has(cur)) {
-    n++;
-    cur = addDays(cur, -1);
-  }
-  return n;
 }
 
 export interface ProgressState extends Saved {
@@ -113,8 +95,6 @@ export interface ProgressState extends Saved {
   isDue: (key: string) => boolean;
   /** 覚えた(連続 LEARNED_STREAK 回正解)かどうか。 */
   isLearned: (key: string) => boolean;
-  /** 連続学習日数。 */
-  streak: () => number;
   /** 記録を全部消す。 */
   reset: () => void;
 }
@@ -138,8 +118,7 @@ export const useProgressStore = create<ProgressState>((set, get) => ({
     };
     // 試験で落とした印は、次に正解したときに外す(間違えたままなら残す)。
     if (!correct && prev?.examMissed) item.examMissed = true;
-    const days = cur.days.includes(d) ? cur.days : [d, ...cur.days].slice(0, 400);
-    const next: Saved = { items: { ...cur.items, [key]: item }, days };
+    const next: Saved = { items: { ...cur.items, [key]: item } };
     save(next);
     set(next);
   },
@@ -162,7 +141,7 @@ export const useProgressStore = create<ProgressState>((set, get) => ({
         examMissed: true,
       };
     }
-    const next: Saved = { items, days: cur.days };
+    const next: Saved = { items };
     save(next);
     set(next);
   },
@@ -177,12 +156,8 @@ export const useProgressStore = create<ProgressState>((set, get) => ({
     return (get().items[key]?.streak ?? 0) >= LEARNED_STREAK;
   },
 
-  streak() {
-    return streakDays(get().days);
-  },
-
   reset() {
-    const empty: Saved = { items: {}, days: [] };
+    const empty: Saved = { items: {} };
     save(empty);
     set(empty);
   },

@@ -259,7 +259,3 @@ export function summarize(marked: { card: { sharp: boolean }; correct: boolean }
   };
 }
 
-/** progressStore の記録から、章ごとの受験可否を求めるための薄い入口。 */
-export function examReadiness(course: JosekiCourse): boolean {
-  return canTake(course, useProgressStore.getState().items);
-}
