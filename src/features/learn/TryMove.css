@@ -1,90 +1,91 @@
-/* 「この手を指したらどうなるか」を試すパネル。 */
-.trypanel .try-head {
+/* 「この手を指したらどうなるか」の檜の板(下から出るシート)。盤は隠さず、読み筋の局面を見せる。 */
+.trysheet {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  max-width: 406px;
+  margin: 0 auto;
+  z-index: 20;
+  max-height: calc(100dvh - 24px);
+  overflow-y: auto;
+  box-shadow: 0 6px 24px rgba(20, 14, 6, 0.45);
+}
+.trysheet p {
+  margin: 0;
+}
+.try-head {
+  margin: 0 0 6px;
   font-family: var(--disp);
-  font-size: 14.5px;
-  font-weight: 600;
-  color: var(--brown-ink);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
 }
 .try-note {
-  color: var(--ink-soft);
-  margin-top: 6px !important;
-}
-.try-verdict {
-  margin-top: 8px !important;
-  font-family: var(--disp);
   font-size: 15px;
-  font-weight: 600;
+  color: var(--ink);
+  margin: 4px 0 12px !important;
+}
+.try-eval {
+  font-family: var(--disp);
+  font-size: 18px;
+  font-weight: 700;
   color: var(--ink);
 }
-/* 何が悪いのか(どの手で何を取られるか)。この欄が主役なので、唯一色面を持たせる。 */
 .try-cause {
-  margin-top: 8px !important;
-  background: var(--gold-soft);
-  border: 1px solid var(--line-2);
-  border-radius: 10px;
-  padding: 9px 11px;
-  font-family: var(--disp);
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.7;
+  margin-top: 4px !important;
+  font-size: 14.5px;
+  line-height: 1.5;
   color: var(--ink);
-}
-.try-line {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 8px !important;
-}
-.try-label {
-  font-size: 11.5px;
-  color: var(--ink-soft);
-}
-.try-move {
-  font-family: var(--kf);
-  font-size: 15px;
-  color: var(--ink);
-  background: var(--card-2);
-  border: 1px solid var(--line-2);
-  border-radius: 8px;
-  padding: 2px 8px;
-  cursor: pointer;
-}
-.try-move.on {
-  background: var(--card);
-  border-color: var(--brown);
-}
-/* 損をする瞬間の手。 */
-.try-move.cause {
-  color: var(--red);
-  border-color: var(--red);
 }
 .try-compare {
-  margin-top: 8px !important;
-  font-size: 12.5px;
-  color: var(--ink-soft);
+  margin-top: 4px !important;
+  font-size: 14px;
+  color: var(--soft);
 }
-.try-compare b {
-  font-family: var(--disp);
-  color: var(--ink);
+/* 読み筋: 44px の行を2列に並べる。見える範囲は2行ぶん、残りは中でスクロール。 */
+.try-rows {
+  list-style: none;
+  margin: 8px 0 10px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 12px;
+  max-height: 88px;
+  overflow-y: auto;
 }
-.try-actions {
+.try-rows li {
+  min-width: 0;
+}
+.try-row {
   display: flex;
-  gap: 6px;
-  margin-top: 10px;
-}
-.try-actions button {
-  flex: 1;
-  border: 1px solid var(--line-2);
-  background: var(--card);
-  border-radius: 8px;
-  padding: 6px;
-  font-size: 12px;
+  align-items: center;
+  width: 100%;
+  height: 44px;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
   font-family: var(--body);
+  font-size: 16px;
   color: var(--ink);
+  text-align: left;
   cursor: pointer;
 }
-.try-actions button:disabled {
-  opacity: 0.4;
-  cursor: default;
+.try-row.on {
+  font-weight: 700;
+}
+.try-row.cause {
+  color: var(--red);
+  font-weight: 700;
+}
+.try-no {
+  display: inline-block;
+  width: 1.5em;
+  font-size: 14px;
+  color: var(--soft);
+  font-weight: 400;
+}
+.try-close {
+  margin-top: 2px;
 }

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Color, Position, moveFromUSI } from "../../domain/shogi";
 import { getEngine } from "../../engine/usiEngine";
+import { evalWords, plainMove } from "../../domain/moveText";
 import { explainLine } from "./tryExplain";
 import type { TryExplain } from "./tryExplain";
 import "./TryMove.css";
@@ -50,6 +51,13 @@ export function TryMove({
   const [bookCp, setBookCp] = useState<number | null>(null);
   const [step, setStep] = useState(0);
   const started = useRef(false);
+  // 呼び出し側が毎回新しい関数を渡しても、効果が走り直さないよう最新の関数を ref に持つ。
+  // (以前は onPreview を依存に入れていたため、呼ぶたびに親が再描画 → 新しい関数 → 効果が再実行 →
+  //  また呼ぶ、の無限ループになり "Maximum update depth exceeded" が出ていた)
+  const previewRef = useRef(onPreview);
+  useEffect(() => {
+    previewRef.current = onPreview;
+  });
 
   useEffect(() => {
     if (started.current) return;
@@ -99,12 +107,12 @@ export function TryMove({
     const info = moveFromUSI(pos, attemptedUsi);
     if (!info || !pos.doMove(info.move)) return;
     if (step === 0 || !explain) {
-      onPreview(pos.sfen, attemptedUsi);
+      previewRef.current(pos.sfen, attemptedUsi);
       return;
     }
     const f = explain.frames[step - 1];
-    if (f) onPreview(f.sfen, f.usi);
-  }, [explain, step, sfenBefore, attemptedUsi, onPreview]);
+    if (f) previewRef.current(f.sfen, f.usi);
+  }, [explain, step, sfenBefore, attemptedUsi]);
 
   // 原因が見つかったら、その手まで自動で進めて見せる。
   useEffect(() => {
@@ -115,7 +123,8 @@ export function TryMove({
     return () => clearTimeout(t);
   }, [explain, step, showCause]);
 
-  useEffect(() => () => onPreview(null, null), [onPreview]);
+  // 閉じる(アンマウント)ときだけ盤を元の局面に戻す。
+  useEffect(() => () => previewRef.current(null, null), []);
 
   const verdict =
     diff === null
@@ -126,54 +135,52 @@ export function TryMove({
           ? "指せますが、定跡の手のほうが得です"
           : "この手は損になります";
 
+  // 読み筋の一覧: 最初の行は指した手そのもの、以降が相手と自分の応酬。
+  const rows = explain ? [{ text: attemptedText, step: 0 }, ...explain.frames.map((f, i) => ({ text: plainMove(f.text), step: i + 1 }))] : [];
+
   return (
-    <div className="quizpanel trypanel">
-      <p className="try-head">{attemptedText} を指すと？</p>
+    <div className="dojo-panel trysheet" role="dialog" aria-label={`${attemptedText}を指すと`}>
+      <h3 className="try-head">{attemptedText} を指すと</h3>
 
       {state === "thinking" && <p className="try-note">将棋エンジンが読んでいます…</p>}
       {state === "error" && <p className="try-note">うまく調べられませんでした。もう一度お試しください。</p>}
 
       {state === "done" && explain && (
         <>
-          {verdict && <p className="try-verdict">{verdict}</p>}
-          {/* 原因は「定跡より悪い」と判定したときだけ出す。
-              評価が変わらない手に警告を出すと、かえって誤解を招くため。 */}
-          {showCause && <p className="try-cause">{explain.cause}</p>}
-          {diff !== null && diff >= -60 && (
-            <p className="try-cause">この手でも大きな損はありません。下の進行のように、相手の応手に対応できます。</p>
-          )}
-
-          <p className="try-line">
-            <span className="try-label">その後の進行</span>
-            {explain.frames.map((f, i) => (
-              <button
-                key={`${f.usi}-${i}`}
-                type="button"
-                className={`try-move${step === i + 1 ? " on" : ""}${showCause && explain.causeIndex === i ? " cause" : ""}`}
-                onClick={() => setStep(i + 1)}
-              >
-                {f.text}
-              </button>
-            ))}
+          {cp !== null && <p className="try-eval"><b>{evalWords(cp)}</b></p>}
+          {/* 原因は「定跡より悪い」と判定したときだけ出す。評価が変わらない手に警告を出すと誤解を招くため。 */}
+          <p className="try-cause">
+            {showCause
+              ? plainMove(explain.cause ?? "")
+              : diff !== null && diff >= -60
+                ? "この手でも大きな損はありません。相手の応手に対応できます。"
+                : verdict}
           </p>
-
-          {diff !== null && (
-            <p className="try-compare">
-              定跡の {correctText} と比べて <b>{diff >= 0 ? `+${diff}` : diff}点</b>
-              (プラスなら自分が得。将棋エンジンの評価です)
-            </p>
+          {bookCp !== null && (
+            <p className="try-compare">定跡の {correctText} なら {evalWords(bookCp)}</p>
           )}
+
+          <ol className="try-rows" aria-label="その後の進行">
+            {rows.map((r, i) => (
+              <li key={`${r.text}-${i}`}>
+                <button
+                  type="button"
+                  className={`try-row${step === r.step ? " on" : ""}${showCause && explain.causeIndex === i - 1 ? " cause" : ""}`}
+                  aria-current={step === r.step}
+                  onClick={() => setStep(r.step)}
+                >
+                  <span className="try-no">{i + 1}</span>
+                  {r.text}
+                </button>
+              </li>
+            ))}
+          </ol>
         </>
       )}
 
-      <div className="try-actions">
-        <button type="button" onClick={() => setStep(0)} disabled={step === 0}>
-          指した直後に戻す
-        </button>
-        <button type="button" onClick={onClose}>
-          閉じて元の局面へ
-        </button>
-      </div>
+      <button type="button" className="btn-secondary full try-close" onClick={onClose}>
+        閉じる
+      </button>
     </div>
   );
 }

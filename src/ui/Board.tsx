@@ -98,6 +98,15 @@ export interface PromotionChoice {
   color: Color;
 }
 
+/**
+ * 盤の上に重ねる矢印(答えの手を示す)。from が null なら駒を打つ手で、移動先の升を枠で囲む。
+ * 升の名前は USI(例: "7g")。盤の向き(flipped)に合わせて描く。
+ */
+export interface BoardArrow {
+  from: string | null;
+  to: string;
+}
+
 export interface BoardProps {
   position: Position;
   /** 'from' 強調を出す升(usi)。持ち駒からの手なら null。 */
@@ -139,6 +148,52 @@ export interface BoardProps {
    * 未指定なら従来どおり先手視点(既存の呼び出しは無影響)。
    */
   flipped?: boolean;
+  /** 持ち駒トレイを盤の上下に出さない(呼び出し側が盤の外に自前で出す)。学習画面で使う。 */
+  hideHands?: boolean;
+  /** 盤の上に矢印を重ねる。 */
+  arrow?: BoardArrow | null;
+}
+
+/** USI の升を、盤の描画上の列・行(0..8, 左上が 0)にする。 */
+function cellOf(usi: string, flipped: boolean): { col: number; row: number } {
+  const x = 9 - Number(usi[0]);
+  const y = usi.charCodeAt(1) - 97;
+  return { col: flipped ? 8 - x : x, row: flipped ? 8 - y : y };
+}
+
+/** 盤全体(9×9 マスを 1 単位とする座標)に重ねる矢印。クリックは通す。 */
+function ArrowOverlay({ arrow, flipped }: { arrow: BoardArrow; flipped: boolean }) {
+  const to = cellOf(arrow.to, flipped);
+  const tx = to.col + 0.5;
+  const ty = to.row + 0.5;
+  if (!arrow.from) {
+    return (
+      <svg className="board-arrow" viewBox="0 0 9 9" aria-hidden="true">
+        <rect x={to.col + 0.06} y={to.row + 0.06} width="0.88" height="0.88" rx="0.08" fill="none"
+          strokeWidth="0.09" strokeDasharray="0.22 0.12" />
+      </svg>
+    );
+  }
+  const from = cellOf(arrow.from, flipped);
+  const fx = from.col + 0.5;
+  const fy = from.row + 0.5;
+  const len = Math.hypot(tx - fx, ty - fy) || 1;
+  const ux = (tx - fx) / len;
+  const uy = (ty - fy) / len;
+  const head = 0.44;
+  const half = 0.28;
+  const bx = tx - ux * head;
+  const by = ty - uy * head;
+  const sx = fx + ux * 0.11;
+  const sy = fy + uy * 0.11;
+  const px = -uy * half;
+  const py = ux * half;
+  return (
+    <svg className="board-arrow" viewBox="0 0 9 9" aria-hidden="true">
+      <line x1={sx} y1={sy} x2={bx} y2={by} strokeWidth="0.17" strokeLinecap="round" />
+      <polygon points={`${tx},${ty} ${bx + px},${by + py} ${bx - px},${by - py}`} stroke="none" />
+    </svg>
+  );
 }
 
 function HandTray({
@@ -200,6 +255,8 @@ export function Board({
   promotionChoice = null,
   onPromotionChoice,
   flipped = false,
+  hideHands = false,
+  arrow = null,
 }: BoardProps) {
   const grid = useMemo(() => boardGrid(position), [position]);
   const glow = glowKeys ?? EMPTY_SET;
@@ -213,7 +270,7 @@ export function Board({
 
   return (
     <div className="board-panel">
-      <HandTray
+      {!hideHands && <HandTray
         position={position}
         color={flipped ? Color.BLACK : Color.WHITE}
         label={flipped ? "▲持駒" : "△持駒"}
@@ -223,7 +280,7 @@ export function Board({
           clickableHandColor === "both" || clickableHandColor === (flipped ? Color.BLACK : Color.WHITE)
         }
         flipped={flipped}
-      />
+      />}
       <div className="board-block">
         <div className="files">
           {fileLabels.map((f) => (
@@ -262,6 +319,7 @@ export function Board({
                 );
               }),
             )}
+            {arrow && <ArrowOverlay arrow={arrow} flipped={flipped} />}
           </div>
           <div className="ranks">
             {rankLabels.map((r) => (
@@ -287,7 +345,7 @@ export function Board({
           </div>
         )}
       </div>
-      <HandTray
+      {!hideHands && <HandTray
         position={position}
         color={flipped ? Color.WHITE : Color.BLACK}
         label={flipped ? "△持駒" : "▲持駒"}
@@ -297,7 +355,7 @@ export function Board({
           clickableHandColor === "both" || clickableHandColor === (flipped ? Color.WHITE : Color.BLACK)
         }
         flipped={flipped}
-      />
+      />}
     </div>
   );
 }

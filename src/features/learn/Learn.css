@@ -1,507 +1,330 @@
-.learn-wrap {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  padding: 26px 14px;
+/*
+ * 学習画面(確定版モック 08〜17)。看板 → 細い進み線 → 持ち駒の行 → 盤 → 檜の板(パネル)。
+ * 盤の位置は状態が変わっても動かない。余白は画面の一番下にだけ出る。
+ */
+.learn-screen {
+  padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
 }
 
-.learn-frame {
-  /* 盤を大きく見せるため、画面が広いときは枠も広げる(スマホでは 100%)。 */
-  width: 560px;
-  max-width: 100%;
-  background: var(--app);
-  border-radius: 20px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
-  /* 学習画面ではタブバーを出さないので、下の余白は小さくてよい。 */
-  padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+/* 章の進み具合: 細い線 */
+.learn-prog {
+  height: 4px;
+  flex: none;
+  background: var(--bar-track);
 }
-.abar .learn-head {
-  flex: 1;
+.learn-prog i {
+  display: block;
+  height: 100%;
+  background: var(--bar-fill);
+}
+
+/* ===== 持ち駒の行(盤の上に1行。盤が動かないよう、空でも「なし」を出す) ===== */
+.learn-hands {
+  flex: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding: 12px 8px 0;
+  margin-bottom: 8px;
+}
+.learn-hand {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 36px;
+  padding: 0 8px;
+  background-color: var(--panel);
+  background-image: var(--tx-hinoki);
+  border: 1px solid var(--pbd);
+  border-radius: 3px;
   min-width: 0;
 }
-.head-badges {
-  display: flex;
-  gap: 5px;
-  flex: none;
-}
-.head-badges .badge {
+.learn-hand .tl {
+  font-family: var(--kf);
+  font-size: 13px;
+  color: var(--ink);
+  margin-right: 6px;
   white-space: nowrap;
 }
-
-.abar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 18px 6px;
-}
-.abar .back {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: 1px solid var(--line-2);
-  background: var(--card);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  flex: none;
-  color: var(--ink);
-  padding: 0;
-}
-
-.learn-head {
-  padding: 0;
-}
-.learn-head .tl {
-  font-size: 12px;
-  color: var(--ink-soft);
-  letter-spacing: 0.06em;
-}
-.learn-head h1 {
-  font-family: var(--disp);
-  font-size: 21px;
-  font-weight: 600;
-  margin: 6px 0 2px;
-  letter-spacing: 0.03em;
-}
-
-.toggle-auto {
-  cursor: pointer;
-  border: 1px solid var(--line-2);
-  background: var(--card-2);
-  color: var(--ink-soft);
-  font-family: var(--body);
-}
-.toggle-auto.off {
-  border-color: var(--gold);
-  color: var(--gold);
-  background: var(--gold-soft);
-}
-
-.guidepill {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  justify-content: center;
-  margin: 2px auto 0;
-  width: max-content;
-  background: var(--gold-soft);
-  color: var(--gold);
-  font-size: 11.5px;
-  padding: 6px 12px;
-  border-radius: 20px;
-}
-
-/*
- * 相手の手を自動で指した直後の「解説を読んでください」表示。
- * なぞりガイド(金茶の guidepill)とは役割が違う(操作を促すのではなく読ませる)ので、
- * 落ち着いた配色にして取り違えないようにする。
- */
-.ackpill {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  justify-content: center;
-  margin: 2px auto 0;
-  width: max-content;
-  max-width: calc(100% - 28px);
-  background: var(--card);
-  color: var(--ink-2, var(--ink));
-  border: 1px solid var(--line-2);
-  font-size: 11.5px;
-  padding: 6px 12px;
-  border-radius: 20px;
-  text-align: center;
-}
-
-.learn-navrow {
-  display: flex;
-  gap: 6px;
-  margin: 8px 14px 12px;
-}
-/* ボタンは小さめに。大きいと盤と解説の間で場所を取りすぎる。 */
-.learn-navrow button {
-  flex: 1;
-  border: 1px solid var(--line-2);
-  background: var(--card);
-  border-radius: 8px;
-  padding: 5px 6px;
-  cursor: pointer;
-  color: var(--ink);
-  font-size: 12px;
-}
-.learn-navrow button:disabled {
-  opacity: 0.4;
-  cursor: default;
-}
-.learn-navrow button.primary {
-  flex: 2.4;
-  background: var(--brown);
-  color: var(--on-mark);
-  border-color: var(--brown);
-  font-family: var(--body);
-  font-size: 12px;
-}
-/* 「◀ 戻る」ボタン型のセレクト。押すと過去の手が並び、選ぶとその局面へ戻る。 */
-.back-select {
-  flex: 1;
-  min-width: 0;
-  appearance: none;
-  -webkit-appearance: none;
-  border: 1px solid var(--line-2);
-  background: var(--card);
-  border-radius: 8px;
-  padding: 5px 6px;
-  color: var(--ink);
-  font-size: 12px;
-  font-family: var(--body);
-  text-align: center;
-  cursor: pointer;
-}
-.back-select:disabled {
-  opacity: 0.4;
-  cursor: default;
-}
-
-.goal-banner {
-  margin: 10px 14px 0;
-  background: var(--good-soft);
-  color: var(--good);
-  border-radius: 14px;
-  padding: 15px;
+.learn-hand .none {
   font-size: 13px;
-  line-height: 1.7;
+  color: var(--soft);
 }
-.goal-banner b {
-  font-family: var(--disp);
-  display: block;
-  margin-bottom: 6px;
+/* 持ち駒1種。押せる駒は高さ44pxぶんの当たりを取る(見た目の枠からはみ出す) */
+.learn-hand .hp {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 44px;
+  /* 見た目の間隔は詰めたまま、当たりだけ 44px 四方にする(隣と 4px ずつ重なる) */
+  margin: -4px -4px;
+  padding: 0 2px;
+  background: none;
+  border: 0;
+  border-radius: 3px;
+  cursor: default;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.learn-hand .hp.can {
+  cursor: pointer;
+}
+.learn-hand .hp.selected {
+  background: var(--inset);
+  box-shadow: inset 0 0 0 2px var(--gold);
+}
+.learn-hand .koma {
+  width: 22px;
+  height: 24px;
+}
+.learn-hand .koma .fc {
+  font-size: 13px;
+}
+.learn-hand .capn {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--red);
+  margin: 0 1px 0 0;
+}
+
+/* ===== 盤: 画面の幅いっぱい(左右8px)・枠3px。盤の部品そのものは変えない ===== */
+.learn-screen .board-panel {
+  flex: none;
+  width: 100%;
+  padding: 0 8px;
+  --c: calc((100cqw - 25px) / 9);
+}
+@supports (container-type: inline-size) {
+  .learn-screen .board-panel {
+    --c: calc((100cqw - 25px) / 9);
+  }
+}
+.learn-screen .board-block {
+  margin: 0 auto;
+}
+.learn-screen .files {
+  padding-left: 3px;
+  padding-right: 19px;
+}
+.learn-screen .files div,
+.learn-screen .ranks div {
+  font-size: 12px;
+  line-height: 1.2;
+  color: var(--ink);
+}
+.learn-screen .ranks {
+  width: 19px;
+  padding: 3px 0 3px 3px;
+}
+.learn-screen .board {
+  border: 3px solid var(--board-edge);
+}
+.learn-screen .cell.last,
+.learn-screen .cell.last-strong {
+  background: var(--cellred2);
+}
+.learn-screen .cell.last-to {
+  box-shadow: inset 0 0 0 2px var(--cellline);
+  animation: none;
+}
+
+/* ===== パネル(盤の16px下) ===== */
+.learn-panel {
+  flex: none;
+  margin: 16px 12px 0;
   font-size: 15px;
 }
-
-/*
- * 出題(相手が定跡を外した局面で咎め手を当てる)。
- * なぞりガイドと違って「答えを教えない」画面なので、金茶のガイド色ではなく
- * 赤系にして、今が問われている場面だと一目で分かるようにする。
- */
-.quizpill {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 2px auto 0;
-  width: max-content;
-  max-width: calc(100% - 28px);
-  background: var(--red-soft);
-  color: var(--red);
-  font-size: 11.5px;
-  padding: 6px 12px;
-  border-radius: 20px;
-  text-align: center;
-}
-
-/* 解説は読ませる場所なので、文字は小さくしすぎず、色も薄くしない。 */
-.quizpanel {
-  margin: 8px 14px 0;
-  background: var(--card);
-  border: 1px solid var(--line-2);
-  border-radius: 14px;
-  padding: 13px 14px;
-  font-size: 14px;
-  line-height: 1.8;
-  color: var(--ink);
-}
-.quizpanel p {
+.learn-panel p {
   margin: 0;
 }
-.quizpanel p + p {
+.learn-panel .turn {
+  font-family: var(--disp);
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.45;
+  margin-bottom: 4px;
+}
+.learn-panel .oppline {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+.learn-panel .oppline b {
+  font-weight: 700;
+}
+.learn-panel .oppbig {
+  font-size: 15px;
+  line-height: 1.6;
+}
+.learn-panel .oppbig b {
+  font-family: var(--disp);
+  font-size: 18px;
+}
+.learn-panel .aim {
+  background-color: var(--inset);
+  border-radius: 3px;
+  padding: 12px 16px;
+}
+.learn-panel .aim-t {
+  font-family: var(--disp);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--ink);
+}
+.learn-panel .aim p {
+  margin-top: 4px;
+  font-size: 15px;
+  color: var(--ink);
+}
+.learn-panel .miss-l {
+  font-family: var(--disp);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--red);
+  margin-top: 12px;
+}
+.learn-panel .ans-l {
+  font-family: var(--disp);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 12px 0 10px;
+}
+.learn-panel .good b {
+  font-family: var(--disp);
+  font-size: 20px;
+  color: var(--good);
+}
+.learn-panel .good {
+  margin-bottom: 4px;
+}
+.learn-panel .expl {
+  margin-bottom: 2px;
+  line-height: 1.6;
+}
+.learn-panel .more {
+  margin: 0 0 10px;
+  white-space: pre-line;
+  line-height: 1.6;
+}
+.learn-panel .soft-t {
+  font-family: var(--disp);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  line-height: 1.45;
+}
+.learn-panel .note-s {
+  font-size: 14px;
+  color: var(--soft);
   margin-top: 8px;
 }
-.quiz-head {
-  font-family: var(--disp);
-  font-size: 14.5px;
-}
-.quiz-no {
-  display: inline-block;
-  margin-right: 8px;
-  color: var(--ink-faint);
-  font-size: 11.5px;
-  font-family: var(--body);
-}
-.quiz-note,
-.quiz-comment {
-  color: var(--ink);
-}
-.quiz-wrong {
-  background: var(--red-soft);
-  color: var(--red);
-  border-radius: 10px;
-  padding: 9px 11px;
-}
-.quiz-wrong span {
-  display: block;
-  font-size: 12px;
-  opacity: 0.85;
-}
-.quiz-punish {
-  background: var(--good-soft);
-  color: var(--good);
-  border-radius: 10px;
-  padding: 9px 11px;
-}
-/* 相手の応手を待っている間は「今は指す番ではない」と分かるよう色を落とす。 */
-.quizpill.waiting {
-  background: var(--card);
-  color: var(--ink-soft);
-  border: 1px solid var(--line-2);
-}
-
-/* 「次の一手」クイズ。咎めクイズ(赤)より穏やかな色にして、性質の違いを示す。 */
-.bookpill {
-  display: flex;
+/* 「くわしく ▾」: 文字のボタン(44px) */
+.learn-panel .tbtn {
+  height: 44px;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  margin: 2px auto 0;
-  width: max-content;
-  max-width: calc(100% - 28px);
-  background: var(--brown-soft);
-  color: var(--brown-ink);
-  font-size: 11.5px;
-  padding: 6px 12px;
-  border-radius: 20px;
-  text-align: center;
-}
-
-/* 狭い画面では左右の余白を削って、そのぶん盤を大きくする。 */
-@media (max-width: 480px) {
-  .learn-wrap {
-    padding: 16px 5px;
-  }
-}
-
-/*
- * 盤と操作ボタンが1画面に収まらないという指摘を受けた圧縮レイアウト。
- * ヘッダー(タイトル・バッジ)が縦を占めていたので、狭い画面では小さくする。
- * 操作ボタン(⏮ ◀ 次へ)は盤の直後に置き、解説はその下にスクロールさせる。
- */
-@media (max-width: 480px) {
-  .learn-wrap {
-    padding: 4px 5px;
-  }
-  .head-badges .badge {
-    font-size: 10.5px;
-    padding: 3px 7px;
-  }
-  .abar {
-    padding: 6px 12px 0;
-    gap: 8px;
-  }
-  .abar .back {
-    width: 30px;
-    height: 30px;
-  }
-  .learn-head .tl {
-    display: none; /* 「定跡道場 ・ 学習」はタブでも分かるので省く */
-  }
-  .learn-head h1 {
-    font-size: 16px;
-    margin: 0;
-    /* 長い戦法名で2行になり、そのぶん盤が下がるのを防ぐ */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .binfo {
-    margin: 4px 10px 2px !important;
-    gap: 5px;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .binfo::-webkit-scrollbar {
-    display: none;
-  }
-  .binfo .badge {
-    font-size: 10.5px;
-    padding: 3px 7px;
-    white-space: nowrap;
-  }
-  .board-block {
-    margin: 4px auto !important;
-  }
-  .tray {
-    min-height: 24px;
-    padding: 3px 6px;
-  }
-  .learn-navrow {
-    margin: 6px 10px 6px;
-  }
-  .quizpanel,
-  .explain {
-    margin-top: 4px;
-    padding: 10px 12px 11px;
-  }
-  .opp-move {
-    font-size: 13px;
-    line-height: 1.55;
-  }
-  .quizpanel p + p {
-    margin-top: 6px;
-  }
-  .learn-navrow button {
-    padding: 5px 4px;
-  }
-}
-
-/* 出題パネルの先頭に出す「相手が指した手＋その解説」。 */
-/* 相手の手は地の文として置く。囲みを付けると「ねらい」と並んで見えて、
-   視線の引き付けが分散するため、色面も罫も付けない。 */
-.opp-move {
-  padding: 0 2px;
-  color: var(--ink-soft);
-  font-size: 13.5px;
-  line-height: 1.7;
-}
-
-/* 出題時に見せる「ねらい」。答えの手の解説を升だけ伏せたもの。 */
-/*
- * 次の一手の「ねらい」。ユーザーが考える手がかりで、パネルの主役。
- * 強調は装飾(グラデーション・影・色罫)ではなく、見出しと同じ明朝体と
- * 文字の大きさで行う。色面は他の要素と同じ gold-soft の平塗りにとどめ、
- * アプリ全体の和紙・木肌の落ち着いた調子から外れないようにする。
- */
-.quiz-aim {
-  background: var(--gold-soft);
-  border: 1px solid var(--line-2);
-  border-radius: 10px;
-  padding: 7px 11px 8px;
+  background: none;
+  border: 0;
+  padding: 0;
   color: var(--ink);
-  font-family: var(--disp);
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.6;
-  letter-spacing: 0.02em;
-}
-.quiz-aim .quiz-no {
-  display: block;
-  margin: 0 0 1px;
-  font-family: var(--body);
-  font-size: 11px;
-  font-weight: 400;
-  color: var(--ink-soft);
-  letter-spacing: 0.04em;
-}
-.quiz-aim .quiz-no::after {
-  content: "のねらい";
-}
-
-/* 急所。最善手と次善手の差が100点以上ある局面。実測で駒組みの2%・ぶつかった後の32%
- * しかないので、ここだけは考えてほしい。色面を足すとねらいへの視線が散るため、
- * ラベルの文言と字送りだけで示す。 */
-.quiz-aim.sharp .quiz-no {
-  color: var(--ink);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-}
-.quiz-aim.sharp .quiz-no::after {
-  content: "の急所 — 外すと損をします";
-}
-
-/* 「別の手も同じくらい良い」局面で違う手を指したとき。不正解の赤ではなく落ち着いた色で返す。 */
-.quiz-wrong.soft {
-  background: var(--brown-soft);
-  color: var(--brown-ink);
-}
-
-/* 章の帯。戦法を選んだあと盤の上で通す章の並び。今いる章を濃く、済んだ章を薄く。 */
-.chapters {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  overflow-x: auto;
-  padding: 0 14px 6px;
-  scrollbar-width: none;
-}
-.chapters .badge {
-  flex: none;
-  white-space: nowrap;
-}
-.chapters::-webkit-scrollbar {
-  display: none;
-}
-.chapter {
-  flex: none;
-  font-size: 11px;
-  padding: 3px 9px;
-  border-radius: 20px;
-  border: 1px solid var(--line-2);
-  color: var(--ink-faint);
-  background: var(--card);
-  white-space: nowrap;
-}
-.chapter.on {
-  color: var(--on-mark);
-  background: var(--brown);
-  border-color: var(--brown);
-}
-.chapter.done {
-  color: var(--ink-soft);
-  background: var(--card-2);
-}
-/* 2章目以降の冒頭に出す案内。 */
-.chapter-intro {
-  margin: 2px 14px 0;
-  padding: 4px 10px;
-  border-radius: 8px;
-  background: var(--card-2);
-  color: var(--ink-soft);
-  font-size: 11.5px;
-  line-height: 1.5;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* 手の効果の実演。解説パネルの下に「▶ △同銀と取ると」のようなボタンを並べ、押すと盤上で再生する。 */
-.demo-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: 6px 14px 0;
-}
-.demo-btn {
-  border: 1px solid var(--line-2);
-  background: var(--gold-soft);
-  color: var(--brown-ink);
-  border-radius: 20px;
-  padding: 5px 12px;
-  font-size: 12.5px;
-  font-family: var(--body);
+  font: 600 15px var(--body);
   cursor: pointer;
 }
-.demo-panel .demo-title {
+.learn-panel .btn-secondary.full {
+  width: 100%;
+}
+.learn-panel .tbtn + .btn-secondary {
+  margin-top: 8px;
+}
+.learn-panel .btn-secondary.mb {
+  margin-bottom: 10px;
+}
+.learn-panel .btn-primary.full {
+  width: 100%;
+  margin-top: 4px;
+}
+
+/* ===== 実演 ===== */
+.learn-panel .dt {
   font-family: var(--disp);
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--brown-ink);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
 }
-.demo-moves {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 6px !important;
+.learn-panel .mlist {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0 8px;
 }
-.demo-move {
-  font-family: var(--kf);
+.learn-panel .mlist li {
   font-size: 15px;
-  color: var(--ink-faint);
-  transition: color 0.2s;
+  padding: 5px 0;
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule);
 }
-.demo-move.on {
+.learn-panel .mlist li span {
+  display: inline-block;
+  width: 1.4em;
+  color: var(--soft);
+}
+.learn-panel .mlist li.cur {
+  font-weight: 700;
+}
+.learn-panel .step {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2px 0 10px;
+}
+.learn-panel .step .meta {
+  font-size: 15px;
   color: var(--ink);
 }
-.demo-text {
-  margin-top: 8px !important;
-  color: var(--ink);
-  font-weight: 600;
+.learn-panel .step .sq {
+  width: 56px;
+  padding: 0;
+}
+.learn-panel .demo-text {
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+/* ===== 章を終えた ===== */
+.learn-panel .done {
+  font-family: var(--disp);
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+.learn-panel .done .nw {
+  white-space: nowrap;
+}
+.learn-panel .res-p {
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+.learn-panel .res-p:last-of-type {
+  margin-bottom: 14px;
+}
+.learn-panel .res-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.learn-panel .res-actions .btn-primary {
+  margin: 0;
+  height: auto;
+  min-height: 52px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  line-height: 1.35;
+  text-align: center;
+  text-wrap: balance;
 }

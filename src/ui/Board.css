@@ -151,6 +151,7 @@
   color: var(--ink-soft);
 }
 .board {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(9, var(--c));
   grid-template-rows: repeat(9, var(--c));
@@ -267,7 +268,8 @@
   transform: rotate(180deg);
 }
 .koma.pr .fc {
-  color: var(--red);
+  /* 成駒の朱は駒の地色(明るい木)の上に載る。テーマで明るくなる --red ではなく駒専用の朱を使う */
+  color: var(--komared, var(--red));
 }
 .koma.ghost {
   opacity: 0.5;
@@ -313,4 +315,16 @@
   .cell.last-to {
     animation: none;
   }
+}
+
+/* 答えを示す矢印(盤の上に重ねる)。色は盤のトークン。 */
+.board-arrow {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  stroke: var(--arrow);
+  fill: var(--arrow);
+  opacity: 0.92;
 }

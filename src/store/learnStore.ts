@@ -7,7 +7,6 @@ import {
   Position,
   Square,
   moveFromUSI,
-  parseUSIMove,
   tryMovePreview,
 } from "../domain/shogi";
 import type { DropDests, MoveDests } from "../domain/legalMoves";
@@ -15,12 +14,12 @@ import { computeDropDests, computeMoveDests } from "../domain/legalMoves";
 import type { JosekiCourse, JosekiMove, JosekiNode, MoveDemo } from "../domain/types";
 import type { Selection } from "./sandboxStore";
 import { loadIbishaVsShikenbishaSente } from "../domain/josekiLoader";
+import { plainMove, splitExplanation, cleanNote } from "../domain/moveText";
 
-/**
- * 相手(course.mySide の逆の手番)の手を自動で進めるまでの間(ms)。
- * practiceStore の OPPONENT_MOVE_DELAY_MS と同じ値(手が急に切り替わらないよう一呼吸置く)。
- */
-const OPPONENT_MOVE_DELAY_MS = 650;
+/** 相手の手が自動で指されるまでの間(ms)。手が急に切り替わらないよう一呼吸置く。 */
+const OPPONENT_MOVE_DELAY_MS = 500;
+/** 相手の手を指したあと、その意図を読ませてから自分の番にするまでの間(ms)。 */
+const OPPONENT_SHOWN_MS = 700;
 
 export function positionFromNode(node: JosekiNode): Position {
   const position = new Position();
@@ -28,208 +27,141 @@ export function positionFromNode(node: JosekiNode): Position {
   return position;
 }
 
-/** コースの mySide に対応する tsshogi の Color。practiceStore の myColorOf と同じ定義。 */
+/** コースの mySide に対応する tsshogi の Color。 */
 function myColorOf(course: JosekiCourse): Color {
   return course.mySide === "sente" ? Color.BLACK : Color.WHITE;
 }
 
-/**
- * 相手の手を自動で指した直後に「解説を読む時間」を作るための一時停止状態。
- * 盤には既に手が適用されている(= ユーザーは盤を操作しなくてよい)が、
- * その手の解説を表示したまま止まり、「次へ」を押すまで先に進まない。
- * これが null でない間は自動進行もガイド表示も行わない。
- */
-export interface AckMove {
-  /** 指された手の番号(第n手)。 */
-  moveNumber: number;
-  /** ▲２六歩 のような表示テキスト。 */
-  moveText: string;
-  note?: string;
-  kind: JosekiMove["kind"];
-  punishNote?: string;
-  /** その手を指す前の局面(JosekiNode)の解説。 */
-  comment?: string;
-  /**
-   * 誰が指した手か。次の一手クイズで正解したあとは自分の手で一旦止まり、
-   * 解説を読んでから「次へ」で相手を進める(進む速さを自分で決められるように)。
-   */
-  by?: "me" | "opponent";
-  /** その手の効果の実演(あれば)。正解後の解説パネルから盤上で再生できる。 */
-  demos?: MoveDemo[];
-}
-
-/**
- * 「相手が定跡を外したので咎めてください」の出題状態。
- *
- * なぜこの形にしたか: 定跡から外れたこと自体は咎める理由にならない。実測でも
- * 駒組みの範囲では定跡手を逃しても損は±30点程度しかなく、必ず見つけるべき手は
- * ほぼ存在しなかった(scripts/analyze-critical.cjs)。急所ができるのは相手が
- * 明確に損な手を指した直後なので、そこだけを出題する。
- */
-/**
- * 「次の一手」クイズ。自分の手番のたびに、定跡手を自分で見つけてもらう。
- *
- * 咎めクイズ(QuizState)との違い: あちらは相手が悪手を指した局面にしか作れないので
- * 数が限られる。こちらは自分の手番すべてで出せるので、駒組みの段階から
- * 考えながら進められる。ただし駒組みでは「その手でないと劣勢」ではないため、
- * 外したときの文言を強く書かない(定跡手とその理由を示すだけにする)。
- */
-export interface BookQuizState {
-  /**
-   * 直近の誤答。null なら未回答。openEnded は「別の手も同じくらい良い局面」で、
-   * 不正解ではなく『この講座ではこう進める』と穏やかに返すための印。
-   */
-  wrong: {
-    attemptedText: string;
-    correctText: string;
-    openEnded?: boolean;
-    /**
-     * 指した手がエンジンの許容手(最善から100点以内)に入っていた。
-     * 「悪い手ではないが、この講座は定跡手で進める」と返すための印。
-     * openEnded(手で付けた印)より優先する。こちらは実測に基づくため。
-     */
-    accepted?: boolean;
-    /** 指そうとした手と定跡手(USI)。「この手を試す」でエンジンに比べさせるために持つ。 */
-    attemptedUsi?: string;
-    correctUsi?: string;
-  } | null;
-  /** 「答えを見る」が押された。以降はガイドを出してなぞらせる。 */
-  revealed: boolean;
-}
-
-export interface QuizState {
-  /** 分岐点のノード。咎め終わったらここへ戻り、本線を続ける。 */
-  anchorNode: JosekiNode;
-  /** 分岐点の手数(戻ったときの表示用)。 */
-  anchorMoveNumber: number;
-  /** 相手が指した逸れ手。 */
-  deviation: JosekiMove;
-  /** 逸れ手の表示テキスト(例: ☖６四歩)。 */
-  deviationText: string;
-  /** 直近の誤答(正解するかクリアするまで表示)。 */
-  wrong: { attemptedText: string; correctText: string } | null;
-  /** 咎めの手順の何手目か(0 = 逸れ手の直後の最初の一手)。表示文の出し分けに使う。 */
-  step: number;
-  /** 咎めの手順を最後まで指し終えたか。ここまで来たら本線へ戻れる。 */
-  solved: boolean;
-}
-
-/** 指定した分岐インデックスの手(無ければ null = 末端/理想陣形)。 */
+/** 指定した分岐インデックスの手(無ければ null = 末端)。 */
 export function branchMove(node: JosekiNode, index: number): JosekiMove | null {
   return node.branches[index] ?? null;
 }
 
-/**
- * 自動進行(相手の手)で採用する本線の手。ユーザーが BranchNav で別の分岐(変化/逸れ手)を
- * プレビュー中でも、自動進行は必ず本線を指す(プレビューは selectedBranchIndex の見せ方
- * だけを変えるものであり、実際にノードを進める手ではないため)。
- */
-function mainBranchOf(node: JosekiNode): JosekiMove | null {
+/** 自動進行・出題で使う本線の手。 */
+export function mainBranchOf(node: JosekiNode): JosekiMove | null {
   return node.branches.find((b) => b.kind === "main") ?? node.branches[0] ?? null;
+}
+
+/**
+ * 指された手の記録(画面に出す文言の素)。
+ * 相手の手は「意図の1行」に、自分の正解手は「正解」の結果パネルに使う。
+ */
+export interface AckMove {
+  /** 指された手の番号(第n手)。 */
+  moveNumber: number;
+  /** ▲2六歩 のような表示テキスト。 */
+  moveText: string;
+  kind: JosekiMove["kind"];
+  by: "me" | "opponent";
+  /** その手の解説(自分の手では「正解」の下に出す1〜2行)。相手の手では意図の1行の素。 */
+  note?: string;
+  /** 「くわしく」で開く続きの解説(長い解説の残り・局面の解説・咎め方)。 */
+  more?: string;
+  /** その手の効果の実演(あれば)。結果パネルから盤上で再生できる。 */
+  demos?: MoveDemo[];
+  /** 相手が定跡を外した手。 */
+  deviation?: boolean;
+}
+
+/** 自分の手番での「次の一手」クイズの状態。 */
+export interface BookQuizState {
+  /** ここまでに外した回数。1回目は赤い一行、2回目からは矢印で答えを示す。 */
+  misses: number;
+  /**
+   * 直近の誤答。null なら未回答。
+   * kind: bad = 定跡の手ではない / accepted = エンジンが許容した手(最善から100点以内) /
+   *       openEnded = 別の手も同じくらい良いと手で印を付けた局面。
+   */
+  wrong: {
+    kind: "bad" | "accepted" | "openEnded";
+    attemptedText: string;
+    correctText: string;
+    attemptedUsi: string;
+    correctUsi: string;
+  } | null;
+}
+
+/** 本線を終えたあとに出す、相手の逸れ手(咎めの問題)。 */
+export interface DevItem {
+  /** 逸れる直前の局面。 */
+  anchor: JosekiNode;
+  move: JosekiMove;
+  /** 初形から anchor の手前までのノード(戻り先・手数の数え方に使う)。 */
+  path: JosekiNode[];
+}
+
+/**
+ * 本線にある相手の逸れ手を、出てくる順に集める。startDepth より前(章が始まる前の
+ * 共通の序盤)にある逸れ手は、前の章で扱うので含めない。
+ */
+function collectDeviations(course: JosekiCourse, startDepth: number): DevItem[] {
+  const out: DevItem[] = [];
+  const path: JosekiNode[] = [];
+  let node = course.root;
+  for (;;) {
+    if (path.length >= startDepth) {
+      for (const b of node.branches) {
+        if (b.kind === "deviation" && b.child) out.push({ anchor: node, move: b, path: [...path] });
+      }
+    }
+    const m = mainBranchOf(node);
+    if (!m || !m.child) break;
+    path.push(node);
+    node = m.child;
+  }
+  return out;
 }
 
 interface LearnState {
   course: JosekiCourse;
   currentNode: JosekiNode;
-  /** 「1手戻る」「最初へ」用の訪問履歴(現在ノードは含まない) */
+  /** 訪問履歴(現在ノードは含まない)。手数の数え方に使う。 */
   nodeHistory: JosekiNode[];
-  /** 現局面でどの分岐(currentNode.branches の何番目)をたどっているか。0 = 本線がデフォルト。 */
-  selectedBranchIndex: number;
-  /** currentNode.sfen から再構成した局面(選択中の手はまだ適用されていない状態) */
+  /** currentNode.sfen から再構成した局面 */
   position: Position;
-  /**
-   * 相手(mySide の逆)の手を一呼吸置いて自動で進めるか。既定 true。
-   * トグル「相手の手も自分でなぞる」で false にすると、従来どおり全手を手動でなぞる挙動に戻る。
-   */
-  autoAdvanceOpponent: boolean;
-  /**
-   * 相手の手を自動で指した直後の「解説の確認待ち」。null でない間は
-   * 盤のガイドを出さず、自動進行も止めて、ユーザーが読み終えるのを待つ。
-   */
-  pendingAck: AckMove | null;
-  /**
-   * 直前に相手が指した手の情報。次の一手クイズでは確認待ち(pendingAck)で
-   * 止めず、この情報を出題パネルに並べて表示することで「相手の手を読む → 次を考える」を
-   * 1画面・1アクションで進められるようにする。
-   */
-  lastOpponent: AckMove | null;
-  /** 「次へ」で確認待ちを解除する。解除後にまた自動進行の判定を行う。 */
-  acknowledgeMove: () => void;
-  /**
-   * 出題中の状態。null = 通常の学習(なぞり)。
-   * null でない間は盤で任意の合法手を指せる(咎め手を自分で見つけてもらうため)。
-   */
-  quiz: QuizState | null;
-  /**
-   * すでに出題した分岐点のノードid。咎めを終えて本線へ戻ったときに
-   * 同じ局面でもう一度出題してしまい、先へ進めなくなるのを防ぐ。
-   */
-  askedQuizIds: string[];
-  /**
-   * 直前に盤に現れた手(USI)。どの駒が動いたかを盤上で示すために使う。
-   * 相手の手は自動で進むので、これが無いと見落としやすい。
-   */
+  /** 直前に盤に現れた手(USI)。どの駒が動いたかを盤上で示す。 */
   lastMoveUsi: string | null;
+  /** 章が始まった手数(0 = 初手から)。共通の序盤を飛ばして始めた章では逸れ手の対象を絞る。 */
+  startDepth: number;
   /**
-   * 自分の手番での「次の一手」クイズ。null = ガイドを出してなぞる従来動作。
-   * bookQuizEnabled が false のときは常に null。
+   * 相手の手の進み具合。waiting = 指す前、shown = 指した直後(意図を読む時間)、idle = それ以外。
    */
+  oppPhase: "idle" | "waiting" | "shown";
+  /** 直前に相手が指した手。自分の番の画面に「相手 ▲2六歩 — …」と並べる。 */
+  lastOpponent: AckMove | null;
+  /** 自分の番の出題。null = 出題していない(相手が指している・結果表示中・章の終わり)。 */
   bookQuiz: BookQuizState | null;
-  /** 「次の一手」クイズを出すか。既定 true。 */
-  bookQuizEnabled: boolean;
-  /** 「次の一手」クイズの出題を切り替える。 */
-  setBookQuizEnabled: (value: boolean) => void;
-  /** 次の一手クイズで盤の升をクリックしたときの処理。 */
-  bookSelectSquare: (square: Square) => void;
-  /** 次の一手クイズで持ち駒をクリックしたときの処理。 */
-  bookSelectHand: (pieceType: PieceType, color: Color) => void;
-  /** 誤答表示を消してやり直す。 */
-  bookRetry: () => void;
-  /** 答えを見る(以降はガイドを出してなぞらせる)。 */
-  bookReveal: () => void;
-  /** 出題中に自分の手番で選べる合法手。通常時は空。 */
+  /** 自分が正解した直後の結果パネル。「次へ」で解除する。 */
+  pendingAck: AckMove | null;
+  /** 本線を終えたあとの逸れ手の問題。 */
+  devQueue: DevItem[];
+  /** 次に出す逸れ手の番号(= すでに出した数)。 */
+  devNext: number;
+  /** いま咎めている逸れ手。本線の間は null。 */
+  dev: DevItem | null;
+  /** 章を終えた(本線も逸れ手もすべて済んだ)。 */
+  chapterDone: boolean;
   moveDests: MoveDests;
   dropDests: DropDests;
   selected: Selection;
-  /** 出題中に盤の升をクリックしたときの処理(選択→着手)。 */
-  quizSelectSquare: (square: Square) => void;
-  /** 出題中に持ち駒をクリックしたときの処理。 */
-  quizSelectHand: (pieceType: PieceType, color: Color) => void;
-  /** 誤答の表示を消してやり直す。 */
-  quizRetry: () => void;
-  /** 咎め方を見せてもらう(答えを見る)。 */
-  quizReveal: () => void;
-  /** 咎めが終わったら分岐点へ戻り、本線を続ける。 */
-  quizReturnToMainLine: () => void;
-  /** 光っている升(ガイドの移動先)をクリックしたときだけ進む。それ以外は無視する。 */
-  attemptSquare: (square: Square) => void;
-  /** 「なぞって次へ」ボタン。選択中の分岐の手をそのまま適用する。 */
-  advance: () => void;
-  /** 現局面の分岐(本線/変化/逸れ手)を選び直す。ノードは移動しない(プレビューのみ)。 */
-  chooseBranch: (index: number) => void;
-  goBack: () => void;
-  goToStart: () => void;
-  /**
-   * 本線の n 手目を指す直前の局面へ移動する(n=1 で初形)。
-   * 「最初へ」ボタンは使われないという指摘を受け、代わりに手数を選んで戻れるようにした。
-   */
+  /** 盤の升をクリックしたときの処理(選択→着手)。 */
+  bookSelectSquare: (square: Square) => void;
+  /** 持ち駒をクリックしたときの処理。 */
+  bookSelectHand: (pieceType: PieceType, color: Color) => void;
+  /** 結果パネルの「次へ」。相手の手が自動で進む。 */
+  acknowledgeMove: () => void;
+  /** 本線の n 手目を指す直前の局面から始める(n=1 で初形)。 */
   goToMove: (n: number) => void;
-  /** 表示するコース自体を差し替える(本物のコース ⇔ 分岐ナビ動作確認用デモの切替に使う)。 */
+  /** 表示するコースを差し替えて、最初から始める。 */
   loadCourse: (course: JosekiCourse) => void;
-  /** トグルUIから呼ぶ。切替時に保留中の自動進行タイマーを必ず破棄してから組み直す。 */
-  setAutoAdvanceOpponent: (value: boolean) => void;
-  /**
-   * Learn画面がアンマウントされた(他画面へ移動した)ときに呼ぶ。保留中の自動進行タイマーを
-   * 破棄し、画面を見ていない間に裏で手が進み続けるのを防ぐ。
-   */
+  /** Learn画面を離れた。保留中のタイマーを破棄し、裏で手が進み続けるのを防ぐ。 */
   pauseAutoAdvance: () => void;
-  /** Learn画面がマウントされた(戻ってきた)ときに呼ぶ。現在の状態に応じて必要ならタイマーを再設定する。 */
+  /** Learn画面に戻った。状況に応じて必要なタイマーを張り直す。 */
   resumeAutoAdvance: () => void;
 }
 
 /**
- * 自動進行タイマー(モジュール単位で1つだけ)。practiceStore の opponentTimer と同じ設計。
- * スケジュールし直す関数(scheduleAutoAdvance)は必ず最初にこれを破棄してから判定するため、
+ * 自動進行タイマー(モジュール単位で1つだけ)。scheduleAutoAdvance は必ず最初にこれを破棄するので、
  * 「古い局面に対して発火する」「重複して2つ走る」は起きない。
  */
 let autoAdvanceTimer: ReturnType<typeof setTimeout> | null = null;
@@ -241,94 +173,51 @@ function clearAutoAdvanceTimer() {
   }
 }
 
+const NO_DESTS = { moveDests: new Map() as MoveDests, dropDests: new Map() as DropDests, selected: null as Selection };
+
 function initial() {
   const course = loadIbishaVsShikenbishaSente();
   return {
     course,
     currentNode: course.root,
     nodeHistory: [] as JosekiNode[],
-    selectedBranchIndex: 0,
     position: positionFromNode(course.root),
-    autoAdvanceOpponent: true,
-    bookQuizEnabled: true,
-    pendingAck: null as AckMove | null,
-    lastOpponent: null as AckMove | null,
-    quiz: null as QuizState | null,
-    askedQuizIds: [] as string[],
-    bookQuiz: null as BookQuizState | null,
     lastMoveUsi: null as string | null,
-    moveDests: new Map() as MoveDests,
-    dropDests: new Map() as DropDests,
-    selected: null as Selection,
+    startDepth: 0,
+    oppPhase: "idle" as LearnState["oppPhase"],
+    lastOpponent: null as AckMove | null,
+    bookQuiz: null as BookQuizState | null,
+    pendingAck: null as AckMove | null,
+    devQueue: [] as DevItem[],
+    devNext: 0,
+    dev: null as DevItem | null,
+    chapterDone: false,
+    ...NO_DESTS,
+  };
+}
+
+/** 章の状態をまっさらにして、depth 手目の手前の局面に置く。 */
+function freshAt(course: JosekiCourse, node: JosekiNode, history: JosekiNode[]) {
+  return {
+    course,
+    currentNode: node,
+    nodeHistory: history,
+    position: positionFromNode(node),
+    lastMoveUsi: null as string | null,
+    startDepth: history.length,
+    oppPhase: "idle" as LearnState["oppPhase"],
+    lastOpponent: null as AckMove | null,
+    bookQuiz: null as BookQuizState | null,
+    pendingAck: null as AckMove | null,
+    devQueue: collectDeviations(course, history.length),
+    devNext: 0,
+    dev: null as DevItem | null,
+    chapterDone: false,
+    ...NO_DESTS,
   };
 }
 
 export const useLearnStore = create<LearnState>((set, get) => {
-  /**
-   * 現在ノードが相手番(position.color !== myColor)かつ自動進行ONなら、一呼吸置いて
-   * 本線の手を適用するタイマーを(再)設定する。呼び出しの最初に必ず既存のタイマーを
-   * 破棄するため、goBack/goToStart/loadCourse/setAutoAdvanceOpponent/画面遷移のどこから
-   * 呼んでも「古い状態に対して発火する」ことはない。
-   */
-  function scheduleAutoAdvance() {
-    clearAutoAdvanceTimer();
-    const { autoAdvanceOpponent, course, currentNode, position, pendingAck } = get();
-    if (pendingAck) return; // 解説の確認待ち中は進めない(「次へ」を押すまで止まる)
-    // 自分の手番なら「次の一手」クイズを立てる。相手の手の自動進行とは無関係なので、
-    // 「全部なぞる」設定でも出題は出す(判定より先に置くこと)。
-    if (position.color === myColorOf(course)) { refreshBookQuiz(); return; }
-    if (!autoAdvanceOpponent) return;
-    const move = mainBranchOf(currentNode);
-    if (!move || !move.child) return; // 理想陣形、またはこの先の本線データが無い
-    // 相手番で逸れ手が用意されている局面は、本線ではなく逸れ手を指させて出題する。
-    const asked = get().askedQuizIds.includes(currentNode.id);
-    const deviation = asked
-      ? undefined
-      : currentNode.branches.find((b) => b.kind === "deviation" && b.child);
-    if (deviation) {
-      autoAdvanceTimer = setTimeout(() => {
-        autoAdvanceTimer = null;
-        startQuiz(currentNode, deviation);
-      }, OPPONENT_MOVE_DELAY_MS);
-      return;
-    }
-
-    autoAdvanceTimer = setTimeout(() => {
-      autoAdvanceTimer = null;
-      // 盤には手を適用するが、その手の解説を表示したまま止まる(pendingAck)。
-      // 表示情報は「手を指す前」の局面から作る必要があるので、goToChild より先に組み立てる。
-      const before = get();
-      const ack: AckMove = {
-        moveNumber: before.nodeHistory.length + 1,
-        moveText: moveFromUSI(before.position, move.usi)?.displayText ?? "",
-        note: move.note,
-        kind: move.kind,
-        punishNote: move.punishNote,
-        comment: before.currentNode.comment,
-        by: "opponent",
-      };
-      // 次の一手クイズが有効なら、確認待ちで止めずに相手の手の情報だけ残す。
-      // ユーザーは「相手の手の解説」と「次の一手」を同じ画面で見て、そのまま指せる。
-      // クイズを切っている(なぞる)ときは従来どおり確認待ちで止める。
-      if (get().bookQuizEnabled) set({ lastOpponent: ack });
-      else set({ pendingAck: ack, lastOpponent: null });
-      goToChild(move);
-    }, OPPONENT_MOVE_DELAY_MS);
-  }
-
-  /**
-   * 自分の手番になったときに「次の一手」クイズを立てる。
-   * 相手番・咎めクイズ中・確認待ち中・この先の本線が無いときは立てない。
-   */
-  function refreshBookQuiz() {
-    const { course, currentNode, position, pendingAck, quiz, bookQuizEnabled } = get();
-    if (!bookQuizEnabled || pendingAck || quiz) { set({ bookQuiz: null, moveDests: new Map(), dropDests: new Map(), selected: null }); return; }
-    if (position.color !== myColorOf(course)) { set({ bookQuiz: null, moveDests: new Map(), dropDests: new Map(), selected: null }); return; }
-    const move = mainBranchOf(currentNode);
-    if (!move || !move.child) { set({ bookQuiz: null, moveDests: new Map(), dropDests: new Map(), selected: null }); return; }
-    set({ bookQuiz: { wrong: null, revealed: false }, ...questDests(position), selected: null });
-  }
-
   /**
    * 「行き先だけをタップ」したときに、その升へ行ける自分の駒を探す。
    * 候補がちょうど1枚のときだけ移動元を返す(2枚以上なら駒を選んでもらう)。
@@ -395,66 +284,19 @@ export const useLearnStore = create<LearnState>((set, get) => {
     };
   }
 
-  /**
-   * 相手の逸れ手を実際に指させて、出題状態に入る。
-   * 本線は指さない(咎め終わったあとに分岐点へ戻って指す)。
-   */
-  function startQuiz(anchor: JosekiNode, dev: JosekiMove) {
-    const { nodeHistory, askedQuizIds } = get();
-    const before = positionFromNode(anchor);
-    const devText = moveFromUSI(before, dev.usi)?.displayText ?? "";
-    const child = dev.child;
-    if (!child) return;
-    const position = positionFromNode(child);
-    set({
-      currentNode: child,
-      position,
-      pendingAck: null,
-      selectedBranchIndex: 0,
-      lastMoveUsi: dev.usi,
-      askedQuizIds: [...askedQuizIds, anchor.id],
-      ...questDests(position),
-      selected: null,
-      quiz: {
-        anchorNode: anchor,
-        anchorMoveNumber: nodeHistory.length + 1,
-        deviation: dev,
-        deviationText: devText,
-        wrong: null,
-        step: 0,
-        solved: false,
-      },
-    });
-  }
 
-  /** 出題中に1手進める(正解した咎め手・相手の応手の両方で使う)。 */
-  function advanceQuizLine(move: JosekiMove) {
-    if (!move.child) return;
-    const position = positionFromNode(move.child);
-    const { quiz, course } = get();
-    const next = mainBranchOf(move.child);
-    // 手順がまだ続くなら出題は終わらない。相手の応手は自動で指し、
-    // 自分の手番なら「続けて咎める」手をもう一度自分で見つけてもらう
-    // (▲2四歩△同歩▲同飛 のように、最後の一手こそが咎めの核心になるため)。
-    const finished = !(next && next.child);
-    set({
-      currentNode: move.child,
-      position,
-      ...questDests(position),
-      selected: null,
-      lastMoveUsi: move.usi,
-      quiz: quiz ? { ...quiz, wrong: null, step: quiz.step + 1, solved: finished } : null,
-    });
-    clearAutoAdvanceTimer();
-    if (!finished && position.color !== myColorOf(course)) {
-      autoAdvanceTimer = setTimeout(() => {
-        autoAdvanceTimer = null;
-        advanceQuizLine(next!);
-      }, OPPONENT_MOVE_DELAY_MS);
+  /** 自分の番になったとき、「次の一手」クイズを立てる。 */
+  function refreshBookQuiz() {
+    const { course, currentNode, position } = get();
+    const move = mainBranchOf(currentNode);
+    if (!move || !move.child || position.color !== myColorOf(course)) {
+      set({ bookQuiz: null, ...NO_DESTS });
+      return;
     }
+    set({ bookQuiz: { misses: 0, wrong: null }, ...questDests(position), selected: null });
   }
 
-  /** ノード遷移の共通処理。手動(advance)・自動(scheduleAutoAdvance)の両方から使う。 */
+  /** ノードを1つ進める(手の記録と、盤に出す手の強調)。 */
   function goToChild(move: JosekiMove) {
     if (!move.child) return;
     const { currentNode, nodeHistory } = get();
@@ -462,90 +304,90 @@ export const useLearnStore = create<LearnState>((set, get) => {
       currentNode: move.child,
       nodeHistory: [...nodeHistory, currentNode],
       position: positionFromNode(move.child),
-      selectedBranchIndex: 0, // 新しいノードでは本線から見せる
       lastMoveUsi: move.usi,
     });
+  }
+
+  /** 相手の手を自動で指す。逸れ手のときは意図を読ませる間を置かず、すぐ自分の番にする。 */
+  function playOpponent(move: JosekiMove, deviation: boolean) {
+    const before = get();
+    const info = moveFromUSI(before.position, move.usi);
+    const ack: AckMove = {
+      moveNumber: before.nodeHistory.length + 1,
+      moveText: plainMove(info?.displayText ?? move.usi),
+      note: move.note,
+      kind: move.kind,
+      by: "opponent",
+      deviation,
+    };
+    goToChild(move);
+    set({ lastOpponent: ack, oppPhase: deviation ? "idle" : "shown" });
     scheduleAutoAdvance();
+  }
+
+  /** いまの流れ(本線または逸れ手の手順)が終わった。次の逸れ手へ進むか、章を終える。 */
+  function finishLine() {
+    const { devQueue, devNext } = get();
+    const item = devQueue[devNext];
+    if (!item) {
+      set({ chapterDone: true, dev: null, oppPhase: "idle", bookQuiz: null, ...NO_DESTS });
+      return;
+    }
+    // 逸れる直前の局面に盤を戻し、相手に誤りの手を自動で指させる。
+    set({
+      dev: item,
+      devNext: devNext + 1,
+      currentNode: item.anchor,
+      nodeHistory: item.path,
+      position: positionFromNode(item.anchor),
+      lastMoveUsi: null,
+      lastOpponent: null,
+      pendingAck: null,
+      bookQuiz: null,
+      oppPhase: "waiting",
+      ...NO_DESTS,
+    });
+    scheduleAutoAdvance();
+  }
+
+  /**
+   * いまの状態から次に起こすことを決めて、必要ならタイマーを張る。
+   * 呼び出しの最初に必ず既存のタイマーを破棄するので、どこから呼んでも古い状態に対して発火しない。
+   *  - 自分が答える途中(出題中・結果表示中)・章の終わりでは何もしない
+   *  - 相手の手を指した直後は、意図を読む間(約0.7秒)を置いて自分の番にする
+   *  - 自分の番なら出題する / 相手の番なら少し置いて相手の手を指す
+   *  - 手順の終わりなら次の逸れ手(または章の終わり)へ
+   */
+  function scheduleAutoAdvance() {
+    clearAutoAdvanceTimer();
+    const s = get();
+    if (s.chapterDone || s.pendingAck || s.bookQuiz) return;
+    if (s.oppPhase === "shown") {
+      autoAdvanceTimer = setTimeout(() => {
+        autoAdvanceTimer = null;
+        set({ oppPhase: "idle" });
+        scheduleAutoAdvance();
+      }, OPPONENT_SHOWN_MS);
+      return;
+    }
+    // 逸れる直前の局面にいるときは、本線ではなく逸れ手を指させる。
+    const devMove = s.dev && s.currentNode === s.dev.anchor ? s.dev.move : null;
+    const next = devMove ?? mainBranchOf(s.currentNode);
+    if (!next || !next.child) { finishLine(); return; }
+    if (s.position.color === myColorOf(s.course)) { refreshBookQuiz(); return; }
+    set({ oppPhase: "waiting" });
+    autoAdvanceTimer = setTimeout(() => {
+      autoAdvanceTimer = null;
+      playOpponent(next, next === devMove);
+    }, OPPONENT_MOVE_DELAY_MS);
   }
 
   return {
     ...initial(),
 
-    advance() {
-      // 確認待ち中の「次へ」は、手を進めるのではなく解説の確認解除として扱う。
-      if (get().pendingAck) {
-        get().acknowledgeMove();
-        return;
-      }
-      const { currentNode, selectedBranchIndex, position, course, bookQuizEnabled } = get();
-      const move = branchMove(currentNode, selectedBranchIndex);
-      if (!move || !move.child) return; // 末端(理想陣形、またはダミー分岐の行き止まり)に到達済み
-      // 自分の手をなぞって進めた場合も、出題に正解したときと同じく一旦止めて解説と実演を出す。
-      // 「答えを見る」で進めた手だけ解説が飛ばされると、学びが薄くなるため。
-      if (bookQuizEnabled && move.kind === "main" && position.color === myColorOf(course)) {
-        const info = moveFromUSI(position, move.usi);
-        const ack: AckMove = {
-          moveNumber: get().nodeHistory.length + 1,
-          moveText: info?.displayText ?? move.usi,
-          note: move.note,
-          kind: move.kind,
-          punishNote: move.punishNote,
-          comment: move.child.comment,
-          by: "me",
-          demos: move.demos,
-        };
-        set({ bookQuiz: null, selected: null, moveDests: new Map(), dropDests: new Map(), lastOpponent: null, pendingAck: ack });
-      }
-      goToChild(move);
-    },
-
-    acknowledgeMove() {
-      if (!get().pendingAck) return;
-      set({ pendingAck: null });
-      scheduleAutoAdvance();
-    },
-
-    quizSelectSquare(square) {
-      const { quiz, position, currentNode } = get();
-      if (!quiz || quiz.solved) return;
-      // 咎め手を当てるのは自分の手番のときだけ。
-      if (position.color !== myColorOf(get().course)) return;
-
-      const answer = mainBranchOf(currentNode);
-      const applied = resolveAttempt(square, answer?.usi);
-      if (!applied) return;
-      // 判定は局面を進めずに行う(不正解のときは盤をそのまま残す)。
-      if (!applied.ok) { set({ selected: null }); return; }
-      const correctText = answer ? (moveFromUSI(position, answer.usi)?.displayText ?? "") : "";
-      if (answer && applied.move.usi === answer.usi) {
-        // 咎めの手は難しいので多め。ただし間違えたあとは通常の後追い正解と同じ。
-        usePointsStore.getState().award(quiz.wrong ? POINTS.bookAfterMiss : POINTS.punish);
-        advanceQuizLine(answer);
-        return;
-      }
-      // 不正解: 局面は進めず、何が正解かを示してやり直してもらう。
-      set({
-        selected: null,
-        quiz: { ...quiz, wrong: { attemptedText: applied.displayText, correctText } },
-      });
-    },
-
-    quizSelectHand(pieceType, color) {
-      const { quiz, position } = get();
-      if (!quiz || quiz.solved) return;
-      if (color !== position.color) return;
-      set({ selected: { kind: "hand", pieceType } });
-    },
-
-    setBookQuizEnabled(value) {
-      set({ bookQuizEnabled: value });
-      if (!value) set({ bookQuiz: null, moveDests: new Map(), dropDests: new Map(), selected: null });
-      else refreshBookQuiz();
-    },
-
     bookSelectSquare(square) {
-      const { bookQuiz, position, currentNode, course } = get();
-      if (!bookQuiz || bookQuiz.revealed) return;
+      const { bookQuiz, position, currentNode, course, dev, nodeHistory } = get();
+      if (!bookQuiz) return;
       if (position.color !== myColorOf(course)) return;
 
       const answer = mainBranchOf(currentNode);
@@ -553,11 +395,10 @@ export const useLearnStore = create<LearnState>((set, get) => {
       if (!applied) return;
       if (!applied.ok) { set({ selected: null }); return; }
       if (answer && applied.move.usi === answer.usi) {
-        // 正解。急所(次善手との差が100点以上)は配点を上げる。
-        // 一発なら急所 +20 / 通常 +10、一度間違えていたら急所 +10 / 通常 +5。
-        const missed = !!bookQuiz.wrong;
+        // 正解。急所(次善手との差が100点以上)は配点を上げる(ポイント表示は無いが記録は従来どおり)。
+        const missed = bookQuiz.misses > 0;
         // 間隔反復の記録。一度でも間違えた問題は「正解」として数えない
-        // (答えを見てから当てたのと変わらないため)。
+        // (答えを見てから当てたのと変わらないため)。咎めの手順の中の自分の手も同じ扱い。
         useProgressStore.getState().record(
           itemKey(currentNode.sfen, answer.usi), !missed, !!answer.sharp
         );
@@ -566,45 +407,45 @@ export const useLearnStore = create<LearnState>((set, get) => {
             ? (missed ? POINTS.sharpAfterMiss : POINTS.sharpFirstTry)
             : (missed ? POINTS.bookAfterMiss : POINTS.bookFirstTry)
         );
-        // ここで一旦止めて、自分が指した手の解説を読ませる。
-        // 「次へ」を押すと相手が指す(scheduleAutoAdvance が走る)。
+        // 一旦止めて、結果(正解と理由)を読ませる。「次へ」で相手が指す。
+        const { lead, rest } = splitExplanation(answer.note);
+        const more = [
+          rest,
+          cleanNote(answer.child?.comment),
+          // 咎めの手順の最初の一手には、咎め方の要点を添える。
+          dev && nodeHistory.length === dev.path.length + 1 ? cleanNote(dev.move.punishNote) : "",
+        ].filter(Boolean).join("\n");
         const ack: AckMove = {
-          moveNumber: get().nodeHistory.length + 1,
-          moveText: applied.displayText,
-          note: answer.note,
+          moveNumber: nodeHistory.length + 1,
+          moveText: plainMove(applied.displayText),
+          note: lead,
+          more,
           kind: answer.kind,
-          punishNote: answer.punishNote,
-          comment: answer.child?.comment,
           by: "me",
           demos: answer.demos,
         };
-        set({
-          bookQuiz: null,
-          selected: null,
-          moveDests: new Map(),
-          dropDests: new Map(),
-          lastOpponent: null,
-          pendingAck: ack,
-        });
+        set({ bookQuiz: null, lastOpponent: null, pendingAck: ack, oppPhase: "idle", ...NO_DESTS });
         goToChild(answer);
         return;
       }
-      const correctText = answer ? (moveFromUSI(position, answer.usi)?.displayText ?? "") : "";
-      // 最初の誤答だけ記録する(「もう一度」で何度も外しても記録は1回)。
-      if (answer && !bookQuiz.wrong) {
+      // 不正解: 盤はそのまま(指した駒は元の位置に戻ったことになる)。
+      // 最初の誤答だけ記録する(何度外しても記録は1回)。
+      if (answer && bookQuiz.misses === 0) {
         useProgressStore.getState().record(itemKey(currentNode.sfen, answer.usi), false, !!answer.sharp);
       }
+      const kind: "bad" | "accepted" | "openEnded" = answer?.accepted?.includes(applied.move.usi)
+        ? "accepted"
+        : answer?.openEnded ? "openEnded" : "bad";
       set({
         selected: null,
         bookQuiz: {
-          ...bookQuiz,
+          misses: bookQuiz.misses + 1,
           wrong: {
-            attemptedText: applied.displayText,
-            correctText,
-            openEnded: !!answer?.openEnded,
-            accepted: !!answer?.accepted?.includes(applied.move.usi),
+            kind,
+            attemptedText: plainMove(applied.displayText),
+            correctText: answer ? plainMove(moveFromUSI(position, answer.usi)?.displayText ?? "") : "",
             attemptedUsi: applied.move.usi,
-            correctUsi: answer?.usi,
+            correctUsi: answer?.usi ?? "",
           },
         },
       });
@@ -612,97 +453,14 @@ export const useLearnStore = create<LearnState>((set, get) => {
 
     bookSelectHand(pieceType, color) {
       const { bookQuiz, position } = get();
-      if (!bookQuiz || bookQuiz.revealed) return;
+      if (!bookQuiz) return;
       if (color !== position.color) return;
       set({ selected: { kind: "hand", pieceType } });
     },
 
-    bookRetry() {
-      const { bookQuiz } = get();
-      if (!bookQuiz) return;
-      set({ bookQuiz: { ...bookQuiz, wrong: null }, selected: null });
-    },
-
-    bookReveal() {
-      const { bookQuiz } = get();
-      if (!bookQuiz) return;
-      // 答えを見たら、以降はガイドを出してなぞってもらう(操作は従来と同じ)。
-      set({ bookQuiz: { wrong: null, revealed: true }, selected: null, moveDests: new Map(), dropDests: new Map() });
-    },
-
-    quizRetry() {
-      const { quiz } = get();
-      if (!quiz) return;
-      set({ quiz: { ...quiz, wrong: null }, selected: null });
-    },
-
-    quizReveal() {
-      const { quiz, currentNode } = get();
-      if (!quiz || quiz.solved) return;
-      const answer = mainBranchOf(currentNode);
-      if (answer) advanceQuizLine(answer);
-    },
-
-    quizReturnToMainLine() {
-      clearAutoAdvanceTimer();
-      const { quiz } = get();
-      if (!quiz) return;
-      const anchor = quiz.anchorNode;
-      set({
-        currentNode: anchor,
-        position: positionFromNode(anchor),
-        quiz: null,
-        lastMoveUsi: null,
-        moveDests: new Map(),
-        dropDests: new Map(),
-        selected: null,
-        selectedBranchIndex: 0,
-        pendingAck: null,
-      });
-      // 分岐点に戻ったので、今度は本線を指させる(相手の正しい手を見せる)。
-      scheduleAutoAdvance();
-    },
-
-    attemptSquare(square) {
-      if (get().pendingAck) return; // 確認待ち中はガイドを出していないので盤クリックは無視
-      const { currentNode, selectedBranchIndex } = get();
-      const move = branchMove(currentNode, selectedBranchIndex);
-      if (!move) return;
-      const parsed = parseUSIMove(move.usi);
-      if (!parsed) return;
-      if (parsed.to.usi === square.usi) {
-        get().advance();
-      }
-      // ガイドの移動先以外へのクリックは無視する(仕様どおり)
-    },
-
-    chooseBranch(index) {
-      const { currentNode } = get();
-      if (index < 0 || index >= currentNode.branches.length) return;
-      set({ selectedBranchIndex: index });
-    },
-
-    goBack() {
-      clearAutoAdvanceTimer();
-      const { nodeHistory, course } = get();
-      if (nodeHistory.length === 0) return;
-      const history = [...nodeHistory];
-      let prev = history.pop()!;
-      // 相手の自動手ノードは「戻る」の停止点にしない: そこへ戻すとタイマーがすぐ再発火して
-      // また先へ進んでしまい、「1手戻る」が実質効かなくなるため。自分の直前の手番ノードまで
-      // 遡ることで、体感を「自分の1手を取り消す」に揃える。
-      while (history.length > 0 && positionFromNode(prev).color !== myColorOf(course)) {
-        prev = history.pop()!;
-      }
-      set({
-        currentNode: prev,
-        nodeHistory: history,
-        position: positionFromNode(prev),
-        selectedBranchIndex: 0,
-        pendingAck: null,
-        lastOpponent: null,
-        lastMoveUsi: null,
-      });
+    acknowledgeMove() {
+      if (!get().pendingAck) return;
+      set({ pendingAck: null });
       scheduleAutoAdvance();
     },
 
@@ -717,54 +475,13 @@ export const useLearnStore = create<LearnState>((set, get) => {
         history.push(node);
         node = next.child;
       }
-      set({
-        currentNode: node,
-        nodeHistory: history,
-        position: positionFromNode(node),
-        selectedBranchIndex: 0,
-        pendingAck: null,
-        lastOpponent: null,
-        lastMoveUsi: null,
-        quiz: null,
-        bookQuiz: null,
-        selected: null,
-      });
-      scheduleAutoAdvance(); // 自分の手番なら、この中で出題も立つ
-    },
-
-    goToStart() {
-      clearAutoAdvanceTimer();
-      const { course } = get();
-      set({
-        currentNode: course.root,
-        nodeHistory: [],
-        position: positionFromNode(course.root),
-        selectedBranchIndex: 0,
-        pendingAck: null,
-        lastOpponent: null,
-        lastMoveUsi: null,
-      });
+      set(freshAt(course, node, history));
       scheduleAutoAdvance();
     },
 
     loadCourse(course) {
       clearAutoAdvanceTimer();
-      set({
-        course,
-        currentNode: course.root,
-        nodeHistory: [],
-        selectedBranchIndex: 0,
-        position: positionFromNode(course.root),
-        pendingAck: null,
-        lastOpponent: null,
-        lastMoveUsi: null,
-      });
-      scheduleAutoAdvance();
-    },
-
-    setAutoAdvanceOpponent(value) {
-      clearAutoAdvanceTimer();
-      set({ autoAdvanceOpponent: value, pendingAck: null });
+      set(freshAt(course, course.root, []));
       scheduleAutoAdvance();
     },
 

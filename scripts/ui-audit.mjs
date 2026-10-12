@@ -18,7 +18,9 @@ import { createServer } from "vite";
 import { chromium } from "playwright-core";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const OUT = path.join(ROOT, "ui-audit");
+const OUT = process.env.UI_AUDIT_OUT ? path.resolve(process.env.UI_AUDIT_OUT) : path.join(ROOT, "ui-audit");
+// UI_AUDIT_ONLY=learn のように場面名の頭を指定すると、その場面だけを撮る(開発用。出力先は UI_AUDIT_OUT で分ける)。
+const ONLY = process.env.UI_AUDIT_ONLY || "";
 const T0 = Date.now();
 const THEMES = ["light", "dark"];
 const VIEWPORT = { width: 390, height: 844 };
@@ -27,12 +29,10 @@ const VIEWPORT = { width: 390, height: 844 };
 const ORDER = [
   "home-first", "home-due", "home-nodue", "about",
   "settings-fresh", "strategy", "strategy-sheet", "chapter", "chapter-exam",
-  "learn-opponent-moving", "learn-first-question", "learn-piece-selected", "learn-wrong",
-  "learn-trymove", "learn-accepted", "learn-correct-explain", "learn-revealed", "learn-chapter-complete",
-  "learn-sente-first-question", "learn-chapter-intro",
-  "learn-correct-demo-button", "learn-demo-playing", "learn-demo-finished",
-  "learn-opponent-wait-branchnav", "learn-branch-selected",
-  "learn-deviation-quiz", "learn-deviation-wrong", "learn-deviation-solved", "learn-all-done",
+  "learn-opponent-auto", "learn-your-turn", "learn-wrong-1", "learn-wrong-2", "learn-trymove",
+  "learn-accepted", "learn-correct", "learn-correct-expanded", "learn-demo",
+  "learn-deviation", "learn-chapter-complete",
+  "learn-sente-first-question", "learn-chapter-intro", "learn-all-done",
   "home-alldone",
   "review-question", "review-wrong", "review-accepted", "review-correct", "review-result",
   "exam-list", "exam-question", "exam-result-pass", "exam-list-after", "exam-result-fail",
@@ -381,19 +381,22 @@ async function installHelpers(page) {
     const au = {};
     au.mainBranch = (node) => node.branches.find((b) => b.kind === "main") ?? node.branches[0] ?? null;
     au.myColor = () => (LS.getState().course.mySide === "sente" ? SH.Color.BLACK : SH.Color.WHITE);
+    /** 学習画面がいまどの場面か。opp-wait / opp-shown / question / result / complete */
     au.status = () => {
       const s = LS.getState();
       const node = s.currentNode;
       const main = au.mainBranch(node);
+      const phase = s.chapterDone ? "complete" : s.pendingAck ? "result" : s.bookQuiz ? "question" : s.oppPhase === "shown" ? "opp-shown" : "opp-wait";
       return {
-        bq: s.bookQuiz ? { wrong: !!s.bookQuiz.wrong, revealed: s.bookQuiz.revealed, accepted: !!s.bookQuiz.wrong?.accepted } : null,
-        ack: s.pendingAck ? { by: s.pendingAck.by, demos: (s.pendingAck.demos || []).length } : null,
-        quiz: s.quiz ? { solved: s.quiz.solved, step: s.quiz.step, wrong: !!s.quiz.wrong } : null,
-        goal: node.branches.length === 0,
-        myTurn: s.position.color === au.myColor(),
-        nb: node.branches.length,
-        hasDev: node.branches.some((b) => b.kind === "deviation" && b.child),
-        asked: s.askedQuizIds.includes(node.id),
+        phase,
+        misses: s.bookQuiz ? s.bookQuiz.misses : 0,
+        wrongKind: s.bookQuiz?.wrong ? s.bookQuiz.wrong.kind : null,
+        dev: !!s.dev,
+        devNext: s.devNext,
+        devTotal: s.devQueue.length,
+        deviationTurn: !!(s.lastOpponent && s.lastOpponent.deviation),
+        more: s.pendingAck ? !!(s.pendingAck.more || (s.pendingAck.demos || []).length) : false,
+        demos: s.pendingAck ? (s.pendingAck.demos || []).length : 0,
         accN: ((main && main.accepted) || []).filter((u) => u !== main.usi).length,
         sharp: !!(main && main.sharp),
         course: s.course.id,
@@ -414,15 +417,13 @@ async function installHelpers(page) {
       }
       return true;
     };
-    au.playLearn = (mode) => {
-      const s = LS.getState();
-      const a = au.mainBranch(s.currentNode);
+    au.playLearn = () => {
+      const a = au.mainBranch(LS.getState().currentNode);
       if (!a) return false;
-      return au.play(LS.getState, mode === "quiz" ? "quizSelectSquare" : "bookSelectSquare", mode === "quiz" ? "quizSelectHand" : "bookSelectHand", a.usi);
+      return au.play(LS.getState, "bookSelectSquare", "bookSelectHand", a.usi);
     };
     au.playAcceptedLearn = () => {
-      const s = LS.getState();
-      const a = au.mainBranch(s.currentNode);
+      const a = au.mainBranch(LS.getState().currentNode);
       const alt = (a?.accepted || []).find((u) => u !== a.usi);
       if (!alt) return false;
       return au.play(LS.getState, "bookSelectSquare", "bookSelectHand", alt);
@@ -437,11 +438,8 @@ async function installHelpers(page) {
       return true;
     };
     au.clearSel = () => LS.setState({ selected: null });
-    /** 正解でも許容手でもない手を探して指す。成功したら true。 */
-    au.wrongLearn = (mode) => {
-      const quiz = mode === "quiz";
-      const sqName = quiz ? "quizSelectSquare" : "bookSelectSquare";
-      const handName = quiz ? "quizSelectHand" : "bookSelectHand";
+    /** 定跡手でも許容手でもない手を探して指す(wrong.kind が "bad" になる手)。成功したら true。 */
+    au.wrongLearn = () => {
       const cands = [];
       const s0 = LS.getState();
       for (const [fromUsi, dests] of s0.moveDests) {
@@ -452,34 +450,26 @@ async function installHelpers(page) {
       for (const [pt, dests] of s0.dropDests) for (const d of dests) cands.push({ hand: pt, to: d });
       for (const c of cands) {
         const s = LS.getState();
-        const stBefore = quiz ? s.quiz : s.bookQuiz;
-        if (!stBefore) return false;
-        if (c.hand !== undefined) { s[handName](c.hand, s.position.color); LS.getState()[sqName](c.to); }
-        else { s[sqName](c.from); LS.getState()[sqName](c.to); }
-        const after = LS.getState();
-        if (quiz) {
-          if (after.quiz && after.quiz.wrong) return true;
-        } else if (after.bookQuiz && after.bookQuiz.wrong) {
-          const w = after.bookQuiz.wrong;
-          if (!w.accepted && !w.openEnded && w.attemptedUsi !== w.correctUsi) return true;
-          after.bookRetry();
-        }
+        if (!s.bookQuiz) return false;
+        const before = s.bookQuiz.misses;
+        if (c.hand !== undefined) { s.bookSelectHand(c.hand, s.position.color); LS.getState().bookSelectSquare(c.to); }
+        else { s.bookSelectSquare(c.from); LS.getState().bookSelectSquare(c.to); }
+        const q = LS.getState().bookQuiz;
+        if (q && q.misses > before && q.wrong && q.wrong.kind === "bad") return true;
         LS.setState({ selected: null });
+        // 許容手を踏んだ場合は誤答として数えられている。次の候補を試す。
       }
       return false;
     };
+    /** 章の問題がすべて記録されたか(咎めの手順の中の自分の手も含む)。 */
+    au.chapterStat = async (i) => {
+      const CP = await import("/src/domain/courseProgress.ts");
+      const PS = await import("/src/store/progressStore.ts");
+      const st = CP.chapterStat(CP.pathFor("gokigen", "gote").chapters[i], i, PS.useProgressStore.getState().items, EX.useExamStore.getState().results);
+      return { total: st.total, answered: st.answered, unanswered: st.unanswered, ready: st.ready };
+    };
     au.pause = () => LS.getState().pauseAutoAdvance();
     au.resume = () => LS.getState().resumeAutoAdvance();
-    au.chooseBranchNonMain = () => {
-      const s = LS.getState();
-      const i = s.currentNode.branches.findIndex((b) => b.kind !== "main");
-      if (i < 0) return -1;
-      s.chooseBranch(i);
-      return i;
-    };
-    au.chooseBranch = (i) => LS.getState().chooseBranch(i);
-    au.bookReveal = () => LS.getState().bookReveal();
-    au.bookRetry = () => LS.getState().bookRetry();
 
     // 復習・試験
     au.review = {
@@ -650,6 +640,7 @@ async function main() {
       fresh: null,
       ch1: { items: learnedItems(1), days: [0], },
       ch2: { items: learnedItems(2), days: [0] },
+      ch4: { items: learnedItems(4), days: [0] },
       last: { items: learnedItems(8), days: [0] },
       records: (() => {
         const items = learnedItems(4, 6);
@@ -671,6 +662,7 @@ async function main() {
 
     /** 1つの場面(新しいブラウザ文脈)を、テーマごとに実行する。 */
     async function scenario(label, seedName, fn) {
+      if (ONLY && !label.startsWith(ONLY)) return;
       for (const theme of THEMES) {
         const ctx = await browser.newContext({
           viewport: VIEWPORT, deviceScaleFactor: 2, isMobile: true, hasTouch: true,
@@ -724,29 +716,21 @@ async function main() {
     }
 
     // 学習画面を自動で進める共通ループ。hooks.before(st) が 'stop' を返すと止まる。
-    async function driveLearn(page, hooks = {}, maxMs = 120000) {
+    // 相手の手はひとりでに進むので、こちらは自分の番(question)と結果(result)だけを操作する。
+    async function driveLearn(page, hooks = {}, maxMs = 240000) {
       const t0 = Date.now();
       let lastKey = "", stuck = 0;
       while (Date.now() - t0 < maxMs) {
         const st = await page.evaluate(() => window.__au.status());
         if (hooks.before) { const r = await hooks.before(st); if (r === "stop") return "stopped"; if (r === "again") continue; }
-        if (st.goal && !st.ack && !st.quiz) return "goal";
+        if (st.phase === "complete") return "complete";
         const key = JSON.stringify(st);
         stuck = key === lastKey ? stuck + 1 : 0;
         lastKey = key;
-        if (stuck > 400) throw new Error("学習の自動進行が止まった: " + key.slice(0, 160));
-        if (st.quiz) {
-          if (st.quiz.solved) await page.getByRole("button", { name: /本線に戻って続ける/ }).click();
-          else if (st.myTurn) await page.evaluate(() => window.__au.playLearn("quiz"));
-          else await sleep(60);
-        } else if (st.ack) {
-          await page.locator(".learn-navrow button.primary").click();
-        } else if (st.bq && st.bq.revealed) {
-          await page.locator(".learn-navrow button.primary").click();
-        } else if (st.bq) {
-          if (st.bq.wrong) await page.evaluate(() => window.__au.bookRetry());
-          await page.evaluate(() => window.__au.playLearn("book"));
-        } else await sleep(60);
+        if (stuck > 600) throw new Error("学習の自動進行が止まった: " + key.slice(0, 160));
+        if (st.phase === "question") await page.evaluate(() => window.__au.playLearn());
+        else if (st.phase === "result") await page.getByRole("button", { name: /^次へ$/ }).click();
+        else await sleep(60);
         await sleep(15);
       }
       throw new Error("学習の自動進行が時間切れ");
@@ -771,129 +755,112 @@ async function main() {
       // 先手で始める → 学習(先手側の盤)
       await step("learn-sente-first-question", async () => {
         await enterLearnFresh(page, "先手");
-        await waitFor(page, () => window.__au.status().bq !== null, 12000);
+        await waitFor(page, () => window.__au.status().phase === "question", 12000);
         await capture("learn-sente-first-question");
       });
     });
 
-    // ───────────── 場面2: 第1章(短い章)を最初から最後まで ─────────────
+    // ───────────── 場面2: 第1章(短い章)で、相手の自動・自分の番・不正解・矢印・許容手・正解 ─────────────
     log("== learn ch0 ==");
     await scenario("learn0", "fresh", async (page) => {
       await enterLearnFresh(page);
-      await step("learn-opponent-moving", async () => {
-        await page.waitForSelector(".waitpill", { timeout: 4000 });
+      await step("learn-opponent-auto", async () => {
+        // 相手の手が指された直後(意図を読む間)で止めて撮る。
+        await waitFor(page, () => window.__au.status().phase === "opp-shown", 6000, 20);
         await page.evaluate(() => window.__au.pause());
-        await capture("learn-opponent-moving", { settle: 200 });
+        await capture("learn-opponent-auto", { settle: 150 });
         await page.evaluate(() => window.__au.resume());
       });
-      await waitFor(page, () => window.__au.status().bq !== null, 12000);
-      await step("learn-first-question", () => capture("learn-first-question"));
-      await step("learn-piece-selected", async () => {
-        await page.evaluate(() => window.__au.selectFromLearn());
-        await capture("learn-piece-selected");
-        await page.evaluate(() => window.__au.clearSel());
-      });
-      await step("learn-wrong", async () => {
-        const ok = await page.evaluate(() => window.__au.wrongLearn("book"));
+      await waitFor(page, () => window.__au.status().phase === "question", 6000);
+      await step("learn-your-turn", () => capture("learn-your-turn"));
+      await step("learn-wrong-1", async () => {
+        const ok = await page.evaluate(() => window.__au.wrongLearn());
         if (!ok) throw new Error("誤答を作れなかった");
-        await capture("learn-wrong");
+        await capture("learn-wrong-1");
+      });
+      await step("learn-wrong-2", async () => {
+        const ok = await page.evaluate(() => window.__au.wrongLearn());
+        if (!ok) throw new Error("2回目の誤答を作れなかった");
+        await capture("learn-wrong-2");
       });
       await step("learn-trymove", async () => {
-        await page.locator(".demo-btn").first().click();
-        await page.waitForSelector(".trypanel");
+        await page.getByRole("button", { name: /指すとどうなる/ }).click();
+        await page.waitForSelector(".trysheet");
         // エンジンの読みが終わるまで待つ(最大25秒)。終わらなければ途中の姿を撮る。
         await page.waitForFunction(() => !document.querySelector(".try-note")?.textContent?.includes("読んでいます"), null, { timeout: 25000 }).catch(() => {});
         await capture("learn-trymove");
-        await page.locator(".try-actions button").nth(1).click();
+        await page.locator(".try-close").click();
         await sleep(200);
       });
       await step("learn-accepted", async () => {
-        await page.evaluate(() => window.__au.bookRetry());
         const st = await page.evaluate(() => window.__au.status());
         if (!st.accN) throw new Error("この局面には許容手が無い");
         const ok = await page.evaluate(() => window.__au.playAcceptedLearn());
         if (!ok) throw new Error("許容手を指せなかった");
-        await waitFor(page, () => window.__au.status().bq?.accepted === true, 3000);
+        await waitFor(page, () => window.__au.status().wrongKind === "accepted", 3000);
         await capture("learn-accepted");
       });
-      await step("learn-correct-explain", async () => {
-        await page.evaluate(() => window.__au.bookRetry());
-        await page.evaluate(() => window.__au.playLearn("book"));
-        await waitFor(page, () => window.__au.status().ack !== null, 3000);
-        await capture("learn-correct-explain");
+      await step("learn-correct", async () => {
+        await page.evaluate(() => window.__au.playLearn());
+        await waitFor(page, () => window.__au.status().phase === "result", 3000);
+        await capture("learn-correct");
       });
-      let revealed = false;
-      const r = await step("learn-revealed", async () => {
-        const res = await driveLearn(page, {
-          async before(st) {
-            if (!revealed && st.bq && !st.bq.revealed && !st.bq.wrong) {
-              revealed = true;
-              await page.evaluate(() => window.__au.bookReveal());
-              await capture("learn-revealed");
-              return "again";
-            }
-          },
-        });
-        await capture("learn-chapter-complete");
-        return res;
+      await driveLearn(page);
+      // 本線にも逸れ手にも続きが無い章なので、そのまま章の終わり。
+      // 「次の章へ」で次の章が(分かれ目から)始まり、相手の手→自分の番まで進む。
+      await step("(次の章へ)", async () => {
+        const before = await page.evaluate(() => window.__au.status().course);
+        await page.getByRole("button", { name: /次の章へ/ }).click();
+        await page.waitForFunction((b) => window.__au.status().course !== b, before, { timeout: 3000 });
+        await waitFor(page, () => window.__au.status().phase === "question", 8000);
       });
-      if (!r) await step("learn-chapter-complete", async () => { await driveLearn(page); await capture("learn-chapter-complete"); });
     });
 
-    // ───────────── 場面3: 第2章(実演・分岐・逸れ手) ─────────────
-    log("== learn ch1 ==");
-    await scenario("learn1", "ch1", async (page) => {
+    // ───────────── 場面3: 第5章(実演・くわしく・逸れ手の咎め・章の終わり) ─────────────
+    log("== learn ch4 ==");
+    await scenario("learn4", "ch4", async (page) => {
       await clickText(page, /続きから/);
       await page.waitForSelector(".learn-wrap");
-      const done = { demo: false, branch: false, dev: false, devWrong: false, devSolved: false };
-      await step("learn-correct-demo-button", async () => {
+      const done = { expanded: false, demo: false, dev: false };
+      await step("learn-correct-expanded", async () => {
         await driveLearn(page, {
           async before(st) {
-            if (!done.demo && st.ack && st.ack.by === "me" && st.ack.demos > 0) {
+            if (!done.expanded && st.phase === "result" && st.more) {
+              done.expanded = true;
+              await page.getByRole("button", { name: /くわしく/ }).click();
+              await capture("learn-correct-expanded");
+              return "again";
+            }
+            if (!done.demo && st.phase === "result" && st.demos > 0) {
               done.demo = true;
-              await capture("learn-correct-demo-button");
-              await page.locator(".demo-btn").first().click();
-              await sleep(1300);
-              await step("learn-demo-playing", () => capture("learn-demo-playing", { settle: 100 }));
-              await page.waitForSelector(".demo-text", { timeout: 12000 }).catch(() => {});
-              await step("learn-demo-finished", () => capture("learn-demo-finished"));
+              // 「くわしく」が閉じていれば開いてから実演を押す。
+              if (await page.getByRole("button", { name: /^くわしく/ }).getAttribute("aria-expanded") !== "true") await page.getByRole("button", { name: /^くわしく/ }).click();
+              await page.getByRole("button", { name: /▶ 実演/ }).first().click();
+              await sleep(1900);
+              await step("learn-demo", () => capture("learn-demo", { settle: 100 }));
               await page.getByRole("button", { name: /実演を閉じる/ }).click();
               return "again";
             }
-            if (!done.branch && !st.myTurn && !st.bq && !st.ack && !st.quiz && !st.goal && st.nb > 1) {
-              done.branch = true;
-              await page.evaluate(() => window.__au.pause());
-              await step("learn-opponent-wait-branchnav", () => capture("learn-opponent-wait-branchnav", { settle: 250 }));
-              await step("learn-branch-selected", async () => {
-                const i = await page.evaluate(() => window.__au.chooseBranchNonMain());
-                if (i < 0) throw new Error("本線以外の枝が無い");
-                await capture("learn-branch-selected", { settle: 250 });
-              });
-              await page.evaluate(() => window.__au.chooseBranch(0));
-              await page.evaluate(() => window.__au.resume());
-              return "again";
-            }
-            if (st.quiz && !st.quiz.solved && st.myTurn && st.quiz.step === 0 && !done.dev) {
+            if (!done.dev && st.phase === "question" && st.deviationTurn) {
               done.dev = true;
-              await step("learn-deviation-quiz", () => capture("learn-deviation-quiz"));
-              await step("learn-deviation-wrong", async () => {
-                const ok = await page.evaluate(() => window.__au.wrongLearn("quiz"));
-                if (!ok) throw new Error("咎めクイズの誤答を作れなかった");
-                await capture("learn-deviation-wrong");
-              });
+              await step("learn-deviation", () => capture("learn-deviation"));
               return "again";
             }
-            if (st.quiz && st.quiz.solved && !done.devSolved) {
-              done.devSolved = true;
-              await step("learn-deviation-solved", () => capture("learn-deviation-solved"));
-              return "again";
-            }
-            if (done.demo && done.branch && done.devSolved) return "stop";
           },
-        }, 180000);
+        }, 300000);
+        // 章の終わり(逸れ手をすべて終えたあと)
+        await step("learn-chapter-complete", async () => {
+          const st = await page.evaluate(() => window.__au.status());
+          if (st.phase !== "complete") throw new Error("章の終わりに着かなかった");
+          await capture("learn-chapter-complete");
+          // 咎めの手順の中の自分の手も含め、章の問題がすべて記録されたか(認定試験の解禁条件と同じ数え方)。
+          const cs = await page.evaluate(() => window.__au.chapterStat(4));
+          log(`   第5章の記録: 問題${cs.total} / 解いた${cs.answered} / 未回答${cs.unanswered} / 試験${cs.ready ? "解禁" : "未解禁"}`);
+          if (cs.unanswered > 0) throw new Error(`第5章の未回答が${cs.unanswered}問残った(咎めの手順が記録されていない)`);
+        });
       });
-      for (const [k, name] of [["demo", "learn-correct-demo-button"], ["branch", "learn-opponent-wait-branchnav"], ["dev", "learn-deviation-quiz"], ["devSolved", "learn-deviation-solved"]]) {
-        if (!done[k] && !unreached.some((u) => u.state === name && u.theme === CUR.theme)) unreached.push({ state: name, theme: CUR.theme, reason: "第2章を通しても該当の局面に当たらなかった" });
+      for (const [k, name] of [["expanded", "learn-correct-expanded"], ["demo", "learn-demo"], ["dev", "learn-deviation"]]) {
+        if (!done[k] && !unreached.some((u) => u.state === name && u.theme === CUR.theme)) unreached.push({ state: name, theme: CUR.theme, reason: "第5章を通しても該当の局面に当たらなかった" });
       }
     });
 
@@ -903,8 +870,7 @@ async function main() {
       await clickText(page, /続きから/);
       await page.waitForSelector(".learn-wrap");
       await step("learn-chapter-intro", async () => {
-        await page.waitForSelector(".chapter-intro", { timeout: 5000 });
-        await waitFor(page, () => window.__au.status().bq !== null, 12000);
+        await waitFor(page, () => window.__au.status().phase === "question", 12000);
         await capture("learn-chapter-intro");
       });
     });
@@ -914,8 +880,8 @@ async function main() {
       await clickText(page, /続きから/);
       await page.waitForSelector(".learn-wrap");
       await step("learn-all-done", async () => {
-        await driveLearn(page, {}, 150000);
-        await page.getByRole("button", { name: /すべての章を修了/ }).waitFor({ timeout: 4000 });
+        await driveLearn(page, {}, 240000);
+        await page.getByRole("button", { name: /戦法のページへ戻る/ }).waitFor({ timeout: 4000 });
         await capture("learn-all-done");
       });
     });

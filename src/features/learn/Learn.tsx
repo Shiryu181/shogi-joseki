@@ -1,32 +1,36 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Color, PieceType, Position, Square, moveFromUSI, parseUSIMove } from "../../domain/shogi";
-
-import type { MoveDemo } from "../../domain/types";
-import { useLearnStore, branchMove, positionFromNode } from "../../store/learnStore";
-import type { JosekiCourse, JosekiNode } from "../../domain/types";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Color, PieceType, Position, Square, handCounts, moveFromUSI, parseUSIMove } from "../../domain/shogi";
+import type { GhostPiece } from "../../ui/Board";
+import type { JosekiCourse, MoveDemo } from "../../domain/types";
 import type { LearnPath } from "../../domain/josekiLoader";
-import { Board } from "../../ui/Board";
-import type { GhostPiece, HandHighlight } from "../../ui/Board";
-import { CommentPanel } from "../../ui/CommentPanel";
+import { useLearnStore, mainBranchOf } from "../../store/learnStore";
+import type { AckMove, BookQuizState } from "../../store/learnStore";
+import { useProgressStore } from "../../store/progressStore";
+import { useExamStore } from "../../store/examStore";
+import { chapterStat } from "../../domain/courseProgress";
+import { toKanjiNumber } from "../../domain/kanjiNumber";
 import { buildHint } from "../../domain/hint";
-import { BranchNav } from "../../ui/BranchNav";
-import { PointsBadge } from "../../ui/PointsBadge";
+import { cleanNote, oneLineIntent, plainMove } from "../../domain/moveText";
+import { Board } from "../../ui/Board";
+import { PieceView } from "../../ui/Piece";
+import { Screen, TopBar } from "../../ui/DojoParts";
 import { TryMove } from "./TryMove";
 import "./Learn.css";
 
 export interface LearnProps {
-  /** 表示するコース。切り替え時は都度渡し直す(本物のコース ⇔ 分岐ナビ動作確認用デモ)。 */
+  /** 表示するコース。切り替え時は都度渡し直す。 */
   course: JosekiCourse;
-  /** 戻るボタンの遷移先。 */
+  /** 戻るボタンの遷移先(章のページ、またはホーム)。 */
   onBack: () => void;
-  /**
-   * 学習パス(章の並び)。戦法を選んだら盤の上で章を順に通す。
-   * 未指定なら単独コースとして動く(開発用の分岐デモなど)。
-   */
+  /** 学習パス(章の並び)。未指定なら単独コースとして動く(開発用の分岐デモなど)。 */
   path?: LearnPath;
   chapterIndex?: number;
-  /** 「次の章へ」。最後の章では呼ばれない。 */
+  /** 「次の章へ」。最後の章では渡されない。 */
   onNextChapter?: () => void;
+  /** 最後の章を終えたときの戻り先(戦法のページ)。 */
+  onStrategy?: () => void;
+  /** この章の認定試験へ。 */
+  onExam?: () => void;
   /**
    * true なら、入った章を1手目から始める(章のページの「最初から学ぶ」)。
    * 覚えた記録は消さない。false なら、前の章と共通の序盤を飛ばして分かれ目から始める。
@@ -48,54 +52,107 @@ function usiKeys(usi: string | null): Set<string> {
   return usi[1] === "*" ? new Set([to]) : new Set([usi.slice(0, 2), to]);
 }
 
+interface DemoFrame { pos: Position; text: string; lastKeys: Set<string>; lastTo: string | null }
+interface DemoState { demo: MoveDemo; frames: DemoFrame[]; step: number; auto: boolean }
+
+/** 持ち駒の行の1枠。「▲持駒 …」。空なら「なし」(盤が動かないよう必ず1枠分を取る)。 */
+function HandChip({
+  label, position, color, flipped, canPick, selectedType, onPick,
+}: {
+  label: string;
+  position: Position;
+  color: Color;
+  flipped: boolean;
+  canPick: boolean;
+  selectedType: PieceType | null;
+  onPick: (type: PieceType, color: Color) => void;
+}) {
+  const pieces = handCounts(position, color);
+  return (
+    <div className="learn-hand">
+      <span className="tl">{label}</span>
+      {pieces.length === 0 ? (
+        <span className="none">なし</span>
+      ) : (
+        pieces.map(({ type, count }) => (
+          <button
+            key={type}
+            type="button"
+            className={`hp${canPick ? " can" : ""}${selectedType === type ? " selected" : ""}`}
+            disabled={!canPick}
+            aria-label={`持ち駒 ${type} ${count}枚`}
+            onClick={() => onPick(type, color)}
+          >
+            {count > 1 && <span className="capn">{count}</span>}
+            <PieceView type={type} color={color} flipped={flipped} />
+          </button>
+        ))
+      )}
+    </div>
+  );
+}
+
+/** 相手の手の1行。「相手 ▲2六歩 — 飛車先を突いて居飛車を明示」 */
+function OppLine({ ack, big = false }: { ack: AckMove; big?: boolean }) {
+  const intent = oneLineIntent(ack.note);
+  return (
+    <p className={big ? "oppbig" : "oppline"}>
+      <b>相手 {ack.moveText}</b>
+      {intent ? ` — ${intent}` : ""}
+    </p>
+  );
+}
+
 /**
- * 学習モード(なぞり)画面。DESIGN.md §5.3 準拠。
- * 本線を1手ずつ、なぞりガイド(from強調+dest glow+ghost駒)で提示し、
- * 光っている升をクリックするか「なぞって次へ」ボタンで進める。
- * 分岐(本線/変化/逸れ手)がある局面では BranchNav で切替可能。
+ * 学習画面(確定版モック 08〜17)。
+ * 相手の手は自動で進み、自分の番は次の一手クイズ。正解したら結果を読んで「次へ」。
+ * 本線を終えたあと、相手の逸れ手(咎めの問題)を1つずつ出し、すべて終えたら章の終わり。
  */
-export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter, restart = false }: LearnProps) {
+export function Learn({
+  course, onBack, path, chapterIndex = 0, onNextChapter, onStrategy, onExam, restart = false,
+}: LearnProps) {
   const storeCourse = useLearnStore((s) => s.course);
   const currentNode = useLearnStore((s) => s.currentNode);
   const nodeHistory = useLearnStore((s) => s.nodeHistory);
-  const selectedBranchIndex = useLearnStore((s) => s.selectedBranchIndex);
   const position = useLearnStore((s) => s.position);
-  const autoAdvanceOpponent = useLearnStore((s) => s.autoAdvanceOpponent);
+  const lastMoveUsi = useLearnStore((s) => s.lastMoveUsi);
+  const startDepth = useLearnStore((s) => s.startDepth);
+  const lastOpponent = useLearnStore((s) => s.lastOpponent);
+  const oppPhase = useLearnStore((s) => s.oppPhase);
+  const bookQuiz = useLearnStore((s) => s.bookQuiz);
   const pendingAck = useLearnStore((s) => s.pendingAck);
-  const quiz = useLearnStore((s) => s.quiz);
+  const devQueue = useLearnStore((s) => s.devQueue);
+  const devNext = useLearnStore((s) => s.devNext);
+  const dev = useLearnStore((s) => s.dev);
+  const chapterDone = useLearnStore((s) => s.chapterDone);
   const moveDests = useLearnStore((s) => s.moveDests);
   const dropDests = useLearnStore((s) => s.dropDests);
-  const lastMoveUsi = useLearnStore((s) => s.lastMoveUsi);
   const selected = useLearnStore((s) => s.selected);
-  const quizSelectSquare = useLearnStore((s) => s.quizSelectSquare);
-  const quizSelectHand = useLearnStore((s) => s.quizSelectHand);
-  const bookQuiz = useLearnStore((s) => s.bookQuiz);
-  const lastOpponent = useLearnStore((s) => s.lastOpponent);
-  const bookQuizEnabled = useLearnStore((s) => s.bookQuizEnabled);
   const bookSelectSquare = useLearnStore((s) => s.bookSelectSquare);
   const bookSelectHand = useLearnStore((s) => s.bookSelectHand);
-  const bookRetry = useLearnStore((s) => s.bookRetry);
-  const bookReveal = useLearnStore((s) => s.bookReveal);
-  const quizRetry = useLearnStore((s) => s.quizRetry);
-  const quizReveal = useLearnStore((s) => s.quizReveal);
-  const quizReturnToMainLine = useLearnStore((s) => s.quizReturnToMainLine);
-  const attemptSquare = useLearnStore((s) => s.attemptSquare);
-  const advance = useLearnStore((s) => s.advance);
-  const chooseBranch = useLearnStore((s) => s.chooseBranch);
+  const acknowledgeMove = useLearnStore((s) => s.acknowledgeMove);
   const goToMove = useLearnStore((s) => s.goToMove);
   const loadCourse = useLearnStore((s) => s.loadCourse);
   const pauseAutoAdvance = useLearnStore((s) => s.pauseAutoAdvance);
   const resumeAutoAdvance = useLearnStore((s) => s.resumeAutoAdvance);
 
+  const items = useProgressStore((s) => s.items);
+  const examResults = useExamStore((s) => s.results);
+
   // 表示すべきコースがストアの現在のコースと違う(画面切替など)場合は読み込み直す。
   // restart のときは、同じコースが読み込み済みでも最初から読み込み直す(入った最初の1回だけ)。
+  // 終えた章に入り直したときも、終わりの画面のままにせず始めから読み込み直す。
   const topCourseId = useRef<string | null>(null);
+  const mounted = useRef(false);
   useEffect(() => {
     const first = topCourseId.current === null;
     if (restart && first) topCourseId.current = course.id;
     // 最初から始める章(入った最初の章)では、分かれ目への移動をしない。
     const atTop = restart && topCourseId.current === course.id;
-    if (storeCourse.id !== course.id || (restart && first)) {
+    const st = useLearnStore.getState();
+    const reentry = !mounted.current && st.course.id === course.id && st.chapterDone;
+    mounted.current = true;
+    if (st.course.id !== course.id || (restart && first) || reentry) {
       loadCourse(course);
       // 2章目以降は、前の章と序盤が共通なので、分かれる地点まで飛んで再開する。
       const chapter = path?.chapters[chapterIndex];
@@ -110,31 +167,31 @@ export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter, r
     return () => pauseAutoAdvance();
   }, [resumeAutoAdvance, pauseAutoAdvance]);
 
-  const guide = branchMove(currentNode, selectedBranchIndex);
-  const isGoal = !guide;
-  const moveNumber = nodeHistory.length + 1;
-  const totalMoves = useMemo(() => countMoves(course.root), [course]);
-
-  // 確認待ち中(相手の手を自動で指した直後)は、解説を読むことに集中してもらうため
-  // 次の自分の手のガイドは出さない。「次へ」を押すと通常の表示に戻る。
-  const guideHidden = pendingAck !== null || quiz !== null || bookQuiz !== null;
-  const parsed = guide && !guideHidden ? parseUSIMove(guide.usi) : null;
-  const moveInfo = guide && !guideHidden ? moveFromUSI(position, guide.usi) : null;
-
   // 「この手を試す」中に盤へ映す局面(null なら通常表示)。
   const [tryPreview, setTryPreview] = useState<{ sfen: string; lastUsi: string | null } | null>(null);
   const [trying, setTrying] = useState(false);
+  // 呼び出しのたびに新しい関数を作ると TryMove の効果が走り直すので、固定する。
+  // 同じ内容なら state を更新しない(再描画の連鎖を断つ)。
+  const onPreview = useCallback((sfen: string | null, lastUsi: string | null) => {
+    setTryPreview((prev) => {
+      if (!sfen) return prev === null ? prev : null;
+      return prev && prev.sfen === sfen && prev.lastUsi === lastUsi ? prev : { sfen, lastUsi };
+    });
+  }, []);
+  const closeTry = useCallback(() => {
+    setTrying(false);
+    setTryPreview(null);
+  }, []);
 
-  // 効果の実演(盤上再生)。position は再生中の局面、step は何手目まで進んだか。
-  const [demo, setDemo] = useState<{
-    demo: MoveDemo;
-    frames: { pos: Position; text: string; lastKeys: Set<string>; lastTo: string | null }[];
-    step: number;
-  } | null>(null);
+  // 「くわしく」の開閉。
+  const [moreOpen, setMoreOpen] = useState(false);
+
+  // 効果の実演(盤上再生)。
+  const [demo, setDemo] = useState<DemoState | null>(null);
 
   function startDemo(d: MoveDemo) {
     // 自分の手を指した直後の局面(= 現在の局面)から手順を進めて、各コマの局面を作る。
-    const frames: { pos: Position; text: string; lastKeys: Set<string>; lastTo: string | null }[] = [];
+    const frames: DemoFrame[] = [];
     let pos = position.clone();
     frames.push({ pos, text: "", lastKeys: new Set(), lastTo: null });
     for (const usi of d.usi) {
@@ -144,50 +201,78 @@ export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter, r
       if (!next.doMove(info.move)) break;
       const to = info.move.to.usi;
       const from = info.move.from instanceof Square ? info.move.from.usi : null;
-      frames.push({ pos: next, text: info.displayText, lastKeys: new Set(from ? [from, to] : [to]), lastTo: to });
+      frames.push({ pos: next, text: plainMove(info.displayText), lastKeys: new Set(from ? [from, to] : [to]), lastTo: to });
       pos = next;
     }
-    setDemo({ demo: d, frames, step: 0 });
+    setDemo({ demo: d, frames, step: 0, auto: true });
   }
 
-  // 実演は1手ずつ自動で進める(900ms)。最後まで行ったら止まる。
+  // 実演は1手ずつ自動で進める(900ms)。◀ ▶ を押したら手動に切り替わる。最後まで行ったら止まる。
   useEffect(() => {
-    if (!demo || demo.step >= demo.frames.length - 1) return;
+    if (!demo || !demo.auto || demo.step >= demo.frames.length - 1) return;
     const t = setTimeout(() => setDemo((d) => (d ? { ...d, step: d.step + 1 } : d)), 900);
     return () => clearTimeout(t);
   }, [demo]);
 
-  // 手数ジャンプ用に、本線の各手の表示テキストを作っておく(「最初へ」ボタンの代わり)。
-  const mainLine = useMemo(() => {
-    const out: { n: number; text: string }[] = [];
-    let node = course.root;
-    let pos = positionFromNode(node);
-    for (let n = 1; ; n++) {
-      const mv = node.branches.find((b) => b.kind === "main");
-      if (!mv || !mv.child) break;
-      const info = moveFromUSI(pos, mv.usi);
-      out.push({ n, text: info?.displayText ?? mv.usi });
-      node = mv.child;
-      pos = positionFromNode(node);
+  // 章が変わったら、実演・試し・開閉を閉じて先頭へ。結果パネルが変わったら開閉を閉じる。
+  useEffect(() => {
+    setDemo(null);
+    setTrying(false);
+    setTryPreview(null);
+    setMoreOpen(false);
+    window.scrollTo(0, 0);
+  }, [course.id]);
+  useEffect(() => {
+    setMoreOpen(false);
+    setDemo(null);
+  }, [pendingAck]);
+  useEffect(() => {
+    if (!bookQuiz) {
+      setTrying(false);
+      setTryPreview(null);
     }
-    return out;
-  }, [course]);
+  }, [bookQuiz]);
 
-  const fromKey = parsed && parsed.from instanceof Square ? parsed.from.usi : null;
-  const fromHand: HandHighlight | null =
-    parsed && !(parsed.from instanceof Square) ? { type: parsed.from, color: position.color } : null;
-  const glowKeys = parsed ? new Set([parsed.to.usi]) : undefined;
+  const mainTotal = useMemo(() => countMoves(course), [course]);
 
+  // ストアがまだこのコースを読み込み切っていない(切替直後の1レンダー)場合は
+  // currentNode が別コースのものである可能性があるため、描画をスキップする。
+  const stat = useMemo(() => {
+    const ch = path?.chapters[chapterIndex];
+    return chapterStat(ch ?? { entry: undefined as never, course, divergeAt: 1 }, chapterIndex, items, examResults);
+  }, [path, chapterIndex, course, items, examResults]);
+
+  if (storeCourse.id !== course.id) return null;
+
+  const myColor = course.mySide === "sente" ? Color.BLACK : Color.WHITE;
+  const flipped = course.mySide === "gote";
+  const title = path?.chapters[chapterIndex]
+    ? `第${toKanjiNumber(chapterIndex + 1)}章 ${path.chapters[chapterIndex].entry.label}`
+    : course.title;
+  const moveNumber = nodeHistory.length + 1;
+
+  // ── 進み具合: 本線は指した手数、逸れ手は終えた数を足す ──
+  const total = mainTotal + devQueue.length;
+  const done = chapterDone
+    ? total
+    : dev
+      ? mainTotal + (devNext - 1)
+      : Math.min(nodeHistory.length, mainTotal);
+
+  // ── 盤に出すもの ──
+  const guide = bookQuiz ? mainBranchOf(currentNode) : null;
+  const wrong = bookQuiz?.wrong ?? null;
+  // 答えの矢印: 2回目以降の誤答、または「悪くない手」(許容手)を指したとき。
+  const showAnswer = !!wrong && !trying && !demo && (wrong.kind !== "bad" || (bookQuiz?.misses ?? 0) >= 2);
+  const answer = showAnswer && wrong?.correctUsi ? parseUSIMove(wrong.correctUsi) : null;
+  const arrow = answer
+    ? { from: answer.from instanceof Square ? answer.from.usi : null, to: answer.to.usi }
+    : null;
   let ghost: GhostPiece | null = null;
-  if (parsed) {
-    const movingType = parsed.from instanceof Square ? position.board.at(parsed.from)?.type : parsed.from;
-    if (movingType) {
-      ghost = { key: parsed.to.usi, color: position.color, type: movingType };
-    }
+  if (answer && !(answer.from instanceof Square)) {
+    ghost = { key: answer.to.usi, color: position.color, type: answer.from };
   }
 
-  // 直前に指された手の移動元・移動先。相手の手は自動で進むので、
-  // どの駒が動いたのかを盤上ではっきり示す。
   const lastParsed = lastMoveUsi ? parseUSIMove(lastMoveUsi) : null;
   let lastKeys: Set<string> | undefined;
   if (lastParsed) {
@@ -196,365 +281,285 @@ export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter, r
   }
   const lastToKey = lastParsed ? lastParsed.to.usi : null;
 
-  function handleSquareClick(square: Square) {
-    if (quiz) { quizSelectSquare(square); return; }
-    if (bookQuiz) { bookSelectSquare(square); return; }
-    attemptSquare(square);
-  }
+  const shownPosition = tryPreview ? positionFromSfen(tryPreview.sfen) : demo ? demo.frames[demo.step].pos : position;
+  const shownLastKeys = tryPreview ? usiKeys(tryPreview.lastUsi) : demo ? demo.frames[demo.step].lastKeys : lastKeys;
+  const shownLastTo = tryPreview ? (tryPreview.lastUsi ? tryPreview.lastUsi.slice(2, 4) : null) : demo ? demo.frames[demo.step].lastTo : lastToKey;
 
-  // 出題中は「自分で合法手を探す」ので、選択した駒の行き先を光らせる。
-  const inQuiz = quiz !== null || bookQuiz !== null;
-  const quizFromKey = inQuiz && selected?.kind === "board" ? selected.square.usi : null;
-  const quizGlow = inQuiz
+  // 自分で手を探すので、選んだ駒の行き先を光らせる。
+  const picking = !!bookQuiz && !trying && !demo;
+  const quizFromKey = picking && selected?.kind === "board" ? selected.square.usi : null;
+  const quizGlow = picking
     ? selected?.kind === "board"
       ? new Set((moveDests.get(selected.square.usi) ?? []).map((d) => d.usi))
       : selected?.kind === "hand"
         ? new Set((dropDests.get(selected.pieceType) ?? []).map((d) => d.usi))
         : undefined
     : undefined;
-  const quizFromHand =
-    inQuiz && selected?.kind === "hand" ? { type: selected.pieceType, color: position.color } : null;
 
-  function handleHandPieceClick(type: PieceType, color: Color) {
-    // なぞりモードでは持ち駒トレイのクリックでは進めない(移動先マスのクリックのみ受理)。
-    // 出題中は自分で手を探すので、打つ手のために持ち駒も選べるようにする。
-    if (quiz) quizSelectHand(type, color);
-    else if (bookQuiz) bookSelectHand(type, color);
+  function handleSquareClick(square: Square) {
+    if (!picking) return;
+    bookSelectSquare(square);
   }
-
-  // ストアがまだこのコースを読み込み切っていない(切替直後の1レンダー)場合は
-  // currentNode が別コースのものである可能性があるため、描画をスキップする。
-  if (storeCourse.id !== course.id) return null;
-
-  const myColor = course.mySide === "sente" ? Color.BLACK : Color.WHITE;
-  const isOpponentTurn = !isGoal && position.color !== myColor;
-  const showWaitPill = isOpponentTurn && autoAdvanceOpponent && !pendingAck;
+  function handlePickHand(type: PieceType, color: Color) {
+    if (picking) bookSelectHand(type, color);
+  }
+  const selectedHandType = picking && selected?.kind === "hand" ? selected.pieceType : null;
+  const canPick = picking;
 
   return (
-    <div className="learn-wrap">
-      <div className="learn-frame">
-        <div className="abar">
-          <button type="button" className="back" onClick={onBack} aria-label="戻る">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M15 5l-7 7 7 7" />
-            </svg>
-          </button>
-          <div className="learn-head">
-            <div className="tl">定跡道場 ・ 学習</div>
-            <h1>{path ? path.title : course.title}</h1>
-          </div>
-          {/* 手番・手数はタイトル行の右端に置いて、行数を増やさない */}
-          <div className="head-badges">
-            <PointsBadge />
-            <span className={`badge b-turn${position.color === Color.WHITE ? " gote" : ""}`}>
-              {position.color === Color.BLACK ? "▲ 先手" : "△ 後手"}
-            </span>
-            <span className="badge b-prog">
-              {Math.min(nodeHistory.length + 1, totalMoves)}/{totalMoves}手
-            </span>
-          </div>
-        </div>
-        {/* 手番・手数のバッジと章の帯を1行にまとめる(縦の場所を取らないように)。
-            章は今いる章を濃くする。押してその章へ移ることはできない(順に通すため)。 */}
-        <div className="chapters" aria-label="章">
-          {path?.chapters.map((ch, i) => (
-            <span key={ch.entry.id} className={`chapter${i === chapterIndex ? " on" : i < chapterIndex ? " done" : ""}`}>
-              {ch.entry.label}
-            </span>
-          ))}
-        </div>
-        <Board
-          position={tryPreview ? positionFromSfen(tryPreview.sfen) : demo ? demo.frames[demo.step].pos : position}
-          fromKey={demo ? null : inQuiz ? quizFromKey : fromKey}
-          fromHand={demo ? null : inQuiz ? quizFromHand : fromHand}
-          glowKeys={demo || inQuiz ? undefined : glowKeys}
-          destKeys={demo ? undefined : inQuiz ? quizGlow : undefined}
-          ghost={demo || inQuiz ? null : ghost}
-          lastKeys={tryPreview ? usiKeys(tryPreview.lastUsi) : demo ? demo.frames[demo.step].lastKeys : lastKeys}
-          emphasizeLast
-          lastToKey={tryPreview ? (tryPreview.lastUsi ? tryPreview.lastUsi.slice(2, 4) : null) : demo ? demo.frames[demo.step].lastTo : lastToKey}
-          onSquareClick={handleSquareClick}
-          onHandPieceClick={handleHandPieceClick}
-          clickableHandColor={inQuiz ? (course.mySide === "sente" ? Color.BLACK : Color.WHITE) : "none"}
-          // 後手番のコースでは盤を後手側から見た向きにする(自分の駒が手前を向く)
-          flipped={course.mySide === "gote"}
-        />
-        {quiz && !quiz.solved && (
-          <div className={`quizpill${position.color === myColor ? "" : " waiting"}`}>
-            {position.color !== myColor
-              ? "相手が応じています…"
-              : quiz.step === 0
-                ? "相手が定跡を外しました。咎める手を指してください"
-                : "続けて咎める手を指してください"}
-          </div>
-        )}
-        {showWaitPill && !quiz && <div className="waitpill">相手が指しています…</div>}
-        {pendingAck && !quiz && !demo && (
-          <div className="ackpill">
-            {pendingAck.by === "me" ? "正解です。解説を読んで「次へ」" : "相手が指しました。解説を読んで「次へ」"}
-          </div>
-        )}
-        {!isGoal && !showWaitPill && !pendingAck && !quiz && !bookQuiz && (
-          <div className="guidepill">光っているマスへ動かして次の手をなぞる</div>
-        )}
-        {/* 章の冒頭(分かれ目の直後、相手の手が自動で入った直後まで)に出す */}
-        {path && chapterIndex > 0 && nodeHistory.length <= path.chapters[chapterIndex].divergeAt && (
-          <div className="chapter-intro">
-            {path.chapters[chapterIndex].divergeAt - 1}手目までは学んだ形と同じ。ここから {path.chapters[chapterIndex].entry.label}
-          </div>
-        )}
-        {trying ? null : demo ? (
-          <div className="learn-navrow">
-            <button type="button" onClick={() => setDemo(null)}>
-              実演を閉じる
-            </button>
-          </div>
-        ) : bookQuiz && !bookQuiz.revealed ? (
-          <div className="learn-navrow">
-          {/* 「◀ 戻る」と書いたボタン型のセレクト。開くと過去の手が並び、選ぶとその局面へ戻る。
-              バッジをセレクト化した案は気づかれないので、押せると分かる見た目にした。 */}
-          <select
-            className="back-select"
-            aria-label="戻る手を選ぶ"
-            value=""
-            disabled={nodeHistory.length === 0}
-            onChange={(e) => { if (e.target.value) goToMove(Number(e.target.value)); }}
-          >
-            <option value="">◀ 戻る</option>
-            {mainLine
-              .filter((m) => m.n <= nodeHistory.length)
-              .reverse()
-              .map((m) => (
-                <option key={m.n} value={m.n}>
-                  {m.n}手目 {m.text} の前に戻る
-                </option>
-              ))}
-          </select>
-            <button type="button" onClick={bookRetry} disabled={!bookQuiz.wrong}>
-              もう一度
-            </button>
-            <button type="button" onClick={bookReveal}>
-              答えを見る
-            </button>
-          </div>
-        ) : quiz ? (
-          <div className="learn-navrow">
-            {quiz.solved ? (
-              <button type="button" className="primary" onClick={quizReturnToMainLine}>
-                本線に戻って続ける ▶
-              </button>
-            ) : (
-              <>
-                <button type="button" onClick={quizRetry} disabled={!quiz.wrong}>
-                  もう一度
-                </button>
-                <button type="button" onClick={quizReveal}>
-                  答えを見る
-                </button>
-              </>
-            )}
-          </div>
-        ) : (
-        <div className="learn-navrow">
-          {/* 「◀ 戻る」と書いたボタン型のセレクト。開くと過去の手が並び、選ぶとその局面へ戻る。
-              バッジをセレクト化した案は気づかれないので、押せると分かる見た目にした。 */}
-          <select
-            className="back-select"
-            aria-label="戻る手を選ぶ"
-            value=""
-            disabled={nodeHistory.length === 0}
-            onChange={(e) => { if (e.target.value) goToMove(Number(e.target.value)); }}
-          >
-            <option value="">◀ 戻る</option>
-            {mainLine
-              .filter((m) => m.n <= nodeHistory.length)
-              .reverse()
-              .map((m) => (
-                <option key={m.n} value={m.n}>
-                  {m.n}手目 {m.text} の前に戻る
-                </option>
-              ))}
-          </select>
-          {isGoal && !pendingAck && path && onNextChapter ? (
-            <button type="button" className="primary" onClick={onNextChapter}>
-              次の章へ ▶ {path.chapters[chapterIndex + 1]?.entry.label ?? ""}
-            </button>
-          ) : (
-            isGoal && !pendingAck && path ? (
-              // 最後の章まで終えた。押せないボタンで終わらせず、戻り先を示す。
-              <button type="button" className="primary" onClick={onBack}>
-                すべての章を修了 ・ 戻る
-              </button>
-            ) : (
-              <button type="button" className="primary" onClick={advance} disabled={isGoal && !pendingAck}>
-                {pendingAck ? "次へ ▶" : isGoal ? "修了" : "なぞって次へ ▶"}
-              </button>
-            )
-          )}
-        </div>
-        )}
-        {trying && bookQuiz?.wrong?.attemptedUsi ? (
-          <TryMove
-            sfenBefore={currentNode.sfen}
-            attemptedUsi={bookQuiz.wrong.attemptedUsi}
-            attemptedText={bookQuiz.wrong.attemptedText}
-            correctUsi={bookQuiz.wrong.correctUsi}
-            correctText={bookQuiz.wrong.correctText}
-            onPreview={(sfen, lastUsi) => setTryPreview(sfen ? { sfen, lastUsi } : null)}
-            onClose={() => {
-              setTrying(false);
-              setTryPreview(null);
-            }}
-          />
-        ) : bookQuiz ? (
-          <div className="quizpanel">
-            {lastOpponent && (
-              <p className="opp-move">
-                <span className="quiz-no">{lastOpponent.moveNumber}手目</span>
-                相手 {lastOpponent.moveText}
-                {lastOpponent.note ? ` — ${lastOpponent.note}` : ""}
-              </p>
-            )}
-            {(() => {
-              // 「なぜその手なのか」から逆算して考えられるよう、答えの手の解説を
-              // 升だけ伏せて『ねらい』として先に見せる。問いの文は毎回同じなので出さず、
-              // 手数だけを添える(盤の上の案内が「盤に指してください」と促している)。
-              const hint = guide?.aim ?? buildHint(guide?.note, moveInfo?.displayText);
-              // 急所(最善手と次善手の差が100点以上)はラベルの文言だけを変える。
-              // 色面を足すとねらいへの視線が散るので、文字で示す。
-              return (
-                <p className={`quiz-aim${guide?.sharp ? " sharp" : ""}`}>
-                  <span className="quiz-no">{moveNumber}手目</span>
-                  {hint ?? "次の一手は？"}
-                </p>
-              );
-            })()}
-            {currentNode.comment && <p className="quiz-comment">{currentNode.comment}</p>}
-            {bookQuiz.wrong && (
-              trying && bookQuiz.wrong.attemptedUsi ? null : bookQuiz.wrong.accepted ? (
-                // エンジンが「最善から100点以内」と判定した手。咎められないので赤で返さない。
-                <p className="quiz-wrong soft">
-                  △ {bookQuiz.wrong.attemptedText}
-                  <span>
-                    その手も咎められません。ただしこの講座では {bookQuiz.wrong.correctText} と進めます。
-                  </span>
-                </p>
-              ) : bookQuiz.wrong.openEnded ? (
-                <p className="quiz-wrong soft">
-                  △ {bookQuiz.wrong.attemptedText}
-                  <span>
-                    その手も悪くありません(差はわずかです)。この講座では {bookQuiz.wrong.correctText} と
-                    進めます。
-                  </span>
-                </p>
-              ) : (
-                <p className="quiz-wrong">
-                  ✕ {bookQuiz.wrong.attemptedText}
-                  <span>
-                    定跡は {bookQuiz.wrong.correctText} です。この手が悪いとは限りませんが、
-                    まずは定跡の形を覚えましょう。
-                  </span>
-                </p>
-              )
-            )}
-            {bookQuiz.wrong?.attemptedUsi && !trying && (
-              // 「この手を指したらどうなるんだろう」に答える。盤で試し、定跡手と比べる。
-              <div className="demo-list">
-                <button type="button" className="demo-btn" onClick={() => setTrying(true)}>
-                  ▶ この手を指すとどうなる？
-                </button>
-              </div>
-            )}
-          </div>
-        ) : quiz ? (
-          <div className="quizpanel">
-            <p className="quiz-head">
-              <span className="quiz-no">{quiz.anchorMoveNumber}手目</span>
-              相手は {quiz.deviationText} と定跡を外しました
-            </p>
-            {quiz.deviation.note && <p className="quiz-note">{quiz.deviation.note}</p>}
-            {currentNode.comment && <p className="quiz-comment">{currentNode.comment}</p>}
-            {quiz.wrong && (
-              <p className="quiz-wrong">
-                ✕ {quiz.wrong.attemptedText}
-                <span>ここでは、もっと厳しい手があります。もう一度考えてみましょう。</span>
-              </p>
-            )}
-            {quiz.solved && quiz.deviation.punishNote && (
-              <p className="quiz-punish">{quiz.deviation.punishNote}</p>
-            )}
-          </div>
-        ) : demo ? (
-          <div className="quizpanel demo-panel">
-            <p className="demo-title">{demo.demo.title}</p>
-            <p className="demo-moves">
-              {demo.frames.slice(1).map((f, i) => (
-                <span key={i} className={`demo-move${i + 1 <= demo.step ? " on" : ""}`}>
-                  {f.text}
-                </span>
-              ))}
-            </p>
-            {demo.step >= demo.frames.length - 1 && <p className="demo-text">{demo.demo.text}</p>}
-          </div>
-        ) : pendingAck ? (
-          <>
-            <CommentPanel
-              isGoal={false}
-              moveNumber={pendingAck.moveNumber}
-              moveText={pendingAck.moveText}
-              note={pendingAck.note}
-              comment={pendingAck.comment}
-              kind={pendingAck.kind}
-              punishNote={pendingAck.punishNote}
-            />
-            {pendingAck.by === "me" && pendingAck.demos && pendingAck.demos.length > 0 && (
-              // その手の効果を、盤上で数手動かして見せる。「なぜその手なのか」を文章でなく局面で示す。
-              <div className="demo-list">
-                {pendingAck.demos.map((d) => (
-                  <button key={d.title} type="button" className="demo-btn" onClick={() => startDemo(d)}>
-                    ▶ {d.title}
-                  </button>
-                ))}
-              </div>
-            )}
-          </>
-        ) : showWaitPill && bookQuizEnabled ? (
-          // 相手が指すまでの待ち時間。ここで通常の解説パネルを出すと、
-          // これから相手が指す手の解説が先に見えてしまい(ネタバレ)、
-          // 指したあとに出題パネルでもう一度同じ説明が出て二重になる。
-          <div className="quizpanel">
-            <p className="quiz-comment">相手の手を待っています…</p>
-          </div>
-        ) : (
-          <CommentPanel
-            isGoal={isGoal}
-            moveNumber={isGoal ? undefined : moveNumber}
-            moveText={moveInfo?.displayText}
-            note={guide?.note}
-            comment={currentNode.comment}
-            kind={guide?.kind}
-            punishNote={guide?.punishNote}
-            goalLabel={course.goalLabel}
-          />
-        )}
-        {!pendingAck && !quiz && !bookQuiz && (
-          <BranchNav branches={currentNode.branches} activeIndex={selectedBranchIndex} onSelect={chooseBranch} />
-        )}
+    <Screen className="learn-screen learn-wrap">
+      <TopBar backLabel="戻る" onBack={onBack} title={title} />
+      <div className="learn-prog" role="progressbar" aria-label="章の進み具合" aria-valuemin={0} aria-valuemax={total} aria-valuenow={done}>
+        <i style={{ width: `${total === 0 ? 0 : Math.min(100, (done / total) * 100)}%` }} />
       </div>
-    </div>
+
+      <div className="learn-hands">
+        <HandChip label="▲持駒" position={shownPosition} color={Color.BLACK} flipped={flipped}
+          canPick={canPick && myColor === Color.BLACK} selectedType={myColor === Color.BLACK ? selectedHandType : null} onPick={handlePickHand} />
+        <HandChip label="△持駒" position={shownPosition} color={Color.WHITE} flipped={flipped}
+          canPick={canPick && myColor === Color.WHITE} selectedType={myColor === Color.WHITE ? selectedHandType : null} onPick={handlePickHand} />
+      </div>
+
+      <Board
+        position={shownPosition}
+        fromKey={quizFromKey}
+        fromHand={null}
+        destKeys={quizGlow}
+        ghost={ghost}
+        lastKeys={shownLastKeys}
+        emphasizeLast
+        lastToKey={shownLastTo}
+        onSquareClick={handleSquareClick}
+        onHandPieceClick={() => {}}
+        clickableHandColor="none"
+        // 後手番のコースでは盤を後手側から見た向きにする(自分の駒が手前を向く)
+        flipped={flipped}
+        hideHands
+        arrow={arrow}
+      />
+
+      <section className="dojo-panel learn-panel" aria-live="polite">
+        {demo ? (
+          <DemoPanel demo={demo} setDemo={setDemo} />
+        ) : chapterDone ? (
+          <CompletePanel
+            title={title}
+            learned={stat.learned}
+            total={stat.total}
+            nextLabel={path && onNextChapter ? path.chapters[chapterIndex + 1]?.entry.label ?? "" : null}
+            examReady={stat.ready && !!onExam}
+            onNext={onNextChapter}
+            onStrategy={onStrategy ?? onBack}
+            onExam={onExam}
+          />
+        ) : pendingAck ? (
+          <ResultPanel ack={pendingAck} open={moreOpen} setOpen={setMoreOpen} onDemo={startDemo} onNext={acknowledgeMove} />
+        ) : bookQuiz ? (
+          <QuestionPanel
+            quiz={bookQuiz}
+            moveNumber={moveNumber}
+            lastOpponent={lastOpponent}
+            aim={guide?.aim ?? buildHint(guide?.note, guide ? moveFromUSI(position, guide.usi)?.displayText : undefined)}
+            sharp={!!guide?.sharp}
+            comment={cleanNote(currentNode.comment)}
+            introNote={
+              !lastOpponent && path && chapterIndex > 0 && startDepth > 0 && nodeHistory.length === startDepth && !dev
+                ? `${startDepth}手目までは学んだ形と同じ。ここから ${path.chapters[chapterIndex].entry.label}`
+                : ""
+            }
+            onTry={() => setTrying(true)}
+          />
+        ) : (
+          <>
+            <p className="oppline">{lastOpponent ? lastOpponent.moveNumber : moveNumber}手目 ・ 相手の手は自動で進みます</p>
+            {lastOpponent && oppPhase === "shown" ? <OppLine ack={lastOpponent} big /> : <p className="oppbig">相手が指します…</p>}
+          </>
+        )}
+      </section>
+
+      {trying && bookQuiz?.wrong && (
+        <TryMove
+          sfenBefore={currentNode.sfen}
+          attemptedUsi={bookQuiz.wrong.attemptedUsi}
+          attemptedText={bookQuiz.wrong.attemptedText}
+          correctUsi={bookQuiz.wrong.correctUsi}
+          correctText={bookQuiz.wrong.correctText}
+          onPreview={onPreview}
+          onClose={closeTry}
+        />
+      )}
+    </Screen>
   );
 }
 
-function countMoves(node: JosekiNode): number {
+/** 自分の番: 「あなたの番 ・ n手目」+ 相手の手 + ねらい。外したときは赤い一行 / 矢印+答え。 */
+function QuestionPanel({
+  quiz, moveNumber, lastOpponent, aim, sharp, comment, introNote, onTry,
+}: {
+  quiz: BookQuizState;
+  moveNumber: number;
+  lastOpponent: AckMove | null;
+  aim: string | null;
+  sharp: boolean;
+  comment: string;
+  introNote: string;
+  onTry: () => void;
+}) {
+  const wrong = quiz.wrong;
+
+  // 別の良い手(許容手・同じくらい良い手): 認めたうえで、定跡の手を矢印で示す。
+  if (wrong && wrong.kind !== "bad") {
+    const mark = wrong.attemptedText.slice(0, 1);
+    return (
+      <>
+        <p className="soft-t">{mark} その手も悪くありません。定跡は {wrong.correctText} です</p>
+        <p className="expl">
+          {wrong.attemptedText} も有力ですが、この章では {wrong.correctText} で覚えます。矢印の手を指してください。
+        </p>
+      </>
+    );
+  }
+
+  const isDeviation = !!lastOpponent?.deviation;
+  return (
+    <>
+      <p className="turn">
+        {isDeviation
+          ? `相手が定跡を外れました(${lastOpponent.moveText})。咎める手を指してください`
+          : `あなたの番 ・ ${moveNumber}手目`}
+      </p>
+      {lastOpponent && !isDeviation && <OppLine ack={lastOpponent} />}
+      {introNote && <p className="oppline">{introNote}</p>}
+      <div className="aim">
+        {aim ? (
+          <>
+            <div className="aim-t">{moveNumber}手目のねらい{sharp ? " ・ 急所" : ""}</div>
+            <p>{aim}</p>
+          </>
+        ) : (
+          <div className="aim-t">{moveNumber}手目{sharp ? " ・ 急所" : ""} ・ 次の一手は？</div>
+        )}
+      </div>
+      {comment && <p className="note-s">{comment}</p>}
+      {wrong && quiz.misses === 1 && (
+        <p className="miss-l">× {wrong.attemptedText} — 定跡の手ではありません。もう一度</p>
+      )}
+      {wrong && quiz.misses >= 2 && (
+        <>
+          <p className="ans-l">答えは {wrong.correctText}。矢印のとおり指してください</p>
+          <button type="button" className="btn-secondary full" onClick={onTry}>
+            ▶ {wrong.attemptedText}を指すとどうなる？
+          </button>
+        </>
+      )}
+    </>
+  );
+}
+
+/** 正解の結果: 「○ 正解」+ 理由 + くわしく + 次へ。 */
+function ResultPanel({
+  ack, open, setOpen, onDemo, onNext,
+}: {
+  ack: AckMove;
+  open: boolean;
+  setOpen: (v: boolean) => void;
+  onDemo: (d: MoveDemo) => void;
+  onNext: () => void;
+}) {
+  const demos = ack.demos ?? [];
+  const hasMore = !!ack.more || demos.length > 0;
+  return (
+    <>
+      <p className="good"><b>○ 正解 {ack.moveText}</b></p>
+      {ack.note && <p className="expl">{ack.note}</p>}
+      {hasMore && (
+        <button type="button" className="tbtn" aria-expanded={open} onClick={() => setOpen(!open)}>
+          くわしく {open ? "▴" : "▾"}
+        </button>
+      )}
+      {open && (
+        <>
+          {ack.more && <p className="more">{ack.more}</p>}
+          {demos.map((d) => (
+            <button key={d.title} type="button" className="btn-secondary full mb" onClick={() => onDemo(d)}>
+              ▶ 実演 {d.title}
+            </button>
+          ))}
+        </>
+      )}
+      <button type="button" className="btn-primary full" onClick={onNext}>次へ</button>
+    </>
+  );
+}
+
+/** 実演の再生中: 題・手順(いまの手は太字)・◀ ▶ と「5 / 6手」・結論・閉じる。 */
+function DemoPanel({ demo, setDemo }: { demo: DemoState; setDemo: (d: DemoState | null) => void }) {
+  const last = demo.frames.length - 1;
+  const go = (step: number) => setDemo({ ...demo, step: Math.max(0, Math.min(last, step)), auto: false });
+  return (
+    <>
+      <h3 className="dt">実演 {demo.demo.title}</h3>
+      <ol className="mlist">
+        {demo.frames.slice(1).map((f, i) => (
+          <li key={i} className={i + 1 === demo.step ? "cur" : ""}>
+            <span>{i + 1}</span>
+            {f.text}
+          </li>
+        ))}
+      </ol>
+      <div className="step">
+        <button type="button" className="btn-secondary sq" aria-label="1手戻る" disabled={demo.step <= 0} onClick={() => go(demo.step - 1)}>◀</button>
+        <span className="meta">{demo.step} / {last}手</span>
+        <button type="button" className="btn-secondary sq" aria-label="1手進む" disabled={demo.step >= last} onClick={() => go(demo.step + 1)}>▶</button>
+      </div>
+      {demo.step >= last && <p className="demo-text">{demo.demo.text}</p>}
+      <button type="button" className="btn-secondary full" onClick={() => setDemo(null)}>実演を閉じる</button>
+    </>
+  );
+}
+
+/** 章を終えた: まとめ2行 + 次の章へ(主)+ 認定試験(副)。点数は出さない。 */
+function CompletePanel({
+  title, learned, total, nextLabel, examReady, onNext, onStrategy, onExam,
+}: {
+  title: string;
+  learned: number;
+  total: number;
+  /** 次の章の名前。null なら最後の章。 */
+  nextLabel: string | null;
+  examReady: boolean;
+  onNext?: () => void;
+  onStrategy: () => void;
+  onExam?: () => void;
+}) {
+  return (
+    <>
+      <h2 className="done">{title}を<span className="nw">終えました</span></h2>
+      <p className="res-p">覚えた問題 {learned} / {total}</p>
+      <p className="res-p">間違えた問題は明日の復習に出ます</p>
+      <div className="res-actions">
+        {nextLabel !== null && onNext ? (
+          <button type="button" className="btn-primary full" onClick={onNext}>次の章へ ▶ {nextLabel}</button>
+        ) : (
+          <button type="button" className="btn-primary full" onClick={onStrategy}>戦法のページへ戻る</button>
+        )}
+        {examReady && onExam && (
+          <button type="button" className="btn-secondary full" onClick={onExam}>この章の認定試験を受ける</button>
+        )}
+      </div>
+    </>
+  );
+}
+
+/** 本線の手数(逸れ手は数えない)。 */
+function countMoves(course: JosekiCourse): number {
   let count = 0;
-  let current = node;
-  while (current.branches.length > 0) {
+  let current = course.root;
+  for (;;) {
+    const main = mainBranchOf(current);
+    if (!main || !main.child) break;
     count++;
-    // 逸れ手の枝を数に含めないよう、本線だけを辿る。
-    const main = current.branches.find((b) => b.kind === "main") ?? current.branches[0];
-    const child = main.child;
-    if (!child) break;
-    current = child;
+    current = main.child;
   }
   return count;
 }

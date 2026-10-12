@@ -162,6 +162,8 @@ function App() {
               chapterIndex + 1 < learningPath.chapters.length ? () => setChapterIndex(chapterIndex + 1) : undefined
             }
             onBack={() => setScreen(learnFrom === "chapter" ? "chapter" : "home")}
+            onStrategy={() => setScreen("strategy")}
+            onExam={() => { setExamAuto(chapterIndex); setScreen("exam"); }}
           />
         )}
 
@@ -188,7 +190,7 @@ function App() {
                 Sandbox(自由対局・検証用)
               </button>
               <button type="button" className="devmenu-item" onClick={() => setScreen("branchDemo")}>
-                分岐デモ(本線/変化/逸れ手 切替の確認用)
+                学習画面デモ(デモのコースで学習画面を動かす)
               </button>
             </div>
           </div>
