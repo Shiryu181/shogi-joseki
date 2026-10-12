@@ -25,7 +25,7 @@ export interface HomeProps {
 
 /**
  * ホーム。毎日ここから始める画面。
- * 並びは「今日の復習 → 学習中 → 戦法をえらぶ → このアプリについて」。
+ * 並びは「今日の復習 → 学習を続ける → 戦法をえらぶ → このアプリについて」。
  * 主ボタンは画面に1つだけ。復習があれば「はじめる」、無ければ「続きから」、
  * 記録がまだ無ければ戦法カードの「この戦法で学ぶ」。
  */
@@ -84,6 +84,8 @@ export function Home({ allChapters, onReview, onSettings, onAbout, onOpenStrateg
         </div>
 
         {started && learning && sum && (
+          <div className="home-sec">
+          <h2 className="fuda">学習を続ける</h2>
           <section className="dojo-panel home-learning">
             <div
               className="home-learning__body"
@@ -96,10 +98,9 @@ export function Home({ allChapters, onReview, onSettings, onAbout, onOpenStrateg
               }}
             >
               <div className="home-learning__head">
-                <span className="home-h-card">学習中</span>
+                <h3>{learning.name}・{sideName(learningSide)}</h3>
                 <ChevronRight />
               </div>
-              <h2>{learning.name}・{sideName(learningSide)}</h2>
               <Bar ratio={sum.total === 0 ? 0 : sum.learned / sum.total} />
               <p className="dj-line">覚えた問題 {sum.learned} / {sum.total}</p>
               <p className="dj-line">認定試験 合格 {sum.passed} / {sum.stats.length}章</p>
@@ -117,6 +118,7 @@ export function Home({ allChapters, onReview, onSettings, onAbout, onOpenStrateg
               {next ? "続きから" : "章の道を見る"}
             </button>
           </section>
+          </div>
         )}
 
         <div className="home-sec">
