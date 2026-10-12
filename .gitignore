@@ -28,3 +28,7 @@ public/engine/
 *.sln
 *.sw?
 scripts/lab-out/
+
+# UI 点検の再生成できる出力(npm run ui-audit)
+ui-audit/screens/
+ui-audit/metrics.json
