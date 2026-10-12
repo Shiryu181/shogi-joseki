@@ -734,9 +734,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     group: "相振り飛車",
     opponentLabel: "三間飛車",
     sideLabel: "先手",
-    label: "相振り飛車は先に5筋を突く",
+    label: "相振り飛車は中飛車左穴熊で",
     kind: "急戦",
-    summary: "相振り飛車は先に動いたほうが主導権を握る。相手が桂を跳ねた瞬間に5筋を突き捨てて突破する。",
+    summary: "相手の飛車は3筋から攻めてくるので、玉を反対の左側の穴熊に囲う。3筋の攻めは銀で受け止め、飛車を2六へ回して反撃する。",
     load: () => assertJosekiCourse(parseRaw(nakabishaVsSankenbishaSenteRaw), "nakabisha-vs-sankenbisha--sente.json"),
   },
   {

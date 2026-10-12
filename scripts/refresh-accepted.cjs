@@ -17,7 +17,7 @@ const { createEngine } = require("./lib/engine.cjs");
 const args = process.argv.slice(2);
 const msIdx = args.indexOf("--ms");
 const MS = msIdx >= 0 ? Number(args[msIdx + 1]) : 6000;
-const targets = args.filter((a, i) => a.includes(":") && i !== msIdx + 1);
+const targets = args.filter((a, i) => a.includes(":") && (msIdx < 0 || i !== msIdx + 1));
 const TOL = 100, PV = 20, MAX_ACCEPTED = 20;
 const CACHE = path.join(__dirname, "accepted-cache.json");
 const key = (sfen) => sfen.split(" ").slice(0, 3).join(" ");
