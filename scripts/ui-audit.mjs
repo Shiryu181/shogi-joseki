@@ -25,15 +25,15 @@ const VIEWPORT = { width: 390, height: 844 };
 
 /** 撮る状態の並び。番号(NN)はこの並びで決まる。 */
 const ORDER = [
-  "dashboard-fresh", "home", "side-both", "about",
-  "settings-fresh", "exam-list-fresh",
+  "home-first", "home-due", "home-nodue", "about",
+  "settings-fresh", "strategy", "strategy-sheet", "chapter", "chapter-exam",
   "learn-opponent-moving", "learn-first-question", "learn-piece-selected", "learn-wrong",
   "learn-trymove", "learn-accepted", "learn-correct-explain", "learn-revealed", "learn-chapter-complete",
   "learn-sente-first-question", "learn-chapter-intro",
   "learn-correct-demo-button", "learn-demo-playing", "learn-demo-finished",
   "learn-opponent-wait-branchnav", "learn-branch-selected",
   "learn-deviation-quiz", "learn-deviation-wrong", "learn-deviation-solved", "learn-all-done",
-  "dashboard-records", "dashboard-all-done",
+  "home-alldone",
   "review-question", "review-wrong", "review-accepted", "review-correct", "review-result",
   "exam-list", "exam-question", "exam-result-pass", "exam-list-after", "exam-result-fail",
   "settings", "settings-confirm",
@@ -700,6 +700,29 @@ async function main() {
     };
     const clickText = (page, re) => page.getByRole("button", { name: re }).first().click();
 
+    /** 記録なしのホームから学習へ入る: 「この戦法で学ぶ」→ (手番を替える)→ 第一章 → 学習をはじめる。 */
+    async function enterLearnFresh(page, side = "後手") {
+      await clickText(page, /この戦法で学ぶ/);
+      await page.waitForSelector(".strategy-screen");
+      if (side !== "後手") {
+        await page.locator(".sp-switch").click();
+        await page.waitForSelector(".sheet");
+        await page.getByRole("radio", { name: new RegExp(side) }).click();
+        await page.waitForSelector(".sheet", { state: "detached" });
+      }
+      await page.locator(".dj-rows li button").first().click();
+      await page.waitForSelector(".chapter-screen");
+      await clickText(page, /学習をはじめる|続きから/);
+      await page.waitForSelector(".learn-wrap");
+    }
+    /** 記録ありのホームから認定試験の一覧へ: 学習中のカード → 戦法のページ → 認定試験の欄。 */
+    async function gotoExamList(page) {
+      await page.locator(".home-learning__body").click();
+      await page.waitForSelector(".strategy-screen");
+      await page.locator(".sp-exam").click();
+      await page.waitForSelector(".exam-list-screen");
+    }
+
     // 学習画面を自動で進める共通ループ。hooks.before(st) が 'stop' を返すと止まる。
     async function driveLearn(page, hooks = {}, maxMs = 120000) {
       const t0 = Date.now();
@@ -732,39 +755,22 @@ async function main() {
     // ───────────── 場面1: 記録なしの各画面 ─────────────
     log("== shell (記録なし) ==");
     await scenario("shell", "fresh", async (page) => {
-      await step("dashboard-fresh", () => capture("dashboard-fresh"));
+      await step("home-first", () => capture("home-first"));
       await step("settings-fresh", async () => {
-        await page.locator(".dash-tri button", { hasText: "設定" }).click();
+        await page.locator(".home-gear").click();
         await page.waitForSelector(".set-wrap");
         await capture("settings-fresh");
         await reload(page);
       });
-      await step("exam-list-fresh", async () => {
-        await page.locator(".dash-tri button", { hasText: "認定試験" }).click();
-        await page.waitForSelector(".exam-wrap");
-        await capture("exam-list-fresh");
-        await reload(page);
-      });
       await step("about", async () => {
-        await page.locator(".dash-foot").click();
+        await page.locator(".home-foot-link").click();
         await page.waitForSelector(".about-wrap, .about-frame, [class*=about]");
         await capture("about");
         await reload(page);
       });
-      await step("home", async () => {
-        await page.locator(".dash-tri button", { hasText: "戦法を選ぶ" }).click();
-        await page.waitForSelector(".home-wrap");
-        await capture("home");
-      });
-      await step("side-both", async () => {
-        await page.locator(".lcard", { hasText: "ゴキゲン中飛車" }).first().click();
-        await page.waitForSelector(".matchup-wrap");
-        await capture("side-both");
-      });
       // 先手で始める → 学習(先手側の盤)
       await step("learn-sente-first-question", async () => {
-        await page.locator(".sidebtn", { hasText: "先手" }).first().click();
-        await page.waitForSelector(".learn-wrap");
+        await enterLearnFresh(page, "先手");
         await waitFor(page, () => window.__au.status().bq !== null, 12000);
         await capture("learn-sente-first-question");
       });
@@ -773,8 +779,7 @@ async function main() {
     // ───────────── 場面2: 第1章(短い章)を最初から最後まで ─────────────
     log("== learn ch0 ==");
     await scenario("learn0", "fresh", async (page) => {
-      await clickText(page, /続きから/);
-      await page.waitForSelector(".learn-wrap");
+      await enterLearnFresh(page);
       await step("learn-opponent-moving", async () => {
         await page.waitForSelector(".waitpill", { timeout: 4000 });
         await page.evaluate(() => window.__au.pause());
@@ -894,6 +899,7 @@ async function main() {
 
     log("== learn ch2 intro ==");
     await scenario("learn2", "ch2", async (page) => {
+      await step("home-nodue", () => capture("home-nodue"));
       await clickText(page, /続きから/);
       await page.waitForSelector(".learn-wrap");
       await step("learn-chapter-intro", async () => {
@@ -917,10 +923,36 @@ async function main() {
     // ───────────── 場面4: 記録あり(ダッシュボード・復習・試験・設定) ─────────────
     log("== records ==");
     await scenario("records", "records", async (page) => {
-      await step("dashboard-records", () => capture("dashboard-records"));
+      await step("home-due", () => capture("home-due"));
+
+      // 戦法のページ・手番のシート・章のページ
+      await step("strategy", async () => {
+        await page.locator(".home-learning__body").click();
+        await page.waitForSelector(".strategy-screen");
+        await capture("strategy");
+      });
+      await step("strategy-sheet", async () => {
+        await page.locator(".sp-switch").click();
+        await page.waitForSelector(".sheet");
+        await capture("strategy-sheet");
+        await page.getByRole("button", { name: "閉じる" }).click();
+      });
+      await step("chapter", async () => {
+        await page.locator(".dj-rows li").nth(4).locator("button").click();
+        await page.waitForSelector(".chapter-screen");
+        await capture("chapter");
+        await clickText(page, /戻る/);
+        await page.waitForSelector(".strategy-screen");
+      });
+      await step("chapter-exam", async () => {
+        await page.locator(".dj-rows li").nth(1).locator("button").click();
+        await page.waitForSelector(".chapter-screen");
+        await capture("chapter-exam");
+        await reload(page);
+      });
 
       await step("settings", async () => {
-        await page.locator(".dash-tri button", { hasText: "設定" }).click();
+        await page.locator(".home-gear").click();
         await page.waitForSelector(".set-wrap");
         await capture("settings");
       });
@@ -933,7 +965,7 @@ async function main() {
 
       // 復習
       await step("review-question", async () => {
-        await page.locator(".dash-rvbtn").click();
+        await clickText(page, /^はじめる$/);
         await page.waitForSelector(".review-wrap");
         await waitFor(page, () => window.__au.review.st().n > 0, 4000);
         await capture("review-question");
@@ -988,13 +1020,12 @@ async function main() {
 
       // 試験
       await step("exam-list", async () => {
-        await page.locator(".dash-tri button", { hasText: "認定試験" }).click();
-        await page.waitForSelector(".exam-wrap");
+        await gotoExamList(page);
         await capture("exam-list");
       });
       await step("exam-result-pass", async () => {
-        const row = page.locator(".exam-row", { hasText: chLabels[3] });
-        await row.locator(".exam-go").click();
+        const row = page.locator(".exl li", { hasText: chLabels[3] });
+        await row.locator(".exl-go").click();
         await page.waitForSelector(".exam-board");
         await capture("exam-question");
         for (let i = 0; i < 12; i++) {
@@ -1008,12 +1039,12 @@ async function main() {
       });
       await step("exam-list-after", async () => {
         await page.locator(".exam-btn").click();
-        await page.waitForSelector(".exam-card");
+        await page.waitForSelector(".exl");
         await capture("exam-list-after");
       });
       await step("exam-result-fail", async () => {
-        const row = page.locator(".exam-row", { hasText: chLabels[1] });
-        await row.locator(".exam-go").click();
+        const row = page.locator(".exl li", { hasText: chLabels[1] });
+        await row.locator(".exl-go").click();
         await page.waitForSelector(".exam-board");
         for (let i = 0; i < 12; i++) {
           const st = await page.evaluate(() => window.__au.exam.st());
@@ -1028,11 +1059,8 @@ async function main() {
 
     log("== all done ==");
     await scenario("alldone", "alldone", async (page) => {
-      await step("dashboard-all-done", () => capture("dashboard-all-done"));
+      await step("home-alldone", () => capture("home-alldone"));
     });
-    unreached.push({ state: "home-search-empty(検索0件)", theme: "both", reason: "公開中の戦法カードが1枚(ゴキゲン中飛車のみ)で、4枚以下だと検索欄とカテゴリタブが出ない" });
-    unreached.push({ state: "side-partial(片方の手番が準備中)", theme: "both", reason: "公開中の戦法が先手・後手の両方を持つため、準備中表示は出ない" });
-    unreached.push({ state: "review-empty(今日の復習はありません)", theme: "both", reason: "復習が0問のとき「はじめる」は無効になり、画面へ到達できない(通常の導線では出ない)" });
   } finally {
     await browser.close().catch(() => {});
     await server.close().catch(() => {});

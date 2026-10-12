@@ -1,84 +1,99 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Color, PieceType, Square } from "../../domain/shogi";
 import { Board } from "../../ui/Board";
-import { useExamStore, summarize, canTake, EXAM_SIZE, PASS_RATIO } from "../../store/examStore";
-import { useProgressStore, itemKey } from "../../store/progressStore";
-import { quizItemsOf } from "../../domain/reviewQueue";
+import { useExamStore, summarize, EXAM_SIZE, PASS_RATIO } from "../../store/examStore";
+import { useProgressStore } from "../../store/progressStore";
+import { summarizePath } from "../../domain/courseProgress";
+import type { ChapterStat } from "../../domain/courseProgress";
+import { toKanjiNumber } from "../../domain/kanjiNumber";
+import { Screen, TopBar } from "../../ui/DojoParts";
 import type { PathChapter } from "../../domain/josekiLoader";
 import "./Exam.css";
 
 export interface ExamProps {
+  /** 選んだ戦法×手番の章。 */
   chapters: PathChapter[];
+  /** 見出し。「ゴキゲン中飛車・後手」。 */
+  heading: string;
   onBack: () => void;
+  /** 指定すると、一覧を出さずにその章の試験をすぐ始める(章のページから)。 */
+  autoStart?: number;
 }
 
 /**
  * 認定試験。章ごとに「覚えたことを確かめる」。
  * ねらいは出さず、間違えてもやり直せない。正誤は最後にまとめて見せる。
+ * 一覧は選んだ戦法×手番の章だけを数える。受けられない章にはボタンを出さず、条件を文字で示す。
  */
-export function Exam({ chapters, onBack }: ExamProps) {
+export function Exam({ chapters, heading, onBack, autoStart }: ExamProps) {
   const [screen, setScreen] = useState<"list" | "run">("list");
   const items = useProgressStore((s) => s.items);
   const results = useExamStore((s) => s.results);
   const start = useExamStore((s) => s.start);
   const quit = useExamStore((s) => s.quit);
+  const autoStarted = useRef(false);
 
-  const rows = useMemo(
-    () =>
-      chapters.map(({ entry, course }) => {
-        const qs = quizItemsOf(course);
-        const answered = qs.filter((q) => itemKey(q.sfen, q.usi) in items).length;
-        return {
-          entry, course, total: qs.length, answered,
-          ready: canTake(course, items),
-          result: results[course.id],
-        };
-      }),
-    [chapters, items, results],
-  );
+  const sum = useMemo(() => summarizePath(chapters, items, results), [chapters, items, results]);
+
+  useEffect(() => {
+    if (autoStart === undefined || autoStarted.current) return;
+    autoStarted.current = true;
+    const ch = chapters[autoStart];
+    if (ch) { start(ch.course, ch.entry.label); setScreen("run"); }
+  }, [autoStart, chapters, start]);
 
   if (screen === "run") {
     return <ExamRun onDone={() => { setScreen("list"); }} onQuit={() => { quit(); setScreen("list"); }} />;
   }
 
   return (
-    <div className="exam-wrap">
-      <header className="exam-head">
-        <button type="button" className="back" onClick={onBack}>◀ 戻る</button>
-        <span className="exam-title">認定試験</span>
-      </header>
+    <Screen className="exam-list-screen">
+      <TopBar backLabel="戻る" onBack={onBack} title="認定試験" />
+      <div className="dojo-body">
+        <h2 className="fuda exl-fuda">{heading}</h2>
+        <section className="dojo-panel exl-sum">
+          <span className="exl-sum__t">認定試験 合格 {sum.passed} / {sum.stats.length}章</span>
+        </section>
 
-      <div className="exam-pad">
-        <p className="exam-lead">
-          章ごとに最大{EXAM_SIZE}問。ねらいは出ません。やり直しもできません。
-          <b>合格は{Math.round(PASS_RATIO * 100)}割</b>、ただし急所を1問でも落とすと不合格です。
-        </p>
-
-        <div className="exam-card">
-          {rows.map((r) => (
-            <div className="exam-row" key={r.course.id}>
-              <div className="exam-nm">
-                {r.entry.label}
-                <small>
-                  {r.result
-                    ? `${r.result.passed ? "合格" : "不合格"} 最高${r.result.best}点 ・ ${r.result.attempts}回受験`
-                    : r.ready ? "未受験" : `章の問題を一通り解くと受けられます(${r.answered}/${r.total})`}
-                </small>
+        <ul className="dojo-panel dj-rows exl">
+          {sum.stats.map((r) => (
+            <li key={r.chapter.course.id}>
+              <div className="dj-row">
+                <span className={`chapter-plate${r.state === "passed" ? " chapter-plate--done" : ""}`}>
+                  {toKanjiNumber(r.index + 1)}
+                </span>
+                <span className="exl-tx">
+                  <span className="dj-row__name">{r.chapter.entry.label}</span>
+                  <span className="exl-state">{examStateWord(r)}</span>
+                </span>
+                {r.ready && (
+                  <button
+                    type="button"
+                    className="btn-secondary exl-go"
+                    onClick={() => { start(r.chapter.course, r.chapter.entry.label); setScreen("run"); }}
+                  >
+                    {r.result ? "再挑戦" : "受ける"}
+                  </button>
+                )}
               </div>
-              <button
-                type="button"
-                className={`exam-go${r.ready && !r.result?.passed ? " on" : ""}`}
-                disabled={!r.ready}
-                onClick={() => { start(r.course, r.entry.label); setScreen("run"); }}
-              >
-                {r.result ? "再挑戦" : "受ける"}
-              </button>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
+
+        <p className="dj-note exl-lead">
+          章ごとに最大{EXAM_SIZE}問。ねらいは出ません。やり直しもできません。
+          合格は{Math.round(PASS_RATIO * 10)}割、ただし急所を1問でも落とすと不合格です。
+        </p>
       </div>
-    </div>
+    </Screen>
   );
+}
+
+/** 一覧の状態の言葉。合格 / 不合格 最高n点 / 未受験 / あとn問 / 未学習。 */
+function examStateWord(r: ChapterStat): string {
+  if (r.result) return r.result.passed ? "合格" : `不合格 最高${r.result.best}点`;
+  if (r.ready) return "未受験";
+  return r.answered > 0 ? `あと${r.unanswered}問` : "未学習";
 }
 
 /** 受験中と結果。 */

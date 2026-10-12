@@ -21,10 +21,6 @@
 .exam-count { margin-left: auto; font-size: 13px; color: var(--ink-soft); }
 
 .exam-pad { width: 430px; max-width: 100%; }
-.exam-lead {
-  margin: 0 2px 12px; font-size: 12.5px; line-height: 1.8; color: var(--ink-soft);
-}
-.exam-lead b { color: var(--ink); }
 .exam-sec { font-size: 11.5px; color: var(--ink-soft); letter-spacing: 0.1em; margin: 16px 2px 7px; }
 
 .exam-card {
@@ -40,13 +36,6 @@
 .exam-nm small {
   display: block; font-size: 11px; color: var(--ink-soft); margin-top: 3px; line-height: 1.5;
 }
-.exam-go {
-  flex: none; padding: 8px 14px; border: 1px solid var(--line-2);
-  border-radius: 9px; background: var(--card); color: var(--ink);
-  font-family: var(--body); font-size: 12.5px; cursor: pointer;
-}
-.exam-go.on { background: var(--brown); color: var(--on-mark); border-color: var(--brown); font-weight: 600; }
-.exam-go:disabled { color: var(--ink-faint); border-color: var(--line); cursor: default; }
 
 /* ── 受験中 ── */
 .exam-board { width: 430px; max-width: 100%; container-type: inline-size; }
@@ -85,3 +74,15 @@
   border: 1px solid var(--line-2); border-radius: 11px; background: var(--card);
   font-family: var(--body); font-size: 15px; color: var(--ink); cursor: pointer;
 }
+
+/* ── 一覧(モック 06) ── */
+.exl-fuda + .dojo-panel { border-top-left-radius: 0; }
+.exl-sum { margin-bottom: 16px; padding: 0 16px; display: flex; align-items: center; min-height: 60px; }
+.exl-sum__t { font-size: 16px; font-weight: 600; }
+/* 名前の下に状態を置く(受験ボタンが付く行でも名前が折り返さないように、全行そろえる) */
+.exl .dj-row { min-height: 58px; }
+.exl-tx { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.exl .dj-row__name { white-space: normal; line-height: 1.35; font-size: 16px; }
+.exl-state { font-size: 14px; color: var(--soft); line-height: 1.4; }
+.exl-go.btn-secondary { height: 44px; padding: 0 12px; font-size: 14px; flex: none; }
+.exl-lead { margin-top: 16px; line-height: 1.7; }

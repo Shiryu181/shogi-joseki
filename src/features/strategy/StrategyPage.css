@@ -1,0 +1,77 @@
+/* 戦法のページ(モック 04)と手番のシート(モック 05)。 */
+
+.sp-head { padding: 16px; }
+.sp-switch { justify-content: space-between; font-family: var(--disp); font-size: 18px; font-weight: 700; height: 48px; }
+.sp-head .dj-bar { margin-top: 12px; }
+.sp-count { margin: 0; }
+.sp-fuda { margin-top: 16px; }
+.sp-fuda + .dojo-panel { border-top-left-radius: 0; }
+
+.sp-exam {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 60px;
+  padding: 0 16px;
+  font-family: var(--body);
+  text-align: left;
+  cursor: pointer;
+}
+.sp-exam__t { font-size: 16px; font-weight: 600; }
+.sp-exam > .dj-ic { color: var(--soft); }
+
+/* シート */
+.sheet-layer { position: fixed; inset: 0; z-index: 50; }
+.sheet-scrim { position: absolute; inset: 0; background: var(--scrim); }
+.sheet {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  width: calc(100% - 24px);
+  max-width: 406px;
+  padding: 16px;
+}
+.sheet-title {
+  margin: 0 0 12px;
+  padding-bottom: 8px;
+  font-family: var(--disp);
+  font-size: 22px;
+  font-weight: 700;
+  border-bottom: 2px solid var(--gold);
+}
+.sheet-card {
+  border: 2px solid var(--sel);
+  border-radius: 3px;
+  padding: 16px;
+  background: var(--raise);
+}
+.sheet-card h3 { margin: 0 0 2px; font-family: var(--disp); font-size: 20px; }
+.sheet-card p { margin: 0 0 4px; font-size: 15px; }
+.sheet-meta { font-size: 14px; color: var(--soft); }
+.sheet-sub { margin: 16px 0 8px; font-family: var(--disp); font-size: 18px; font-weight: 700; }
+.sheet-radios {
+  margin-bottom: 16px;
+  background: var(--raise);
+  border: 1.5px solid var(--pbd);
+  border-radius: 3px;
+}
+.sheet-radio {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 52px;
+  padding: 0 16px;
+  background: none;
+  border: 0;
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 15px;
+  cursor: pointer;
+}
+.sheet-radio + .sheet-radio { border-top: 1px solid var(--rule); }
+.sheet-radio.is-on { font-weight: 700; }
+.sheet-radio b { color: var(--sel); }
+.sheet-radio:disabled { opacity: 0.5; cursor: default; }

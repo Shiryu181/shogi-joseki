@@ -2,39 +2,40 @@ import { useEffect, useMemo, useState } from "react";
 import { Sandbox } from "./features/sandbox/Sandbox";
 import { Learn } from "./features/learn/Learn";
 import { Home } from "./features/home/Home";
-import { SidePick } from "./features/matchup/SidePick";
+import { StrategyPage } from "./features/strategy/StrategyPage";
+import { ChapterPage } from "./features/chapter/ChapterPage";
 import { About } from "./features/about/About";
 import { Review } from "./features/review/Review";
-import { Dashboard } from "./features/home/Dashboard";
 import { Settings } from "./features/settings/Settings";
 import { Exam } from "./features/exam/Exam";
 import { applyTheme, useSettingsStore } from "./store/settingsStore";
 import { useLearningStore } from "./store/learningStore";
 import { STRATEGIES } from "./data/strategies";
-
-import { loadBranchNavDemo, buildLearnPath } from "./domain/josekiLoader";
-import type { LearnPath } from "./domain/josekiLoader";
-import type { HomeMode } from "./features/home/Home";
-import type { CardItem } from "./features/home/StrategyCard";
+import { loadBranchNavDemo } from "./domain/josekiLoader";
+import { READY_STRATEGY_IDS, chapterCounts, pathFor, sideName } from "./domain/courseProgress";
+import type { Side } from "./domain/courseProgress";
 import "./App.css";
 
-type Screen = "dashboard" | "home" | "side" | "learn" | "about" | "review" | "settings" | "exam" | "devMenu" | "sandbox" | "branchDemo";
+type Screen =
+  | "home" | "strategy" | "chapter" | "learn" | "exam" | "review" | "settings" | "about"
+  | "devMenu" | "sandbox" | "branchDemo";
 
 /**
- * DESIGN.md §5 のユーザー導線。
- * ホーム(探す)→ 対抗形選択 → 学習/練習、+ 下部タブバー。
- * Sandbox・分岐デモは開発専用で、通常のユーザー導線からは外し、
- * `?dev=1` のときだけ画面右上の小さなリンクから到達できるようにする(完全削除はしない)。
+ * ユーザー導線: ホーム → 戦法のページ → 章のページ → 学習。
+ * 戦法のページから認定試験の一覧へ、ホームから復習・設定・このアプリについてへ。
+ * 戦法と手番は「学習中」(learningStore)に1組だけ持ち、戦法のページの切替シートで変える。
+ * Sandbox・分岐デモは開発専用で、`?dev=1` のときだけ画面右上の小さなリンクから到達できる。
  */
 function App() {
-  const [screen, setScreen] = useState<Screen>("dashboard");
-  // 入口は「自分の戦法」だけ。章立てがすでに相手戦型ごとなので、
-  // 「相手に備える」は同じ内容を別の切り口で並べているだけだった(2026-10 に廃止)。
-  const homeMode: HomeMode = "mine";
-  const [selectedCard, setSelectedCard] = useState<CardItem | null>(null);
-  // 戦法と手番を選んだあとの学習パス(章の並び)と、今いる章。
-  const [path, setPath] = useState<LearnPath | null>(null);
+  const [screen, setScreen] = useState<Screen>("home");
+  // 章のページ・学習・認定試験が指す章(学習中の戦法×手番の章の並びの何番目か)。
   const [chapterIndex, setChapterIndex] = useState(0);
+  // 学習画面を閉じたときに戻る先(ホームの「続きから」で入ったか、章のページから入ったか)。
+  const [learnFrom, setLearnFrom] = useState<"home" | "chapter">("home");
+  // 学習を章の1手目から始めるか(章のページの「最初から学ぶ」)。
+  const [learnRestart, setLearnRestart] = useState(false);
+  // 章のページから認定試験をすぐ始めるときの章。一覧から入ったときは undefined。
+  const [examAuto, setExamAuto] = useState<number | undefined>(undefined);
 
   // ?dev=1 のときだけ開発用画面(Sandbox/分岐デモ)への入口を出す。通常のユーザーの目には触れない。
   const [devMode] = useState(() => {
@@ -42,50 +43,50 @@ function App() {
     return new URLSearchParams(window.location.search).get("dev") === "1";
   });
 
-  /**
-   * 復習の対象にするコース。いまは後手ゴキゲン中飛車の章だけ。
-   * ホーム画面を作り直す際に、学習中の戦法から決める形へ変える。
-   */
-  // いま学んでいる戦法と手番。戦法カードで手番を選ぶたびに保存される。
+  // いま学んでいる戦法と手番。
   const learningId = useLearningStore((s) => s.strategyId);
   const learningSide = useLearningStore((s) => s.side);
   const selectLearning = useLearningStore((s) => s.select);
   const learningName = useMemo(
-    () => STRATEGIES.find((s) => s.id === learningId)?.name ?? "中飛車",
+    () => STRATEGIES.find((s) => s.id === learningId)?.name ?? learningId,
     [learningId],
   );
 
-  /**
-   * 学習中の戦法の章。並びは学習画面と同じ学習パスから取る
-   * (ホームと学習で順番が食い違わないように)。
-   */
-  const learningPath = useMemo(
-    () => buildLearnPath("mine", learningId, learningName, learningSide),
-    [learningId, learningName, learningSide],
+  /** 学習中の戦法×手番の章。並びは学習画面と同じ学習パスから取る。 */
+  const learningPath = useMemo(() => pathFor(learningId, learningSide), [learningId, learningSide]);
+
+  /** 今日の復習の対象: 仕上がっている全戦法の先手・後手すべての章。 */
+  const allChapters = useMemo(
+    () =>
+      READY_STRATEGY_IDS.flatMap((id) => {
+        const n = chapterCounts(id);
+        return (["gote", "sente"] as const)
+          .filter((side) => n[side] > 0)
+          .flatMap((side) => pathFor(id, side).chapters);
+      }),
+    [],
   );
   const reviewCourses = useMemo(
-    () => learningPath.chapters.map((c) => ({ course: c.course, label: c.entry.label })),
-    [learningPath],
+    () => allChapters.map((c) => ({ course: c.course, label: c.entry.label })),
+    [allChapters],
   );
 
-  /** ホームの「続きから」。指定の章から始める。 */
-  function continueLearning(index: number) {
-    setPath(learningPath);
+  function openStrategy(strategyId: string, side: Side) {
+    // 選んだ戦法と手番を「学習中」として覚える。
+    selectLearning(strategyId, side);
+    setScreen("strategy");
+  }
+
+  function openChapter(index: number) {
     setChapterIndex(index);
-    setScreen("learn");
+    setScreen("chapter");
   }
 
-  function openCard(_mode: HomeMode, item: CardItem) {
-    setSelectedCard(item);
-    setScreen("side");
-  }
-
-  function startPath(side: "sente" | "gote") {
-    if (!selectedCard) return;
-    // 選んだ戦法と手番を「学習中」として覚える。次にホームを開いたときはこれが出る。
-    selectLearning(selectedCard.id, side);
-    setPath(buildLearnPath(homeMode, selectedCard.id, selectedCard.name, side));
-    setChapterIndex(0);
+  /** index の章の学習を始める。from は閉じたときの戻り先。 */
+  function startLearn(index: number, from: "home" | "chapter", restart: boolean) {
+    setChapterIndex(index);
+    setLearnFrom(from);
+    setLearnRestart(restart);
     setScreen("learn");
   }
 
@@ -110,45 +111,61 @@ function App() {
       )}
 
       <div className="app-content">
-        {screen === "dashboard" && (
-          <Dashboard
-            chapters={learningPath.chapters}
-            strategyName={learningName}
-            sideLabel={learningSide === "sente" ? "先手" : "後手"}
-            onContinue={continueLearning}
+        {screen === "home" && (
+          <Home
+            allChapters={allChapters}
             onReview={() => setScreen("review")}
-            onPickStrategy={() => setScreen("home")}
-            onExam={() => setScreen("exam")}
             onSettings={() => setScreen("settings")}
             onAbout={() => setScreen("about")}
+            onOpenStrategy={openStrategy}
+            onContinue={(index) => startLearn(index, "home", false)}
           />
         )}
-        {screen === "home" && (
-          <Home mode={homeMode} onOpenCard={openCard} onOpenAbout={() => setScreen("about")} />
+        {screen === "strategy" && (
+          <StrategyPage
+            strategyId={learningId}
+            side={learningSide}
+            onBack={() => setScreen("home")}
+            onSelectSide={(side) => selectLearning(learningId, side)}
+            onOpenChapter={openChapter}
+            onOpenExam={() => { setExamAuto(undefined); setScreen("exam"); }}
+          />
         )}
-        {screen === "review" && <Review courses={reviewCourses} onBack={() => setScreen("dashboard")} />}
-        {screen === "settings" && <Settings onBack={() => setScreen("dashboard")} />}
-        {screen === "exam" && (
-          <Exam chapters={learningPath.chapters} onBack={() => setScreen("dashboard")} />
-        )}
-
-        {screen === "side" && selectedCard && (
-          <SidePick mode={homeMode} item={selectedCard} onBack={() => setScreen("home")} onPick={startPath} />
-        )}
-
-        {screen === "learn" && path && (
-          <Learn
-            course={path.chapters[chapterIndex].course}
-            path={path}
+        {screen === "chapter" && (
+          <ChapterPage
+            strategyId={learningId}
+            side={learningSide}
             chapterIndex={chapterIndex}
-            onNextChapter={
-              chapterIndex + 1 < path.chapters.length ? () => setChapterIndex(chapterIndex + 1) : undefined
-            }
-            onBack={() => setScreen("dashboard")}
+            onBack={() => setScreen("strategy")}
+            onLearn={(restart) => startLearn(chapterIndex, "chapter", restart)}
+            onExam={() => { setExamAuto(chapterIndex); setScreen("exam"); }}
+          />
+        )}
+        {screen === "review" && <Review courses={reviewCourses} onBack={() => setScreen("home")} />}
+        {screen === "settings" && <Settings onBack={() => setScreen("home")} />}
+        {screen === "exam" && (
+          <Exam
+            chapters={learningPath.chapters}
+            heading={`${learningName}・${sideName(learningSide)}`}
+            autoStart={examAuto}
+            onBack={() => setScreen(examAuto === undefined ? "strategy" : "chapter")}
           />
         )}
 
-        {screen === "about" && <About onBack={() => setScreen("dashboard")} />}
+        {screen === "learn" && learningPath.chapters[chapterIndex] && (
+          <Learn
+            course={learningPath.chapters[chapterIndex].course}
+            path={learningPath}
+            chapterIndex={chapterIndex}
+            restart={learnRestart}
+            onNextChapter={
+              chapterIndex + 1 < learningPath.chapters.length ? () => setChapterIndex(chapterIndex + 1) : undefined
+            }
+            onBack={() => setScreen(learnFrom === "chapter" ? "chapter" : "home")}
+          />
+        )}
+
+        {screen === "about" && <About onBack={() => setScreen("home")} />}
 
         {screen === "devMenu" && (
           <div className="devmenu-wrap">

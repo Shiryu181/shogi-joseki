@@ -1,129 +1,164 @@
-import { useMemo, useState } from "react";
-import { STRATEGIES } from "../../data/strategies";
-import { OPPONENTS, courseEntriesFor, courseEntriesForOpponent } from "../../domain/josekiLoader";
-import { SearchBar } from "./SearchBar";
-import { CategoryTabs } from "./CategoryTabs";
-import type { CategoryFilterKey } from "./categories";
-import { StrategyCard } from "./StrategyCard";
-import type { CardItem } from "./StrategyCard";
-import { usePointsStore } from "../../store/pointsStore";
+import { useMemo } from "react";
+import { useProgressStore } from "../../store/progressStore";
+import { useExamStore } from "../../store/examStore";
+import { useLearningStore } from "../../store/learningStore";
+import {
+  readyStrategies, blurbOf, chapterCounts, pathFor, summarizePath, dueToday, pickSide, sideName,
+} from "../../domain/courseProgress";
+import type { Side } from "../../domain/courseProgress";
+import type { PathChapter } from "../../domain/josekiLoader";
+import { toKanjiNumber } from "../../domain/kanjiNumber";
+import { Bar, ChevronRight, GearIcon, PieceIcon, Screen } from "../../ui/DojoParts";
 import "./Home.css";
 
-/** ホームの2つの入口。「自分の戦法を学ぶ」と「相手の戦法に備える」。 */
-export type HomeMode = "mine" | "opponent";
+/** 復習1回の上限。実際の出題の絞り込みは復習画面側(U4)で行う。 */
+const DAILY_CAP = 20;
 
 export interface HomeProps {
-  mode: HomeMode;
-  /** 「このアプリについて」(ライセンス表記)を開く。 */
-  onOpenAbout: () => void;
-  /** カードがタップされたときに呼ばれる(コース選択へ進む)。 */
-  onOpenCard: (mode: HomeMode, item: CardItem) => void;
-}
-
-function matchesCategory(item: CardItem, key: CategoryFilterKey): boolean {
-  if (key === "popular") return true;
-  if (key === "beginner") return (item.level ?? "").includes("入門");
-  return item.category === key;
+  /** 今日の復習の対象にする全章(準備ができた戦法の先手・後手すべて)。 */
+  allChapters: PathChapter[];
+  onReview: () => void;
+  onSettings: () => void;
+  onAbout: () => void;
+  /** 戦法のページを開く。戦法と手番は呼び出し側で学習中として保存する。 */
+  onOpenStrategy: (strategyId: string, side: Side) => void;
+  /** 学習中の戦法の、いま取り組む章から学習を再開する。 */
+  onContinue: (chapterIndex: number) => void;
 }
 
 /**
- * いまの基準で作り込みが終わっている戦法。ここに無い戦法は一覧に出さない。
- *
- * なぜ絞るか: 「出典+エンジン検証」「許容手と急所」「相手のミスを咎める枝」
- * 「盤上の実演」まで揃えた戦法だけを出す方針にしたため。古いコースは
- * これらが未整備で、並べると同じ品質のものに見えてしまう。
- * 1戦法ずつ仕上げて、仕上がった順にここへ足していく。
+ * ホーム。毎日ここから始める画面。
+ * 並びは「今日の復習 → 学習中 → 戦法をえらぶ → このアプリについて」。
+ * 主ボタンは画面に1つだけ。復習があれば「はじめる」、無ければ「続きから」、
+ * 記録がまだ無ければ戦法カードの「この戦法で学ぶ」。
  */
-const READY_STRATEGY_IDS = ["gokigen"];
+export function Home({ allChapters, onReview, onSettings, onAbout, onOpenStrategy, onContinue }: HomeProps) {
+  const items = useProgressStore((s) => s.items);
+  const results = useExamStore((s) => s.results);
+  const learningId = useLearningStore((s) => s.strategyId);
+  const learningSide = useLearningStore((s) => s.side);
 
-/** 戦法のカード。仕上がっている戦法だけを返す。 */
-function myStrategyCards(): CardItem[] {
-  return STRATEGIES.filter((s) => READY_STRATEGY_IDS.includes(s.id)).map((s) => {
-    const n = courseEntriesFor(s.id).length;
-    return { ...s, lineCount: n, ready: n > 0 };
-  });
-}
+  const strategies = useMemo(() => readyStrategies(), []);
+  const started = Object.keys(items).length > 0;
+  const learning = strategies.find((s) => s.id === learningId) ?? strategies[0];
 
-/** 「相手に備える」タブのカード。対策コースがある相手だけ ready。 */
-function opponentCards(): CardItem[] {
-  return OPPONENTS.map((o) => {
-    const n = courseEntriesForOpponent(o.id).length;
-    return { ...o, lineCount: n, ready: n > 0 };
-  });
-}
+  const due = useMemo(() => dueToday(allChapters, items), [allChapters, items]);
+  const shown = Math.min(due.due, DAILY_CAP);
+  const shownSharp = Math.min(due.sharp, shown);
 
-const COPY: Record<HomeMode, { title: string; lead: string; placeholder: string }> = {
-  mine: {
-    title: "自分の戦法",
-    lead: "自分が指す戦法を選んで、基本の組み方からその戦法の型・変化までを1手ずつ出題します。いまは中飛車だけを公開しています(1戦法ずつ仕上げているため)。",
-    placeholder: "戦法名で検索(例:四間飛車)",
-  },
-  opponent: {
-    title: "相手に備える",
-    lead: "相手がどの戦法で来るかを選ぶと、その戦法に有利に戦える対策を、おすすめ順に学べます。相手が定跡を外したときの咎め方も出題します。",
-    placeholder: "相手の戦法で検索(例:早石田)",
-  },
-};
+  const sum = useMemo(
+    () => (learning ? summarizePath(pathFor(learning.id, learningSide).chapters, items, results) : null),
+    [learning, learningSide, items, results],
+  );
 
-/** ホーム画面。DESIGN.md §5.1 準拠。検索・カテゴリ絞り込み・カード一覧。 */
-export function Home({ mode, onOpenCard, onOpenAbout }: HomeProps) {
-  const [query, setQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState<CategoryFilterKey>("popular");
-
-  const cards = useMemo(() => (mode === "mine" ? myStrategyCards() : opponentCards()), [mode]);
-
-  const list = useMemo(() => {
-    const q = query.trim();
-    return cards
-      .filter((s) => {
-        const entries = mode === "mine" ? courseEntriesFor(s.id) : courseEntriesForOpponent(s.id);
-        // 戦法名・かなに加えて、そのカードに入っているコース名でも引けるようにする。
-        const matchesQuery =
-          !q ||
-          s.name.includes(q) ||
-          s.kana.includes(q) ||
-          entries.some((c) => c.label.includes(q) || c.opponentLabel.includes(q));
-        return matchesCategory(s, activeCategory) && matchesQuery;
-      })
-      .sort((a, b) => b.popularity - a.popularity);
-  }, [cards, mode, query, activeCategory]);
-
-  const copy = COPY[mode];
-  const total = usePointsStore((s) => s.total);
-  const today = usePointsStore((s) => s.today);
+  const hasReview = shown > 0;
+  const next = sum && sum.currentIndex >= 0 ? sum.stats[sum.currentIndex] : null;
 
   return (
-    <div className="home-wrap">
-      <div className="home-frame">
-        <div className="home-head">
-          <div className="home-topline">
-            <div className="tl">定跡道場</div>
-            {/* 正解で貯まるポイント。今日の獲得と累計。 */}
-            <div className="home-points" aria-label={`今日 ${today} ポイント、累計 ${total} ポイント`}>
-              今日 <b>+{today}</b> ・ 累計 <b>★ {total.toLocaleString()}</b>
+    <Screen className="home-screen">
+      <header className="home-band">
+        <h1>定跡道場</h1>
+        <button type="button" className="btn-secondary home-gear" onClick={onSettings}>
+          <GearIcon />設定
+        </button>
+      </header>
+
+      <div className="home-body">
+        <div className="home-sec">
+          <h2 className="fuda">今日の復習</h2>
+          <section className="dojo-panel">
+            {hasReview ? (
+              <>
+                <div className="home-rv">
+                  <span className="home-big">{shown}<span className="home-unit">問</span></span>
+                  <button type="button" className="btn-primary home-rv-btn" onClick={onReview}>はじめる</button>
+                </div>
+                <p className="dj-note home-rv-n">うち急所{shownSharp}問 ・ すべての戦法から</p>
+              </>
+            ) : (
+              <>
+                <p className="home-rv-none">今日の復習はありません</p>
+                <p className="dj-note home-rv-n">
+                  {started ? "問題を解くと、翌日から復習に出てきます" : "戦法をえらんで学びはじめましょう"}
+                </p>
+              </>
+            )}
+          </section>
+        </div>
+
+        {started && learning && sum && (
+          <section className="dojo-panel home-learning">
+            <div
+              className="home-learning__body"
+              role="button"
+              tabIndex={0}
+              aria-label={`${learning.name}・${sideName(learningSide)}のページを開く`}
+              onClick={() => onOpenStrategy(learning.id, learningSide)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onOpenStrategy(learning.id, learningSide); }
+              }}
+            >
+              <div className="home-learning__head">
+                <span className="home-h-card">学習中</span>
+                <ChevronRight />
+              </div>
+              <h2>{learning.name}・{sideName(learningSide)}</h2>
+              <Bar ratio={sum.total === 0 ? 0 : sum.learned / sum.total} />
+              <p className="dj-line">覚えた問題 {sum.learned} / {sum.total}</p>
+              <p className="dj-line">認定試験 合格 {sum.passed} / {sum.stats.length}章</p>
+              <p className="dj-line">
+                {next
+                  ? <>次は <b>第{toKanjiNumber(next.index + 1)}章 {next.chapter.entry.label}</b></>
+                  : "すべての章を覚えました"}
+              </p>
             </div>
-          </div>
-          <h1>{copy.title}</h1>
-          <p className="lead">{copy.lead}</p>
-          {/* 戦法が数件しか無いうちは、検索も絞り込みも押す意味が無いので出さない。
-              公開する戦法が増えたら自動で復活する。 */}
-          {cards.length > 4 && <SearchBar value={query} onChange={setQuery} placeholder={copy.placeholder} />}
+            <button
+              type="button"
+              className={`${hasReview ? "btn-secondary" : "btn-primary"} full`}
+              onClick={() => (next ? onContinue(next.index) : onOpenStrategy(learning.id, learningSide))}
+            >
+              {next ? "続きから" : "章の道を見る"}
+            </button>
+          </section>
+        )}
+
+        <div className="home-sec">
+          <h2 className="fuda">戦法をえらぶ</h2>
+          {strategies.map((s) => {
+            const n = chapterCounts(s.id);
+            const side = pickSide(s.id, learningId === s.id ? learningSide : "gote");
+            const counts = [
+              n.gote > 0 ? `後手 ${n.gote}章` : "",
+              n.sente > 0 ? `先手 ${n.sente}章` : "",
+            ].filter(Boolean).join(" / ");
+            const open = () => onOpenStrategy(s.id, side);
+            const info = (
+              <>
+                <PieceIcon glyph={s.category === "ibisha" ? "角" : "飛"} />
+                <span className="home-card__tx">
+                  <span className="home-card__name">{s.name}</span>
+                  <span className="home-card__desc">{blurbOf(s).card}</span>
+                  <span className="home-card__sub">{counts}</span>
+                </span>
+              </>
+            );
+            return started ? (
+              <button key={s.id} type="button" className="dojo-panel home-card" onClick={open}>
+                {info}<ChevronRight />
+              </button>
+            ) : (
+              <section key={s.id} className="dojo-panel home-card home-card--first">
+                <button type="button" className="home-card__row" onClick={open}>{info}</button>
+                <button type="button" className="btn-primary full" onClick={open}>この戦法で学ぶ</button>
+              </section>
+            );
+          })}
         </div>
-        {cards.length > 4 && <CategoryTabs active={activeCategory} onSelect={setActiveCategory} />}
-        <div className="listcount">{list.length}件の戦法</div>
-        <div className="cards">
-          {list.length > 0 ? (
-            list.map((s) => <StrategyCard key={s.id} item={s} onOpen={(item) => onOpenCard(mode, item)} />)
-          ) : (
-            <div className="empty">「{query}」に一致する戦法はありません</div>
-          )}
-        </div>
-        <div className="home-foot">
-          <button type="button" className="home-about-link" onClick={onOpenAbout}>
-            このアプリについて・ライセンス
-          </button>
-        </div>
+
+        <button type="button" className="home-foot-link" onClick={onAbout}>
+          このアプリについて・ライセンス<ChevronRight />
+        </button>
       </div>
-    </div>
+    </Screen>
   );
 }

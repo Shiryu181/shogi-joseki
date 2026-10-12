@@ -1,0 +1,81 @@
+/* 道場の画面で共通に使う部品(確定版モック mockup-final.html の値)。 */
+
+.dojo-screen {
+  width: 100%;
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.dojo-body {
+  flex: none;
+  padding: 16px 16px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.dj-ic { flex: none; color: currentColor; }
+.dj-ic--mark { color: var(--mark); }
+
+/* 進み具合の細い棒 */
+.dj-bar {
+  height: 6px;
+  margin: 12px 0 8px;
+  background: var(--bar-track);
+  overflow: hidden;
+}
+.dj-bar i { display: block; height: 100%; background: var(--bar-fill); }
+
+.dj-line { margin: 0 0 4px; font-size: 15px; color: var(--ink); }
+.dj-note { margin: 0; font-size: 14px; color: var(--soft); }
+
+/* 木札の下に置く、全幅の一覧パネル(章の道・認定試験の一覧) */
+.dj-rows {
+  list-style: none;
+  margin: 0;
+  padding: 6px 16px;
+}
+.dj-rows > li + li { border-top: 1px solid var(--rule); }
+.dj-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 46px;
+  padding: 3px 6px 3px 0;
+  background: none;
+  border: 0;
+  color: var(--ink);
+  font-family: var(--body);
+  text-align: left;
+}
+button.dj-row { cursor: pointer; min-height: 48px; }
+.dj-row__name {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--disp);
+  font-size: 16px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dj-row__state { flex: none; font-size: 13px; color: var(--ink); white-space: nowrap; }
+
+/* いまの章: 地色を一段落とし、金の縁で囲う(色面は1つ) */
+.dj-rows > li.is-current {
+  background: var(--inset);
+  outline: 2px solid var(--gold);
+  outline-offset: -2px;
+  margin: 0 -8px;
+  padding: 0 8px;
+  border-top-color: transparent;
+}
+.dj-rows > li.is-current + li { border-top-color: transparent; }
+.is-current .dj-row__name,
+.is-current .dj-row__state { font-weight: 700; }

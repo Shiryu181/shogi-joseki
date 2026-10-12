@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Color, PieceType, Position, Square, moveFromUSI, parseUSIMove } from "../../domain/shogi";
 
 import type { MoveDemo } from "../../domain/types";
@@ -27,6 +27,11 @@ export interface LearnProps {
   chapterIndex?: number;
   /** 「次の章へ」。最後の章では呼ばれない。 */
   onNextChapter?: () => void;
+  /**
+   * true なら、入った章を1手目から始める(章のページの「最初から学ぶ」)。
+   * 覚えた記録は消さない。false なら、前の章と共通の序盤を飛ばして分かれ目から始める。
+   */
+  restart?: boolean;
 }
 
 /** SFEN から局面を作る(「この手を試す」の盤表示用)。 */
@@ -49,7 +54,7 @@ function usiKeys(usi: string | null): Set<string> {
  * 光っている升をクリックするか「なぞって次へ」ボタンで進める。
  * 分岐(本線/変化/逸れ手)がある局面では BranchNav で切替可能。
  */
-export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter }: LearnProps) {
+export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter, restart = false }: LearnProps) {
   const storeCourse = useLearnStore((s) => s.course);
   const currentNode = useLearnStore((s) => s.currentNode);
   const nodeHistory = useLearnStore((s) => s.nodeHistory);
@@ -83,14 +88,20 @@ export function Learn({ course, onBack, path, chapterIndex = 0, onNextChapter }:
   const resumeAutoAdvance = useLearnStore((s) => s.resumeAutoAdvance);
 
   // 表示すべきコースがストアの現在のコースと違う(画面切替など)場合は読み込み直す。
+  // restart のときは、同じコースが読み込み済みでも最初から読み込み直す(入った最初の1回だけ)。
+  const topCourseId = useRef<string | null>(null);
   useEffect(() => {
-    if (storeCourse.id !== course.id) {
+    const first = topCourseId.current === null;
+    if (restart && first) topCourseId.current = course.id;
+    // 最初から始める章(入った最初の章)では、分かれ目への移動をしない。
+    const atTop = restart && topCourseId.current === course.id;
+    if (storeCourse.id !== course.id || (restart && first)) {
       loadCourse(course);
       // 2章目以降は、前の章と序盤が共通なので、分かれる地点まで飛んで再開する。
       const chapter = path?.chapters[chapterIndex];
-      if (chapter && chapter.divergeAt > 1) goToMove(chapter.divergeAt);
+      if (!atTop && chapter && chapter.divergeAt > 1) goToMove(chapter.divergeAt);
     }
-  }, [course, storeCourse.id, loadCourse, goToMove, path, chapterIndex]);
+  }, [course, storeCourse.id, loadCourse, goToMove, path, chapterIndex, restart]);
 
   // マウント中だけ相手の手の自動進行タイマーを有効にする。他画面へ移動した(アンマウントされた)
   // 間は裏で手が進み続けないよう、離脱時に必ず保留中のタイマーを破棄する。

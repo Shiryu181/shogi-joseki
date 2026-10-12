@@ -14,10 +14,7 @@
 
 /* 既存の画面枠も、色だけでなく畳の目を載せる */
 .devmenu-frame,
-.home-frame,
-.dash-frame,
 .learn-frame,
-.matchup-frame,
 .about-frame,
 .sandbox-frame,
 .practice-frame {
