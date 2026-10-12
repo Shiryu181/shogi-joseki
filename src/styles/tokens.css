@@ -1,34 +1,72 @@
 /*
- * デザイントークン: mockup.html の :root 変数をそのまま移植。
- * 木目パレット・ライト/ダーク切替・書体トークンを一元管理する。
- * 参照元: /Users/takahashishiryuu/Desktop/tool/shogi-joseki/mockup.html
+ * デザイントークン: 確定版モック(mockup-final.html の案B「道場」)から移植。
+ * ライト=昼の道場、ダーク=夜の道場。ライトが既定。
+ * ダークは「OS がダーク かつ data-theme が light でない」時と、data-theme="dark" の時に効く。
+ * 既存の変数名(--canvas / --app / --card / --ink / --brown ...)は残し、道場の値に張り替えてある。
+ * 質感(畳・板・檜)は SVG の data URI。モックの最終強度のまま。
  */
 :root {
-  --canvas: #c7a874;
-  --app: #f7f1e4;
-  --card: #ffffff;
-  --card-2: #fbf6ec;
-  --ink: #2a2115;
-  --ink-soft: #7c6f58;
-  --ink-faint: #a79a80;
-  --line: #eadfc8;
-  --line-2: #e0d2b4;
-  --brown: #6e4a25;
-  --brown-soft: #efe3ce;
-  --brown-ink: #523414;
-  --red: #b23a2e;
-  --red-soft: #f4e2dd;
-  --gold: #b0842e;
-  --gold-soft: #f1e7ce;
-  --good: #39795a;
-  --good-soft: #dfede3;
+  --tx-tatami: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2296%22%20height%3D%226%22%3E%3Crect%20width%3D%2296%22%20height%3D%221%22%20y%3D%220%22%20fill%3D%22%236b6030%22%20fill-opacity%3D%220.1%22%2F%3E%3Crect%20width%3D%2296%22%20height%3D%221%22%20y%3D%223%22%20fill%3D%22%236b6030%22%20fill-opacity%3D%220.05%22%2F%3E%3Crect%20width%3D%221%22%20height%3D%226%22%20x%3D%220%22%20fill%3D%22%236b6030%22%20fill-opacity%3D%220.07%22%2F%3E%3C%2Fsvg%3E");
+  --tx-plank: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22320%22%20height%3D%22120%22%3E%3Cfilter%20id%3D%22a%22%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.008%200.28%22%20numOctaves%3D%223%22%20seed%3D%225%22%2F%3E%3CfeColorMatrix%20values%3D%220%200%200%200%200.95%200%200%200%200%200.85%200%200%200%200%200.66%200.26%200%200%200%20-0.09%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23a)%22%2F%3E%3C%2Fsvg%3E");
+  --tx-hinoki: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22320%22%20height%3D%22160%22%3E%3Cfilter%20id%3D%22a%22%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.006%200.3%22%20numOctaves%3D%223%22%20seed%3D%222%22%2F%3E%3CfeColorMatrix%20values%3D%220%200%200%200%200.5%200%200%200%200%200.36%200%200%200%200%200.18%200.26%200%200%200%20-0.09%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23a)%22%2F%3E%3C%2Fsvg%3E");
+  /* 面(地・看板・檜板・盛り上がり・くぼみ) */
+  --ground: #d6d0ae;
+  --wood: #3f2c1e;
+  --cream: #f6ecd2;
+  --panel: #efe3c6;
+  --raise: #f8f0da;
+  --inset: #e6d6ad;
+  --pbd: #cbb987;
+  --rule: #cdbf94;
+  --btnbd: #3f2c1e;
+  /* 文字・印 */
+  --soft: #54452f;
+  --mark: #3f2c1e;
+  /* 主ボタン: 藍 */
+  --ai: #22385a;
+  --on-ai: #f6ecd2;
+  --sel: #22385a;
+  /* 強調(金)・進捗・意味色 */
+  --gold: #a8833a;
+  --gold-ink: #6b4f14;
+  --gold-soft: #e9dcb2;
+  --bar-fill: #3f2c1e;
+  --bar-track: #cdbf94;
+  --red: #a8281c;
+  --red-soft: #f3e0d6;
+  --good: #25593f;
+  --good-soft: #d9e4cc;
+  --scrim: rgba(20, 14, 6, 0.55);
+  /* 木札 */
+  --on-mark: #f6ecd2;
+  --fuda: #3f2c1e;
+  --fuda-ink: #f6ecd2;
+  /* 盤・駒 */
   --board: #e7c787;
-  --board-line: #8a6233;
-  --board-edge: #c7a257;
+  --board-line: #7a5428;
+  --board-edge: #5a3d1d;
   --star-dot: #6e4e24;
   --koma: #f3deaa;
   --koma-rim: #cba85e;
   --koma-ink: #2b2013;
+  --komared: #8f1f15;
+  --arrow: #a8281c;
+  --cellred: rgba(168, 40, 28, 0.15);
+  --cellred2: rgba(168, 40, 28, 0.22);
+  --cellline: rgba(168, 40, 28, 0.75);
+  /* 既存名(各画面が使う)を道場の値に張り替え */
+  --canvas: var(--ground);
+  --app: var(--ground);
+  --card: var(--panel);
+  --card-2: var(--raise);
+  --ink: #2a1f14;
+  --ink-soft: var(--soft);
+  --ink-faint: #66563c;
+  --line: var(--rule);
+  --line-2: var(--pbd);
+  --brown: var(--mark);
+  --brown-soft: var(--inset);
+  --brown-ink: var(--wood);
   --disp: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", serif;
   --body: "Hiragino Kaku Gothic ProN", "Yu Gothic", "YuGothic", "Noto Sans JP", "Segoe UI", sans-serif;
   --kf: "ShogiKaisho", "Kaiti SC", "STKaiti", "Kaiti TC", "YuKyokasho", "游教科書体", "YuKyokasho Yoko",
@@ -36,89 +74,95 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --canvas: #241c12;
-    --app: #1b160f;
-    --card: #241e16;
-    --card-2: #2b241a;
-    --ink: #f0e7d6;
-    --ink-soft: #ac9f88;
-    --ink-faint: #7e7360;
-    --line: #37301f;
-    --line-2: #40371f;
-    --brown: #cda163;
-    --brown-soft: #2e2417;
-    --brown-ink: #e7c892;
-    --red: #e0776a;
-    --red-soft: #39221e;
-    --gold: #d6b05c;
-    --gold-soft: #312813;
+  :root:not([data-theme="light"]) {
+    --tx-tatami: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2296%22%20height%3D%226%22%3E%3Crect%20width%3D%2296%22%20height%3D%221%22%20y%3D%220%22%20fill%3D%22%239a9468%22%20fill-opacity%3D%220.1%22%2F%3E%3Crect%20width%3D%2296%22%20height%3D%221%22%20y%3D%223%22%20fill%3D%22%239a9468%22%20fill-opacity%3D%220.05%22%2F%3E%3Crect%20width%3D%221%22%20height%3D%226%22%20x%3D%220%22%20fill%3D%22%239a9468%22%20fill-opacity%3D%220.07%22%2F%3E%3C%2Fsvg%3E");
+    --tx-plank: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22320%22%20height%3D%22120%22%3E%3Cfilter%20id%3D%22a%22%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.008%200.28%22%20numOctaves%3D%223%22%20seed%3D%225%22%2F%3E%3CfeColorMatrix%20values%3D%220%200%200%200%200.95%200%200%200%200%200.85%200%200%200%200%200.66%200.16%200%200%200%20-0.055%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23a)%22%2F%3E%3C%2Fsvg%3E");
+    --tx-hinoki: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22320%22%20height%3D%22160%22%3E%3Cfilter%20id%3D%22a%22%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.006%200.3%22%20numOctaves%3D%223%22%20seed%3D%222%22%2F%3E%3CfeColorMatrix%20values%3D%220%200%200%200%200.9%200%200%200%200%200.75%200%200%200%200%200.5%200.12%200%200%200%20-0.04%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23a)%22%2F%3E%3C%2Fsvg%3E");
+    --ground: #26261c;
+    --wood: #1e150d;
+    --cream: #efe6d3;
+    --panel: #2e271d;
+    --raise: #3a3226;
+    --inset: #3a3226;
+    --pbd: #4a4030;
+    --rule: #4a4030;
+    --btnbd: #8a7e66;
+    --soft: #bcb09a;
+    --mark: #caa55e;
+    --ai: #34588f;
+    --on-ai: #f6ecd2;
+    --sel: #caa55e;
+    --gold: #caa55e;
+    --gold-ink: #caa55e;
+    --gold-soft: #3a3016;
+    --bar-fill: #bcb09a;
+    --bar-track: #4a4030;
+    --red: #eb8a7c;
+    --red-soft: #3d2420;
     --good: #6fbf95;
     --good-soft: #1e2e25;
+    --scrim: rgba(8, 6, 3, 0.6);
+    --on-mark: #1e150d;
+  --fuda: #1e150d;
+    --fuda-ink: #efe6d3;
     --board: #c9a461;
-    --board-line: #5a3f1c;
+    --board-line: #4a3216;
     --board-edge: #8a6c38;
     --star-dot: #3a2a13;
     --koma: #d9bc80;
     --koma-rim: #8a6c38;
     --koma-ink: #241a0d;
+    --komared: #8f1f15;
+    --arrow: #a3281d;
+    --ink: #efe6d3;
+    --ink-faint: #a39880;
+    --brown-ink: #e7c892;
   }
 }
 
 :root[data-theme="dark"] {
-  --canvas: #241c12;
-  --app: #1b160f;
-  --card: #241e16;
-  --card-2: #2b241a;
-  --ink: #f0e7d6;
-  --ink-soft: #ac9f88;
-  --ink-faint: #7e7360;
-  --line: #37301f;
-  --line-2: #40371f;
-  --brown: #cda163;
-  --brown-soft: #2e2417;
-  --brown-ink: #e7c892;
-  --red: #e0776a;
-  --red-soft: #39221e;
-  --gold: #d6b05c;
-  --gold-soft: #312813;
+  --tx-tatami: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2296%22%20height%3D%226%22%3E%3Crect%20width%3D%2296%22%20height%3D%221%22%20y%3D%220%22%20fill%3D%22%239a9468%22%20fill-opacity%3D%220.1%22%2F%3E%3Crect%20width%3D%2296%22%20height%3D%221%22%20y%3D%223%22%20fill%3D%22%239a9468%22%20fill-opacity%3D%220.05%22%2F%3E%3Crect%20width%3D%221%22%20height%3D%226%22%20x%3D%220%22%20fill%3D%22%239a9468%22%20fill-opacity%3D%220.07%22%2F%3E%3C%2Fsvg%3E");
+  --tx-plank: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22320%22%20height%3D%22120%22%3E%3Cfilter%20id%3D%22a%22%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.008%200.28%22%20numOctaves%3D%223%22%20seed%3D%225%22%2F%3E%3CfeColorMatrix%20values%3D%220%200%200%200%200.95%200%200%200%200%200.85%200%200%200%200%200.66%200.16%200%200%200%20-0.055%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23a)%22%2F%3E%3C%2Fsvg%3E");
+  --tx-hinoki: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22320%22%20height%3D%22160%22%3E%3Cfilter%20id%3D%22a%22%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.006%200.3%22%20numOctaves%3D%223%22%20seed%3D%222%22%2F%3E%3CfeColorMatrix%20values%3D%220%200%200%200%200.9%200%200%200%200%200.75%200%200%200%200%200.5%200.12%200%200%200%20-0.04%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23a)%22%2F%3E%3C%2Fsvg%3E");
+  --ground: #26261c;
+  --wood: #1e150d;
+  --cream: #efe6d3;
+  --panel: #2e271d;
+  --raise: #3a3226;
+  --inset: #3a3226;
+  --pbd: #4a4030;
+  --rule: #4a4030;
+  --btnbd: #8a7e66;
+  --soft: #bcb09a;
+  --mark: #caa55e;
+  --ai: #34588f;
+  --on-ai: #f6ecd2;
+  --sel: #caa55e;
+  --gold: #caa55e;
+  --gold-ink: #caa55e;
+  --gold-soft: #3a3016;
+  --bar-fill: #bcb09a;
+  --bar-track: #4a4030;
+  --red: #eb8a7c;
+  --red-soft: #3d2420;
   --good: #6fbf95;
   --good-soft: #1e2e25;
+  --scrim: rgba(8, 6, 3, 0.6);
+  --on-mark: #1e150d;
+  --fuda: #1e150d;
+  --fuda-ink: #efe6d3;
   --board: #c9a461;
-  --board-line: #5a3f1c;
+  --board-line: #4a3216;
   --board-edge: #8a6c38;
   --star-dot: #3a2a13;
   --koma: #d9bc80;
   --koma-rim: #8a6c38;
   --koma-ink: #241a0d;
-}
-
-:root[data-theme="light"] {
-  --canvas: #c7a874;
-  --app: #f7f1e4;
-  --card: #ffffff;
-  --card-2: #fbf6ec;
-  --ink: #2a2115;
-  --ink-soft: #7c6f58;
-  --ink-faint: #a79a80;
-  --line: #eadfc8;
-  --line-2: #e0d2b4;
-  --brown: #6e4a25;
-  --brown-soft: #efe3ce;
-  --brown-ink: #523414;
-  --red: #b23a2e;
-  --red-soft: #f4e2dd;
-  --gold: #b0842e;
-  --gold-soft: #f1e7ce;
-  --good: #39795a;
-  --good-soft: #dfede3;
-  --board: #e7c787;
-  --board-line: #8a6233;
-  --board-edge: #c7a257;
-  --star-dot: #6e4e24;
-  --koma: #f3deaa;
-  --koma-rim: #cba85e;
-  --koma-ink: #2b2013;
+  --komared: #8f1f15;
+  --arrow: #a3281d;
+  --ink: #efe6d3;
+  --ink-faint: #a39880;
+  --brown-ink: #e7c892;
 }
 
 * {
@@ -132,11 +176,20 @@ body {
 }
 
 body {
-  background: var(--canvas);
+  background-color: var(--canvas);
+  background-image: var(--tx-tatami);
   color: var(--ink);
   font-family: var(--body);
+  font-size: 15px;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--disp);
 }
 
 #root {

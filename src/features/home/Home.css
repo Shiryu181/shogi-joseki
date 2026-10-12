@@ -206,7 +206,7 @@
   padding: 2px 8px;
   border-radius: 20px;
   background: rgba(255, 252, 244, 0.9);
-  color: var(--brown-ink);
+  color: #3f2c1e;
   letter-spacing: 0.05em;
 }
 .hero .soon {

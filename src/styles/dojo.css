@@ -1,0 +1,215 @@
+/*
+ * 「道場」の共通部品(確定版モック mockup-final.html の値)。
+ * 色・質感は tokens.css の変数を使う。後続の段階(U2〜)で各画面がこのクラスを使う。
+ */
+
+/* ===== 地(畳) ===== */
+.dojo-ground {
+  background-color: var(--ground);
+  background-image: var(--tx-tatami);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* 既存の画面枠も、色だけでなく畳の目を載せる */
+.devmenu-frame,
+.home-frame,
+.dash-frame,
+.learn-frame,
+.matchup-frame,
+.about-frame,
+.sandbox-frame,
+.practice-frame {
+  background-image: var(--tx-tatami);
+}
+
+/* ===== ボタン ===== */
+.btn-primary,
+.btn-secondary {
+  font-family: var(--body);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 0;
+  border-radius: 3px;
+}
+
+.btn-primary {
+  height: 52px;
+  padding: 0 20px;
+  background: var(--ai);
+  border: 0;
+  color: var(--on-ai);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.btn-secondary {
+  height: 46px;
+  padding: 0 16px;
+  background: var(--raise);
+  border: 1.5px solid var(--btnbd);
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.btn-primary.full,
+.btn-secondary.full {
+  width: 100%;
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* ===== 全幅の行リンク(›付き) ===== */
+.link-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  background: none;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  padding: 0;
+  width: 100%;
+  font-family: var(--body);
+  text-align: left;
+}
+
+.link-row::after {
+  content: "›";
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1;
+  margin-left: 8px;
+}
+
+.link-row:last-child {
+  border-bottom: 0;
+}
+
+/* ===== 看板(上部の板ヘッダ) ===== */
+.dojo-topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 62px;
+  padding: 0 16px;
+  flex: none;
+  background-color: var(--wood);
+  background-image: var(--tx-plank);
+  color: var(--cream);
+  border-bottom: 3px solid var(--gold);
+}
+
+.dojo-topbar h1 {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--disp);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0.04em;
+  color: var(--cream);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 左の「◀ 戻る」用の枠。中に .btn-secondary を置く */
+.dojo-topbar__back {
+  flex: none;
+  display: inline-flex;
+}
+
+.dojo-topbar .btn-secondary {
+  height: 44px;
+  padding: 0 12px;
+  white-space: nowrap;
+  background: transparent;
+  color: var(--cream);
+  border-color: var(--cream);
+}
+
+.dojo-topbar__right {
+  flex: none;
+  font-size: 14px;
+  color: var(--cream);
+  white-space: nowrap;
+}
+
+/* ===== 檜の板(パネル) ===== */
+.dojo-panel {
+  background-color: var(--panel);
+  background-image: var(--tx-hinoki);
+  border: 1.5px solid var(--pbd);
+  border-radius: 3px;
+  padding: 16px;
+  color: var(--ink);
+}
+
+/* ===== 木札(節のラベル) ===== */
+.fuda {
+  display: block;
+  align-self: flex-start;
+  width: max-content;
+  margin: 0;
+  padding: 3px 16px;
+  background-color: var(--fuda);
+  background-image: var(--tx-plank);
+  color: var(--fuda-ink);
+  font-family: var(--disp);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  border-radius: 3px 3px 0 0;
+}
+
+/* 木札の直下に付くパネルは左上の角を落として札とつなぐ */
+.fuda + .dojo-panel {
+  border-top-left-radius: 0;
+}
+
+/* ===== 章番号の板(漢数字) ===== */
+.chapter-plate {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  background: var(--wood);
+  color: var(--cream);
+  font-family: var(--disp);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* 合格 = 塗りつぶし(藍) */
+.chapter-plate--done {
+  background: var(--ai);
+  color: var(--on-ai);
+}
+
+/* いま取り組む章 = 金の縁 */
+.chapter-plate--current {
+  box-shadow: 0 0 0 2px var(--gold);
+}

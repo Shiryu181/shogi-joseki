@@ -323,7 +323,7 @@
   width: 100%;
   border: none;
   background: var(--brown);
-  color: #fff;
+  color: var(--on-mark);
   border-radius: 11px;
   padding: 11px 14px;
   font-size: 13px;
@@ -374,6 +374,6 @@
 }
 .practice-navrow button.primary {
   background: var(--brown);
-  color: #fff;
+  color: var(--on-mark);
   border-color: var(--brown);
 }

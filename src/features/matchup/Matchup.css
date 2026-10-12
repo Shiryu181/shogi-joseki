@@ -132,7 +132,7 @@
 .startbtn {
   width: 100%;
   background: var(--brown);
-  color: #fff;
+  color: var(--on-mark);
   border: none;
   font-family: var(--disp);
   font-size: 15px;
@@ -203,7 +203,7 @@
   margin-right: 6px;
   border-radius: 50%;
   background: var(--brown);
-  color: #fff;
+  color: var(--on-mark);
   font-size: 11px;
   font-family: var(--disp);
   font-weight: 600;

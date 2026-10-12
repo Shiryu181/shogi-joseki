@@ -20,7 +20,7 @@
 .branch.on {
   border-color: var(--brown);
   background: var(--brown);
-  color: #fff;
+  color: var(--on-mark);
 }
 .branch.dev {
   border-color: var(--red);
@@ -32,5 +32,5 @@
 }
 .branch.dev.on {
   background: var(--red);
-  color: #fff;
+  color: var(--card);
 }

@@ -45,7 +45,7 @@
   border-radius: 9px; background: var(--card); color: var(--ink);
   font-family: var(--body); font-size: 12.5px; cursor: pointer;
 }
-.exam-go.on { background: var(--brown); color: #fff; border-color: var(--brown); font-weight: 600; }
+.exam-go.on { background: var(--brown); color: var(--on-mark); border-color: var(--brown); font-weight: 600; }
 .exam-go:disabled { color: var(--ink-faint); border-color: var(--line); cursor: default; }
 
 /* ── 受験中 ── */

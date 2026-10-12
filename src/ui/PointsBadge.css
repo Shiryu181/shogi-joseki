@@ -14,7 +14,7 @@
   white-space: nowrap;
 }
 .points-star {
-  color: var(--gold);
+  color: var(--gold-ink);
   font-size: 10px;
 }
 /* 獲得した点が上に浮かんで消える。 */
@@ -22,7 +22,7 @@
   position: absolute;
   right: 4px;
   top: -4px;
-  color: var(--gold);
+  color: var(--gold-ink);
   font-size: 12px;
   font-weight: 600;
   pointer-events: none;

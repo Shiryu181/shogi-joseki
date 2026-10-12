@@ -28,32 +28,32 @@
 .dash-hero { background: var(--canvas); padding: 20px 16px 16px; }
 .dash-brand {
   font-family: var(--disp); font-size: 24px; font-weight: 600;
-  letter-spacing: 0.1em; color: #3d2a12;
+  letter-spacing: 0.1em; color: var(--ink);
 }
 
 /* ── カレンダー ── */
 .dash-cal { display: flex; gap: 5px; margin-top: 14px; }
 .dash-day { flex: 1; text-align: center; min-width: 0; }
-.dash-dow { font-size: 11px; color: #5a401d; opacity: 0.85; margin-bottom: 5px; }
+.dash-dow { font-size: 11px; color: var(--ink-soft); margin-bottom: 5px; }
 .dash-cell {
-  aspect-ratio: 1; border-radius: 9px; background: rgba(255, 255, 255, 0.4);
+  aspect-ratio: 1; border-radius: 9px; background: var(--card-2);
   display: grid; place-items: center; position: relative;
 }
-.dash-d { font-family: var(--disp); font-size: 14px; color: #6b5230; }
-.dash-cell.today { background: #fff; box-shadow: inset 0 0 0 2px #3d2a12; }
+.dash-d { font-family: var(--disp); font-size: 14px; color: var(--ink-soft); }
+.dash-cell.today { background: var(--raise); box-shadow: inset 0 0 0 2px var(--ink); }
 /* 学習した日の朱印。 */
 .dash-stamp { position: absolute; inset: 0; display: grid; place-items: center; }
 .dash-stamp b {
   width: 34px; height: 34px; border: 2px solid var(--red); border-radius: 7px;
   color: var(--red); font-family: var(--disp); font-size: 11px; font-weight: 600;
   line-height: 1.05; display: grid; place-items: center;
-  transform: rotate(-7deg); background: rgba(255, 255, 255, 0.6);
+  transform: rotate(-7deg); background: var(--card);
 }
 .dash-calfoot { display: flex; align-items: baseline; margin-top: 11px; }
-.dash-streak { font-family: var(--disp); color: #3d2a12; }
+.dash-streak { font-family: var(--disp); color: var(--ink); }
 .dash-streak b { font-size: 23px; }
-.dash-streak span { font-size: 12px; font-family: var(--body); color: #5a401d; margin-left: 3px; }
-.dash-calnote { margin-left: auto; font-size: 11.5px; color: #5a401d; opacity: 0.9; }
+.dash-streak span { font-size: 12px; font-family: var(--body); color: var(--ink-soft); margin-left: 3px; }
+.dash-calnote { margin-left: auto; font-size: 11.5px; color: var(--ink-soft); }
 
 /* ── 学習中 ── */
 .dash-sthead { display: flex; align-items: baseline; gap: 7px; }
@@ -73,7 +73,7 @@
   font-family: var(--body); font-size: 15px; color: var(--ink); cursor: pointer;
 }
 /* 毎日やってほしいのは復習なので、濃い塗りは復習側に置く。 */
-.dash-btn.main { background: var(--brown); color: #fff; border-color: var(--brown); font-weight: 600; }
+.dash-btn.main { background: var(--ai); color: var(--on-ai); border-color: var(--ai); font-weight: 600; }
 .dash-btn.main:disabled {
   background: var(--card); color: var(--ink-faint);
   border-color: var(--line); font-weight: 400; cursor: default;

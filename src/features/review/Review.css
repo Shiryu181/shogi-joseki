@@ -119,6 +119,7 @@
 }
 .review-btn {
   background: var(--gold-soft) !important;
+  color: var(--ink);
   font-weight: 600;
 }
 

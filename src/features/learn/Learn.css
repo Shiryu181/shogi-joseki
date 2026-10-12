@@ -138,7 +138,7 @@
 .learn-navrow button.primary {
   flex: 2.4;
   background: var(--brown);
-  color: #fff;
+  color: var(--on-mark);
   border-color: var(--brown);
   font-family: var(--body);
   font-size: 12px;
@@ -440,7 +440,7 @@
   white-space: nowrap;
 }
 .chapter.on {
-  color: #fff;
+  color: var(--on-mark);
   background: var(--brown);
   border-color: var(--brown);
 }
