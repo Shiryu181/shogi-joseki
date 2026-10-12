@@ -400,6 +400,9 @@ export const useLearnStore = create<LearnState>((set, get) => {
         const { lead, rest } = splitExplanation(answer.note);
         const more = [
           rest,
+          // 指す前の局面の解説(章の最初の説明や、相手の手のあとの方針)は答えを明かしうるので、
+          // 出題中には出さず、正解のあとにここで読ませる。
+          cleanNote(currentNode.comment),
           cleanNote(answer.child?.comment),
           // 咎めの手順の最初の一手には、咎め方の要点を添える。
           dev && nodeHistory.length === dev.path.length + 1 ? cleanNote(dev.move.punishNote) : "",

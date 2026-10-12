@@ -216,11 +216,6 @@
   margin-bottom: 6px;
   line-height: 1.45;
 }
-.learn-panel .note-s {
-  font-size: 14px;
-  color: var(--soft);
-  margin-top: 8px;
-}
 /* 「くわしく ▾」: 文字のボタン(44px) */
 .learn-panel .tbtn {
   height: 44px;

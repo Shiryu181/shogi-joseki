@@ -10,7 +10,7 @@ import { useExamStore } from "../../store/examStore";
 import { chapterStat } from "../../domain/courseProgress";
 import { toKanjiNumber } from "../../domain/kanjiNumber";
 import { buildHint } from "../../domain/hint";
-import { cleanNote, oneLineIntent, plainMove } from "../../domain/moveText";
+import { oneLineIntent, plainMove } from "../../domain/moveText";
 import { Board } from "../../ui/Board";
 import { PieceView } from "../../ui/Piece";
 import { Screen, TopBar } from "../../ui/DojoParts";
@@ -361,7 +361,6 @@ export function Learn({
             lastOpponent={lastOpponent}
             aim={guide?.aim ?? buildHint(guide?.note, guide ? moveFromUSI(position, guide.usi)?.displayText : undefined)}
             sharp={!!guide?.sharp}
-            comment={cleanNote(currentNode.comment)}
             introNote={
               !lastOpponent && path && chapterIndex > 0 && startDepth > 0 && nodeHistory.length === startDepth && !dev
                 ? `${startDepth}手目までは学んだ形と同じ。ここから ${path.chapters[chapterIndex].entry.label}`
@@ -394,14 +393,13 @@ export function Learn({
 
 /** 自分の番: 「あなたの番 ・ n手目」+ 相手の手 + ねらい。外したときは赤い一行 / 矢印+答え。 */
 function QuestionPanel({
-  quiz, moveNumber, lastOpponent, aim, sharp, comment, introNote, onTry,
+  quiz, moveNumber, lastOpponent, aim, sharp, introNote, onTry,
 }: {
   quiz: BookQuizState;
   moveNumber: number;
   lastOpponent: AckMove | null;
   aim: string | null;
   sharp: boolean;
-  comment: string;
   introNote: string;
   onTry: () => void;
 }) {
@@ -440,7 +438,6 @@ function QuestionPanel({
           <div className="aim-t">{moveNumber}手目{sharp ? " ・ 急所" : ""} ・ 次の一手は？</div>
         )}
       </div>
-      {comment && <p className="note-s">{comment}</p>}
       {wrong && quiz.misses === 1 && (
         <p className="miss-l">× {wrong.attemptedText} — 定跡の手ではありません。もう一度</p>
       )}
