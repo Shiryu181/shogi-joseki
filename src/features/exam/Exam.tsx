@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Color, PieceType, Square } from "../../domain/shogi";
+import { Color, PieceType, Position, Square, parseUSIMove } from "../../domain/shogi";
+import type { GhostPiece } from "../../ui/Board";
+import { buildHint } from "../../domain/hint";
 import { Board } from "../../ui/Board";
 import { HandChip } from "../learn/Learn";
-import { plainMove } from "../../domain/moveText";
-import { useExamStore, summarize, EXAM_SIZE, PASS_RATIO } from "../../store/examStore";
+import { plainMove, splitExplanation } from "../../domain/moveText";
+import { useExamStore, summarize, type Marked, EXAM_SIZE, PASS_RATIO } from "../../store/examStore";
 import { useProgressStore } from "../../store/progressStore";
 import { summarizePath } from "../../domain/courseProgress";
 import type { ChapterStat } from "../../domain/courseProgress";
@@ -117,6 +119,8 @@ function ExamRun({ fromChapter, onDone, onQuit }: { fromChapter: boolean; onDone
   const selectSquare = useExamStore((s) => s.selectSquare);
   const selectHand = useExamStore((s) => s.selectHand);
   const skip = useExamStore((s) => s.skip);
+  /** 結果から開いている振り返りの問題(0 始まり)。null なら結果を出す。 */
+  const [review, setReview] = useState<number | null>(null);
 
   const destKeys = useMemo(() => {
     if (!selected) return undefined;
@@ -128,6 +132,15 @@ function ExamRun({ fromChapter, onDone, onQuit }: { fromChapter: boolean; onDone
 
   const title = chapterTitle(chapterNo - 1, label);
 
+  if (finished && review !== null && marked[review]) {
+    return (
+      <ExamReview
+        marked={marked} index={review} title={title}
+        onMove={setReview} onClose={() => setReview(null)}
+      />
+    );
+  }
+
   if (finished) {
     const s = summarize(marked);
     const missed = s.total - s.correct;
@@ -136,9 +149,11 @@ function ExamRun({ fromChapter, onDone, onQuit }: { fromChapter: boolean; onDone
         <TopBar backLabel="戻る" onBack={onDone} title="認定試験" right="結果" />
         <SubLabel>{title}</SubLabel>
         <div className="dojo-panel exam-result">
-          <div className={`exam-verdict ${s.passed ? "ok" : "ng"}`}>{s.passed ? "合格" : "不合格"}</div>
-          <div className="exam-score">
-            <span className="n">{s.correct}</span>問 正解<span className="meta"> ・ {s.total}問中</span>
+          <div className="exam-verdict-row">
+            <div className={`exam-verdict ${s.passed ? "ok" : "ng"}`}>{s.passed ? "合格" : "不合格"}</div>
+            <div className="exam-score">
+              <span className="n">{s.correct}</span>問 正解<span className="meta"> ・ {s.total}問中</span>
+            </div>
           </div>
           {!s.passed && (
             <p className="exam-reason">{s.missedSharp ? "急所を落としています" : "8割に届きませんでした"}</p>
@@ -146,13 +161,17 @@ function ExamRun({ fromChapter, onDone, onQuit }: { fromChapter: boolean; onDone
           {s.passed && <p className="exam-line">第{toKanjiNumber(chapterNo)}章は「合格」になりました。</p>}
           {missed > 0 && <p className="exam-line">落とした{missed}問を明日の復習の先頭に入れました</p>}
 
+          <p className="exam-qhint">問題を押すと、正解と解説を見られます</p>
           <ul className="exam-qlist">
             {marked.map((m, i) => (
               <li key={i}>
-                <span className="qn">{i + 1}</span>
-                <span className={m.correct ? "ok" : "ng"}>{m.correct ? "○" : "×"}</span>
-                <span className="mv">{m.correct ? plainMove(m.card.correctText) : m.played ? plainMove(m.playedText) : "飛ばした"}</span>
-                {!m.correct && <span className="meta">正解 {plainMove(m.card.correctText)}</span>}
+                <button type="button" className="exam-qrow" onClick={() => setReview(i)}>
+                  <span className="qn">{i + 1}</span>
+                  <span className={`mk ${m.correct ? "ok" : m.played ? "ng" : "sk"}`}>{m.correct ? "○" : m.played ? "×" : "−"}</span>
+                  <span className="mv">{m.correct ? plainMove(m.card.correctText) : m.played ? plainMove(m.playedText) : "飛ばした"}</span>
+                  {!m.correct && <span className="meta">正解 {plainMove(m.card.correctText)}</span>}
+                  <span className="chev" aria-hidden="true">›</span>
+                </button>
               </li>
             ))}
           </ul>
@@ -203,6 +222,100 @@ function ExamRun({ fromChapter, onDone, onQuit }: { fromChapter: boolean; onDone
         <p className="rv-meta">ヒントとやり直しはありません。</p>
         <button type="button" className="btn-secondary full" onClick={skip}>分からないので飛ばす</button>
       </section>
+    </Screen>
+  );
+}
+
+/**
+ * 試験後の振り返り。出題時の局面に、正解を矢印で重ねる。
+ * 誤答だったときは、その行き先を薄い点線で示す。試験の直後(同じセッション)だけで使う。
+ */
+function ExamReview({
+  marked, index, title, onMove, onClose,
+}: {
+  marked: Marked[];
+  index: number;
+  title: string;
+  onMove: (i: number) => void;
+  onClose: () => void;
+}) {
+  const m = marked[index];
+  const { card } = m;
+  const position = useMemo(() => {
+    const p = new Position();
+    p.resetBySFEN(card.sfen);
+    return p;
+  }, [card.sfen]);
+  const flipped = position.color === Color.WHITE;
+
+  const answer = parseUSIMove(card.usi);
+  const arrow = answer
+    ? { from: answer.from instanceof Square ? answer.from.usi : null, to: answer.to.usi }
+    : null;
+  let ghost: GhostPiece | null = null;
+  if (answer && !(answer.from instanceof Square)) {
+    ghost = { key: answer.to.usi, color: position.color, type: answer.from };
+  }
+  // 誤答の行き先(USI の末尾2文字が移動先の升)。
+  const markKeys = !m.correct && m.played ? new Set([m.played.slice(2, 4)]) : undefined;
+
+  const skipped = m.played === null;
+  const aim = card.aim ?? buildHint(card.note, card.correctText);
+  const lead = splitExplanation(card.note).lead;
+  const verdict = m.correct ? "○ 正解" : skipped ? "− 飛ばした" : "× 不正解";
+  const verdictCls = m.correct ? "ok" : skipped ? "sk" : "ng";
+
+  return (
+    <Screen className="learn-screen exam-screen exam-review">
+      <TopBar backLabel="結果" onBack={onClose} title={`第${index + 1}問`} right={`${index + 1} / ${marked.length}`} />
+      <SubLabel>{title}{card.sharp ? " ・ 急所" : ""}</SubLabel>
+
+      <div className="learn-hands">
+        <HandChip label="▲持駒" position={position} color={Color.BLACK} flipped={flipped}
+          canPick={false} selectedType={null} onPick={() => {}} />
+        <HandChip label="△持駒" position={position} color={Color.WHITE} flipped={flipped}
+          canPick={false} selectedType={null} onPick={() => {}} />
+      </div>
+
+      <Board
+        position={position}
+        fromKey={null}
+        fromHand={null}
+        onSquareClick={() => {}}
+        onHandPieceClick={() => {}}
+        clickableHandColor="none"
+        flipped={flipped}
+        hideHands
+        arrow={arrow}
+        ghost={ghost}
+        markKeys={markKeys}
+      />
+
+      <section className="dojo-panel learn-panel exam-rv-panel">
+        <p className={`rv-res ${verdictCls}`}>{verdict}</p>
+        <div className={`rv-ans${skipped ? " one" : ""}`}>
+          {!skipped && (
+            <div>
+              <span className="al">あなたの答え</span>
+              <span className="av">{plainMove(m.playedText)}</span>
+            </div>
+          )}
+          <div>
+            <span className="al">正解</span>
+            <span className="av st">{plainMove(card.correctText)}</span>
+          </div>
+        </div>
+        {aim && <div className="aim rv-aim"><p><b>ねらい</b>{aim}</p></div>}
+        {lead && <p className="expl">{lead}</p>}
+      </section>
+
+      <div className="rv-foot">
+        <div className="rv-nav">
+          <button type="button" className="btn-secondary" disabled={index === 0} onClick={() => onMove(index - 1)}>◀ 前の問題</button>
+          <button type="button" className="btn-secondary" disabled={index >= marked.length - 1} onClick={() => onMove(index + 1)}>次の問題 ▶</button>
+        </div>
+        <button type="button" className="btn-primary full" onClick={onClose}>結果へ戻る</button>
+      </div>
     </Screen>
   );
 }

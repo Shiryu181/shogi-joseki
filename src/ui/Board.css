@@ -317,6 +317,18 @@
   }
 }
 
+/* 誤答の行き先: 薄い点線の枠(振り返り用)。 */
+.cell.marked::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: 2px dashed var(--ink);
+  border-radius: 2px;
+  opacity: 0.45;
+  z-index: 1;
+  pointer-events: none;
+}
+
 /* 答えを示す矢印(盤の上に重ねる)。色は盤のトークン。 */
 .board-arrow {
   position: absolute;

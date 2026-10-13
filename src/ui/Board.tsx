@@ -152,6 +152,8 @@ export interface BoardProps {
   hideHands?: boolean;
   /** 盤の上に矢印を重ねる。 */
   arrow?: BoardArrow | null;
+  /** 誤答の行き先など、薄い点線の枠で印を付ける升(usi)。 */
+  markKeys?: Set<string>;
 }
 
 /** USI の升を、盤の描画上の列・行(0..8, 左上が 0)にする。 */
@@ -257,6 +259,7 @@ export function Board({
   flipped = false,
   hideHands = false,
   arrow = null,
+  markKeys,
 }: BoardProps) {
   const grid = useMemo(() => boardGrid(position), [position]);
   const glow = glowKeys ?? EMPTY_SET;
@@ -303,6 +306,7 @@ export function Board({
                   glow.has(key) ? "glow" : "",
                   dests.has(key) ? "dest" : "",
                   dests.has(key) && piece ? "occupied" : "",
+                  markKeys?.has(key) ? "marked" : "",
                 ]
                   .filter(Boolean)
                   .join(" ");

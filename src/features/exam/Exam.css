@@ -24,20 +24,36 @@
   font-weight: 700;
   color: var(--red);
 }
-.exam-qlist { list-style: none; margin: 8px 0 0; padding: 0; }
-.exam-qlist li {
+.exam-verdict-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.exam-verdict-row .exam-verdict { white-space: nowrap; flex: none; }
+.exam-verdict-row .exam-score { margin: 0; white-space: nowrap; }
+.exam-verdict-row .exam-score .meta { font-size: 14px; }
+.exam-qhint { margin: 10px 0 0 !important; font-size: 14px !important; color: var(--soft); }
+.exam-qlist { list-style: none; margin: 2px 0 0; padding: 0; }
+.exam-qlist li { border-bottom: 1px solid var(--rule); }
+.exam-qrow {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 10px;
-  min-height: 34px;
-  border-bottom: 1px solid var(--rule);
-  font-size: 15px;
+  width: 100%;
+  min-height: 44px;
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: 0;
+  color: var(--ink);
+  font: 15px var(--body);
+  text-align: left;
+  cursor: pointer;
 }
-.exam-qlist .qn { width: 1.4em; color: var(--soft); font-size: 14px; }
-.exam-qlist .ok { color: var(--good); font-weight: 700; }
-.exam-qlist .ng { color: var(--red); font-weight: 700; }
-.exam-qlist .mv { font-family: var(--disp); font-size: 16px; flex: 1; }
-.exam-qlist .meta { font-size: 14px; color: var(--soft); }
+.exam-qrow .qn { width: 1.4em; color: var(--soft); font-size: 14px; }
+.exam-qrow .mk { width: 1em; text-align: center; font-weight: 700; flex: none; }
+.exam-qrow .ok { color: var(--good); }
+.exam-qrow .ng { color: var(--red); }
+.exam-qrow .sk { color: var(--ink); }
+.exam-qrow .mv { font-family: var(--disp); font-size: 16px; flex: 1; min-width: 0; white-space: nowrap; }
+.exam-qrow .meta { font-size: 14px; color: var(--soft); white-space: nowrap; }
+.exam-qrow .chev { flex: none; width: 12px; font-size: 22px; line-height: 1; color: var(--soft); text-align: right; }
 .exam-result .exam-back { width: 100%; margin-top: 16px; }
 
 /* ── 一覧(モック 06) ── */
@@ -51,3 +67,21 @@
 .exl-state { font-size: 14px; color: var(--soft); line-height: 1.4; }
 .exl-go.btn-secondary { height: 44px; padding: 0 12px; font-size: 14px; flex: none; }
 .exl-lead { margin-top: 16px; line-height: 1.7; }
+
+/* ── 振り返り(1問ずつ) ── */
+.exam-review .rv-res { font-family: var(--disp); font-size: 20px; font-weight: 700; margin: 0 0 8px; line-height: 1.4; }
+.exam-review .rv-res.ok { color: var(--good); }
+.exam-review .rv-res.ng { color: var(--red); }
+.exam-review .rv-res.sk { color: var(--ink); }
+.rv-ans { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 0 12px; }
+.rv-ans.one { grid-template-columns: 1fr; }
+.rv-ans .al { display: block; font-size: 13px; color: var(--soft); }
+.rv-ans .av { display: block; font-family: var(--disp); font-size: 18px; line-height: 1.4; }
+.rv-ans .av.st { font-weight: 700; }
+.exam-review .learn-panel .rv-aim { padding: 10px 16px; margin: 0 0 10px; }
+.exam-review .learn-panel .rv-aim p { margin: 0; line-height: 1.55; }
+.exam-review .learn-panel .rv-aim b { font-family: var(--disp); font-size: 16px; margin-right: 8px; }
+.exam-review .learn-panel .expl { font-size: 15px; line-height: 1.55; margin: 0; }
+.rv-foot { margin: auto 12px 0; padding: 16px 0 0; }
+.rv-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.rv-foot .btn-primary { margin-top: 10px; width: 100%; }

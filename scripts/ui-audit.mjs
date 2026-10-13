@@ -35,7 +35,7 @@ const ORDER = [
   "learn-sente-first-question", "learn-chapter-intro", "learn-all-done",
   "home-alldone",
   "review-question", "review-hint", "review-wrong-1", "review-wrong-2", "review-accepted", "review-correct", "review-end",
-  "exam-list", "exam-question", "exam-result-pass", "exam-list-after", "exam-result-fail",
+  "exam-list", "exam-question", "exam-result-pass", "exam-review-correct", "exam-list-after", "exam-result-fail", "exam-review-wrong", "exam-review-skipped",
   "settings", "settings-confirm",
 ];
 const ORDER_NUM = Object.fromEntries(ORDER.map((n, i) => [n, i + 1]));
@@ -508,6 +508,24 @@ async function installHelpers(page) {
     au.exam = {
       st: () => { const s = EX.useExamStore.getState(); return { finished: s.finished, n: s.cards.length, i: s.index, sharp: !!(s.cards[s.index] && s.cards[s.index].sharp) }; },
       play: () => { const s = EX.useExamStore.getState(); const c = s.cards[s.index]; return au.play(EX.useExamStore.getState, "selectSquare", "selectHand", c.usi); },
+      /** 正解以外の手を指す(駒を動かす手)。成功したら true。 */
+      wrong: () => {
+        const X = EX.useExamStore;
+        const s0 = X.getState();
+        const c = s0.cards[s0.index];
+        for (const [fromUsi, dests] of s0.moveDests) {
+          const from = SH.Square.newByUSI(fromUsi);
+          if (!from || s0.position.board.at(from)?.color !== s0.position.color) continue;
+          for (const d of dests) {
+            if (fromUsi + d.usi === c.usi.slice(0, 4)) continue;
+            const before = X.getState().marked.length;
+            X.getState().selectSquare(from); X.getState().selectSquare(d);
+            if (X.getState().marked.length > before) return true;
+          }
+        }
+        return false;
+      },
+      marks: () => EX.useExamStore.getState().marked.map((m) => (m.correct ? "ok" : m.played ? "ng" : "sk")),
     };
     window.__au = au;
   });
@@ -953,6 +971,18 @@ async function main() {
         }
         await page.waitForSelector(".exam-result");
         await capture("exam-result-pass");
+        // 振り返り: 正解の問題を開く。前後の移動と、結果へ戻るも通す。
+        await page.locator(".exam-qrow").nth(2).click();
+        await page.waitForSelector(".exam-review .board-panel, .exam-review .board");
+        await capture("exam-review-correct");
+        const head = () => page.locator(".exam-review .dojo-topbar h1").textContent();
+        await page.getByRole("button", { name: /次の問題/ }).click();
+        if ((await head()) !== "第4問") throw new Error("次の問題で第4問にならない: " + (await head()));
+        await page.getByRole("button", { name: /前の問題/ }).click();
+        if ((await head()) !== "第3問") throw new Error("前の問題で第3問にならない");
+        log("review orientation (pass chapter): first file label =", await page.locator(".exam-review .files div").first().textContent());
+        await page.getByRole("button", { name: /結果へ戻る/ }).click();
+        await page.waitForSelector(".exam-result");
       });
       await step("exam-list-after", async () => {
         await page.locator(".exam-back").click();
@@ -969,6 +999,8 @@ async function main() {
           const st = await page.evaluate(() => window.__au.exam.st());
           if (st.finished) break;
           if (skipped < 3 && (st.sharp || i === 1 || i === 3 || i === 6)) {
+            // 最初の1問は飛ばさず、わざと別の手を指す(振り返りで誤答を撮るため)。
+            if (skipped === 0 && (await page.evaluate(() => window.__au.exam.wrong()))) { skipped++; await sleep(30); continue; }
             await page.getByRole("button", { name: /分からないので飛ばす/ }).click();
             skipped++;
           } else {
@@ -978,6 +1010,21 @@ async function main() {
         }
         await page.waitForSelector(".exam-result");
         await capture("exam-result-fail");
+        const marks = await page.evaluate(() => window.__au.exam.marks());
+        const open = async (kind) => {
+          const idx = marks.indexOf(kind);
+          if (idx < 0) throw new Error("振り返りに開ける問題がない: " + kind);
+          await page.locator(".exam-qrow").nth(idx).click();
+          await page.waitForSelector(".exam-review .board");
+        };
+        await open("ng");
+        await capture("exam-review-wrong");
+        log("review orientation (fail chapter): first file label =", await page.locator(".exam-review .files div").first().textContent());
+        await page.getByRole("button", { name: /結果へ戻る/ }).click();
+        await open("sk");
+        await capture("exam-review-skipped");
+        await page.getByRole("button", { name: /結果へ戻る/ }).click();
+        await page.waitForSelector(".exam-result");
       });
     });
 

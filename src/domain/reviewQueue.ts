@@ -23,6 +23,9 @@ export interface QuizItem {
   moveNumber: number;
   /** 枝(相手のミスを咎める手順)の中の問題か。 */
   inBranch: boolean;
+  /** その手の解説・ねらい(試験の振り返りで使う)。 */
+  note?: string;
+  aim?: string;
 }
 
 /** コースに含まれる問題をすべて集める。 */
@@ -41,6 +44,8 @@ export function quizItemsOf(course: JosekiCourse): QuizItem[] {
           sharp: !!b.sharp,
           moveNumber,
           inBranch,
+          note: b.note,
+          aim: b.aim,
         });
       }
       if (b.child) {
