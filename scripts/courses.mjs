@@ -14,6 +14,7 @@
  */
 import { buildCourse, buildCourseFromUsi, writeCourse, reportAnnotateWarnings } from "./build-joseki.mjs";
 import { swapSides } from "./mirror-course.mjs";
+import { checkConsistency } from "./check-consistency.mjs";
 import c_ibisha_vs_shikenbisha__sente from "./courses/ibisha-vs-shikenbisha--sente.mjs";
 import c_ibisha_vs_shikenbisha__bougin from "./courses/ibisha-vs-shikenbisha--bougin.mjs";
 import c_ibisha_vs_shikenbisha__45hayashikake from "./courses/ibisha-vs-shikenbisha--45hayashikake.mjs";
@@ -198,3 +199,8 @@ for (const [a, b, shared] of PAIRED_COURSES) {
 // 出典どおりの手がエンジンの許容手から外れている箇所をまとめて出す。
 // 駒組みでは出典を優先するので止めはしないが、見落としたくないので必ず報告する。
 reportAnnotateWarnings();
+
+// 同じ学習パスの章どうしで、同じ局面なのに正解の手が違うものを報告する。
+// 止めはしない(JSON は書き出し済み)が、食い違いがあれば必ず出す。単独で動かすと終了コード 1 になる:
+// node scripts/check-consistency.mjs
+checkConsistency();

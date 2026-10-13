@@ -2,7 +2,7 @@
  "meta": {
   "ms": 2000,
   "tol": 100,
-  "updated": "2026-10-12"
+  "updated": "2026-10-13"
  },
  "positions": {
   "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b -": {
@@ -18943,6 +18943,72 @@
    ],
    "courses": [
     "nakabisha-vs-sankenbisha--sente"
+   ]
+  },
+  "ln1gkgsnl/1r1s3b1/p1pppp1pp/6p2/1p7/2P1P4/PP1P1PPPP/1B2RK3/LNSG1GSNL b -": {
+   "best": "1g1f",
+   "cp": -48,
+   "gap": 16,
+   "accepted": [
+    "1g1f",
+    "8h7g",
+    "5f5e",
+    "3g3f",
+    "8h2b+",
+    "3i2h",
+    "9g9f",
+    "6i7h",
+    "4h3h",
+    "5h5i",
+    "6g6f",
+    "4i5i"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsgkgsnl/1r5b1/ppppp2pp/5pp2/9/4P4/PPPP1PPPP/1B2R4/LNSGKGSNL b -": {
+   "best": "3i4h",
+   "cp": -40,
+   "gap": 4,
+   "accepted": [
+    "3i4h",
+    "4g4f",
+    "7i7h",
+    "6i7h",
+    "5i6h",
+    "7g7f",
+    "9g9f",
+    "2g2f",
+    "4i3h",
+    "3i2h",
+    "4i4h",
+    "3g3f"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsgkgsnl/4r4/pppp1pbpp/4p1p2/7P1/2P6/PP1PPPP1P/1B1K1S1R1/LNSG1G1NL w -": {
+   "best": "4c4d",
+   "cp": -122,
+   "gap": 5,
+   "accepted": [
+    "4c4d",
+    "3a3b",
+    "3a2b",
+    "6a6b",
+    "3a4b",
+    "4a4b",
+    "4a3b",
+    "3c8h+",
+    "9c9d",
+    "5d5e",
+    "5b2b",
+    "7c7d"
+   ],
+   "courses": [
+    "_lab"
    ]
   }
  }

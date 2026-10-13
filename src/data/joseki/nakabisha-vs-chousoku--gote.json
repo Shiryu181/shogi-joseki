@@ -4,7 +4,7 @@
   "myStrategy": "nakabisha",
   "opponentStrategy": "ibisha",
   "mySide": "gote",
-  "source": "手順はゼロから始める将棋研究所(shogi-joutatsu.com)「ゴキゲン中飛車vs超速3七銀」「vsゴキゲン中飛車 超速2枚銀」に準拠。同じ棋譜を中飛車側の視点で収録。仕掛け以降はエンジンの最善手で補う(2026-09)。42手目以降はエンジン(YaneuraOu、course-lab、2026-10-10/11)の探索による。42手目△4五銀は後手+72〜+100、△5五銀は-237〜-281",
+  "source": "手順はゼロから始める将棋研究所(shogi-joutatsu.com)「ゴキゲン中飛車vs超速3七銀」「vsゴキゲン中飛車 超速2枚銀」に準拠。同じ棋譜を中飛車側の視点で収録。仕掛け以降はエンジンの最善手で補う(2026-09)。42手目以降はエンジン(YaneuraOu、course-lab、2026-10-10/11)の探索による。42手目△4五銀は後手+72〜+100、△5五銀は-237〜-281。序盤の手順(8〜10手目)は、7筋から攻める章(nakabisha-vs-anaguma--7suji)と同じ並びにそろえた(2026-10-13、入れ替え前は△5五歩→▲6八玉→△3三角)。同じ局面で章ごとに別の手を正解にしないための入れ替えで、10手目後の局面は入れ替え前と同一。",
   "goalFormation": "5筋の位を取り、銀を4四へ繰り出して相手の超速に銀対抗し、玉を美濃囲いに収め、4五の桂を銀で取った形。",
   "goalLabel": "銀対抗と美濃囲いが完成し、互角に戦えます",
   "goalSfen": "ln1g4l/1ks1r1gb1/1pp2pnp1/p2p2R1p/4Ss3/P1P2SP2/1P1PPP2P/1BK1G4/LN1G4L b 3Pn 1",
@@ -135,10 +135,10 @@
                                               "comment": null,
                                               "branches": [
                                                 {
-                                                  "usi": "5d5e",
+                                                  "usi": "2b3c",
                                                   "kind": "main",
-                                                  "note": "5筋の位を取ります。中央の主導権を握る、ゴキゲン中飛車の基本の形です。",
-                                                  "aim": "中央の位を取って、主導権を握りたい。",
+                                                  "note": "角を上がって2筋を受けます。3三の角が2四に利くので、飛車先の歩を突き込まれても受けられます。",
+                                                  "aim": "相手が突き込んでくる筋を、大駒を上げて受けておきたい。",
                                                   "accepted": [
                                                     "5a6b",
                                                     "9c9d",
@@ -163,7 +163,8 @@
                                                   ],
                                                   "child": {
                                                     "id": "n8",
-                                                    "sfen": "lnsgkgsnl/4r2b1/pppp1p1pp/6p2/4p2P1/2P6/PP1PPPP1P/1B3S1R1/LNSGKG1NL b - 1",
+                                                    "sfen": "lnsgkgsnl/4r4/pppp1pbpp/4p1p2/7P1/2P6/PP1PPPP1P/1B3S1R1/LNSGKG1NL b - 1",
+                                                    "comment": null,
                                                     "branches": [
                                                       {
                                                         "usi": "5i6h",
@@ -171,32 +172,31 @@
                                                         "note": "相手の玉が動きます。",
                                                         "child": {
                                                           "id": "n9",
-                                                          "sfen": "lnsgkgsnl/4r2b1/pppp1p1pp/6p2/4p2P1/2P6/PP1PPPP1P/1B1K1S1R1/LNSG1G1NL w - 1",
+                                                          "sfen": "lnsgkgsnl/4r4/pppp1pbpp/4p1p2/7P1/2P6/PP1PPPP1P/1B1K1S1R1/LNSG1G1NL w - 1",
                                                           "comment": null,
                                                           "branches": [
                                                             {
-                                                              "usi": "2b3c",
+                                                              "usi": "5d5e",
                                                               "kind": "main",
-                                                              "note": "角を上がって2筋を受けます。ここを省くと▲2四歩から飛車先を破られます。",
-                                                              "aim": "省くと破られてしまう筋を、大駒を上げて受けたい。",
+                                                              "note": "5筋の位を取ります。中央の主導権を握る、ゴキゲン中飛車の基本の形です。",
+                                                              "aim": "中央の位を取って、主導権を握りたい。",
                                                               "accepted": [
-                                                                "2b3c",
+                                                                "4c4d",
                                                                 "3a3b",
-                                                                "4a3b",
-                                                                "7a6b",
-                                                                "1c1d",
-                                                                "9c9d",
-                                                                "5a6b",
-                                                                "2b4d",
+                                                                "3a2b",
+                                                                "6a6b",
                                                                 "3a4b",
-                                                                "7a7b",
-                                                                "7a8b",
+                                                                "4a4b",
+                                                                "4a3b",
+                                                                "3c8h+",
+                                                                "9c9d",
+                                                                "5d5e",
+                                                                "5b2b",
                                                                 "7c7d"
                                                               ],
                                                               "child": {
                                                                 "id": "n10",
                                                                 "sfen": "lnsgkgsnl/4r4/pppp1pbpp/6p2/4p2P1/2P6/PP1PPPP1P/1B1K1S1R1/LNSG1G1NL b - 1",
-                                                                "comment": null,
                                                                 "branches": [
                                                                   {
                                                                     "usi": "3g3f",
