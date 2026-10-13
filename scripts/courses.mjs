@@ -108,7 +108,6 @@ const COURSES = [
   c_sankenbisha_vs_nakabisha__aifuri,
   c_nakabisha_vs_sankenbisha__aifuri,
   c_sankenbisha_vs_mukaibisha__aifuri,
-  c_nakabisha_vs_onigoroshi__gote,
   c_nakabisha__shote,
 ];
 
@@ -172,6 +171,7 @@ const USI_COURSES = [
   c_nakabisha_vs_chokyusen__kaihi,
   c_nakabisha_vs_anaguma__7suji,
   c_nakabisha_vs_ureshino__gote,
+  c_nakabisha_vs_onigoroshi__gote,
 ];
 
 for (const def of USI_COURSES) {

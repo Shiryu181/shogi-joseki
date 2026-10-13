@@ -4,14 +4,14 @@
   "myStrategy": "nakabisha",
   "opponentStrategy": "onigoroshi",
   "mySide": "gote",
-  "source": "対策の骨子はゼロから始める将棋研究所(shogi-joutatsu.com)「鬼殺し対策」の△6二金に準拠。△6二金を省くと▲5五角の銀歩両取りが決まることも同記事による。手順はエンジンで検証済みで、▲6五桂に△6四歩と桂を取りにいけば後手+446(2026-10)",
-  "goalFormation": "鬼殺しの桂を取り切り、駒得のまま中飛車に組む形。",
-  "goalLabel": "鬼殺しを受け切りました",
-  "goalSfen": "ln2k1snl/1r1s2g2/p1p1gp1pp/3p1bp2/7P1/2P3P2/PP1PPP2P/1BG2S1R1/L1SK1G1NL b Pnp 1",
+  "source": "鬼殺し(▲7六歩 △3四歩 ▲7七桂)が、角道を開けた後手(△3四歩)を狙う罠であることは shogi-joutatsu.com/archives/2807 と thirdfilerook.jp/about-demon-killer/ に拠る。note.com/shogihousemidori は、新鬼殺しへの対抗策を『角道を開けないこと』としている。△5四歩に対する▲7七桂を扱った出典は見つかっていない。この手順はエンジン(YaneuraOu、course-lab、2026-10-13)で作った。後手の評価値は△5四歩が-145、▲7七桂が+112〜+164(先手の最善より217〜252悪い手)、△6二銀が+144〜+155(エンジンの最善手とほぼ同じ)、▲6五桂が+416(最善より286悪い)、△3二金が+432、△6四歩が+391、△7三同銀が+343、最後の△6二金が+326。以前この章は△6二金を採用していたが、同じ局面で+47〜+74にとどまったため、△6二銀にした",
+  "goalFormation": "鬼殺しの桂跳ねを受け、桂を歩と引き換えに取って、駒得のまま金を寄せた形。",
+  "goalLabel": "鬼殺しは△5四歩なら怖くない。落ち着いて受けて優勢",
+  "goalSfen": "ln2k1snl/1r1g2gb1/pps2pppp/3pp4/9/P1P6/1P1PPPPPP/1BR6/L1SGKGSNL b Pn 1",
   "root": {
     "id": "n0",
     "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
-    "comment": "平手の初形です。相手が3手目に▲7七桂と跳ねる『鬼殺し』で来たときの受け方を学びます。受け方を知らないと序盤で潰されますが、知っていれば逆に駒得できる戦法です。",
+    "comment": "平手の初形です。鬼殺しは、3手目に▲7七桂と跳ねる奇襲です。本来は、角道を開けた(△3四歩と突いた)後手を狙う罠です。このアプリの指し方は▲7六歩に△5四歩なので、桂を跳ねてこられても、落ち着いて受ければ怖くありません。",
     "branches": [
       {
         "usi": "7g7f",
@@ -22,10 +22,9 @@
           "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1",
           "branches": [
             {
-              "usi": "3c3d",
+              "usi": "5c5d",
               "kind": "main",
-              "note": "こちらも角道を開けます。",
-              "aim": "大駒の道を開けて、序盤の選択肢を広げたい。",
+              "note": "5筋の歩を突きます。中飛車の合図であり、こちらは角道を開けません。",
               "accepted": [
                 "8c8d",
                 "3c3d",
@@ -42,460 +41,155 @@
               ],
               "child": {
                 "id": "n2",
-                "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                "sfen": "lnsgkgsnl/1r5b1/pppp1pppp/4p4/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
                 "branches": [
                   {
                     "usi": "8i7g",
                     "kind": "main",
-                    "note": "相手が3手目に桂を跳ねました。これが『鬼殺し』の合図です。次に▲6五桂と跳ねて、こちらの飛車の頭を狙ってきます。",
+                    "note": "相手が桂を跳ねました。鬼殺しの形です。次に▲6五桂と跳ねて、こちらの陣を狙ってきます。",
                     "child": {
                       "id": "n3",
-                      "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P6/PPNPPPPPP/1B5R1/L1SGKGSNL w - 1",
-                      "comment": "鬼殺しです。次の一手を間違えると序盤で潰されます。桂が6五へ跳んでくる前に、備えておく必要があります。",
+                      "sfen": "lnsgkgsnl/1r5b1/pppp1pppp/4p4/9/2P6/PPNPPPPPP/1B5R1/L1SGKGSNL w - 1",
                       "branches": [
                         {
-                          "usi": "6a6b",
+                          "usi": "7a6b",
                           "kind": "main",
-                          "note": "金を6二へ上がります。これが急所の一手です。金は横に動けるので、あとで▲5五角と両取りを掛けられても受けられます。",
-                          "aim": "相手の桂の攻めに備えて、横に動ける守り駒を先に上げておきたい。",
+                          "note": "銀を6二へ上げます。6二の銀は、相手の桂が跳ねてきたときに狙う5三と7三の2か所を守ります。",
+                          "aim": "相手の駒が狙ってくる場所に、先に守りの駒を利かせておきたい。",
                           "accepted": [
-                            "6a6b",
-                            "4a3b",
-                            "3a4b",
-                            "6a5b",
-                            "7c7d",
-                            "6c6d",
-                            "8c8d",
-                            "5a5b",
-                            "3a3b",
                             "7a6b",
-                            "2b3c",
-                            "9c9d"
-                          ],
-                          "demos": [
-                            {
-                              "title": "相手が角で両取りを狙っても",
-                              "usi": [
-                                "7g6e",
-                                "6c6d",
-                                "8h2b+",
-                                "3a2b",
-                                "B*5e",
-                                "6b6c"
-                              ],
-                              "text": "▲6五桂△6四歩▲2二角成△同銀▲5五角と銀歩の両取りを狙われても、△6三金で両方守れます。ここで6二が銀だと横に動けず、受かりません。これが△6二金の理由です。"
-                            }
+                            "3c3d",
+                            "6a5b",
+                            "3a3b",
+                            "8c8d",
+                            "6c6d",
+                            "7c7d",
+                            "3a4b",
+                            "5a4b",
+                            "4a3b",
+                            "8b7b"
                           ],
                           "child": {
                             "id": "n4",
-                            "sfen": "lns1kgsnl/1r1g3b1/pppppp1pp/6p2/9/2P6/PPNPPPPPP/1B5R1/L1SGKGSNL b - 1",
-                            "comment": null,
+                            "sfen": "ln1gkgsnl/1r1s3b1/pppp1pppp/4p4/9/2P6/PPNPPPPPP/1B5R1/L1SGKGSNL b - 1",
+                            "comment": "ここが受けの急所です。こちらは角道を開けていないので、鬼殺し本来の▲5五角の両取りを狙う筋は使えません。▲7七桂は、この手順に対しては単に跳ねすぎです。",
                             "branches": [
                               {
                                 "usi": "7g6e",
                                 "kind": "main",
-                                "note": "相手の桂が6五へ。飛車の頭を狙ってきました。",
+                                "note": "相手の桂が6五へ跳ねました。5三と7三の歩を狙っていますが、どちらも銀が守っています。",
                                 "child": {
                                   "id": "n5",
-                                  "sfen": "lns1kgsnl/1r1g3b1/pppppp1pp/6p2/3N5/2P6/PP1PPPPPP/1B5R1/L1SGKGSNL w - 1",
-                                  "comment": null,
+                                  "sfen": "ln1gkgsnl/1r1s3b1/pppp1pppp/4p4/3N5/2P6/PP1PPPPPP/1B5R1/L1SGKGSNL w - 1",
                                   "branches": [
                                     {
-                                      "usi": "6c6d",
+                                      "usi": "4a3b",
                                       "kind": "main",
-                                      "note": "6筋の歩を突いて、桂を取りにいきます。桂は前にしか進めないので、歩で狙われると逃げ場がありません。",
-                                      "aim": "前にしか進めない相手の駒を、歩で狙って捕まえたい。",
+                                      "note": "金を3二へ上げます。相手が桂以外にすぐ攻める駒を持たないので、慌てずに囲いを進めます。",
+                                      "aim": "相手の攻めが急でないうちに、玉の守りを固めたい。",
                                       "accepted": [
-                                        "6c6d",
-                                        "9c9d",
-                                        "5a4b",
                                         "4a3b",
-                                        "8c8d",
-                                        "4c4d",
+                                        "3c3d",
+                                        "6c6d",
+                                        "3a4b",
                                         "1c1d",
-                                        "5c5d",
-                                        "5a5b",
-                                        "2b8h+"
-                                      ],
-                                      "demos": [
-                                        {
-                                          "title": "相手が逃げずに成り込むと",
-                                          "usi": [
-                                            "6e5c+",
-                                            "6b5c"
-                                          ],
-                                          "text": "▲5三桂成には△同金。歩1枚と引き換えに桂が取れて、こちらの駒得です。"
-                                        }
+                                        "6a5b",
+                                        "3a3b",
+                                        "4c4d",
+                                        "5a4b",
+                                        "4a4b",
+                                        "9c9d",
+                                        "8c8d"
                                       ],
                                       "child": {
                                         "id": "n6",
-                                        "sfen": "lns1kgsnl/1r1g3b1/ppp1pp1pp/3p2p2/3N5/2P6/PP1PPPPPP/1B5R1/L1SGKGSNL b - 1",
-                                        "comment": null,
+                                        "sfen": "ln1gk1snl/1r1s2gb1/pppp1pppp/4p4/3N5/2P6/PP1PPPPPP/1B5R1/L1SGKGSNL b - 1",
                                         "branches": [
                                           {
-                                            "usi": "6e5c+",
+                                            "usi": "9g9f",
                                             "kind": "main",
-                                            "note": "相手は桂を成り込んできました。",
+                                            "note": "相手が端の歩を突きました。",
                                             "child": {
                                               "id": "n7",
-                                              "sfen": "lns1kgsnl/1r1g3b1/ppp1+Np1pp/3p2p2/9/2P6/PP1PPPPPP/1B5R1/L1SGKGSNL w P 1",
-                                              "comment": null,
+                                              "sfen": "ln1gk1snl/1r1s2gb1/pppp1pppp/4p4/3N5/P1P6/1P1PPPPPP/1B5R1/L1SGKGSNL w - 1",
                                               "branches": [
                                                 {
-                                                  "usi": "6b5c",
+                                                  "usi": "6c6d",
                                                   "kind": "main",
-                                                  "note": "金で取ります。歩1枚と引き換えに桂を取り、はっきり駒得になりました。",
-                                                  "aim": "成り込んできた相手の駒を取り返して、駒得を確定させたい。",
+                                                  "note": "6筋の歩を突いて、6五の桂に当てます。桂は前にしか進めないので、逃げ場がありません。",
+                                                  "aim": "前にしか進めない相手の駒を、歩で狙って追い詰めたい。",
                                                   "accepted": [
-                                                    "6b5c"
+                                                    "6c6d",
+                                                    "3a4b",
+                                                    "5a4a",
+                                                    "9c9d",
+                                                    "1c1d",
+                                                    "8c8d",
+                                                    "6a5b",
+                                                    "6a7b",
+                                                    "3c3d",
+                                                    "5a5b",
+                                                    "8b7b",
+                                                    "4c4d"
                                                   ],
-                                                  "sharp": true,
                                                   "child": {
                                                     "id": "n8",
-                                                    "sfen": "lns1kgsnl/1r5b1/ppp1gp1pp/3p2p2/9/2P6/PP1PPPPPP/1B5R1/L1SGKGSNL b Pn 1",
-                                                    "comment": "鬼殺しを受け切りました。桂を取って駒得です(後手+463)。ここから先は『駒得を活かしてどう指すか』を学びます。手順は将棋ソフトの最善手で、出典はありません。",
+                                                    "sfen": "ln1gk1snl/1r1s2gb1/ppp2pppp/3pp4/3N5/P1P6/1P1PPPPPP/1B5R1/L1SGKGSNL b - 1",
                                                     "branches": [
                                                       {
-                                                        "usi": "6i7h",
+                                                        "usi": "6e7c+",
                                                         "kind": "main",
-                                                        "note": "相手は金を上がって立て直します。",
+                                                        "note": "相手の桂は7三の歩を取って成りました。逃げると同時に、歩を取る狙いです。",
                                                         "child": {
                                                           "id": "n9",
-                                                          "sfen": "lns1kgsnl/1r5b1/ppp1gp1pp/3p2p2/9/2P6/PP1PPPPPP/1BG4R1/L1S1KGSNL w Pn 1",
-                                                          "comment": null,
+                                                          "sfen": "ln1gk1snl/1r1s2gb1/pp+N2pppp/3pp4/9/P1P6/1P1PPPPPP/1B5R1/L1SGKGSNL w P 1",
                                                           "branches": [
                                                             {
-                                                              "usi": "7a6b",
+                                                              "usi": "6b7c",
                                                               "kind": "main",
-                                                              "note": "銀を上げて、金の後ろを整えます。桂得をしているので、無理をせず駒組みを進めるのが勝ち方です。",
-                                                              "aim": "駒得をしたので、無理をせず守りの形を整えたい。",
-                                                              "openEnded": true,
+                                                              "note": "銀で取り返します。こちらは歩を1枚損しましたが、桂を取ったので、桂得の駒得です。",
+                                                              "aim": "成り込んできた駒を取り返して、駒得の形にしたい。",
                                                               "accepted": [
-                                                                "4c4d",
-                                                                "7c7d",
-                                                                "4a3b",
-                                                                "8b7b",
-                                                                "2b8h+",
-                                                                "8c8d",
-                                                                "5c4d",
-                                                                "2b4d",
-                                                                "7a6b",
-                                                                "9c9d",
-                                                                "2b3c",
-                                                                "1c1d"
+                                                                "6b7c",
+                                                                "8a7c"
                                                               ],
                                                               "child": {
                                                                 "id": "n10",
-                                                                "sfen": "ln2kgsnl/1r1s3b1/ppp1gp1pp/3p2p2/9/2P6/PP1PPPPPP/1BG4R1/L1S1KGSNL b Pn 1",
-                                                                "comment": null,
+                                                                "sfen": "ln1gk1snl/1r4gb1/pps2pppp/3pp4/9/P1P6/1P1PPPPPP/1B5R1/L1SGKGSNL b Pn 1",
+                                                                "comment": "桂と歩の交換になり、こちらが駒得になりました(エンジンの評価は後手+343)。手順はエンジンで作ったもので、出典はありません。",
                                                                 "branches": [
                                                                   {
-                                                                    "usi": "2g2f",
+                                                                    "usi": "2h7h",
                                                                     "kind": "main",
-                                                                    "note": "相手が飛車先を突いてきました。",
+                                                                    "note": "相手は飛車を7八へ回しました。",
                                                                     "child": {
                                                                       "id": "n11",
-                                                                      "sfen": "ln2kgsnl/1r1s3b1/ppp1gp1pp/3p2p2/9/2P4P1/PP1PPPP1P/1BG4R1/L1S1KGSNL w Pn 1",
-                                                                      "comment": null,
+                                                                      "sfen": "ln1gk1snl/1r4gb1/pps2pppp/3pp4/9/P1P6/1P1PPPPPP/1BR6/L1SGKGSNL w Pn 1",
                                                                       "branches": [
                                                                         {
-                                                                          "usi": "4a3b",
+                                                                          "usi": "6a6b",
                                                                           "kind": "main",
-                                                                          "note": "金を上げて2筋に備えます。",
-                                                                          "aim": "相手が攻めてくる筋に、守り駒を足して備えたい。",
-                                                                          "openEnded": true,
+                                                                          "note": "金を6二へ寄せて、銀の後ろを固めます。守りを厚くしたうえで、駒得を活かして戦います。",
+                                                                          "aim": "駒得を保ったまま、守りの形を整えたい。",
                                                                           "accepted": [
-                                                                            "8c8d",
+                                                                            "6a6b",
+                                                                            "8b5b",
+                                                                            "5a5b",
+                                                                            "3c3d",
                                                                             "4c4d",
-                                                                            "8b7b",
-                                                                            "4a3b",
-                                                                            "2b4d",
-                                                                            "7c7d",
-                                                                            "1c1d",
-                                                                            "2b8h+",
+                                                                            "8c8d",
+                                                                            "6a7b",
+                                                                            "2c2d",
+                                                                            "5a4a",
+                                                                            "5a4b",
                                                                             "9c9d",
-                                                                            "6b6c",
-                                                                            "3d3e",
-                                                                            "4a4b"
+                                                                            "7c6b"
                                                                           ],
                                                                           "child": {
                                                                             "id": "n12",
-                                                                            "sfen": "ln2k1snl/1r1s2gb1/ppp1gp1pp/3p2p2/9/2P4P1/PP1PPPP1P/1BG4R1/L1S1KGSNL b Pn 1",
-                                                                            "comment": null,
-                                                                            "branches": [
-                                                                              {
-                                                                                "usi": "3i4h",
-                                                                                "kind": "main",
-                                                                                "note": "相手は銀を上げました。",
-                                                                                "child": {
-                                                                                  "id": "n13",
-                                                                                  "sfen": "ln2k1snl/1r1s2gb1/ppp1gp1pp/3p2p2/9/2P4P1/PP1PPPP1P/1BG2S1R1/L1S1KG1NL w Pn 1",
-                                                                                  "comment": null,
-                                                                                  "branches": [
-                                                                                    {
-                                                                                      "usi": "8c8d",
-                                                                                      "kind": "main",
-                                                                                      "note": "8筋の歩を突きます。駒得のときは、相手に手を渡さず自分から動くのが有効です。",
-                                                                                      "aim": "駒得を活かすため、こちらから攻める筋を作りたい。",
-                                                                                      "openEnded": true,
-                                                                                      "accepted": [
-                                                                                        "8c8d",
-                                                                                        "1c1d",
-                                                                                        "8b7b",
-                                                                                        "5a4a",
-                                                                                        "7c7d",
-                                                                                        "2b4d",
-                                                                                        "3d3e",
-                                                                                        "9c9d",
-                                                                                        "3a4b",
-                                                                                        "5a4b",
-                                                                                        "5a5b",
-                                                                                        "2b8h+"
-                                                                                      ],
-                                                                                      "child": {
-                                                                                        "id": "n14",
-                                                                                        "sfen": "ln2k1snl/1r1s2gb1/p1p1gp1pp/1p1p2p2/9/2P4P1/PP1PPPP1P/1BG2S1R1/L1S1KG1NL b Pn 1",
-                                                                                        "comment": null,
-                                                                                        "branches": [
-                                                                                          {
-                                                                                            "usi": "3g3f",
-                                                                                            "kind": "main",
-                                                                                            "note": "相手が3筋の歩を突きました。",
-                                                                                            "child": {
-                                                                                              "id": "n15",
-                                                                                              "sfen": "ln2k1snl/1r1s2gb1/p1p1gp1pp/1p1p2p2/9/2P3PP1/PP1PPP2P/1BG2S1R1/L1S1KG1NL w Pn 1",
-                                                                                              "comment": null,
-                                                                                              "branches": [
-                                                                                                {
-                                                                                                  "usi": "8d8e",
-                                                                                                  "kind": "main",
-                                                                                                  "note": "8筋の歩をさらに伸ばします。",
-                                                                                                  "aim": "攻めの主役の前を伸ばして、仕掛けに近づけたい。",
-                                                                                                  "openEnded": true,
-                                                                                                  "accepted": [
-                                                                                                    "8d8e",
-                                                                                                    "2b4d",
-                                                                                                    "1c1d",
-                                                                                                    "3d3e",
-                                                                                                    "9c9d",
-                                                                                                    "7c7d",
-                                                                                                    "3a4b",
-                                                                                                    "5a5b",
-                                                                                                    "4c4d",
-                                                                                                    "5a4a",
-                                                                                                    "8b8c",
-                                                                                                    "5a4b"
-                                                                                                  ],
-                                                                                                  "child": {
-                                                                                                    "id": "n16",
-                                                                                                    "sfen": "ln2k1snl/1r1s2gb1/p1p1gp1pp/3p2p2/1p7/2P3PP1/PP1PPP2P/1BG2S1R1/L1S1KG1NL b Pn 1",
-                                                                                                    "comment": null,
-                                                                                                    "branches": [
-                                                                                                      {
-                                                                                                        "usi": "5i6i",
-                                                                                                        "kind": "main",
-                                                                                                        "note": "相手の玉が動きました。",
-                                                                                                        "child": {
-                                                                                                          "id": "n17",
-                                                                                                          "sfen": "ln2k1snl/1r1s2gb1/p1p1gp1pp/3p2p2/1p7/2P3PP1/PP1PPP2P/1BG2S1R1/L1SK1G1NL w Pn 1",
-                                                                                                          "comment": null,
-                                                                                                          "branches": [
-                                                                                                            {
-                                                                                                              "usi": "8e8f",
-                                                                                                              "kind": "main",
-                                                                                                              "note": "8筋の歩をぶつけます。飛車先を交換して、持ち駒の歩を手に入れます。",
-                                                                                                              "aim": "大駒の前の歩をぶつけて、交換して持ち駒を得たい。",
-                                                                                                              "accepted": [
-                                                                                                                "7c7d",
-                                                                                                                "9c9d",
-                                                                                                                "3d3e",
-                                                                                                                "8e8f",
-                                                                                                                "5a4b",
-                                                                                                                "5a4a",
-                                                                                                                "5a5b",
-                                                                                                                "2b4d",
-                                                                                                                "1c1d",
-                                                                                                                "3a4b",
-                                                                                                                "4c4d",
-                                                                                                                "2b8h+"
-                                                                                                              ],
-                                                                                                              "child": {
-                                                                                                                "id": "n18",
-                                                                                                                "sfen": "ln2k1snl/1r1s2gb1/p1p1gp1pp/3p2p2/9/1pP3PP1/PP1PPP2P/1BG2S1R1/L1SK1G1NL b Pn 1",
-                                                                                                                "comment": null,
-                                                                                                                "branches": [
-                                                                                                                  {
-                                                                                                                    "usi": "8g8f",
-                                                                                                                    "kind": "main",
-                                                                                                                    "note": "相手は歩で取ります。",
-                                                                                                                    "child": {
-                                                                                                                      "id": "n19",
-                                                                                                                      "sfen": "ln2k1snl/1r1s2gb1/p1p1gp1pp/3p2p2/9/1PP3PP1/P2PPP2P/1BG2S1R1/L1SK1G1NL w 2Pn 1",
-                                                                                                                      "comment": null,
-                                                                                                                      "branches": [
-                                                                                                                        {
-                                                                                                                          "usi": "8b8f",
-                                                                                                                          "kind": "main",
-                                                                                                                          "note": "飛車で取り返します。歩が1枚手に入りました。",
-                                                                                                                          "aim": "取り返して、持ち駒の歩を手に入れたい。",
-                                                                                                                          "accepted": [
-                                                                                                                            "8b8f",
-                                                                                                                            "7c7d",
-                                                                                                                            "3d3e",
-                                                                                                                            "9c9d",
-                                                                                                                            "1c1d"
-                                                                                                                          ],
-                                                                                                                          "child": {
-                                                                                                                            "id": "n20",
-                                                                                                                            "sfen": "ln2k1snl/3s2gb1/p1p1gp1pp/3p2p2/9/1rP3PP1/P2PPP2P/1BG2S1R1/L1SK1G1NL b 2Pnp 1",
-                                                                                                                            "comment": null,
-                                                                                                                            "branches": [
-                                                                                                                              {
-                                                                                                                                "usi": "P*8g",
-                                                                                                                                "kind": "main",
-                                                                                                                                "note": "相手は歩を打って飛車を追い返します。",
-                                                                                                                                "child": {
-                                                                                                                                  "id": "n21",
-                                                                                                                                  "sfen": "ln2k1snl/3s2gb1/p1p1gp1pp/3p2p2/9/1rP3PP1/PP1PPP2P/1BG2S1R1/L1SK1G1NL w Pnp 1",
-                                                                                                                                  "branches": [
-                                                                                                                                    {
-                                                                                                                                      "usi": "8f8b",
-                                                                                                                                      "kind": "main",
-                                                                                                                                      "note": "飛車を引きます。",
-                                                                                                                                      "aim": "追われた大駒を、安全な位置へ引きたい。",
-                                                                                                                                      "openEnded": true,
-                                                                                                                                      "accepted": [
-                                                                                                                                        "8f8b",
-                                                                                                                                        "8f8d",
-                                                                                                                                        "8f8c"
-                                                                                                                                      ],
-                                                                                                                                      "child": {
-                                                                                                                                        "id": "n22",
-                                                                                                                                        "sfen": "ln2k1snl/1r1s2gb1/p1p1gp1pp/3p2p2/9/2P3PP1/PP1PPP2P/1BG2S1R1/L1SK1G1NL b Pnp 1",
-                                                                                                                                        "comment": null,
-                                                                                                                                        "branches": [
-                                                                                                                                          {
-                                                                                                                                            "usi": "2f2e",
-                                                                                                                                            "kind": "main",
-                                                                                                                                            "note": "相手が飛車先を伸ばしてきました。",
-                                                                                                                                            "child": {
-                                                                                                                                              "id": "n23",
-                                                                                                                                              "sfen": "ln2k1snl/1r1s2gb1/p1p1gp1pp/3p2p2/7P1/2P3P2/PP1PPP2P/1BG2S1R1/L1SK1G1NL w Pnp 1",
-                                                                                                                                              "comment": null,
-                                                                                                                                              "branches": [
-                                                                                                                                                {
-                                                                                                                                                  "usi": "2b4d",
-                                                                                                                                                  "kind": "main",
-                                                                                                                                                  "note": "角を4四へ上げます。2筋の守りに利かせつつ、相手陣もにらむ好位置です。",
-                                                                                                                                                  "aim": "大駒を、守りにも攻めにも利く位置へ上げたい。",
-                                                                                                                                                  "accepted": [
-                                                                                                                                                    "N*9e",
-                                                                                                                                                    "2b8h+",
-                                                                                                                                                    "7c7d",
-                                                                                                                                                    "9c9d",
-                                                                                                                                                    "1c1d",
-                                                                                                                                                    "2b4d",
-                                                                                                                                                    "3a4b",
-                                                                                                                                                    "5a5b",
-                                                                                                                                                    "5a4a"
-                                                                                                                                                  ],
-                                                                                                                                                  "child": {
-                                                                                                                                                    "id": "n24",
-                                                                                                                                                    "sfen": "ln2k1snl/1r1s2g2/p1p1gp1pp/3p1bp2/7P1/2P3P2/PP1PPP2P/1BG2S1R1/L1SK1G1NL b Pnp 1",
-                                                                                                                                                    "comment": "鬼殺しを受け切り、駒得を活かした駒組みまで進みました(後手+463)。まとめると、(1)▲7七桂には△6二金、(2)▲6五桂には△6四歩で桂を取る、(3)駒得したら無理をせず、飛車先を交換して持ち駒を増やす、の3つです。鬼殺しは受け方さえ知っていれば、むしろ有利になれる戦法です。",
-                                                                                                                                                    "branches": []
-                                                                                                                                                  }
-                                                                                                                                                }
-                                                                                                                                              ]
-                                                                                                                                            }
-                                                                                                                                          }
-                                                                                                                                        ]
-                                                                                                                                      }
-                                                                                                                                    }
-                                                                                                                                  ]
-                                                                                                                                }
-                                                                                                                              },
-                                                                                                                              {
-                                                                                                                                "usi": "6i6h",
-                                                                                                                                "kind": "deviation",
-                                                                                                                                "note": "相手が玉を動かしました。自然な手ですが、こちらの攻めのほうが速い局面です。",
-                                                                                                                                "punishNote": "持ち駒の桂を打ち込んで、攻めを一気に加速させます。",
-                                                                                                                                "child": {
-                                                                                                                                  "id": "d21",
-                                                                                                                                  "sfen": "ln2k1snl/3s2gb1/p1p1gp1pp/3p2p2/9/1rP3PP1/P2PPP2P/1BGK1S1R1/L1S2G1NL w 2Pnp 1",
-                                                                                                                                  "branches": [
-                                                                                                                                    {
-                                                                                                                                      "usi": "N*8g",
-                                                                                                                                      "kind": "main",
-                                                                                                                                      "note": "桂を8七へ打ち込みます。玉のすぐ近くです。",
-                                                                                                                                      "child": {
-                                                                                                                                        "id": "d21_1",
-                                                                                                                                        "sfen": "ln2k1snl/3s2gb1/p1p1gp1pp/3p2p2/9/1rP3PP1/Pn1PPP2P/1BGK1S1R1/L1S2G1NL b 2Pp 1",
-                                                                                                                                        "branches": [
-                                                                                                                                          {
-                                                                                                                                            "usi": "8h2b+",
-                                                                                                                                            "kind": "main",
-                                                                                                                                            "note": "相手は角を成って反撃してきます。",
-                                                                                                                                            "child": {
-                                                                                                                                              "id": "d21_2",
-                                                                                                                                              "sfen": "ln2k1snl/3s2g+B1/p1p1gp1pp/3p2p2/9/1rP3PP1/Pn1PPP2P/2GK1S1R1/L1S2G1NL w B2Pp 1",
-                                                                                                                                              "branches": [
-                                                                                                                                                {
-                                                                                                                                                  "usi": "3a2b",
-                                                                                                                                                  "kind": "main",
-                                                                                                                                                  "note": "銀で馬を取ります。",
-                                                                                                                                                  "child": {
-                                                                                                                                                    "id": "d21_3",
-                                                                                                                                                    "sfen": "ln2k2nl/3s2gs1/p1p1gp1pp/3p2p2/9/1rP3PP1/Pn1PPP2P/2GK1S1R1/L1S2G1NL b B2Pbp 1",
-                                                                                                                                                    "branches": [
-                                                                                                                                                      {
-                                                                                                                                                        "usi": "B*7g",
-                                                                                                                                                        "kind": "main",
-                                                                                                                                                        "note": "相手は角を打って受けます。",
-                                                                                                                                                        "child": {
-                                                                                                                                                          "id": "d21_4",
-                                                                                                                                                          "sfen": "ln2k2nl/3s2gs1/p1p1gp1pp/3p2p2/9/1rP3PP1/PnBPPP2P/2GK1S1R1/L1S2G1NL w 2Pbp 1",
-                                                                                                                                                          "comment": "角を交換したうえ、8七の桂が玉に迫っています。鬼殺しを受け切った時点で優勢でしたが、ここで緩めず攻め続けるのが勝ち方です。",
-                                                                                                                                                          "branches": []
-                                                                                                                                                        }
-                                                                                                                                                      }
-                                                                                                                                                    ]
-                                                                                                                                                  }
-                                                                                                                                                }
-                                                                                                                                              ]
-                                                                                                                                            }
-                                                                                                                                          }
-                                                                                                                                        ]
-                                                                                                                                      }
-                                                                                                                                    }
-                                                                                                                                  ]
-                                                                                                                                }
-                                                                                                                              }
-                                                                                                                            ]
-                                                                                                                          }
-                                                                                                                        }
-                                                                                                                      ]
-                                                                                                                    }
-                                                                                                                  }
-                                                                                                                ]
-                                                                                                              }
-                                                                                                            }
-                                                                                                          ]
-                                                                                                        }
-                                                                                                      }
-                                                                                                    ]
-                                                                                                  }
-                                                                                                }
-                                                                                              ]
-                                                                                            }
-                                                                                          }
-                                                                                        ]
-                                                                                      }
-                                                                                    }
-                                                                                  ]
-                                                                                }
-                                                                              }
-                                                                            ]
+                                                                            "sfen": "ln2k1snl/1r1g2gb1/pps2pppp/3pp4/9/P1P6/1P1PPPPPP/1BR6/L1SGKGSNL b Pn 1",
+                                                                            "comment": "鬼殺しを受け切りました。まとめると、(1)▲7七桂には△6二銀で5三と7三の両方を守る、(2)▲6五桂には△6四歩で桂に当てる、(3)桂と歩の交換で駒得になったら、金で守りを固めて落ち着いて指す、の3つです。ただし鬼殺しが本当に怖いのは、角道を開けた後手です。▲7六歩に△5四歩と答える限り、この形にはなりません。",
+                                                                            "branches": []
                                                                           }
                                                                         }
                                                                       ]
