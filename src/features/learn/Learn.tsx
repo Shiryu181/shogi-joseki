@@ -33,7 +33,7 @@ export interface LearnProps {
   onExam?: () => void;
   /**
    * true なら、入った章を1手目から始める(章のページの「最初から学ぶ」)。
-   * 覚えた記録は消さない。false なら、前の章と共通の序盤を飛ばして分かれ目から始める。
+   * これまでの記録は消さない。false なら、前の章と共通の序盤を飛ばして分かれ目から始める。
    */
   restart?: boolean;
 }
@@ -344,7 +344,7 @@ export function Learn({
         ) : chapterDone ? (
           <CompletePanel
             title={title}
-            learned={stat.learned}
+            correct={stat.correct}
             total={stat.total}
             nextLabel={path && onNextChapter ? path.chapters[chapterIndex + 1]?.entry.label ?? "" : null}
             examReady={stat.ready && !!onExam}
@@ -517,10 +517,10 @@ function DemoPanel({ demo, setDemo }: { demo: DemoState; setDemo: (d: DemoState 
 
 /** 章を終えた: まとめ2行 + 次の章へ(主)+ 認定試験(副)。点数は出さない。 */
 function CompletePanel({
-  title, learned, total, nextLabel, examReady, onNext, onStrategy, onExam,
+  title, correct, total, nextLabel, examReady, onNext, onStrategy, onExam,
 }: {
   title: string;
-  learned: number;
+  correct: number;
   total: number;
   /** 次の章の名前。null なら最後の章。 */
   nextLabel: string | null;
@@ -532,7 +532,7 @@ function CompletePanel({
   return (
     <>
       <h2 className="done">{title}を<span className="nw">終えました</span></h2>
-      <p className="res-p">覚えた問題 {learned} / {total}</p>
+      <p className="res-p">正解した問題 {correct} / {total}</p>
       <p className="res-p">間違えた問題は明日の復習に出ます</p>
       <div className="res-actions">
         {nextLabel !== null && onNext ? (

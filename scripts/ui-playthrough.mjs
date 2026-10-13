@@ -218,7 +218,7 @@ try {
   const dark = await bgOf();
   check(light !== dark && (await page.evaluate(() => document.documentElement.getAttribute("data-theme"))) === "dark", `テーマ切替(${light} → ${dark})`);
   const st = await text();
-  check(/解いた問題/.test(st) && /覚えた問題/.test(st) && /合格した章/.test(st) && !/連続|ポイント|学習した日/.test(st), "設定: 3つの数だけ、連続日数・ポイントなし");
+  check(/解いた問題/.test(st) && /正解した問題/.test(st) && /合格した章/.test(st) && !/連続|ポイント|学習した日/.test(st), "設定: 3つの数だけ、連続日数・ポイントなし");
   await page.getByRole("radio", { name: /端末に合わせる/ }).click();
   // このアプリについて(設定から)
   await click(/^このアプリについて$/);

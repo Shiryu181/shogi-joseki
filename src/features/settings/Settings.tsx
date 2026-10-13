@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSettingsStore } from "../../store/settingsStore";
 import type { Theme } from "../../store/settingsStore";
-import { useProgressStore, LEARNED_STREAK } from "../../store/progressStore";
+import { useProgressStore, CORRECT_STREAK } from "../../store/progressStore";
 import { useExamStore } from "../../store/examStore";
 import { passedChapterCount } from "../../domain/courseProgress";
 import { Screen, TopBar } from "../../ui/DojoParts";
@@ -29,7 +29,7 @@ export function Settings({ onBack, onAbout }: SettingsProps) {
   const [confirming, setConfirming] = useState(false);
 
   const solved = Object.keys(items).length;
-  const learned = Object.values(items).filter((i) => i.streak >= LEARNED_STREAK).length;
+  const correct = Object.values(items).filter((i) => i.streak >= CORRECT_STREAK).length;
   const passed = passedChapterCount(results);
 
   return (
@@ -57,7 +57,7 @@ export function Settings({ onBack, onAbout }: SettingsProps) {
         <h2 className="fuda set-fuda">学習の記録</h2>
         <div className="dojo-panel set-stats">
           <div><span className="set-n">{solved}</span><span className="set-l">解いた問題</span></div>
-          <div><span className="set-n">{learned}</span><span className="set-l">覚えた問題</span></div>
+          <div><span className="set-n">{correct}</span><span className="set-l">正解した問題</span></div>
           <div><span className="set-n">{passed}</span><span className="set-l">合格した章</span></div>
         </div>
 

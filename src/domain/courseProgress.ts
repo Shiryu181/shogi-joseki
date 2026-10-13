@@ -3,7 +3,7 @@ import type { Strategy } from "./types";
 import { buildLearnPath, pathSidesFor } from "./josekiLoader";
 import type { PathChapter } from "./josekiLoader";
 import { quizItemsOf, dueQuizItems, DAILY_CAP } from "./reviewQueue";
-import { itemKey, LEARNED_STREAK } from "../store/progressStore";
+import { itemKey, CORRECT_STREAK } from "../store/progressStore";
 import type { ItemRecord } from "../store/progressStore";
 import type { ExamResult } from "../store/examStore";
 
@@ -68,8 +68,8 @@ export interface ChapterStat {
   chapter: PathChapter;
   /** 章の問題数。 */
   total: number;
-  /** 覚えた(連続正解が LEARNED_STREAK 以上)問題数。 */
-  learned: number;
+  /** 正解した(直近の答えが正解 = 連続正解が CORRECT_STREAK 以上)問題数。 */
+  correct: number;
   /** 一度でも解いた問題数。 */
   answered: number;
   /** まだ一度も解いていない問題の数(同じ局面・同じ手は1問と数える)。認定試験が受けられるまでの残り。 */
@@ -87,7 +87,7 @@ export function chapterStat(
   results: Record<string, ExamResult>,
 ): ChapterStat {
   const qs = quizItemsOf(chapter.course);
-  const learned = qs.filter((q) => (items[itemKey(q.sfen, q.usi)]?.streak ?? 0) >= LEARNED_STREAK).length;
+  const correct = qs.filter((q) => (items[itemKey(q.sfen, q.usi)]?.streak ?? 0) >= CORRECT_STREAK).length;
   const answered = qs.filter((q) => itemKey(q.sfen, q.usi) in items).length;
   const missing = new Set<string>();
   for (const q of qs) {
@@ -98,15 +98,15 @@ export function chapterStat(
   const result = results[chapter.course.id];
   const ready = qs.length > 0 && unanswered === 0;
   const state: ChapterState = result?.passed ? "passed" : ready ? "review" : answered > 0 ? "learning" : "none";
-  return { index, chapter, total: qs.length, learned, answered, unanswered, state, ready, result };
+  return { index, chapter, total: qs.length, correct, answered, unanswered, state, ready, result };
 }
 
 export interface PathSummary {
   stats: ChapterStat[];
-  learned: number;
+  correct: number;
   total: number;
   passed: number;
-  /** いま取り組む章。まだ解いていない問題がある最初の章。無ければ覚えきっていない最初の章。全部覚えたら -1。 */
+  /** いま取り組む章。まだ解いていない問題がある最初の章。無ければ正解していない問題が残る最初の章。全部正解していたら -1。 */
   currentIndex: number;
 }
 
@@ -117,22 +117,22 @@ export function summarizePath(
 ): PathSummary {
   const stats = chapters.map((c, i) => chapterStat(c, i, items, results));
   let currentIndex = stats.findIndex((s) => s.unanswered > 0);
-  if (currentIndex < 0) currentIndex = stats.findIndex((s) => s.learned < s.total);
+  if (currentIndex < 0) currentIndex = stats.findIndex((s) => s.correct < s.total);
   return {
     stats,
-    learned: stats.reduce((a, s) => a + s.learned, 0),
+    correct: stats.reduce((a, s) => a + s.correct, 0),
     total: stats.reduce((a, s) => a + s.total, 0),
     passed: stats.filter((s) => s.state === "passed").length,
     currentIndex,
   };
 }
 
-/** 章の状態を文字にする。「学習中 4/26」のように、学習中だけ覚えた数を添える。 */
+/** 章の状態を文字にする。「学習中 4/26」のように、学習中だけ正解した数を添える。 */
 export function stateWord(s: ChapterStat, withCount: boolean): string {
   switch (s.state) {
     case "passed": return "合格";
     case "review": return "復習中";
-    case "learning": return withCount ? `学習中 ${s.learned}/${s.total}` : "学習中";
+    case "learning": return withCount ? `学習中 ${s.correct}/${s.total}` : "学習中";
     default: return "未学習";
   }
 }

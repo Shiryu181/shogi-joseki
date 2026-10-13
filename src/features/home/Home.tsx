@@ -101,13 +101,13 @@ export function Home({ allChapters, onReview, onSettings, onAbout, onOpenStrateg
                 <h3>{learning.name}・{sideName(learningSide)}</h3>
                 <ChevronRight />
               </div>
-              <Bar ratio={sum.total === 0 ? 0 : sum.learned / sum.total} />
-              <p className="dj-line">覚えた問題 {sum.learned} / {sum.total}</p>
+              <Bar ratio={sum.total === 0 ? 0 : sum.correct / sum.total} />
+              <p className="dj-line">正解した問題 {sum.correct} / {sum.total}</p>
               <p className="dj-line">認定試験 合格 {sum.passed} / {sum.stats.length}章</p>
               <p className="dj-line">
                 {next
                   ? <>次は <b>第{toKanjiNumber(next.index + 1)}章 {next.chapter.entry.label}</b></>
-                  : "すべての章を覚えました"}
+                  : "すべての章の問題に正解しました"}
               </p>
             </div>
             <button

@@ -20,8 +20,8 @@ const INTERVALS_NORMAL = [1, 3, 7, 21, 60];
 /** 急所は短めに回す。 */
 const INTERVALS_SHARP = [1, 2, 5, 14, 30];
 
-/** 連続2回正解で「覚えた」とみなす。章ごとの覚えた数はこの数で数える。 */
-export const LEARNED_STREAK = 2;
+/** 直近の答えが正解(連続正解数が1以上)なら「正解した」問題とみなす。章ごとの正解した数はこの数で数える。 */
+export const CORRECT_STREAK = 1;
 
 /**
  * 1問の記録。キーは「局面 + その局面での正解手」。
@@ -93,8 +93,8 @@ export interface ProgressState extends Saved {
   markExamMissed: (keys: string[]) => void;
   /** その問題が今日出題対象か(未学習 or 期日が来ている)。 */
   isDue: (key: string) => boolean;
-  /** 覚えた(連続 LEARNED_STREAK 回正解)かどうか。 */
-  isLearned: (key: string) => boolean;
+  /** 正解した(直近の答えが正解)かどうか。 */
+  isCorrect: (key: string) => boolean;
   /** 記録を全部消す。 */
   reset: () => void;
 }
@@ -152,8 +152,8 @@ export const useProgressStore = create<ProgressState>((set, get) => ({
     return it.due <= today();
   },
 
-  isLearned(key) {
-    return (get().items[key]?.streak ?? 0) >= LEARNED_STREAK;
+  isCorrect(key) {
+    return (get().items[key]?.streak ?? 0) >= CORRECT_STREAK;
   },
 
   reset() {

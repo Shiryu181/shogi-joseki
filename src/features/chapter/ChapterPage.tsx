@@ -39,8 +39,8 @@ export function ChapterPage({ strategyId, side, chapterIndex, onBack, onLearn, o
           <div className="cp-no">第{toKanjiNumber(chapterIndex + 1)}章</div>
           <h2 className="cp-name">{entry.label}</h2>
           <div className="cp-state">{stateWord(stat, false)}</div>
-          <Bar ratio={stat.total === 0 ? 0 : stat.learned / stat.total} />
-          <div className="cp-count">覚えた問題 {stat.learned} / {stat.total}</div>
+          <Bar ratio={stat.total === 0 ? 0 : stat.correct / stat.total} />
+          <div className="cp-count">正解した問題 {stat.correct} / {stat.total}</div>
           <p className="cp-blurb">{entry.summary}</p>
           <button type="button" className="btn-primary full" onClick={() => onLearn(false)}>
             {stat.answered > 0 ? "続きから" : "学習をはじめる"}
@@ -66,7 +66,7 @@ export function ChapterPage({ strategyId, side, chapterIndex, onBack, onLearn, o
         </section>
 
         <button type="button" className="btn-secondary full" onClick={() => onLearn(true)}>最初から学ぶ</button>
-        <p className="cp-restart-n">覚えた記録はそのまま残ります</p>
+        <p className="cp-restart-n">これまでの記録はそのまま残ります</p>
       </div>
     </Screen>
   );

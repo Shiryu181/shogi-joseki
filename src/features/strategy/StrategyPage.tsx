@@ -18,7 +18,7 @@ export interface StrategyPageProps {
   onOpenExam: () => void;
 }
 
-/** 戦法のページ(確定版モック 04)。手番の切替、覚えた問題、章の道、認定試験の入口。 */
+/** 戦法のページ(確定版モック 04)。手番の切替、正解した問題、章の道、認定試験の入口。 */
 export function StrategyPage({ strategyId, side, onBack, onSelectSide, onOpenChapter, onOpenExam }: StrategyPageProps) {
   const [sheetOpen, setSheetOpen] = useState(false);
   const items = useProgressStore((s) => s.items);
@@ -37,8 +37,8 @@ export function StrategyPage({ strategyId, side, onBack, onSelectSide, onOpenCha
           <button type="button" className="btn-secondary full sp-switch" onClick={() => setSheetOpen(true)} aria-haspopup="dialog">
             <span>{label}</span><ChevronDown />
           </button>
-          <Bar ratio={sum.total === 0 ? 0 : sum.learned / sum.total} />
-          <p className="dj-line sp-count">覚えた問題 {sum.learned} / {sum.total}</p>
+          <Bar ratio={sum.total === 0 ? 0 : sum.correct / sum.total} />
+          <p className="dj-line sp-count">正解した問題 {sum.correct} / {sum.total}</p>
         </section>
 
         <h2 className="fuda sp-fuda">章の道</h2>

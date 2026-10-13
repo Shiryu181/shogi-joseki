@@ -663,7 +663,7 @@ async function main() {
       last: { items: learnedItems(8), days: [0] },
       records: (() => {
         const items = learnedItems(4, 6);
-        // 第5章は途中まで(覚えた→昨日が期日→未学習の混在)
+        // 第5章は途中まで(正解済み→昨日が期日→未学習の混在)
         const seen = new Set(items.map((i) => i.key));
         const k5 = chKeys[4].filter((k) => !seen.has(k));
         k5.forEach((k, i) => {
@@ -675,7 +675,7 @@ async function main() {
           exams: { [chIds[0]]: { best: 100, passed: true, ago: 3, attempts: 1 }, [chIds[1]]: { best: 60, passed: false, ago: 1, attempts: 2 } },
         };
       })(),
-      // 復習が上限(20問)を超えて溜まっている: 第1〜4章を覚え済みで、うち32問が期日。3問は試験で落とした印つき。
+      // 復習が上限(20問)を超えて溜まっている: 第1〜4章に正解済みで、うち32問が期日。3問は試験で落とした印つき。
       rvfull: (() => {
         const items = learnedItems(4, 6);
         items.slice(0, 32).forEach((it, i) => { it.due = -1; it.streak = 1; if (i % 11 === 5) it.examMissed = true; });
