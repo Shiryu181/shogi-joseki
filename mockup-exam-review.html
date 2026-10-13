@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="ja" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>定跡道場 認定試験の振り返り(案B 道場)</title>
+<style>/* ===== tokens: 道場 (light) / 夜の道場 (dark) ===== */
+:root{--tx-tatami:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2296%22%20height%3D%226%22%3E%3Crect%20width%3D%2296%22%20height%3D%221%22%20y%3D%220%22%20fill%3D%22%236b6030%22%20fill-opacity%3D%220.1%22%2F%3E%3Crect%20width%3D%2296%22%20height%3D%221%22%20y%3D%223%22%20fill%3D%22%236b6030%22%20fill-opacity%3D%220.05%22%2F%3E%3Crect%20width%3D%221%22%20height%3D%226%22%20x%3D%220%22%20fill%3D%22%236b6030%22%20fill-opacity%3D%220.07%22%2F%3E%3C%2Fsvg%3E");--tx-plank:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22320%22%20height%3D%22120%22%3E%3Cfilter%20id%3D%22a%22%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.008%200.28%22%20numOctaves%3D%223%22%20seed%3D%225%22%2F%3E%3CfeColorMatrix%20values%3D%220%200%200%200%200.95%200%200%200%200%200.85%200%200%200%200%200.66%200.26%200%200%200%20-0.09%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23a)%22%2F%3E%3C%2Fsvg%3E");--tx-hinoki:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22320%22%20height%3D%22160%22%3E%3Cfilter%20id%3D%22a%22%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.006%200.3%22%20numOctaves%3D%223%22%20seed%3D%222%22%2F%3E%3CfeColorMatrix%20values%3D%220%200%200%200%200.5%200%200%200%200%200.36%200%200%200%200%200.18%200.26%200%200%200%20-0.09%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23a)%22%2F%3E%3C%2Fsvg%3E");--ground:#d6d0ae;--wood:#3f2c1e;--cream:#f6ecd2;--panel:#efe3c6;--raise:#f8f0da;--inset:#e6d6ad;--pbd:#cbb987;--rule:#cdbf94;--ink:#2a1f14;--soft:#54452f;--btnbd:#3f2c1e;--pri:#22385a;--onpri:#f6ecd2;--gold:#a8833a;--sel:#22385a;--mark:#3f2c1e;--barfill:#3f2c1e;--bartrack:#cdbf94;--red:#a8281c;--good:#25593f;--scrim:rgba(20,14,6,.55);
+--board:#e7c787;--board-line:#7a5428;--board-edge:#5a3d1d;--koma:#f3deaa;--koma-rim:#cba85e;--koma-ink:#2b2013;--komared:#8f1f15;--arrow:#a8281c;--cellred:rgba(168,40,28,.15);--cellred2:rgba(168,40,28,.22);--cellline:rgba(168,40,28,.75);
+--disp:"Hiragino Mincho ProN","Yu Mincho","YuMincho","Noto Serif JP",serif;--body:"Hiragino Kaku Gothic ProN","Yu Gothic","YuGothic","Noto Sans JP","Segoe UI",sans-serif;--kf:"ShogiKaisho","Kaiti SC","STKaiti","Kaiti TC","YuKyokasho","游教科書体","Hiragino Mincho ProN","Yu Mincho",serif;
+--pg:#dcdad4;--pg-ink:#2b2a27;--pg-soft:#55524b;--pg-line:#bdbab1}
+:root[data-theme="dark"]{--tx-tatami:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2296%22%20height%3D%226%22%3E%3Crect%20width%3D%2296%22%20height%3D%221%22%20y%3D%220%22%20fill%3D%22%239a9468%22%20fill-opacity%3D%220.1%22%2F%3E%3Crect%20width%3D%2296%22%20height%3D%221%22%20y%3D%223%22%20fill%3D%22%239a9468%22%20fill-opacity%3D%220.05%22%2F%3E%3Crect%20width%3D%221%22%20height%3D%226%22%20x%3D%220%22%20fill%3D%22%239a9468%22%20fill-opacity%3D%220.07%22%2F%3E%3C%2Fsvg%3E");--tx-plank:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22320%22%20height%3D%22120%22%3E%3Cfilter%20id%3D%22a%22%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.008%200.28%22%20numOctaves%3D%223%22%20seed%3D%225%22%2F%3E%3CfeColorMatrix%20values%3D%220%200%200%200%200.95%200%200%200%200%200.85%200%200%200%200%200.66%200.16%200%200%200%20-0.055%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23a)%22%2F%3E%3C%2Fsvg%3E");--tx-hinoki:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22320%22%20height%3D%22160%22%3E%3Cfilter%20id%3D%22a%22%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.006%200.3%22%20numOctaves%3D%223%22%20seed%3D%222%22%2F%3E%3CfeColorMatrix%20values%3D%220%200%200%200%200.9%200%200%200%200%200.75%200%200%200%200%200.5%200.12%200%200%200%20-0.04%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23a)%22%2F%3E%3C%2Fsvg%3E");--ground:#26261c;--wood:#1e150d;--cream:#efe6d3;--panel:#2e271d;--raise:#3a3226;--inset:#3a3226;--pbd:#4a4030;--rule:#4a4030;--ink:#efe6d3;--soft:#bcb09a;--btnbd:#8a7e66;--pri:#34588f;--onpri:#f6ecd2;--gold:#caa55e;--sel:#caa55e;--mark:#caa55e;--barfill:#bcb09a;--bartrack:#4a4030;--red:#eb8a7c;--good:#6fbf95;--scrim:rgba(8,6,3,.6);
+--board:#c9a461;--board-line:#4a3216;--board-edge:#8a6c38;--koma:#d9bc80;--koma-rim:#8a6c38;--koma-ink:#241a0d;--komared:#8f1f15;--arrow:#a3281d;
+--pg:#12100c;--pg-ink:#e6e0d2;--pg-soft:#b0a998;--pg-line:#3a352b}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--pg);color:var(--pg-ink);font-family:var(--body);-webkit-font-smoothing:antialiased}
+/* ===== page chrome ===== */
+.page-h{display:flex;align-items:center;gap:16px;padding:20px 24px 4px;flex-wrap:wrap}
+.page-h h1{font-family:var(--disp);font-size:22px;margin:0;font-weight:700}
+.tg{display:flex;border:1px solid var(--pg-line);border-radius:10px;overflow:hidden}
+.tg button{height:44px;padding:0 18px;border:0;background:transparent;color:var(--pg-ink);font:14px var(--body);cursor:pointer}
+.tg button+button{border-left:1px solid var(--pg-line)}
+.tg button.on{font-weight:700;background:var(--pg-line)}
+.final-note{margin:8px 24px 0;padding:12px 16px;border-left:4px solid var(--pg-soft);font-size:14px;line-height:1.7;color:var(--pg-ink);max-width:980px}
+.final-note b{font-size:15px}
+.final-note ul{margin:4px 0 0;padding-left:1.2em;color:var(--pg-soft)}
+.page-n{padding:0 24px 12px;font-size:13px;color:var(--pg-soft);margin:10px 0 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(390px,1fr));gap:36px 24px;padding:16px 24px 48px;justify-items:center}
+figure{margin:0;width:390px}
+figcaption{margin-top:10px;font-size:13px;line-height:1.55;color:var(--pg-ink)}
+figcaption b{font-size:14px;display:block}
+.cap-h{display:inline-block;color:var(--pg-soft);margin-top:4px;font-size:12px}
+figcaption ul{margin:2px 0 0;padding-left:1.2em;color:var(--pg-soft)}
+/* ===== frame ===== */
+.frame{width:390px;height:844px;outline:1px solid var(--pg-line);overflow:hidden;position:relative;color:var(--ink);font-size:15px;line-height:1.55;background-color:var(--ground);background-image:var(--tx-tatami)}
+.scr{height:844px;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.body{flex:none;padding:16px 16px 0}
+.ic{flex:none;color:currentColor}
+/* ===== 看板 (plank) ===== */
+.top,.band{background-color:var(--wood);background-image:var(--tx-plank);color:var(--cream);border-bottom:3px solid var(--gold);flex:none}
+.top{display:flex;align-items:center;gap:12px;height:62px;padding:0 16px}
+.top h1{font-family:var(--disp);font-size:20px;font-weight:700;margin:0;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.25;color:var(--cream);letter-spacing:.04em}
+.top .r{font-size:14px;color:var(--cream);white-space:nowrap}
+.top .btn.sub{background:transparent;color:var(--cream);border-color:var(--cream)}
+.band{padding:14px 16px}
+.band-top{display:flex;align-items:center;justify-content:space-between}
+.band h1.app{font-family:var(--disp);font-size:34px;margin:0;font-weight:700;color:var(--cream);letter-spacing:.14em;line-height:1.2}
+.btn.gear{height:44px;padding:0 14px 0 10px;font-size:14px;background:transparent;color:var(--cream);border-color:var(--cream)}
+/* ===== buttons ===== */
+.btn{font-family:var(--body);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;border-radius:3px;margin:0;gap:6px}
+.btn.sub{height:46px;padding:0 16px;background:var(--raise);border:1px solid var(--btnbd);color:var(--ink);font-size:15px;font-weight:500}
+.btn.sub.back{padding:0 12px;white-space:nowrap;flex:none;height:44px}
+.btn.sub.wide,.btn.sub.full{width:100%}
+.btn.sub.mb{margin-bottom:10px}
+.btn.sub.sq{width:64px;padding:0}
+.btn.pri{height:52px;padding:0 20px;background:var(--pri);border:0;color:var(--onpri);font-size:17px;font-weight:700}
+.btn.pri.full{width:100%}
+.btn.pri.mt{margin-top:16px}.btn.pri.mb{margin-bottom:10px}
+.btn.danger{border-color:var(--red);color:var(--red);margin-top:16px}
+.linkrow{display:flex;align-items:center;justify-content:space-between;height:48px;border-bottom:1px solid var(--rule);color:var(--ink);font-size:15px;font-weight:600;text-decoration:none}
+.meta{font-size:14px;color:var(--soft)}
+.meta2{margin:0 0 12px;font-size:14px;color:var(--soft)}
+.expl{margin:0 0 8px;font-size:15px;color:var(--ink)}
+/* ===== 木札 (top-level section labels) ===== */
+.h-sec,.body>.h-card{align-self:flex-start;width:max-content;background-color:var(--wood);background-image:var(--tx-plank);color:var(--cream);font-family:var(--disp);font-size:15px;font-weight:700;letter-spacing:.14em;padding:3px 16px;border-radius:3px 3px 0 0;line-height:1.5;margin:0}
+.h-sec.s{font-size:15px;margin:0}
+.body>.h-sec,.body>.h-card{display:block}
+.body>*+.h-sec,.body>*+.h-card{margin-top:16px}
+.h-sec+.card,.h-sec+.path,.h-sec+.radios,.h-sec+.stats,.h-card+.card{border-top-left-radius:0}
+/* ===== hinoki panels ===== */
+.card,.panel,.blk,.path,.radios,.stats,.exl,.msheet,.body.res,.body.result,.body.about,.modal{background-color:var(--panel);background-image:var(--tx-hinoki);border:1px solid var(--pbd);border-radius:3px;color:var(--ink)}
+.card{padding:16px}
+.card.row{display:flex;align-items:center;justify-content:space-between;min-height:60px;padding:0 16px}
+.card h2{font-family:var(--disp);font-size:20px;margin:4px 0 0;font-weight:700;line-height:1.35}
+.h-card{font-family:var(--disp);font-size:18px;font-weight:700;color:var(--ink);line-height:1.3}
+.note{font-size:14px;color:var(--soft);margin:2px 0 14px}
+.bar{height:6px;background:var(--bartrack);margin:12px 0 8px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--barfill)}
+.bar-l{font-size:15px;color:var(--ink);margin-bottom:12px}
+.l1{margin:0 0 4px;font-size:15px;color:var(--ink)}
+.card .btn.full{margin-top:16px}
+.rr{display:flex;align-items:center;gap:4px;font-size:15px;color:var(--ink)}
+.ic.big{color:var(--mark)}
+/* ===== home ===== */
+.hb{padding:16px 16px 0;display:flex;flex-direction:column;gap:16px;flex:none}
+.sec{display:flex;flex-direction:column;gap:0}
+.rv{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.rv .big{font-family:var(--disp);font-size:48px;font-weight:700;line-height:1.1;color:var(--ink)}
+.rv .big .u{font-size:22px;margin-left:2px}
+.rv .btn.pri{width:132px;flex:none}
+.rv-n{margin:2px 0 0;font-size:14px;color:var(--soft)}
+.rv-none{font-family:var(--disp);font-size:20px;font-weight:700;margin:0;line-height:1.4}
+.srow{display:flex;align-items:center;gap:14px}
+.srow .tx{flex:1;min-width:0}
+.srow .tn{font-family:var(--disp);font-size:20px;font-weight:700;line-height:1.35;display:block}
+.srow .ds{display:block;font-size:14px;color:var(--ink);line-height:1.5}
+.srow .ts{display:block;font-size:14px;color:var(--soft);margin-top:2px}
+.lh{display:flex;justify-content:space-between;align-items:center}
+.lh .ic{color:var(--soft)}
+.foot-link{display:flex;align-items:center;justify-content:center;gap:2px;height:48px;color:var(--ink);font-size:15px;font-weight:600;margin-bottom:8px}
+/* ===== strategy page ===== */
+.blk{padding:16px;margin-bottom:0}
+.sp .btn.switch{justify-content:space-between;font-family:var(--disp);font-size:18px;font-weight:700;height:48px}
+.sp .bar{margin-top:12px}
+.sp .blk .l1{margin:0}
+.sp .h-sec{margin-top:16px}
+.path{list-style:none;margin:0;padding:6px 16px}
+.path li,.exl li{position:relative;display:flex;align-items:center;gap:12px;height:46px;padding:0 6px 0 0}
+.path li+li,.exl li+li{border-top:1px solid var(--rule)}
+.cn{width:34px;height:34px;border-radius:2px;background:var(--wood);color:var(--cream);font-family:var(--disp);font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none;line-height:1}
+.path li.done .cn,.cn.dn{background:var(--pri);color:var(--onpri)}
+.path li.cur{background:var(--inset);box-shadow:none;outline:2px solid var(--gold);outline-offset:-2px;padding-left:8px;margin:0 -8px;padding-right:14px}
+.cnm{font-family:var(--disp);font-size:16px;font-weight:600;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cur .cnm,.cur .cs{font-weight:700}
+.cs{font-size:13px;color:var(--ink);white-space:nowrap}
+.rt{font-family:var(--disp);font-size:18px;font-weight:700}.rt.s{font-size:16px;font-family:var(--body);font-weight:600}
+/* ===== chapter page ===== */
+.cp{display:flex;flex-direction:column;gap:16px}
+.cp .card h2{font-size:22px}
+.cp .st{font-size:15px;font-weight:700;color:var(--ink)}
+.cp .blurb{font-size:15px;margin:0 0 4px;color:var(--ink)}
+.cp .lockline{font-size:15px;color:var(--ink);margin:6px 0 0}
+.restart-n{margin:-8px 2px 0;font-size:14px;color:var(--soft)}
+/* ===== exam list ===== */
+.sumcard{margin:0 0 16px}
+.exl{list-style:none;margin:0;padding:6px 16px}
+.exl .cnm{font-size:16px}
+.exl .cs{font-size:14px}
+.body>.h-card+.card.sumcard{border-top-left-radius:0}
+/* ===== board ===== */
+.board-panel{--c:39px;flex:none;padding:12px 8px 0;width:100%}
+.hands{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px}
+.hand{display:flex;align-items:center;gap:2px;height:36px;padding:0 8px;background-color:var(--panel);background-image:var(--tx-hinoki);border:1px solid var(--pbd);border-radius:3px;overflow:hidden}
+.hand .tl{font-family:var(--kf);font-size:13px;color:var(--ink);margin-right:6px;white-space:nowrap}
+.hand .hp{display:flex;align-items:center;padding:0 2px}
+.hand .koma{width:22px;height:24px}
+.hand .koma .fc{font-size:13px}
+.capn{font-size:13px;color:var(--red);margin-right:1px;font-weight:700}
+.hand .none{font-size:13px;color:var(--soft)}
+.board-block{width:373px;margin:0 auto}
+.files{display:grid;grid-template-columns:repeat(9,var(--c));padding-left:3px;padding-right:19px}
+.files div,.ranks div{font-family:var(--kf);font-size:12px;color:var(--ink);text-align:center;line-height:1.2}
+.brow{display:flex}
+.ranks{display:grid;grid-template-rows:repeat(9,var(--c));padding:3px 0 3px 3px;width:19px}
+.ranks div{display:flex;align-items:center}
+.board{position:relative;display:grid;grid-template-columns:repeat(9,var(--c));grid-template-rows:repeat(9,var(--c));background:var(--board);border:3px solid var(--board-edge);width:calc(9*var(--c) + 6px)}
+.cell{border-right:1px solid var(--board-line);border-bottom:1px solid var(--board-line);display:flex;align-items:center;justify-content:center}
+.cell:nth-child(9n){border-right:0}
+.cell:nth-child(n+73){border-bottom:0}
+.cell.last{background:var(--cellred)}
+.cell.strong{background:var(--cellred2)}
+.cell.lastto{outline:2px solid var(--cellline);outline-offset:-2px}
+.cell.miss{outline:2px dashed var(--arrow);outline-offset:-3px}
+.koma{width:calc(var(--c)*.84);height:calc(var(--c)*.92);clip-path:polygon(50% 3%,84% 25%,90% 97%,10% 97%,16% 25%);background:var(--koma-rim);display:flex;align-items:center;justify-content:center}
+.koma .fc{width:87%;height:87%;clip-path:polygon(50% 3%,84% 25%,90% 97%,10% 97%,16% 25%);background:var(--koma);display:flex;align-items:center;justify-content:center;font-family:var(--kf);font-size:calc(var(--c)*.53);font-weight:600;color:var(--koma-ink);line-height:1}
+.koma.g{transform:rotate(180deg)}
+.koma.pr .fc{color:var(--komared)}
+.arrow{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;stroke:var(--arrow);fill:var(--arrow)}
+.prog{height:4px;background:var(--bartrack);flex:none}
+.prog i{display:block;height:100%;background:var(--barfill)}
+.sub-h{padding:12px 16px 0;font-size:14px;color:var(--ink);flex:none}
+/* ===== learning panel (16px under the board) ===== */
+.panel{flex:none;margin:16px 12px 0;padding:16px}
+.turn{font-family:var(--disp);font-size:19px;font-weight:700;margin:0 0 4px;line-height:1.45}
+.oppline{font-size:14px;color:var(--ink);margin:0 0 10px;line-height:1.5}
+.oppline b{font-weight:700}
+.oppbig{font-size:15px;line-height:1.6;margin:0}
+.oppbig b{font-family:var(--disp);font-size:18px}
+.aim{background-color:var(--inset);border-radius:3px;padding:12px 16px}
+.aim-t{font-family:var(--disp);font-weight:700;font-size:18px;color:var(--ink)}
+.aim p{margin:4px 0 0;font-size:15px;color:var(--ink)}
+.aim .key{font-size:13px;color:var(--ink);margin-bottom:2px;font-weight:600}
+.miss-l{font-family:var(--disp);font-size:17px;font-weight:700;color:var(--red);margin:12px 0 0}
+.ans-l{font-family:var(--disp);font-size:17px;font-weight:700;color:var(--ink);margin:12px 0 10px}
+.good{margin:0 0 4px}
+.good b{font-family:var(--disp);font-size:20px;color:var(--good)}
+.tbtn{height:44px;display:inline-flex;align-items:center;background:none;border:0;padding:0;color:var(--ink);font:600 15px var(--body);cursor:pointer}
+.panel .btn.pri{width:100%}
+.more{margin:0 0 10px;font-size:15px;color:var(--ink)}
+.soft-t{font-family:var(--disp);font-size:18px;font-weight:700;margin:0 0 6px;color:var(--ink);line-height:1.45}
+.dt{font-family:var(--disp);font-size:18px;margin:0 0 8px}
+.mlist{list-style:none;margin:0 0 8px;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:0 8px}
+.mlist li{font-size:15px;padding:5px 0;color:var(--ink);border-bottom:1px solid var(--rule)}
+.mlist li span{display:inline-block;width:1.4em;color:var(--soft)}
+.mlist li.cur{font-weight:700}
+.step{display:flex;align-items:center;justify-content:space-between;margin:2px 0 10px}
+.res h2.done,.done{font-family:var(--disp);font-size:22px;margin:0 0 6px;font-weight:700}
+.res p{margin:0 0 6px;font-size:15px}
+.res p.meta2{margin-bottom:14px}
+.q{font-family:var(--disp);font-size:20px;margin:0 0 4px;font-weight:700}
+.big-s{font-family:var(--disp);font-size:40px;font-weight:700;line-height:1.3;padding-top:8px}
+.sum{font-family:var(--disp);font-size:20px;font-weight:700;margin:8px 0 10px}
+/* panels that are a whole screen body */
+.body.res,.body.result,.body.about{margin:16px 16px 0;padding:16px}
+.body.res p{margin:0 0 8px;font-size:15px}
+/* ===== sheets / modal ===== */
+.dimwrap{position:absolute;inset:0;display:flex;flex-direction:column;overflow:hidden}
+.scrim{position:absolute;inset:0;background:var(--scrim)}
+.msheet{position:absolute;left:12px;right:12px;bottom:12px;padding:16px;z-index:5}
+.sheet-h h2{font-family:var(--disp);font-size:22px;margin:0 0 12px;font-weight:700;padding-bottom:8px;border-bottom:2px solid var(--gold)}
+.msheet .h-sec{background:none;color:var(--ink);padding:0;border-radius:0;letter-spacing:0;font-size:18px;width:auto;margin:16px 0 8px}
+.cardsel{border:2px solid var(--sel);border-radius:3px;padding:16px;background:var(--raise);margin-bottom:0}
+.cardsel h2{font-family:var(--disp);font-size:20px;margin:0 0 2px}
+.cardsel p{margin:0 0 4px;font-size:15px}
+.msheet .radios{background-image:none;background-color:var(--raise);margin-bottom:16px}
+.modal{position:absolute;left:24px;right:24px;top:50%;transform:translateY(-50%);padding:20px 16px 16px;z-index:5}
+.modal h2{font-family:var(--disp);font-size:20px;margin:0 0 8px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding-top:8px}
+/* ===== exam / result ===== */
+.ok{color:var(--good);font-weight:700}
+.ng{color:var(--red);font-weight:700}
+.verdict{font-family:var(--disp);font-size:48px;font-weight:700;line-height:1.2;margin-top:0}
+.verdict.okc{color:var(--good)}.verdict.ngc{color:var(--red)}
+.score{font-family:var(--disp);font-size:18px;margin-bottom:6px}
+.score .n{font-size:40px;font-weight:700}
+.score .meta{font-family:var(--body)}
+.reason{font-family:var(--disp);font-size:18px;font-weight:700;color:var(--red);margin:0 0 6px!important}
+.qlist{list-style:none;margin:8px 0 0;padding:0}
+.qlist li{display:flex;align-items:baseline;gap:10px;height:34px;border-bottom:1px solid var(--rule);font-size:15px}
+.qn{width:1.4em;color:var(--soft);font-size:14px}
+.qlist .mv{font-family:var(--disp);font-size:16px;flex:1}
+/* ===== settings / about ===== */
+.radios{list-style:none;margin:0 0 16px;padding:0}
+.radios li{height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-size:15px}
+.radios li+li{border-top:1px solid var(--rule)}
+.radios li.on{font-weight:700}
+.radios li b{color:var(--sel)}
+.radios.tall li{height:52px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr)}
+.stats div{padding:16px;display:flex;flex-direction:column}
+.stats div+div{border-left:1px solid var(--rule)}
+.sn{font-family:var(--disp);font-size:40px;font-weight:700;line-height:1.2}
+.sl{font-size:14px;color:var(--soft)}
+.about h3{font-family:var(--disp);font-size:18px;margin:12px 0 4px;font-weight:700}
+.about h3:first-child{margin-top:0}
+.about p{margin:0 0 6px;font-size:14px;line-height:1.6;color:var(--ink)}
+.about .linkrow:last-child{border-bottom:0}
+
+/* ===== exam review (new) ===== */
+.board-panel{--c:34px}
+.board-block{width:calc(9*var(--c) + 6px + 19px + 3px)}
+.sub-h.rv{padding:8px 16px 0}
+.qhint{margin:10px 0 0;font-size:14px;color:var(--soft)}
+.qlist.tap{margin-top:2px}
+.qlist.tap li{height:auto;display:block;padding:0}
+.qrow{display:flex;align-items:center;gap:10px;width:100%;height:44px;padding:0;margin:0;background:none;border:0;color:var(--ink);font:15px var(--body);text-align:left;cursor:pointer}
+.qrow .mk{width:1em;text-align:center;font-weight:700;flex:none}
+.qrow .mk.sk{color:var(--ink)}
+.qrow .mv{flex:1;min-width:0;white-space:nowrap}
+.qrow .meta{white-space:nowrap}
+.qrow .chev{flex:none;width:12px;font-size:22px;line-height:1;color:var(--soft);text-align:right}
+.verd-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.verd-row .score{margin:0;white-space:nowrap}
+.rres{font-family:var(--disp);font-size:20px;font-weight:700;margin:0 0 8px;line-height:1.4}
+.rres.okc{color:var(--good)}.rres.ngc{color:var(--red)}.rres.skc{color:var(--ink)}
+.ans{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 12px}
+.ans.one{grid-template-columns:1fr}
+.ans .al{display:block;font-size:13px;color:var(--soft)}
+.ans .av{display:block;font-family:var(--disp);font-size:18px;font-weight:400;line-height:1.4}
+.ans .av.st{font-weight:700}
+.aim.rv{padding:10px 16px;margin:0 0 10px}
+.aim.rv p{margin:0;font-size:15px;line-height:1.55}
+.aim.rv b{font-family:var(--disp);font-size:16px;margin-right:8px}
+.panel .expl{margin:0;font-size:15px;line-height:1.55}
+.foot{margin:auto 12px 0;padding:16px 0 16px}
+.navrow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.foot .btn.pri{margin-top:10px;width:100%}
+.btn.sub.dis{opacity:1}
+</style>
+</head>
+<body>
+<div class="page-h"><h1>認定試験の振り返り モック(案B 「道場」)</h1><div class="tg" role="group" aria-label="テーマ"><button id="t-light" class="on">ライト 道場</button><button id="t-dark">ダーク 夜の道場</button></div></div>
+<p class="page-n">各枠は 390×844。mockup-final.html の見た目をそのまま使っています。局面・文言・数字は見た目の確認用のダミーで、定跡の内容として確認したものではありません。盤の筋・段の表記は標準(筋は右から9→1、段は上から一→九)にしました。</p>
+<main class="grid">
+<figure><div class="frame"><div class="scr "><header class="top"><button class="btn sub back">◀ 戻る</button><h1>認定試験</h1><span class="r">結果</span></header><div class="sub-h">第二章 銀対抗の受け方</div><div class="body result"><div class="verd-row"><div class="verdict ngc">不合格</div><div class="score"><span class="n">7</span>問 正解<span class="meta"> ・ 10問中</span></div></div><p class="reason">急所を落としています</p><p class="expl">落とした3問を明日の復習の先頭に入れました</p><p class="qhint">問題を押すと、正解と解説を見られます</p><ul class="qlist tap"><li><button class="qrow" type="button"><span class="qn">1</span><span class="mk ok">○</span><span class="mv">▲7六歩</span><span class="chev" aria-hidden="true">›</span></button></li><li><button class="qrow" type="button"><span class="qn">2</span><span class="mk ng">×</span><span class="mv">△8四歩</span><span class="meta">正解 △3四歩</span><span class="chev" aria-hidden="true">›</span></button></li><li><button class="qrow" type="button"><span class="qn">3</span><span class="mk ng">×</span><span class="mv">△7二金</span><span class="meta">正解 △7二玉</span><span class="chev" aria-hidden="true">›</span></button></li><li><button class="qrow" type="button"><span class="qn">4</span><span class="mk ok">○</span><span class="mv">▲4八銀</span><span class="chev" aria-hidden="true">›</span></button></li><li><button class="qrow" type="button"><span class="qn">5</span><span class="mk ok">○</span><span class="mv">△5二飛</span><span class="chev" aria-hidden="true">›</span></button></li><li><button class="qrow" type="button"><span class="qn">6</span><span class="mk ok">○</span><span class="mv">△3四歩</span><span class="chev" aria-hidden="true">›</span></button></li><li><button class="qrow" type="button"><span class="qn">7</span><span class="mk ok">○</span><span class="mv">▲7八金</span><span class="chev" aria-hidden="true">›</span></button></li><li><button class="qrow" type="button"><span class="qn">8</span><span class="mk ok">○</span><span class="mv">△4二玉</span><span class="chev" aria-hidden="true">›</span></button></li><li><button class="qrow" type="button"><span class="qn">9</span><span class="mk sk">−</span><span class="mv">飛ばした</span><span class="meta">正解 △2四歩</span><span class="chev" aria-hidden="true">›</span></button></li><li><button class="qrow" type="button"><span class="qn">10</span><span class="mk ok">○</span><span class="mv">△3二金</span><span class="chev" aria-hidden="true">›</span></button></li></ul><button class="btn pri full mt">章のページへ戻る</button></div></div></div><figcaption><b>1 認定試験・結果(不合格)</b><span class="cap-h">ねらい</span><ul><li>全問の行を押せる行(高さ44px、右端に「›」付き)にして、結果から1問ずつ見直せる入口にした</li><li>押せることは一行のヒントと「›」で伝え、色や囲みは足さない。行の見た目は他の一覧と同じ</li></ul></figcaption></figure>
+<figure><div class="frame"><div class="scr "><header class="top"><button class="btn sub back">◀ 結果</button><h1>第3問</h1><span class="r">3 / 10</span></header><div class="sub-h rv">第二章 銀対抗の受け方 ・ 急所</div><div class="board-panel"><div class="hands"><div class="hand"><span class="tl">▲持駒</span><span class="none">なし</span></div><div class="hand"><span class="tl">△持駒</span><span class="none">なし</span></div></div><div class="board-block"><div class="files"><div>9</div><div>8</div><div>7</div><div>6</div><div>5</div><div>4</div><div>3</div><div>2</div><div>1</div></div><div class="brow"><div class="board"><div class="cell"><div class="koma g"><div class="fc">香</div></div></div><div class="cell"><div class="koma g"><div class="fc">玉</div></div></div><div class="cell"></div><div class="cell"><div class="koma g"><div class="fc">金</div></div></div><div class="cell"></div><div class="cell"><div class="koma g"><div class="fc">金</div></div></div><div class="cell"><div class="koma g"><div class="fc">銀</div></div></div><div class="cell"><div class="koma g"><div class="fc">桂</div></div></div><div class="cell"><div class="koma g"><div class="fc">香</div></div></div><div class="cell"></div><div class="cell"><div class="koma g"><div class="fc">飛</div></div></div><div class="cell miss"></div><div class="cell"></div><div class="cell"><div class="koma g"><div class="fc">銀</div></div></div><div class="cell"></div><div class="cell"></div><div class="cell"><div class="koma g"><div class="fc">角</div></div></div><div class="cell"></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"></div><div class="cell"><div class="koma"><div class="fc">角</div></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"><div class="koma"><div class="fc">飛</div></div></div><div class="cell"></div><div class="cell"><div class="koma"><div class="fc">香</div></div></div><div class="cell"><div class="koma"><div class="fc">桂</div></div></div><div class="cell"><div class="koma"><div class="fc">銀</div></div></div><div class="cell"><div class="koma"><div class="fc">金</div></div></div><div class="cell"><div class="koma"><div class="fc">玉</div></div></div><div class="cell"><div class="koma"><div class="fc">金</div></div></div><div class="cell"><div class="koma"><div class="fc">銀</div></div></div><div class="cell"><div class="koma"><div class="fc">桂</div></div></div><div class="cell"><div class="koma"><div class="fc">香</div></div></div><svg class="arrow" viewBox="0 0 324 324" aria-hidden="true"><line x1="56.8" y1="20.8" x2="78.7" y2="42.7" stroke-width="6" stroke-linecap="round"/><polygon points="90.0,54.0 71.6,49.8 85.8,35.6"/></svg></div><div class="ranks"><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div><div>七</div><div>八</div><div>九</div></div></div></div></div><div class="panel"><p class="rres ngc">× 不正解</p><div class="ans"><div><span class="al">あなたの答え</span><span class="av">△7二金</span></div><div><span class="al">正解</span><span class="av st">△7二玉</span></div></div><div class="aim rv"><p><b>ねらい</b>玉を寄せて陣形を整える</p></div><p class="expl">△7二玉 と受け、玉の逃げ道を残します。</p></div><div class="foot"><div class="navrow"><button class="btn sub">◀ 前の問題</button><button class="btn sub">次の問題 ▶</button></div><button class="btn pri full">結果へ戻る</button></div></div></div><figcaption><b>2 問題の振り返り(誤答)</b><span class="cap-h">ねらい</span><ul><li>出題時の局面に正解を矢印で重ね、誤答の行き先は点線で薄く示す。正解の手だけ太字にして違いを一目で見せる</li><li>色面はねらいの1つだけ。操作は盤から離した下端にまとめ、主ボタンは「結果へ戻る」1つ</li></ul></figcaption></figure>
+<figure><div class="frame"><div class="scr "><header class="top"><button class="btn sub back">◀ 結果</button><h1>第6問</h1><span class="r">6 / 10</span></header><div class="sub-h rv">第二章 銀対抗の受け方 ・ 急所</div><div class="board-panel"><div class="hands"><div class="hand"><span class="tl">▲持駒</span><span class="none">なし</span></div><div class="hand"><span class="tl">△持駒</span><span class="none">なし</span></div></div><div class="board-block"><div class="files"><div>9</div><div>8</div><div>7</div><div>6</div><div>5</div><div>4</div><div>3</div><div>2</div><div>1</div></div><div class="brow"><div class="board"><div class="cell"><div class="koma g"><div class="fc">香</div></div></div><div class="cell"><div class="koma g"><div class="fc">桂</div></div></div><div class="cell"><div class="koma g"><div class="fc">銀</div></div></div><div class="cell"><div class="koma g"><div class="fc">金</div></div></div><div class="cell"><div class="koma g"><div class="fc">玉</div></div></div><div class="cell"><div class="koma g"><div class="fc">金</div></div></div><div class="cell"><div class="koma g"><div class="fc">銀</div></div></div><div class="cell"><div class="koma g"><div class="fc">桂</div></div></div><div class="cell"><div class="koma g"><div class="fc">香</div></div></div><div class="cell"></div><div class="cell"><div class="koma g"><div class="fc">飛</div></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"><div class="koma g"><div class="fc">角</div></div></div><div class="cell"></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"></div><div class="cell"><div class="koma"><div class="fc">角</div></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"><div class="koma"><div class="fc">飛</div></div></div><div class="cell"></div><div class="cell"><div class="koma"><div class="fc">香</div></div></div><div class="cell"><div class="koma"><div class="fc">桂</div></div></div><div class="cell"><div class="koma"><div class="fc">銀</div></div></div><div class="cell"><div class="koma"><div class="fc">金</div></div></div><div class="cell"><div class="koma"><div class="fc">玉</div></div></div><div class="cell"><div class="koma"><div class="fc">金</div></div></div><div class="cell"><div class="koma"><div class="fc">銀</div></div></div><div class="cell"><div class="koma"><div class="fc">桂</div></div></div><div class="cell"><div class="koma"><div class="fc">香</div></div></div><svg class="arrow" viewBox="0 0 324 324" aria-hidden="true"><line x1="234.0" y1="94.0" x2="234.0" y2="110.0" stroke-width="6" stroke-linecap="round"/><polygon points="234.0,126.0 224.0,110.0 244.0,110.0"/></svg></div><div class="ranks"><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div><div>七</div><div>八</div><div>九</div></div></div></div></div><div class="panel"><p class="rres okc">○ 正解</p><div class="ans one"><div><span class="al">あなたの答え</span><span class="av">△3四歩</span></div></div><div class="aim rv"><p><b>ねらい</b>角道を開けて先手に応じる</p></div><p class="expl">△3四歩 で角道が通り、角が働きます。</p></div><div class="foot"><div class="navrow"><button class="btn sub">◀ 前の問題</button><button class="btn sub">次の問題 ▶</button></div><button class="btn pri full">結果へ戻る</button></div></div></div><figcaption><b>3 問題の振り返り(正解)</b><span class="cap-h">ねらい</span><ul><li>正解した問題も同じ構成で読み返せる。誤答の印は出さず、矢印で手を確かめるだけ</li><li>「あなたの答え」だけを出し、正解の行は重ねない</li></ul></figcaption></figure>
+<figure><div class="frame"><div class="scr "><header class="top"><button class="btn sub back">◀ 結果</button><h1>第9問</h1><span class="r">9 / 10</span></header><div class="sub-h rv">第二章 銀対抗の受け方 ・ 急所</div><div class="board-panel"><div class="hands"><div class="hand"><span class="tl">▲持駒</span><span class="none">なし</span></div><div class="hand"><span class="tl">△持駒</span><span class="none">なし</span></div></div><div class="board-block"><div class="files"><div>9</div><div>8</div><div>7</div><div>6</div><div>5</div><div>4</div><div>3</div><div>2</div><div>1</div></div><div class="brow"><div class="board"><div class="cell"><div class="koma g"><div class="fc">香</div></div></div><div class="cell"><div class="koma g"><div class="fc">桂</div></div></div><div class="cell"><div class="koma g"><div class="fc">銀</div></div></div><div class="cell"><div class="koma g"><div class="fc">金</div></div></div><div class="cell"><div class="koma g"><div class="fc">玉</div></div></div><div class="cell"><div class="koma g"><div class="fc">金</div></div></div><div class="cell"><div class="koma g"><div class="fc">銀</div></div></div><div class="cell"><div class="koma g"><div class="fc">桂</div></div></div><div class="cell"><div class="koma g"><div class="fc">香</div></div></div><div class="cell"></div><div class="cell"><div class="koma g"><div class="fc">飛</div></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"><div class="koma g"><div class="fc">角</div></div></div><div class="cell"></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"><div class="koma g"><div class="fc">歩</div></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"></div><div class="cell"><div class="koma"><div class="fc">歩</div></div></div><div class="cell"></div><div class="cell"><div class="koma"><div class="fc">角</div></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"><div class="koma"><div class="fc">飛</div></div></div><div class="cell"></div><div class="cell"><div class="koma"><div class="fc">香</div></div></div><div class="cell"><div class="koma"><div class="fc">桂</div></div></div><div class="cell"><div class="koma"><div class="fc">銀</div></div></div><div class="cell"><div class="koma"><div class="fc">金</div></div></div><div class="cell"><div class="koma"><div class="fc">玉</div></div></div><div class="cell"><div class="koma"><div class="fc">金</div></div></div><div class="cell"><div class="koma"><div class="fc">銀</div></div></div><div class="cell"><div class="koma"><div class="fc">桂</div></div></div><div class="cell"><div class="koma"><div class="fc">香</div></div></div><svg class="arrow" viewBox="0 0 324 324" aria-hidden="true"><line x1="270.0" y1="94.0" x2="270.0" y2="110.0" stroke-width="6" stroke-linecap="round"/><polygon points="270.0,126.0 260.0,110.0 280.0,110.0"/></svg></div><div class="ranks"><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div><div>七</div><div>八</div><div>九</div></div></div></div></div><div class="panel"><p class="rres skc">− 飛ばした</p><div class="ans one"><div><span class="al">正解</span><span class="av st">△2四歩</span></div></div><div class="aim rv"><p><b>ねらい</b>飛車先を突いて攻めを始める</p></div><p class="expl">△2四歩 と突き、飛車の道を開きます。</p></div><div class="foot"><div class="navrow"><button class="btn sub">◀ 前の問題</button><button class="btn sub">次の問題 ▶</button></div><button class="btn pri full">結果へ戻る</button></div></div></div><figcaption><b>4 問題の振り返り(飛ばした)</b><span class="cap-h">ねらい</span><ul><li>飛ばした問題は責めない言い方で、正解だけを見せる。あなたの答えの行は出さない</li><li>構成・ボタンの位置は他と同じにして、前後の問題へ迷わず移れる</li></ul></figcaption></figure>
+</main>
+<script>
+(function(){var r=document.documentElement;function s(t){r.setAttribute("data-theme",t);document.getElementById("t-light").className=t==="light"?"on":"";document.getElementById("t-dark").className=t==="dark"?"on":"";}
+document.getElementById("t-light").onclick=function(){s("light")};document.getElementById("t-dark").onclick=function(){s("dark")};})();
+</script>
+</body>
+</html>
