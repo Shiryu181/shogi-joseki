@@ -44,6 +44,7 @@ import ibishaVsGokigenChousokuRaw from "../data/joseki/ibisha-vs-gokigen--chouso
 import nakabishaVsChousokuGoteRaw from "../data/joseki/nakabisha-vs-chousoku--gote.json?raw";
 import nakabishaVsOnigoroshiRaw from "../data/joseki/nakabisha-vs-onigoroshi--gote.json?raw";
 import sankenbishaIshidaDeashiRaw from "../data/joseki/sankenbisha-ishida--deashi.json?raw";
+import sankenbishaIshidaKakugawariRaw from "../data/joseki/sankenbisha-ishida--kakugawari.json?raw";
 import hayaishidaBasicRaw from "../data/joseki/hayaishida--basic.json?raw";
 import ibishaVsHayaishida42Raw from "../data/joseki/ibisha-vs-hayaishida--42gyoku.json?raw";
 import sankenbishaVsNakabishaAifuriRaw from "../data/joseki/sankenbisha-vs-nakabisha--aifuri.json?raw";
@@ -845,6 +846,19 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "持久戦",
     summary: "▲7五歩から飛車を7六に振って石田流を作り、美濃囲いに収めるまで。相手が別の手を指したときの返し方も覚える。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaIshidaDeashiRaw), "sankenbisha-ishida--deashi.json"),
+  },
+  {
+    id: "sankenbisha-ishida--kakugawari",
+    strategyId: "sankenbisha",
+    opponentId: "ibisha-kyusen",
+    recommend: 11,
+    group: "基本の組み方",
+    opponentLabel: "居飛車",
+    sideLabel: "先手",
+    label: "角交換されたら",
+    kind: "持久戦",
+    summary: "石田流の途中で△8八角成と角を交換されたとき、△4五角に▲7六角と打ち返して、玉を囲い終えるまで。",
+    load: () => assertJosekiCourse(parseRaw(sankenbishaIshidaKakugawariRaw), "sankenbisha-ishida--kakugawari.json"),
   },
   {
     id: "sujichigaikaku--basic",

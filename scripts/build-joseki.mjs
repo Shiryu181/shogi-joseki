@@ -38,6 +38,7 @@ const KNOWN_BOOK_OVER_ENGINE = new Set([
   "nakabisha-vs-ibisha--sente 9手目", // ▲5八飛(中飛車に振る手。最善▲2六歩との差146、2026-10-09)
   "nakabisha-vs-sankenbisha--sente 5手目", // ▲5八飛(同上。最善▲4八銀との差101)
   "sankenbisha-ishida--deashi 3手目", // ▲7五歩(早石田で三間飛車・石田流を選ぶ手。最善▲7八金との差107〜127、2026-10-15。中飛車の▲5八飛と同じ「戦法を選ぶ手」)
+  "sankenbisha-ishida--kakugawari 3手目", // ▲7五歩(第1章と同じ。戦法を選ぶ手。最善▲7八金との差は第1章と同じ測定、2026-10-15)
   "nakabisha--shote 4手目", // △5四歩(ゴキゲン中飛車を選ぶ手。最善△4二銀との差103〜106、2026-10-10)
 ]);
 
