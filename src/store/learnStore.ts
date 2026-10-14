@@ -53,8 +53,10 @@ export interface AckMove {
   more?: string;
   /** その手の効果の実演(あれば)。結果パネルから盤上で再生できる。 */
   demos?: MoveDemo[];
-  /** 相手が定跡を外した手。 */
+  /** 相手が定跡を外した手(変化を含む)。 */
   deviation?: boolean;
+  /** deviation のうち、ミスではなく別の手(変化)。 */
+  variation?: boolean;
 }
 
 /** 自分の手番での「次の一手」クイズの状態。 */
@@ -103,7 +105,8 @@ function collectDeviations(course: JosekiCourse, startDepth: number): DevItem[] 
     path.push(node);
     node = m.child;
   }
-  return out;
+  // 変化(ミスではない別の手)を先に、ミスを咎める枝をあとに出す。同じ種類の中では出てくる順のまま。
+  return [...out.filter((d) => d.move.variation), ...out.filter((d) => !d.move.variation)];
 }
 
 interface LearnState {
@@ -127,7 +130,7 @@ interface LearnState {
   bookQuiz: BookQuizState | null;
   /** 自分が正解した直後の結果パネル。「次へ」で解除する。 */
   pendingAck: AckMove | null;
-  /** 本線を終えたあとの逸れ手の問題。 */
+  /** 本線を終えたあとの逸れ手の問題(変化が先、ミスを咎める枝があと)。 */
   devQueue: DevItem[];
   /** 次に出す逸れ手の番号(= すでに出した数)。 */
   devNext: number;
@@ -313,6 +316,7 @@ export const useLearnStore = create<LearnState>((set, get) => {
       kind: move.kind,
       by: "opponent",
       deviation,
+      ...(deviation && move.variation ? { variation: true } : {}),
     };
     goToChild(move);
     set({ lastOpponent: ack, oppPhase: deviation ? "idle" : "shown" });

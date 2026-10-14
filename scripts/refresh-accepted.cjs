@@ -6,8 +6,10 @@
  * 警告18件のうち14件は長い探索では差が2〜97点だった)。
  * そこで2回(ms と 1.5×ms)測り、どちらかで最善から100点以内に入った手を許容手とする。
  *
- * 使い方: node scripts/refresh-accepted.cjs [--ms 6000] <コースID>:<手数> ...
+ * 使い方: node scripts/refresh-accepted.cjs [--ms 6000] <コースID>:<手数> ... [@<コースID>@<手順>=<定跡手>] ...
  *   手数はその定跡手の手数(1始まり)。その手を指す前の局面を測り直す。
+ *   枝の中の局面は「@コースID@初形からの手順(USIをカンマ区切り)=定跡手」で指定する
+ *   (例: @sankenbisha-ishida--deashi@7g7f,8c8d=6g6f)。
  */
 const fs = require("node:fs");
 const path = require("node:path");
@@ -17,7 +19,7 @@ const { createEngine } = require("./lib/engine.cjs");
 const args = process.argv.slice(2);
 const msIdx = args.indexOf("--ms");
 const MS = msIdx >= 0 ? Number(args[msIdx + 1]) : 6000;
-const targets = args.filter((a, i) => a.includes(":") && (msIdx < 0 || i !== msIdx + 1));
+const targets = args.filter((a, i) => (a.includes(":") || a.startsWith("@")) && (msIdx < 0 || i !== msIdx + 1));
 const TOL = 100, PV = 20, MAX_ACCEPTED = 20;
 const CACHE = path.join(__dirname, "accepted-cache.json");
 const key = (sfen) => sfen.split(" ").slice(0, 3).join(" ");
@@ -50,11 +52,22 @@ function sfenBefore(sfen0, usis, ply) {
   const cache = JSON.parse(fs.readFileSync(CACHE, "utf8"));
   const engine = createEngine((s) => console.error(s));
   for (const t of targets) {
-    const [id, plyStr] = t.split(":");
-    const ply = Number(plyStr);
-    const { sfen0, usis } = mainLine(id);
-    const sfen = sfenBefore(sfen0, usis, ply);
-    const book = usis[ply - 1];
+    let id, sfen, book;
+    if (t.startsWith("@")) {
+      const [, cid, rest] = t.split("@");
+      const [pathStr, bookUsi] = rest.split("=");
+      const path = pathStr ? pathStr.split(",") : [];
+      id = cid;
+      sfen = sfenBefore(mainLine(cid).sfen0, path, path.length + 1);
+      book = bookUsi;
+    } else {
+      const [cid, plyStr] = t.split(":");
+      const ply = Number(plyStr);
+      const { sfen0, usis } = mainLine(cid);
+      id = cid;
+      sfen = sfenBefore(sfen0, usis, ply);
+      book = usis[ply - 1];
+    }
     const runs = [];
     for (const ms of [MS, Math.round(MS * 1.5)]) {
       const r = await engine.search(sfen, PV, ms);

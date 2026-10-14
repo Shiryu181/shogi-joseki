@@ -29,10 +29,13 @@ export function SideSheet({ strategyId, side, total, counts, onPick, onClose }: 
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
-  const rows: { side: Side; mark: string; label: string }[] = [
+  const allRows: { side: Side; mark: string; label: string }[] = [
     { side: "sente", mark: "▲", label: "先手" },
     { side: "gote", mark: "△", label: "後手" },
   ];
+  // 章が1つも無い手番は出さない(片方にしか章が無い戦法で、空の手番を選ばせないため)。
+  const withChapters = allRows.filter((r) => counts[r.side] > 0);
+  const rows = withChapters.length > 0 ? withChapters : allRows;
 
   return (
     <div className="sheet-layer">

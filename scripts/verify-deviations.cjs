@@ -56,7 +56,8 @@ function collectQuizzes(course) {
   let moveNo = 1;
   while (node) {
     for (const b of node.branches) {
-      if (b.kind === "deviation" && b.child) out.push({ moveNo, anchor: node, dev: b });
+      // 変化(variation)はミスではないので咎め検証の対象外
+      if (b.kind === "deviation" && !b.variation && b.child) out.push({ moveNo, anchor: node, dev: b });
     }
     const next = mainOf(node);
     if (!next || !next.child) break;

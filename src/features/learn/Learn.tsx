@@ -106,7 +106,7 @@ function OppLine({ ack, big = false }: { ack: AckMove; big?: boolean }) {
 /**
  * 学習画面(確定版モック 08〜17)。
  * 相手の手は自動で進み、自分の番は次の一手クイズ。正解したら結果を読んで「次へ」。
- * 本線を終えたあと、相手の逸れ手(咎めの問題)を1つずつ出し、すべて終えたら章の終わり。
+ * 本線を終えたあと、相手の変化(ミスではない別の手)、続けて逸れ手(咎めの問題)を1つずつ出し、すべて終えたら章の終わり。
  */
 export function Learn({
   course, onBack, path, chapterIndex = 0, onNextChapter, onStrategy, onExam, restart = false,
@@ -419,12 +419,15 @@ function QuestionPanel({
   }
 
   const isDeviation = !!lastOpponent?.deviation;
+  const isVariation = isDeviation && !!lastOpponent?.variation;
   return (
     <>
       <p className="turn">
-        {isDeviation
-          ? `相手が定跡を外れました(${lastOpponent.moveText})。咎める手を指してください`
-          : `あなたの番 ・ ${moveNumber}手目`}
+        {isVariation
+          ? `相手が別の手を指しました(${lastOpponent.moveText})。この局面の正しい手は？`
+          : isDeviation
+            ? `相手が定跡を外れました(${lastOpponent.moveText})。咎める手を指してください`
+            : `あなたの番 ・ ${moveNumber}手目`}
       </p>
       {lastOpponent && !isDeviation && <OppLine ack={lastOpponent} />}
       {introNote && <p className="oppline">{introNote}</p>}

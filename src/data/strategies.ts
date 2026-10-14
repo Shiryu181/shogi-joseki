@@ -21,7 +21,7 @@ export const STRATEGIES: Strategy[] = [
   {
     id: "sankenbisha", name: "三間飛車", kana: "さんけんびしゃ", category: "furibisha",
     popularity: 4.4, level: "入門〜",
-    description: "飛車を3筋(後手番なら7筋)に振る。飛車が角の頭を守るぶん四間飛車より一手得と言われ、石田流への発展や相振り飛車でも主力になる。",
+    description: "飛車を7筋(後手番なら3筋)に振る。飛車が角の頭を守るぶん四間飛車より一手得と言われ、石田流への発展や相振り飛車でも主力になる。",
   },
   {
     id: "hayaishida", name: "早石田", kana: "はやいしだ", category: "furibisha",

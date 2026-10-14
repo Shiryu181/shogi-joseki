@@ -43,6 +43,7 @@ import ibishaVsNakabishaGoteRaw from "../data/joseki/ibisha-vs-nakabisha--gote.j
 import ibishaVsGokigenChousokuRaw from "../data/joseki/ibisha-vs-gokigen--chousoku.json?raw";
 import nakabishaVsChousokuGoteRaw from "../data/joseki/nakabisha-vs-chousoku--gote.json?raw";
 import nakabishaVsOnigoroshiRaw from "../data/joseki/nakabisha-vs-onigoroshi--gote.json?raw";
+import sankenbishaIshidaDeashiRaw from "../data/joseki/sankenbisha-ishida--deashi.json?raw";
 import hayaishidaBasicRaw from "../data/joseki/hayaishida--basic.json?raw";
 import ibishaVsHayaishida42Raw from "../data/joseki/ibisha-vs-hayaishida--42gyoku.json?raw";
 import sankenbishaVsNakabishaAifuriRaw from "../data/joseki/sankenbisha-vs-nakabisha--aifuri.json?raw";
@@ -422,9 +423,11 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     summary: "右桂を早めに跳ね、角のラインと4筋への集中で穴熊が完成する前に攻める。",
     load: () => assertJosekiCourse(parseRaw(shikenbishaVsAnagumaSokkouRaw), "shikenbisha-vs-anaguma--sokkou.json"),
   },
+  // 以下の三間飛車の章(strategyId: null)は、2026-10-15 に新しい三間飛車の学習パスから外した。
+  // JSON と章ファイルは残してあり、「相手に備える」側からは辿れる。
   {
     id: "sankenbisha-vs-ibisha--basic",
-    strategyId: "sankenbisha",
+    strategyId: null,
     opponentId: "ibisha-kyusen",
     recommend: 3,
     group: "基本の組み方",
@@ -437,7 +440,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "sankenbisha-vs-bougin--53kin",
-    strategyId: "sankenbisha",
+    strategyId: null,
     opponentId: "ibisha-kyusen",
     recommend: 4,
     group: "対急戦",
@@ -450,7 +453,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "sankenbisha-vs-45hayashikake--sabaki",
-    strategyId: "sankenbisha",
+    strategyId: null,
     opponentId: "ibisha-kyusen",
     recommend: 5,
     group: "対急戦",
@@ -463,7 +466,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "sankenbisha-vs-anaguma--koyan",
-    strategyId: "sankenbisha",
+    strategyId: null,
     opponentId: "anaguma",
     recommend: 3,
     group: "対居飛車穴熊",
@@ -476,7 +479,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "sankenbisha-vs-ibisha--sente",
-    strategyId: "sankenbisha",
+    strategyId: null,
     opponentId: "ibisha-kyusen",
     recommend: 6,
     group: "基本の組み方",
@@ -676,7 +679,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "sankenbisha-vs-nakabisha--aifuri",
-    strategyId: "sankenbisha",
+    strategyId: null,
     opponentId: "gokigen",
     recommend: 4,
     group: "相振り飛車",
@@ -689,7 +692,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
   },
   {
     id: "sankenbisha-vs-mukaibisha--aifuri",
-    strategyId: "sankenbisha",
+    strategyId: null,
     opponentId: "mukaibisha",
     recommend: 1,
     group: "相振り飛車",
@@ -829,6 +832,19 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "急戦",
     summary: "3手目▲7七桂の鬼殺し。△6二金と△6四歩の2手を知っていれば、逆に桂を取って駒得できる。",
     load: () => assertJosekiCourse(parseRaw(nakabishaVsOnigoroshiRaw), "nakabisha-vs-onigoroshi--gote.json"),
+  },
+  {
+    id: "sankenbisha-ishida--deashi",
+    strategyId: "sankenbisha",
+    opponentId: "ibisha-kyusen",
+    recommend: 10,
+    group: "基本の組み方",
+    opponentLabel: "居飛車",
+    sideLabel: "先手",
+    label: "石田流の出だし",
+    kind: "持久戦",
+    summary: "▲7五歩から飛車を7六に振って石田流を作り、美濃囲いに収めるまで。相手が別の手を指したときの返し方も覚える。",
+    load: () => assertJosekiCourse(parseRaw(sankenbishaIshidaDeashiRaw), "sankenbisha-ishida--deashi.json"),
   },
   {
     id: "sujichigaikaku--basic",

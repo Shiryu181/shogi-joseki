@@ -37,6 +37,7 @@ const annotateWarnings = [];
 const KNOWN_BOOK_OVER_ENGINE = new Set([
   "nakabisha-vs-ibisha--sente 9手目", // ▲5八飛(中飛車に振る手。最善▲2六歩との差146、2026-10-09)
   "nakabisha-vs-sankenbisha--sente 5手目", // ▲5八飛(同上。最善▲4八銀との差101)
+  "sankenbisha-ishida--deashi 3手目", // ▲7五歩(早石田で三間飛車・石田流を選ぶ手。最善▲7八金との差107〜127、2026-10-15。中飛車の▲5八飛と同じ「戦法を選ぶ手」)
   "nakabisha--shote 4手目", // △5四歩(ゴキゲン中飛車を選ぶ手。最善△4二銀との差103〜106、2026-10-10)
 ]);
 
@@ -189,7 +190,7 @@ export function buildCourse({ id, title, myStrategy, opponentStrategy, mySide, s
     // 逸れ手(相手が定跡を外す手)は、本線を適用する前の局面から枝を伸ばす。
     // 学習画面で「相手がこう指してきたらどう咎めるか」を出題するために使う。
     // 本線を常に branches[0] に置くため、逸れ手は本線を積んでから後ろに足す。
-    const devBranches = (spec.devs ?? []).map((dev) => buildDeviation(position, dev, i + 1));
+    const devBranches = (spec.devs ?? []).map((dev) => buildDeviation(position, dev, i + 1, { id, mySide }));
 
     const move = resolveMove(position, spec, i + 1);
     const usi = move.usi;
@@ -241,7 +242,13 @@ function resolveDevMove(position, spec, label) {
   return move;
 }
 
-function buildDeviation(position, dev, moveNo) {
+/**
+ * dev.variation === true は「変化」。相手のミスではなく、相手が選びうる別の手(定跡の分かれ道)。
+ * 枝の中の自分の手には、本線と同じ「ねらい」と「許容手・急所」を付ける(ミスを咎める枝には付けない)。
+ * 出力の枝は kind:"deviation" のまま variation:true を足す。咎め方の要点(punishNote)は
+ * 変化では「なぜこの返しか」の説明に使う。
+ */
+function buildDeviation(position, dev, moveNo, ctx = {}) {
   const work = position.clone();
   const devMove = resolveDevMove(work, dev, `${moveNo}(逸れ手)`);
   if (!work.doMove(devMove)) throw new Error(`${moveNo}手目の逸れ手 ${devMove.usi}: 適用に失敗`);
@@ -249,16 +256,24 @@ function buildDeviation(position, dev, moveNo) {
   const head = { id: `d${moveNo}`, sfen: work.sfen, comment: dev.comment, branches: [] };
   let cursor = head;
   (dev.line ?? []).forEach((spec, j) => {
+    const sfenBefore = work.sfen;
     const mv = resolveDevMove(work, spec, `${moveNo}(咎め${j + 1})`);
     if (!work.doMove(mv)) throw new Error(`${moveNo}手目の咎め手 ${mv.usi}: 適用に失敗`);
     const child = { id: `d${moveNo}_${j + 1}`, sfen: work.sfen, comment: spec.comment, branches: [] };
-    cursor.branches.push({ usi: mv.usi, kind: "main", note: spec.note, child });
+    const extra = dev.variation
+      ? {
+          ...((spec.aim ?? (spec.note ? AIM_BY_NOTE[spec.note] : undefined)) ? { aim: spec.aim ?? AIM_BY_NOTE[spec.note] } : {}),
+          ...annotate(sfenBefore, mv.usi, ctx.mySide, `${ctx.id} ${moveNo}手目 変化${devMove.usi}`),
+        }
+      : {};
+    cursor.branches.push({ usi: mv.usi, kind: "main", note: spec.note, ...extra, child });
     cursor = child;
   });
 
   return {
     usi: devMove.usi,
     kind: "deviation",
+    ...(dev.variation ? { variation: true } : {}),
     note: dev.note,
     punishNote: dev.punishNote,
     child: head,
@@ -286,7 +301,7 @@ export function buildCourseFromUsi({ id, title, myStrategy, opponentStrategy, my
     // notes[i] = [解説, 局面の解説, 実演(任意), 咎めクイズ(任意)]
     const [note, comment, demos, devs] = notes[i] ?? [];
     // 逸れ手は本線を適用する「前」の局面から枝を伸ばす(buildCourse と同じ扱い)。
-    const devBranches = (devs ?? []).map((dev) => buildDeviation(position, dev, i + 1));
+    const devBranches = (devs ?? []).map((dev) => buildDeviation(position, dev, i + 1, { id, mySide }));
     if (!position.doMove(move)) throw new Error(`${i + 1}手目 ${usi}: 適用に失敗`);
     // USI から組み立てるコース(先後を入れ替えたコースなど)にも、同じ辞書でねらいを付ける。
     const aim = note ? AIM_BY_NOTE[note] : undefined;

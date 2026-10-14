@@ -96,6 +96,11 @@ export interface JosekiMove {
    * ここだけは外すと確実に損をするので、出題時に明示して考えさせる。
    */
   sharp?: boolean;
-  punishNote?: string; // deviation のとき「どう咎めるか」の要点
+  punishNote?: string; // deviation のとき「どう咎めるか」の要点(variation のときは「なぜこの返しか」の説明)
+  /**
+   * kind が deviation で true のとき「変化」。相手のミスではなく、相手が選びうる別の手。
+   * 枝の中の自分の手(ねらい・許容手つき)を、ミスを咎める枝より先に出題する。
+   */
+  variation?: boolean;
   child: JosekiNode | null; // null = 末端 or エンジンに委譲
 }

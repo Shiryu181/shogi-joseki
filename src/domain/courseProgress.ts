@@ -22,7 +22,8 @@ export type Side = "sente" | "gote";
  * これらが未整備で、並べると同じ品質のものに見えてしまう。
  * 1戦法ずつ仕上げて、仕上がった順にここへ足していく。
  */
-export const READY_STRATEGY_IDS = ["gokigen"];
+// 隠すときは、下の配列から該当の戦法 id を消す1行だけでよい(章の JSON と josekiLoader の登録は残す)。
+export const READY_STRATEGY_IDS = ["gokigen", "sankenbisha"];
 
 /** 仕上がっている戦法だけを返す。 */
 export function readyStrategies(): Strategy[] {
@@ -34,6 +35,10 @@ const BLURB: Record<string, { card: string; sheet: string }> = {
   gokigen: {
     card: "飛車を中央に振る戦法。受け方と反撃を覚えます。",
     sheet: "後手が飛車を中央に振る戦法。先手の出方ごとの受け方と反撃を覚えます。",
+  },
+  sankenbisha: {
+    card: "飛車を7筋に振る振り飛車。先手は石田流に組みます。",
+    sheet: "飛車を7筋に振る振り飛車。先手は石田流に組みます。",
   },
 };
 export function blurbOf(s: Strategy): { card: string; sheet: string } {

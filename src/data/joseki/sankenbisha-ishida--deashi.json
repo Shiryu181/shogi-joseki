@@ -1,0 +1,774 @@
+{
+  "id": "sankenbisha-ishida--deashi",
+  "title": "三間飛車 石田流の出だし(先手)",
+  "myStrategy": "sankenbisha",
+  "opponentStrategy": "ibisha",
+  "mySide": "sente",
+  "source": "1〜7手目と『△4二玉に▲6六歩』は、Wikibooks「将棋/石田流」(ja.wikibooks.org/wiki/将棋/石田流)とWikipedia「石田流」に拠る。△8四歩に対する応じ方は Wikibooks「将棋/▲7六歩/△8四歩」に拠る。美濃囲いの手順(▲4八玉 ▲3八玉 ▲2八玉 ▲3八銀 ▲5八金左)と、後手の10〜18手目は出典から取ったものではない。エンジンで選んで確かめた(YaneuraOu、course-lab、2026-10-15)。こちらの手はどれも最善手から35点以内で、評価値は先手から見て-30〜-100点前後、ほぼ互角。3手目の▲7五歩は、エンジンの最善手▲7八金より107〜127点低い。中飛車の▲5八飛と同じく、戦法を選ぶ手なので採用する。『変化』の欄にある、△8四歩・△5四歩に▲6六歩(▲7五歩は-74〜-137点)、△6二銀・△4二玉・△1四歩・△5四歩に▲6六歩、△4四歩・△3五歩に▲7八飛、△8八角成に同銀、は同じエンジンの測定による。この4手目の▲6六歩は最善手との差が49〜73点あり、エンジンの許容手には入らない場合がある。出典(Wikibooks)に拠る手と合わせて採用した。",
+  "goalFormation": "飛車を7六に上げた石田流と、玉を2八に収めた美濃囲いがそろった形。",
+  "goalLabel": "石田流と美濃囲いが完成しました",
+  "goalSfen": "ln3g1nl/1r1sgksb1/p1p1pp1p1/3p2p1p/1pP6/2RP5/PP2PPPPP/1B2G1SK1/LNS2G1NL w - 1",
+  "root": {
+    "id": "n0",
+    "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
+    "comment": "平手の初形です。この章では、先手で三間飛車の「石田流」を指します。三間飛車は飛車を7筋(右から3本目)に振る戦法で、その中でも、飛車を7六に出して7筋の歩を後ろから支える形が石田流です。7筋から攻める速い戦法ですが、囲いも忘れずに美濃囲いまで組みます。相手が定跡どおりに指さない場面も出てきます。ミスではなく、ありえる別の手として、その返し方も覚えます。",
+    "branches": [
+      {
+        "usi": "7g7f",
+        "kind": "main",
+        "note": "角道を開けます。7筋の歩を突くのは、石田流にも普通の三間飛車にも使える最初の一手です。",
+        "aim": "角の通り道を開けて、駒組みの第一歩を踏み出したい。",
+        "accepted": [
+          "7g7f",
+          "2g2f",
+          "1g1f",
+          "6i7h",
+          "3i3h",
+          "4i5h",
+          "5i5h",
+          "9g9f",
+          "6g6f",
+          "3i4h",
+          "5g5f",
+          "5i6h"
+        ],
+        "child": {
+          "id": "n1",
+          "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1",
+          "branches": [
+            {
+              "usi": "3c3d",
+              "kind": "main",
+              "note": "相手も角道を開けました。",
+              "child": {
+                "id": "n2",
+                "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                "comment": null,
+                "branches": [
+                  {
+                    "usi": "7f7e",
+                    "kind": "main",
+                    "note": "7筋の歩をもう一つ突きます。これが「早石田」の合図で、石田流を目指すと決める手です。",
+                    "aim": "攻めたい筋を早めに突き進めて、戦法の方針を決めたい。",
+                    "accepted": [
+                      "6i7h",
+                      "2g2f",
+                      "3i3h",
+                      "5i6h",
+                      "1g1f",
+                      "9g9f",
+                      "4i5h",
+                      "5g5f",
+                      "3i4h",
+                      "6g6f",
+                      "5i5h",
+                      "4i4h"
+                    ],
+                    "child": {
+                      "id": "n3",
+                      "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/2P6/9/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1",
+                      "comment": "エンジンの最善手は▲7八金で、この▲7五歩は107〜127点ほど低い評価です。ただし、これは戦法を選ぶ手です。中飛車の▲5八飛と同じで、この講座では石田流を指すためにこの手を採用します。",
+                      "branches": [
+                        {
+                          "usi": "8c8d",
+                          "kind": "main",
+                          "note": "相手が飛車先の歩を突きました。",
+                          "child": {
+                            "id": "n4",
+                            "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/1p4p2/2P6/9/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                            "comment": null,
+                            "branches": [
+                              {
+                                "usi": "2h7h",
+                                "kind": "main",
+                                "note": "飛車を7八へ振ります。三間飛車の形です。7筋の歩を後ろから支える位置で、次の一手で石田流になります。",
+                                "aim": "大駒を横に動かして、戦法の形を決めたい。",
+                                "accepted": [
+                                  "2h7h",
+                                  "2g2f",
+                                  "6i7h",
+                                  "1g1f",
+                                  "4i5h",
+                                  "8h2b+",
+                                  "9g9f",
+                                  "3i3h",
+                                  "3i4h",
+                                  "7e7d",
+                                  "3g3f",
+                                  "5i5h"
+                                ],
+                                "child": {
+                                  "id": "n5",
+                                  "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/1p4p2/2P6/9/PP1PPPPPP/1BR6/LNSGKGSNL w - 1",
+                                  "branches": [
+                                    {
+                                      "usi": "8d8e",
+                                      "kind": "main",
+                                      "note": "相手が飛車先の歩をもう一つ進めました。",
+                                      "child": {
+                                        "id": "n6",
+                                        "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/6p2/1pP6/9/PP1PPPPPP/1BR6/LNSGKGSNL b - 1",
+                                        "branches": [
+                                          {
+                                            "usi": "7h7f",
+                                            "kind": "main",
+                                            "note": "飛車を7六へ上げます。7筋に歩と飛車が並ぶ、石田流の形になりました。このあとは、この飛車を軸に7筋から攻める準備をします。",
+                                            "aim": "大駒を前に出して、突いた歩を後ろから支える形にしたい。",
+                                            "accepted": [
+                                              "7e7d",
+                                              "7h7f",
+                                              "5i4h",
+                                              "1g1f",
+                                              "3i3h",
+                                              "7i6h",
+                                              "9g9f",
+                                              "6i5h",
+                                              "3g3f",
+                                              "4i5h",
+                                              "4g4f",
+                                              "8h2b+"
+                                            ],
+                                            "child": {
+                                              "id": "n7",
+                                              "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/6p2/1pP6/2R6/PP1PPPPPP/1B7/LNSGKGSNL w - 1",
+                                              "branches": [
+                                                {
+                                                  "usi": "5a4b",
+                                                  "kind": "main",
+                                                  "note": "相手は玉を寄せて、囲いに向かいます。",
+                                                  "child": {
+                                                    "id": "n8",
+                                                    "sfen": "lnsg1gsnl/1r3k1b1/p1pppp1pp/6p2/1pP6/2R6/PP1PPPPPP/1B7/LNSGKGSNL b - 1",
+                                                    "branches": [
+                                                      {
+                                                        "usi": "6g6f",
+                                                        "kind": "main",
+                                                        "note": "6筋の歩を突いて、角の通り道を自分で止めます。同じ線の上で相手の角が当たってくる道も、これでふさげます。角交換をされず、落ち着いて組めます。",
+                                                        "aim": "大駒の交換が起きないよう、通り道を先に止めておきたい。",
+                                                        "accepted": [
+                                                          "7e7d",
+                                                          "5i4h",
+                                                          "1g1f",
+                                                          "8i7g",
+                                                          "9g9f",
+                                                          "8h7g",
+                                                          "6g6f",
+                                                          "3g3f",
+                                                          "6i5h",
+                                                          "8h2b+",
+                                                          "4i4h",
+                                                          "3i3h"
+                                                        ],
+                                                        "child": {
+                                                          "id": "n9",
+                                                          "sfen": "lnsg1gsnl/1r3k1b1/p1pppp1pp/6p2/1pP6/2RP5/PP2PPPPP/1B7/LNSGKGSNL w - 1",
+                                                          "branches": [
+                                                            {
+                                                              "usi": "3a3b",
+                                                              "kind": "main",
+                                                              "note": "相手は銀を3二へ上げて、玉の守りを固めます。",
+                                                              "child": {
+                                                                "id": "n10",
+                                                                "sfen": "lnsg1g1nl/1r3ksb1/p1pppp1pp/6p2/1pP6/2RP5/PP2PPPPP/1B7/LNSGKGSNL b - 1",
+                                                                "branches": [
+                                                                  {
+                                                                    "usi": "5i4h",
+                                                                    "kind": "main",
+                                                                    "note": "玉を4八へ動かします。美濃囲いを作る最初の一歩です。飛車とは反対側(2筋の方)に寄せて囲うのが、振り飛車の基本です。",
+                                                                    "aim": "安全な場所を目指して、囲いを作る一歩目を踏み出したい。",
+                                                                    "accepted": [
+                                                                      "7i7h",
+                                                                      "1g1f",
+                                                                      "8h7g",
+                                                                      "5i4h",
+                                                                      "7i6h",
+                                                                      "3i3h",
+                                                                      "9g9f",
+                                                                      "4i5h",
+                                                                      "4g4f",
+                                                                      "4i4h",
+                                                                      "5i5h",
+                                                                      "6i7h"
+                                                                    ],
+                                                                    "child": {
+                                                                      "id": "n11",
+                                                                      "sfen": "lnsg1g1nl/1r3ksb1/p1pppp1pp/6p2/1pP6/2RP5/PP2PPPPP/1B3K3/LNSG1GSNL w - 1",
+                                                                      "branches": [
+                                                                        {
+                                                                          "usi": "7a6b",
+                                                                          "kind": "main",
+                                                                          "note": "相手も銀を上げて、囲いを進めます。",
+                                                                          "child": {
+                                                                            "id": "n12",
+                                                                            "sfen": "ln1g1g1nl/1r1s1ksb1/p1pppp1pp/6p2/1pP6/2RP5/PP2PPPPP/1B3K3/LNSG1GSNL b - 1",
+                                                                            "branches": [
+                                                                              {
+                                                                                "usi": "4h3h",
+                                                                                "kind": "main",
+                                                                                "note": "玉をもう一つ寄せて3八へ。美濃囲いの途中です。",
+                                                                                "aim": "囲いに向かって、さらに一歩ずつ進めたい。",
+                                                                                "accepted": [
+                                                                                  "1g1f",
+                                                                                  "7i7h",
+                                                                                  "7i6h",
+                                                                                  "3i3h",
+                                                                                  "8h7g",
+                                                                                  "4h3h",
+                                                                                  "5g5f",
+                                                                                  "6i5i",
+                                                                                  "9g9f",
+                                                                                  "4g4f",
+                                                                                  "8i7g",
+                                                                                  "6i7h"
+                                                                                ],
+                                                                                "child": {
+                                                                                  "id": "n13",
+                                                                                  "sfen": "ln1g1g1nl/1r1s1ksb1/p1pppp1pp/6p2/1pP6/2RP5/PP2PPPPP/1B4K2/LNSG1GSNL w - 1",
+                                                                                  "branches": [
+                                                                                    {
+                                                                                      "usi": "6a5b",
+                                                                                      "kind": "main",
+                                                                                      "note": "相手は金を寄せて、囲いを整えます。",
+                                                                                      "child": {
+                                                                                        "id": "n14",
+                                                                                        "sfen": "ln3g1nl/1r1sgksb1/p1pppp1pp/6p2/1pP6/2RP5/PP2PPPPP/1B4K2/LNSG1GSNL b - 1",
+                                                                                        "branches": [
+                                                                                          {
+                                                                                            "usi": "3h2h",
+                                                                                            "kind": "main",
+                                                                                            "note": "玉を2八に収めます。ここが美濃囲いの玉の位置です。囲いの完成まで、あとは銀と金の2手です。",
+                                                                                            "aim": "囲いの定位置に収めて、安全な場所に落ち着かせたい。",
+                                                                                            "accepted": [
+                                                                                              "8h7g",
+                                                                                              "1g1f",
+                                                                                              "7i7h",
+                                                                                              "7i6h",
+                                                                                              "9g9f",
+                                                                                              "3h2h",
+                                                                                              "6i5h",
+                                                                                              "6i6h",
+                                                                                              "6i7h",
+                                                                                              "8i7g",
+                                                                                              "6i5i",
+                                                                                              "3g3f"
+                                                                                            ],
+                                                                                            "child": {
+                                                                                              "id": "n15",
+                                                                                              "sfen": "ln3g1nl/1r1sgksb1/p1pppp1pp/6p2/1pP6/2RP5/PP2PPPPP/1B5K1/LNSG1GSNL w - 1",
+                                                                                              "branches": [
+                                                                                                {
+                                                                                                  "usi": "6c6d",
+                                                                                                  "kind": "main",
+                                                                                                  "note": "相手は6筋の歩を突いて、陣形を進めます。",
+                                                                                                  "child": {
+                                                                                                    "id": "n16",
+                                                                                                    "sfen": "ln3g1nl/1r1sgksb1/p1p1pp1pp/3p2p2/1pP6/2RP5/PP2PPPPP/1B5K1/LNSG1GSNL b - 1",
+                                                                                                    "branches": [
+                                                                                                      {
+                                                                                                        "usi": "3i3h",
+                                                                                                        "kind": "main",
+                                                                                                        "note": "銀を3八へ上げて、玉の斜め前を守ります。これが美濃囲いの銀です。",
+                                                                                                        "aim": "守りの駒を寄せて、囲いの形を整えたい。",
+                                                                                                        "accepted": [
+                                                                                                          "7i6h",
+                                                                                                          "7i7h",
+                                                                                                          "1g1f",
+                                                                                                          "4i3h",
+                                                                                                          "3i3h",
+                                                                                                          "8h7g",
+                                                                                                          "8i7g",
+                                                                                                          "6i5h",
+                                                                                                          "6i7h",
+                                                                                                          "9g9f",
+                                                                                                          "5g5f",
+                                                                                                          "6i5i"
+                                                                                                        ],
+                                                                                                        "child": {
+                                                                                                          "id": "n17",
+                                                                                                          "sfen": "ln3g1nl/1r1sgksb1/p1p1pp1pp/3p2p2/1pP6/2RP5/PP2PPPPP/1B4SK1/LNSG1G1NL w - 1",
+                                                                                                          "branches": [
+                                                                                                            {
+                                                                                                              "usi": "1c1d",
+                                                                                                              "kind": "main",
+                                                                                                              "note": "相手は端の歩を突きました。",
+                                                                                                              "child": {
+                                                                                                                "id": "n18",
+                                                                                                                "sfen": "ln3g1nl/1r1sgksb1/p1p1pp1p1/3p2p1p/1pP6/2RP5/PP2PPPPP/1B4SK1/LNSG1G1NL b - 1",
+                                                                                                                "branches": [
+                                                                                                                  {
+                                                                                                                    "usi": "6i5h",
+                                                                                                                    "kind": "main",
+                                                                                                                    "note": "金を5八へ寄せて、美濃囲いが完成しました。7六の飛車と合わせて、石田流と美濃囲いがそろった形です。",
+                                                                                                                    "aim": "最後の守りの駒を寄せて、囲いを完成させたい。",
+                                                                                                                    "accepted": [
+                                                                                                                      "1g1f",
+                                                                                                                      "8i7g",
+                                                                                                                      "6i5h",
+                                                                                                                      "8h7g",
+                                                                                                                      "7i7h",
+                                                                                                                      "7i6h",
+                                                                                                                      "5g5f",
+                                                                                                                      "9g9f",
+                                                                                                                      "7e7d",
+                                                                                                                      "6i7h",
+                                                                                                                      "6i6h",
+                                                                                                                      "6i5i"
+                                                                                                                    ],
+                                                                                                                    "child": {
+                                                                                                                      "id": "n19",
+                                                                                                                      "sfen": "ln3g1nl/1r1sgksb1/p1p1pp1p1/3p2p1p/1pP6/2RP5/PP2PPPPP/1B2G1SK1/LNS2G1NL w - 1",
+                                                                                                                      "comment": "石田流と美濃囲いが完成しました。まとめると、(1)▲7五歩〜▲7八飛〜▲7六飛で石田流を作る、(2)▲6六歩で角道を止めて角交換を避ける、(3)玉を4八・3八・2八と寄せて美濃囲いを作る、の3つです。\n\n【ここからの方針】囲いが固まったので、これから7筋を中心に攻めていきます。相手が角を交換してくる形(角交換型)は、今後の章で扱う予定です。",
+                                                                                                                      "branches": []
+                                                                                                                    }
+                                                                                                                  }
+                                                                                                                ]
+                                                                                                              }
+                                                                                                            }
+                                                                                                          ]
+                                                                                                        }
+                                                                                                      }
+                                                                                                    ]
+                                                                                                  }
+                                                                                                }
+                                                                                              ]
+                                                                                            }
+                                                                                          }
+                                                                                        ]
+                                                                                      }
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              }
+                                                                            ]
+                                                                          }
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                              }
+                                                            }
+                                                          ]
+                                                        }
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "usi": "7a6b",
+                          "kind": "deviation",
+                          "variation": true,
+                          "note": "相手が銀を6二に上げました。",
+                          "punishNote": "悪い手ではないので、咎める必要はありません。角道を止めておき、飛車を振るのは相手の形を見てからにします。",
+                          "child": {
+                            "id": "d4",
+                            "sfen": "ln1gkgsnl/1r1s3b1/pppppp1pp/6p2/2P6/9/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                            "branches": [
+                              {
+                                "usi": "6g6f",
+                                "kind": "main",
+                                "note": "相手が銀を6二に上げても、こちらの方針は変わりません。6筋の歩を突いて角道を止め、角交換を避けて形を整えます。",
+                                "aim": "相手が動かないうちに、大駒の通り道を止めて安全な形にしたい。",
+                                "accepted": [
+                                  "2g2f",
+                                  "6i7h",
+                                  "3i3h",
+                                  "3i4h",
+                                  "1g1f",
+                                  "5i6h",
+                                  "6i6h",
+                                  "9g9f",
+                                  "4g4f",
+                                  "4i5h",
+                                  "2h7h",
+                                  "2h3h",
+                                  "3g3f",
+                                  "5i5h",
+                                  "4i4h",
+                                  "5g5f",
+                                  "2h6h",
+                                  "6g6f",
+                                  "8h2b+",
+                                  "8h6f"
+                                ],
+                                "child": {
+                                  "id": "d4_1",
+                                  "sfen": "ln1gkgsnl/1r1s3b1/pppppp1pp/6p2/2P6/3P5/PP2PPPPP/1B5R1/LNSGKGSNL w - 1",
+                                  "branches": []
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "usi": "5a4b",
+                          "kind": "deviation",
+                          "variation": true,
+                          "note": "相手が玉を4二に寄せました。",
+                          "punishNote": "Wikibooksも、△4二玉には▲6六歩としています。まず角道を止めて、角交換の筋を消してから飛車を振ります。",
+                          "child": {
+                            "id": "d4",
+                            "sfen": "lnsg1gsnl/1r3k1b1/pppppp1pp/6p2/2P6/9/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                            "branches": [
+                              {
+                                "usi": "6g6f",
+                                "kind": "main",
+                                "note": "相手が玉を囲いに向かわせたので、こちらも6筋の歩を突いて角道を止め、角交換を避けながら駒組みを進めます。",
+                                "aim": "大駒が交換されない形にして、相手に合わせて囲いを進めたい。",
+                                "accepted": [
+                                  "2g2f",
+                                  "6i7h",
+                                  "3i3h",
+                                  "4i5h",
+                                  "3i4h",
+                                  "3g3f",
+                                  "4i4h",
+                                  "4g4f",
+                                  "5i6h",
+                                  "9g9f",
+                                  "1g1f",
+                                  "5i5h",
+                                  "2h7h",
+                                  "6i6h",
+                                  "4i3h",
+                                  "2h6h",
+                                  "5i4h",
+                                  "6g6f",
+                                  "8h2b+",
+                                  "2h3h"
+                                ],
+                                "child": {
+                                  "id": "d4_1",
+                                  "sfen": "lnsg1gsnl/1r3k1b1/pppppp1pp/6p2/2P6/3P5/PP2PPPPP/1B5R1/LNSGKGSNL w - 1",
+                                  "branches": []
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "usi": "1c1d",
+                          "kind": "deviation",
+                          "variation": true,
+                          "note": "相手が端の歩を突きました。",
+                          "punishNote": "端の歩は様子見の手です。付き合わずに、先に角交換の筋を消しておきます。",
+                          "child": {
+                            "id": "d4",
+                            "sfen": "lnsgkgsnl/1r5b1/pppppp1p1/6p1p/2P6/9/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                            "branches": [
+                              {
+                                "usi": "6g6f",
+                                "kind": "main",
+                                "note": "端の歩は様子見なので、6筋の歩を突いて角道を止めます。先に角交換の筋をなくしておきます。",
+                                "aim": "様子見の手には付き合わず、大駒の交換の筋を先に消しておきたい。",
+                                "accepted": [
+                                  "2g2f",
+                                  "6i7h",
+                                  "1g1f",
+                                  "3i3h",
+                                  "9g9f",
+                                  "5i6h",
+                                  "4i5h",
+                                  "2h3h",
+                                  "3i4h",
+                                  "2h7h",
+                                  "6i6h",
+                                  "4i4h",
+                                  "4g4f",
+                                  "6g6f",
+                                  "3g3f",
+                                  "8h2b+",
+                                  "5i5h",
+                                  "5g5f",
+                                  "2h6h"
+                                ],
+                                "child": {
+                                  "id": "d4_1",
+                                  "sfen": "lnsgkgsnl/1r5b1/pppppp1p1/6p1p/2P6/3P5/PP2PPPPP/1B5R1/LNSGKGSNL w - 1",
+                                  "branches": []
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "usi": "5c5d",
+                          "kind": "deviation",
+                          "variation": true,
+                          "note": "相手が5筋の歩を突きました。",
+                          "punishNote": "5筋を突かれても慌てません。角道を止めて、角交換を避けます。",
+                          "child": {
+                            "id": "d4",
+                            "sfen": "lnsgkgsnl/1r5b1/pppp1p1pp/4p1p2/2P6/9/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                            "branches": [
+                              {
+                                "usi": "6g6f",
+                                "kind": "main",
+                                "note": "相手が5筋の歩を突いてきたので、6筋の歩を突いて角道を止めます。角交換のない形で落ち着いて駒組みを進めます。",
+                                "aim": "相手の中央の動きに備えて、大駒の通り道を止めて落ち着きたい。",
+                                "accepted": [
+                                  "6g6f",
+                                  "3i4h",
+                                  "4g4f",
+                                  "6i7h",
+                                  "2h7h",
+                                  "2g2f",
+                                  "3i3h",
+                                  "3g3f",
+                                  "6i6h",
+                                  "4i5h",
+                                  "5i6h",
+                                  "9g9f",
+                                  "1g1f",
+                                  "2h6h",
+                                  "5g5f",
+                                  "8h2b+",
+                                  "4i4h",
+                                  "2h3h",
+                                  "5i5h",
+                                  "8h7g"
+                                ],
+                                "child": {
+                                  "id": "d4_1",
+                                  "sfen": "lnsgkgsnl/1r5b1/pppp1p1pp/4p1p2/2P6/3P5/PP2PPPPP/1B5R1/LNSGKGSNL w - 1",
+                                  "branches": []
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "usi": "4c4d",
+                          "kind": "deviation",
+                          "variation": true,
+                          "note": "相手が4筋の歩を突きました。",
+                          "punishNote": "相手が飛車先を突いてこなければ、予定どおり飛車を振って石田流を目指せます。",
+                          "child": {
+                            "id": "d4",
+                            "sfen": "lnsgkgsnl/1r5b1/ppppp2pp/5pp2/2P6/9/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                            "branches": [
+                              {
+                                "usi": "2h7h",
+                                "kind": "main",
+                                "note": "飛車を7八へ振ります。相手が4筋を突いてきても、石田流を目指す方針は変わりません。",
+                                "aim": "相手の動きに合わせず、予定どおり大駒を動かして戦法の形を決めたい。",
+                                "accepted": [
+                                  "2h4h",
+                                  "3i3h",
+                                  "2h7h",
+                                  "4g4f",
+                                  "1g1f",
+                                  "5i6h",
+                                  "7i7h",
+                                  "3i4h",
+                                  "9g9f",
+                                  "6i7h",
+                                  "7i6h",
+                                  "4i5h",
+                                  "6g6f",
+                                  "3g3f",
+                                  "2g2f",
+                                  "8h7g",
+                                  "5g5f",
+                                  "2h3h",
+                                  "2h6h",
+                                  "2h5h"
+                                ],
+                                "child": {
+                                  "id": "d4_1",
+                                  "sfen": "lnsgkgsnl/1r5b1/ppppp2pp/5pp2/2P6/9/PP1PPPPPP/1BR6/LNSGKGSNL w - 1",
+                                  "branches": []
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "usi": "3d3e",
+                          "kind": "deviation",
+                          "variation": true,
+                          "note": "相手が3筋の歩を突き出しました。",
+                          "punishNote": "相手が飛車先を突いてこなければ、予定どおり飛車を振って石田流を目指せます。",
+                          "child": {
+                            "id": "d4",
+                            "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/9/2P3p2/9/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                            "branches": [
+                              {
+                                "usi": "2h7h",
+                                "kind": "main",
+                                "note": "飛車を7八へ振ります。相手が3筋の歩を突いてきても、予定どおり石田流に向かいます。",
+                                "aim": "相手の突き出しに惑わされず、予定の方針で大駒を動かしたい。",
+                                "accepted": [
+                                  "2g2f",
+                                  "1g1f",
+                                  "6i7h",
+                                  "3i4h",
+                                  "9g9f",
+                                  "6i6h",
+                                  "4i5h",
+                                  "2h7h",
+                                  "5i5h",
+                                  "3i3h",
+                                  "4i4h",
+                                  "4g4f",
+                                  "2h3h",
+                                  "2h6h",
+                                  "8h2b+",
+                                  "5i6h",
+                                  "2h5h",
+                                  "6g6f",
+                                  "5g5f"
+                                ],
+                                "child": {
+                                  "id": "d4_1",
+                                  "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/9/2P3p2/9/PP1PPPPPP/1BR6/LNSGKGSNL w - 1",
+                                  "branches": []
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "usi": "2b8h+",
+                          "kind": "deviation",
+                          "variation": true,
+                          "note": "相手が角を交換してきました。",
+                          "punishNote": "これは「角交換型」という別の形です。次の章で詳しく扱います。ここでは取り返す手だけ覚えてください。",
+                          "child": {
+                            "id": "d4",
+                            "sfen": "lnsgkgsnl/1r7/pppppp1pp/6p2/2P6/9/PP1PPPPPP/1+b5R1/LNSGKGSNL b b 1",
+                            "branches": [
+                              {
+                                "usi": "7i8h",
+                                "kind": "main",
+                                "note": "銀で角を取り返します。角交換型という別の形に進みます(次の章で詳しく扱います)。",
+                                "aim": "交換で取られた駒を取り返して、駒の損得を元に戻したい。",
+                                "accepted": [
+                                  "7i8h",
+                                  "2h8h"
+                                ],
+                                "child": {
+                                  "id": "d4_1",
+                                  "sfen": "lnsgkgsnl/1r7/pppppp1pp/6p2/2P6/9/PP1PPPPPP/1S5R1/LN1GKGSNL w Bb 1",
+                                  "branches": []
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "usi": "8c8d",
+              "kind": "deviation",
+              "variation": true,
+              "note": "相手が角道を開けずに、飛車先の歩を突いてきました。",
+              "punishNote": "この形で▲7五歩と突くのは難しいです。△8五歩と進められると、角を7七に上げて石田流を組むのがうまくいかなくなるためです(Wikibooksも同じ見方です)。エンジンの評価でも、ここで▲7五歩は先手から見て-74〜-137点と苦しくなります。そこで石田流はあきらめ、6六の歩で角道を止めて、角交換のない三間飛車に切りかえます。",
+              "child": {
+                "id": "d2",
+                "sfen": "lnsgkgsnl/1r5b1/p1ppppppp/1p7/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                "branches": [
+                  {
+                    "usi": "6g6f",
+                    "kind": "main",
+                    "note": "6筋の歩を突いて、角道を止めます。8筋を突かれた形では▲7五歩が難しいので、石田流は目指さず、角交換のない三間飛車に向かいます。",
+                    "aim": "無理に仕掛けず、大駒の交換が起きない形にして落ち着いて組みたい。",
+                    "accepted": [
+                      "6i7h",
+                      "8h7g",
+                      "2g2f",
+                      "7i6h",
+                      "7i7h",
+                      "9g9f",
+                      "4i5h",
+                      "6g6f",
+                      "3i4h",
+                      "1g1f",
+                      "5g5f",
+                      "5i5h",
+                      "3i3h",
+                      "8h6f",
+                      "5i6h",
+                      "6i6h",
+                      "3g3f",
+                      "4g4f",
+                      "4i4h",
+                      "2h6h"
+                    ],
+                    "child": {
+                      "id": "d2_1",
+                      "sfen": "lnsgkgsnl/1r5b1/p1ppppppp/1p7/9/2PP5/PP2PPPPP/1B5R1/LNSGKGSNL w - 1",
+                      "branches": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "usi": "5c5d",
+              "kind": "deviation",
+              "variation": true,
+              "note": "相手が5筋の歩を突いてきました。中飛車の合図です。",
+              "punishNote": "相手が角道を開けない形では、▲7五歩は苦しくなります(エンジンの評価は先手から見て-74〜-137点)。石田流にこだわらず、6六の歩で角道を止めて、三間飛車に向かいます。",
+              "child": {
+                "id": "d2",
+                "sfen": "lnsgkgsnl/1r5b1/pppp1pppp/4p4/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                "branches": [
+                  {
+                    "usi": "6g6f",
+                    "kind": "main",
+                    "note": "相手が5筋を突いた形(△5四歩)でも、6筋の歩を突いて角道を止めます。まず角交換の筋を消して、三間飛車に向かいます。",
+                    "aim": "相手の方針が見えるまで、大駒が交換される筋を先に消しておきたい。",
+                    "accepted": [
+                      "2g2f",
+                      "3i4h",
+                      "3i3h",
+                      "4i5h",
+                      "7i7h",
+                      "3g3f",
+                      "8h7g",
+                      "9g9f",
+                      "1g1f",
+                      "4g4f",
+                      "5i6h",
+                      "5g5f",
+                      "5i5h",
+                      "6g6f",
+                      "4i4h",
+                      "6i7h",
+                      "8h6f",
+                      "7i6h",
+                      "4i3h",
+                      "6i6h"
+                    ],
+                    "child": {
+                      "id": "d2_1",
+                      "sfen": "lnsgkgsnl/1r5b1/pppp1pppp/4p4/9/2PP5/PP2PPPPP/1B5R1/LNSGKGSNL w - 1",
+                      "branches": []
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
