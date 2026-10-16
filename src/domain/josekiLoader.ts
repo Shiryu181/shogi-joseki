@@ -46,6 +46,7 @@ import nakabishaVsOnigoroshiRaw from "../data/joseki/nakabisha-vs-onigoroshi--go
 import sankenbishaIshidaDeashiRaw from "../data/joseki/sankenbisha-ishida--deashi.json?raw";
 import sankenbishaIshidaKakugawariRaw from "../data/joseki/sankenbisha-ishida--kakugawari.json?raw";
 import sankenbishaIshidaHonkumiRaw from "../data/joseki/sankenbisha-ishida--honkumi.json?raw";
+import sankenbishaIshidaMigishikenRaw from "../data/joseki/sankenbisha-ishida--migishiken.json?raw";
 import hayaishidaBasicRaw from "../data/joseki/hayaishida--basic.json?raw";
 import ibishaVsHayaishida42Raw from "../data/joseki/ibisha-vs-hayaishida--42gyoku.json?raw";
 import sankenbishaVsNakabishaAifuriRaw from "../data/joseki/sankenbisha-vs-nakabisha--aifuri.json?raw";
@@ -873,6 +874,19 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "持久戦",
     summary: "美濃囲いのあと、▲7七桂 → ▲6八銀 → ▲6七銀 → ▲9六歩 → ▲9七角と、石田流の標準の形に組むまで。△6五歩への返し方も覚える。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaIshidaHonkumiRaw), "sankenbisha-ishida--honkumi.json"),
+  },
+  {
+    id: "sankenbisha-ishida--migishiken",
+    strategyId: "sankenbisha",
+    opponentId: "ibisha-kyusen",
+    recommend: 13,
+    group: "基本の組み方",
+    opponentLabel: "居飛車",
+    sideLabel: "先手",
+    label: "右四間飛車の急戦",
+    kind: "急戦",
+    summary: "後手が△6三銀から右四間飛車に組んできたとき、▲1六歩 → ▲7七桂と受けて、互角に組み直すまで。△7四歩・△8六歩の仕掛けの咎め方も覚える。",
+    load: () => assertJosekiCourse(parseRaw(sankenbishaIshidaMigishikenRaw), "sankenbisha-ishida--migishiken.json"),
   },
   {
     id: "sujichigaikaku--basic",

@@ -1,0 +1,686 @@
+{
+  "id": "sankenbisha-ishida--migishiken",
+  "title": "三間飛車 石田流 vs 右四間飛車(先手)",
+  "myStrategy": "sankenbisha",
+  "opponentStrategy": "ibisha",
+  "mySide": "sente",
+  "source": "1〜19手目は第1章(石田流の出だし)と同じで、出典も同じ(Wikibooks「将棋/石田流」、Wikipedia「石田流」)。20手目以降は、出典に先手の受けの手順が見つからなかったため、エンジンで選んで確かめたもの。(1) 文春オンライン(bunshun.jp/articles/-/14064?page=3):右四間飛車は石田流にとって手強い相手、という指摘。受けの手順は書かれていない。(2) Wikibooks「将棋/▲7六歩/△3四歩/▲7五歩」:後手の狙い(△6四歩〜△6三銀〜△5四銀〜△6二飛〜△6五歩の右四間速攻)の名前と手順だけで、先手の応じ方は書かれていない。(3) 常盤台メイ(note.com/tokiwadai_mei/n/n059009ed265d):△5四銀に▲7七桂と跳ねると6五への利きが増え、右四間の仕掛けをほぼ受けられる、という説明。この章の▲7七桂の考え方はこれに拠る。先手の手順(▲1六歩 → ▲7七桂 → ▲7八銀 → ▲6七銀 → ▲5六歩)と、後手の手は、出典のものではなく、エンジンが選んだ手(YaneuraOu、course-lab、2026-10-15/16)。こちらの手の評価は先手から見て、▲1六歩=0、▲7七桂=+1、▲7八銀=-16、▲6七銀=±2、▲5六歩=+1〜+26。どれもエンジンの最善手から100点以内。第3章の本組みの順(▲7七桂 → ▲6七銀 → ▲9七角)を、この形でそのまま続けると崩れる(▲9七角で駒損になり、-3773点)ことも、同じ測定で確かめた。なお、後手がエンジンの最善手(△1五歩)を指す場合は、この章ではなく第3章の道筋になる。この章は、後手が△6三銀から右四間に組んだときの受け方で、先手がよくなる章ではなく、互角に収める章。『変化』の欄にある、△7四歩→▲同歩(後手が300点以上損)、△8六歩→▲同飛(後手が350点以上損)、△6二飛→▲7七桂のあとの△5四銀→▲7四歩(後手が約260点損)は、同じエンジンの測定による。",
+  "goalFormation": "桂を7七、銀を6七、歩を5六に置いて、右四間飛車の急戦を受け止めた形。",
+  "goalLabel": "右四間飛車の急戦を受けて、互角に組み直しました",
+  "goalSfen": "ln3gknl/2r3sb1/p1pgpp1p1/3ps1p1p/1pP6/2RPP3P/PPNS1PPP1/1B2G1SK1/L4G1NL w - 1",
+  "root": {
+    "id": "n0",
+    "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
+    "comment": "平手の初形です。この章では、先手の石田流に対して、後手が右四間飛車の急戦を仕掛けてくる形を扱います。右四間飛車は、4筋の飛車で4筋・5筋から攻める戦法で、石田流にとっては手強い相手だと言われます(文春オンライン)。第1章の手順(▲7五歩〜▲7六飛〜美濃囲い)を19手目まで進めたあと、後手が△6三銀と銀を上げてくる形から始まります。第3章の本組みの順を急がず、まず1筋、次に7七の桂で6五を守るのが、この章の考え方です。",
+    "branches": [
+      {
+        "usi": "7g7f",
+        "kind": "main",
+        "note": "角道を開けます。7筋の歩を突くのは、石田流にも普通の三間飛車にも使える最初の一手です。",
+        "aim": "角の通り道を開けて、駒組みの第一歩を踏み出したい。",
+        "accepted": [
+          "7g7f",
+          "2g2f",
+          "1g1f",
+          "6i7h",
+          "3i3h",
+          "4i5h",
+          "5i5h",
+          "9g9f",
+          "6g6f",
+          "3i4h",
+          "5g5f",
+          "5i6h"
+        ],
+        "child": {
+          "id": "n1",
+          "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1",
+          "branches": [
+            {
+              "usi": "3c3d",
+              "kind": "main",
+              "note": "相手も角道を開けました。",
+              "child": {
+                "id": "n2",
+                "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                "comment": null,
+                "branches": [
+                  {
+                    "usi": "7f7e",
+                    "kind": "main",
+                    "note": "7筋の歩をもう一つ突きます。これが「早石田」の合図で、石田流を目指すと決める手です。",
+                    "aim": "攻めたい筋を早めに突き進めて、戦法の方針を決めたい。",
+                    "accepted": [
+                      "6i7h",
+                      "2g2f",
+                      "3i3h",
+                      "5i6h",
+                      "1g1f",
+                      "9g9f",
+                      "4i5h",
+                      "5g5f",
+                      "3i4h",
+                      "6g6f",
+                      "5i5h",
+                      "4i4h"
+                    ],
+                    "child": {
+                      "id": "n3",
+                      "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/2P6/9/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1",
+                      "comment": "エンジンの最善手は▲7八金で、この▲7五歩は107〜127点ほど低い評価です。ただし、これは戦法を選ぶ手です。中飛車の▲5八飛と同じで、この講座では石田流を指すためにこの手を採用します。",
+                      "branches": [
+                        {
+                          "usi": "8c8d",
+                          "kind": "main",
+                          "note": "相手が飛車先の歩を突きました。",
+                          "child": {
+                            "id": "n4",
+                            "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/1p4p2/2P6/9/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                            "comment": null,
+                            "branches": [
+                              {
+                                "usi": "2h7h",
+                                "kind": "main",
+                                "note": "飛車を7八へ振ります。三間飛車の形です。7筋の歩を後ろから支える位置で、次の一手で石田流になります。",
+                                "aim": "大駒を横に動かして、戦法の形を決めたい。",
+                                "accepted": [
+                                  "2h7h",
+                                  "2g2f",
+                                  "6i7h",
+                                  "1g1f",
+                                  "4i5h",
+                                  "8h2b+",
+                                  "9g9f",
+                                  "3i3h",
+                                  "3i4h",
+                                  "7e7d",
+                                  "3g3f",
+                                  "5i5h"
+                                ],
+                                "child": {
+                                  "id": "n5",
+                                  "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/1p4p2/2P6/9/PP1PPPPPP/1BR6/LNSGKGSNL w - 1",
+                                  "branches": [
+                                    {
+                                      "usi": "8d8e",
+                                      "kind": "main",
+                                      "note": "相手が飛車先の歩をもう一つ進めました。",
+                                      "child": {
+                                        "id": "n6",
+                                        "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/6p2/1pP6/9/PP1PPPPPP/1BR6/LNSGKGSNL b - 1",
+                                        "branches": [
+                                          {
+                                            "usi": "7h7f",
+                                            "kind": "main",
+                                            "note": "飛車を7六へ上げます。7筋に歩と飛車が並ぶ、石田流の形になりました。このあとは、この飛車を軸に7筋から攻める準備をします。",
+                                            "aim": "大駒を前に出して、突いた歩を後ろから支える形にしたい。",
+                                            "accepted": [
+                                              "7e7d",
+                                              "7h7f",
+                                              "5i4h",
+                                              "1g1f",
+                                              "3i3h",
+                                              "7i6h",
+                                              "9g9f",
+                                              "6i5h",
+                                              "3g3f",
+                                              "4i5h",
+                                              "4g4f",
+                                              "8h2b+"
+                                            ],
+                                            "child": {
+                                              "id": "n7",
+                                              "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/6p2/1pP6/2R6/PP1PPPPPP/1B7/LNSGKGSNL w - 1",
+                                              "branches": [
+                                                {
+                                                  "usi": "5a4b",
+                                                  "kind": "main",
+                                                  "note": "相手は玉を寄せて、囲いに向かいます。",
+                                                  "child": {
+                                                    "id": "n8",
+                                                    "sfen": "lnsg1gsnl/1r3k1b1/p1pppp1pp/6p2/1pP6/2R6/PP1PPPPPP/1B7/LNSGKGSNL b - 1",
+                                                    "branches": [
+                                                      {
+                                                        "usi": "6g6f",
+                                                        "kind": "main",
+                                                        "note": "6筋の歩を突いて、角の通り道を自分で止めます。同じ線の上で相手の角が当たってくる道も、これでふさげます。角交換をされず、落ち着いて組めます。",
+                                                        "aim": "大駒の交換が起きないよう、通り道を先に止めておきたい。",
+                                                        "accepted": [
+                                                          "7e7d",
+                                                          "5i4h",
+                                                          "1g1f",
+                                                          "8i7g",
+                                                          "9g9f",
+                                                          "8h7g",
+                                                          "6g6f",
+                                                          "3g3f",
+                                                          "6i5h",
+                                                          "8h2b+",
+                                                          "4i4h",
+                                                          "3i3h"
+                                                        ],
+                                                        "child": {
+                                                          "id": "n9",
+                                                          "sfen": "lnsg1gsnl/1r3k1b1/p1pppp1pp/6p2/1pP6/2RP5/PP2PPPPP/1B7/LNSGKGSNL w - 1",
+                                                          "branches": [
+                                                            {
+                                                              "usi": "3a3b",
+                                                              "kind": "main",
+                                                              "note": "相手は銀を3二へ上げて、玉の守りを固めます。",
+                                                              "child": {
+                                                                "id": "n10",
+                                                                "sfen": "lnsg1g1nl/1r3ksb1/p1pppp1pp/6p2/1pP6/2RP5/PP2PPPPP/1B7/LNSGKGSNL b - 1",
+                                                                "branches": [
+                                                                  {
+                                                                    "usi": "5i4h",
+                                                                    "kind": "main",
+                                                                    "note": "玉を4八へ動かします。美濃囲いを作る最初の一歩です。飛車とは反対側(2筋の方)に寄せて囲うのが、振り飛車の基本です。",
+                                                                    "aim": "安全な場所を目指して、囲いを作る一歩目を踏み出したい。",
+                                                                    "accepted": [
+                                                                      "7i7h",
+                                                                      "1g1f",
+                                                                      "8h7g",
+                                                                      "5i4h",
+                                                                      "7i6h",
+                                                                      "3i3h",
+                                                                      "9g9f",
+                                                                      "4i5h",
+                                                                      "4g4f",
+                                                                      "4i4h",
+                                                                      "5i5h",
+                                                                      "6i7h"
+                                                                    ],
+                                                                    "child": {
+                                                                      "id": "n11",
+                                                                      "sfen": "lnsg1g1nl/1r3ksb1/p1pppp1pp/6p2/1pP6/2RP5/PP2PPPPP/1B3K3/LNSG1GSNL w - 1",
+                                                                      "branches": [
+                                                                        {
+                                                                          "usi": "7a6b",
+                                                                          "kind": "main",
+                                                                          "note": "相手も銀を上げて、囲いを進めます。",
+                                                                          "child": {
+                                                                            "id": "n12",
+                                                                            "sfen": "ln1g1g1nl/1r1s1ksb1/p1pppp1pp/6p2/1pP6/2RP5/PP2PPPPP/1B3K3/LNSG1GSNL b - 1",
+                                                                            "branches": [
+                                                                              {
+                                                                                "usi": "4h3h",
+                                                                                "kind": "main",
+                                                                                "note": "玉をもう一つ寄せて3八へ。美濃囲いの途中です。",
+                                                                                "aim": "囲いに向かって、さらに一歩ずつ進めたい。",
+                                                                                "accepted": [
+                                                                                  "1g1f",
+                                                                                  "7i7h",
+                                                                                  "7i6h",
+                                                                                  "3i3h",
+                                                                                  "8h7g",
+                                                                                  "4h3h",
+                                                                                  "5g5f",
+                                                                                  "6i5i",
+                                                                                  "9g9f",
+                                                                                  "4g4f",
+                                                                                  "8i7g",
+                                                                                  "6i7h"
+                                                                                ],
+                                                                                "child": {
+                                                                                  "id": "n13",
+                                                                                  "sfen": "ln1g1g1nl/1r1s1ksb1/p1pppp1pp/6p2/1pP6/2RP5/PP2PPPPP/1B4K2/LNSG1GSNL w - 1",
+                                                                                  "branches": [
+                                                                                    {
+                                                                                      "usi": "6a5b",
+                                                                                      "kind": "main",
+                                                                                      "note": "相手は金を寄せて、囲いを整えます。",
+                                                                                      "child": {
+                                                                                        "id": "n14",
+                                                                                        "sfen": "ln3g1nl/1r1sgksb1/p1pppp1pp/6p2/1pP6/2RP5/PP2PPPPP/1B4K2/LNSG1GSNL b - 1",
+                                                                                        "branches": [
+                                                                                          {
+                                                                                            "usi": "3h2h",
+                                                                                            "kind": "main",
+                                                                                            "note": "玉を2八に収めます。ここが美濃囲いの玉の位置です。囲いの完成まで、あとは銀と金の2手です。",
+                                                                                            "aim": "囲いの定位置に収めて、安全な場所に落ち着かせたい。",
+                                                                                            "accepted": [
+                                                                                              "8h7g",
+                                                                                              "1g1f",
+                                                                                              "7i7h",
+                                                                                              "7i6h",
+                                                                                              "9g9f",
+                                                                                              "3h2h",
+                                                                                              "6i5h",
+                                                                                              "6i6h",
+                                                                                              "6i7h",
+                                                                                              "8i7g",
+                                                                                              "6i5i",
+                                                                                              "3g3f"
+                                                                                            ],
+                                                                                            "child": {
+                                                                                              "id": "n15",
+                                                                                              "sfen": "ln3g1nl/1r1sgksb1/p1pppp1pp/6p2/1pP6/2RP5/PP2PPPPP/1B5K1/LNSG1GSNL w - 1",
+                                                                                              "branches": [
+                                                                                                {
+                                                                                                  "usi": "6c6d",
+                                                                                                  "kind": "main",
+                                                                                                  "note": "相手は6筋の歩を突いて、陣形を進めます。",
+                                                                                                  "child": {
+                                                                                                    "id": "n16",
+                                                                                                    "sfen": "ln3g1nl/1r1sgksb1/p1p1pp1pp/3p2p2/1pP6/2RP5/PP2PPPPP/1B5K1/LNSG1GSNL b - 1",
+                                                                                                    "branches": [
+                                                                                                      {
+                                                                                                        "usi": "3i3h",
+                                                                                                        "kind": "main",
+                                                                                                        "note": "銀を3八へ上げて、玉の斜め前を守ります。これが美濃囲いの銀です。",
+                                                                                                        "aim": "守りの駒を寄せて、囲いの形を整えたい。",
+                                                                                                        "accepted": [
+                                                                                                          "7i6h",
+                                                                                                          "7i7h",
+                                                                                                          "1g1f",
+                                                                                                          "4i3h",
+                                                                                                          "3i3h",
+                                                                                                          "8h7g",
+                                                                                                          "8i7g",
+                                                                                                          "6i5h",
+                                                                                                          "6i7h",
+                                                                                                          "9g9f",
+                                                                                                          "5g5f",
+                                                                                                          "6i5i"
+                                                                                                        ],
+                                                                                                        "child": {
+                                                                                                          "id": "n17",
+                                                                                                          "sfen": "ln3g1nl/1r1sgksb1/p1p1pp1pp/3p2p2/1pP6/2RP5/PP2PPPPP/1B4SK1/LNSG1G1NL w - 1",
+                                                                                                          "branches": [
+                                                                                                            {
+                                                                                                              "usi": "1c1d",
+                                                                                                              "kind": "main",
+                                                                                                              "note": "相手は端の歩を突きました。",
+                                                                                                              "child": {
+                                                                                                                "id": "n18",
+                                                                                                                "sfen": "ln3g1nl/1r1sgksb1/p1p1pp1p1/3p2p1p/1pP6/2RP5/PP2PPPPP/1B4SK1/LNSG1G1NL b - 1",
+                                                                                                                "branches": [
+                                                                                                                  {
+                                                                                                                    "usi": "6i5h",
+                                                                                                                    "kind": "main",
+                                                                                                                    "note": "金を5八へ寄せて、美濃囲いが完成しました。7六の飛車と合わせて、石田流と美濃囲いがそろった形です。",
+                                                                                                                    "aim": "最後の守りの駒を寄せて、囲いを完成させたい。",
+                                                                                                                    "accepted": [
+                                                                                                                      "1g1f",
+                                                                                                                      "8i7g",
+                                                                                                                      "6i5h",
+                                                                                                                      "8h7g",
+                                                                                                                      "7i7h",
+                                                                                                                      "7i6h",
+                                                                                                                      "5g5f",
+                                                                                                                      "9g9f",
+                                                                                                                      "7e7d",
+                                                                                                                      "6i7h",
+                                                                                                                      "6i6h",
+                                                                                                                      "6i5i"
+                                                                                                                    ],
+                                                                                                                    "child": {
+                                                                                                                      "id": "n19",
+                                                                                                                      "sfen": "ln3g1nl/1r1sgksb1/p1p1pp1p1/3p2p1p/1pP6/2RP5/PP2PPPPP/1B2G1SK1/LNS2G1NL w - 1",
+                                                                                                                      "branches": [
+                                                                                                                        {
+                                                                                                                          "usi": "6b6c",
+                                                                                                                          "kind": "main",
+                                                                                                                          "note": "相手は銀を6三に上げました。右四間飛車の準備かもしれません(△6三銀から△5四銀と出て、6筋・5筋から攻める組み方があります)。",
+                                                                                                                          "child": {
+                                                                                                                            "id": "n20",
+                                                                                                                            "sfen": "ln3g1nl/1r2gksb1/p1pspp1p1/3p2p1p/1pP6/2RP5/PP2PPPPP/1B2G1SK1/LNS2G1NL b - 1",
+                                                                                                                            "branches": [
+                                                                                                                              {
+                                                                                                                                "usi": "1g1f",
+                                                                                                                                "kind": "main",
+                                                                                                                                "note": "端の歩を突きます。第3章の本組みでは、この局面で▲7七桂と跳ねましたが、右四間の形を見たこの局面では、先に端の歩を突く手が、エンジンの評価で0点と最善でした。この手順(▲1六歩が先で、▲7七桂は次)はエンジンが選んだもので、出典には書かれていません。",
+                                                                                                                                "aim": "相手の仕掛けにそなえて、手を打つ順番を整えて、先に手をかけておきたい。",
+                                                                                                                                "accepted": [
+                                                                                                                                  "1g1f",
+                                                                                                                                  "9g9f",
+                                                                                                                                  "7i7h",
+                                                                                                                                  "8i7g",
+                                                                                                                                  "5g5f",
+                                                                                                                                  "4i3i",
+                                                                                                                                  "7i6h"
+                                                                                                                                ],
+                                                                                                                                "child": {
+                                                                                                                                  "id": "n21",
+                                                                                                                                  "sfen": "ln3g1nl/1r2gksb1/p1pspp1p1/3p2p1p/1pP6/2RP4P/PP2PPPP1/1B2G1SK1/LNS2G1NL w - 1",
+                                                                                                                                  "comment": "第3章の順をそのまま続けると崩れることを、エンジンで確かめました。後手が△6三銀〜△6二飛〜△5四銀〜△6五歩と進める形で、第3章と同じ順を続けて測りました。最初の▲7七桂は-95〜-108点で、最善の▲1六歩(-11点)と約100点離れます。さらに▲6七銀・▲9六歩・▲9七角と続けると、最後の▲9七角では駒損になって-3773点まで落ちます。右四間を見たら、第3章の本組みの順を急がないのが、この章の方針です。なお、端の歩を先に突く理由の詳しい説明は、確かめていません(エンジンの手です)。",
+                                                                                                                                  "branches": [
+                                                                                                                                    {
+                                                                                                                                      "usi": "6c5d",
+                                                                                                                                      "kind": "main",
+                                                                                                                                      "note": "相手は銀を5四に出しました。5四の銀は6五や4五をねらえる位置で、右四間の仕掛けに向かう組み方です(Wikibooksの手順の一つ)。",
+                                                                                                                                      "child": {
+                                                                                                                                        "id": "n22",
+                                                                                                                                        "sfen": "ln3g1nl/1r2gksb1/p1p1pp1p1/3ps1p1p/1pP6/2RP4P/PP2PPPP1/1B2G1SK1/LNS2G1NL b - 1",
+                                                                                                                                        "comment": null,
+                                                                                                                                        "branches": [
+                                                                                                                                          {
+                                                                                                                                            "usi": "8i7g",
+                                                                                                                                            "kind": "main",
+                                                                                                                                            "note": "桂を7七へ跳ねます。相手の銀が5四に出てきたので、6五の地点に先手の利きを増やすのが目的です。桂が6五を守れば、△6五歩と突かれても取り返せます(常盤台メイの説明)。",
+                                                                                                                                            "aim": "相手の突っかけに対して、取り返せる備えを増やしておきたい。",
+                                                                                                                                            "accepted": [
+                                                                                                                                              "8i7g",
+                                                                                                                                              "5g5f",
+                                                                                                                                              "9g9f",
+                                                                                                                                              "7e7d",
+                                                                                                                                              "7i6h",
+                                                                                                                                              "4g4f",
+                                                                                                                                              "4i3i",
+                                                                                                                                              "8h7g",
+                                                                                                                                              "7i7h",
+                                                                                                                                              "2g2f",
+                                                                                                                                              "5h6g",
+                                                                                                                                              "4i4h"
+                                                                                                                                            ],
+                                                                                                                                            "child": {
+                                                                                                                                              "id": "n23",
+                                                                                                                                              "sfen": "ln3g1nl/1r2gksb1/p1p1pp1p1/3ps1p1p/1pP6/2RP4P/PPN1PPPP1/1B2G1SK1/L1S2G1NL w - 1",
+                                                                                                                                              "comment": "エンジンの評価は先手から見て+1点で、ほぼ互角です。第3章では桂を一手目に跳ねましたが、この章では▲1六歩を先に指してから跳ねています。順番を入れかえるだけで、評価がちがいます。",
+                                                                                                                                              "branches": [
+                                                                                                                                                {
+                                                                                                                                                  "usi": "5b6c",
+                                                                                                                                                  "kind": "main",
+                                                                                                                                                  "note": "相手は金を6三に寄せました。銀のうしろを固める手に見えます(推測です)。",
+                                                                                                                                                  "child": {
+                                                                                                                                                    "id": "n24",
+                                                                                                                                                    "sfen": "ln3g1nl/1r3ksb1/p1pgpp1p1/3ps1p1p/1pP6/2RP4P/PPN1PPPP1/1B2G1SK1/L1S2G1NL b - 1",
+                                                                                                                                                    "branches": [
+                                                                                                                                                      {
+                                                                                                                                                        "usi": "7i7h",
+                                                                                                                                                        "kind": "main",
+                                                                                                                                                        "note": "銀を7八へ上げます。7七の桂と、7六の飛車のうしろを固める手です。第3章の▲6八銀とはちがい、6筋ではなく7筋に銀を寄せています。",
+                                                                                                                                                        "aim": "大駒のうしろを固めて、仕掛けられても崩れない形にしたい。",
+                                                                                                                                                        "accepted": [
+                                                                                                                                                          "7i7h",
+                                                                                                                                                          "5g5f",
+                                                                                                                                                          "9g9f",
+                                                                                                                                                          "7i6h",
+                                                                                                                                                          "4g4f",
+                                                                                                                                                          "5h6g",
+                                                                                                                                                          "4i3i",
+                                                                                                                                                          "4i4h",
+                                                                                                                                                          "5h5i",
+                                                                                                                                                          "2g2f",
+                                                                                                                                                          "5h4h",
+                                                                                                                                                          "2h3i"
+                                                                                                                                                        ],
+                                                                                                                                                        "child": {
+                                                                                                                                                          "id": "n25",
+                                                                                                                                                          "sfen": "ln3g1nl/1r3ksb1/p1pgpp1p1/3ps1p1p/1pP6/2RP4P/PPN1PPPP1/1BS1G1SK1/L4G1NL w - 1",
+                                                                                                                                                          "comment": "エンジンの評価は先手から見て-16点です。その次の最善手(+6点)との差は小さく、許容の範囲です。第3章と同じ▲6八銀ではなく、まず7八に銀を置く形が、右四間を見たときの組み方です。",
+                                                                                                                                                          "branches": [
+                                                                                                                                                            {
+                                                                                                                                                              "usi": "4b3a",
+                                                                                                                                                              "kind": "main",
+                                                                                                                                                              "note": "相手は玉を3一に寄せました。",
+                                                                                                                                                              "child": {
+                                                                                                                                                                "id": "n26",
+                                                                                                                                                                "sfen": "ln3gknl/1r4sb1/p1pgpp1p1/3ps1p1p/1pP6/2RP4P/PPN1PPPP1/1BS1G1SK1/L4G1NL b - 1",
+                                                                                                                                                                "branches": [
+                                                                                                                                                                  {
+                                                                                                                                                                    "usi": "7h6g",
+                                                                                                                                                                    "kind": "main",
+                                                                                                                                                                    "note": "銀を6七へ上げます。6筋を厚くして、△6五歩の仕掛けに備えます。",
+                                                                                                                                                                    "aim": "仕掛けられやすい側を厚くして、受けを固めたい。",
+                                                                                                                                                                    "accepted": [
+                                                                                                                                                                      "7h6g",
+                                                                                                                                                                      "5g5f",
+                                                                                                                                                                      "8h7i",
+                                                                                                                                                                      "9g9f",
+                                                                                                                                                                      "4i3i",
+                                                                                                                                                                      "9i9h",
+                                                                                                                                                                      "5h6g",
+                                                                                                                                                                      "4g4f",
+                                                                                                                                                                      "2g2f"
+                                                                                                                                                                    ],
+                                                                                                                                                                    "child": {
+                                                                                                                                                                      "id": "n27",
+                                                                                                                                                                      "sfen": "ln3gknl/1r4sb1/p1pgpp1p1/3ps1p1p/1pP6/2RP4P/PPNSPPPP1/1B2G1SK1/L4G1NL w - 1",
+                                                                                                                                                                      "comment": "エンジンの評価は先手から見て±2点で、ほぼ互角です。第3章では、このあと▲9六歩と▲9七角に進みましたが、右四間を見たこの章では、角を引かずに5六の歩へ進みます。",
+                                                                                                                                                                      "branches": [
+                                                                                                                                                                        {
+                                                                                                                                                                          "usi": "8b7b",
+                                                                                                                                                                          "kind": "main",
+                                                                                                                                                                          "note": "相手は飛車を7二に動かしました。6筋の仕掛けを見送ったように見えます(推測です)。",
+                                                                                                                                                                          "child": {
+                                                                                                                                                                            "id": "n28",
+                                                                                                                                                                            "sfen": "ln3gknl/2r3sb1/p1pgpp1p1/3ps1p1p/1pP6/2RP4P/PPNSPPPP1/1B2G1SK1/L4G1NL b - 1",
+                                                                                                                                                                            "branches": [
+                                                                                                                                                                              {
+                                                                                                                                                                                "usi": "5g5f",
+                                                                                                                                                                                "kind": "main",
+                                                                                                                                                                                "note": "5筋の歩を突きます。中央から6筋を厚くして、5五・6五の地点の守りを固めます。",
+                                                                                                                                                                                "aim": "中央から守りを厚くして、互角の形に落ち着けたい。",
+                                                                                                                                                                                "accepted": [
+                                                                                                                                                                                  "5g5f",
+                                                                                                                                                                                  "7g8e",
+                                                                                                                                                                                  "8g8f",
+                                                                                                                                                                                  "9g9f",
+                                                                                                                                                                                  "4g4f"
+                                                                                                                                                                                ],
+                                                                                                                                                                                "child": {
+                                                                                                                                                                                  "id": "n29",
+                                                                                                                                                                                  "sfen": "ln3gknl/2r3sb1/p1pgpp1p1/3ps1p1p/1pP6/2RPP3P/PPNS1PPP1/1B2G1SK1/L4G1NL w - 1",
+                                                                                                                                                                                  "comment": "右四間飛車の急戦を受けて、互角に組み直しました。まとめると、(1)▲1六歩を先に指す、(2)▲7七桂で6五の守りを増やす、(3)▲7八銀 → ▲6七銀 → ▲5六歩と6筋・5筋を厚くする、の3つです。\n\n【ここでのいちばん大事なこと】右四間を見たら、第3章の本組みの順(▲7七桂 → ▲6七銀 → ▲9七角)を急がないことです。エンジンで確かめると、この形でそのまま第3章の順を続けると、▲9七角では駒損になり、-3773点まで落ちます。▲1六歩が先、▲7七桂が次、という順番は、エンジンが見つけたものです(出典には書かれていません)。\n\n【形勢について】エンジンの評価は先手から見て+1〜+26点で、ほぼ互角です。後手が最善の△1五歩を指した場合は、この章ではなく第3章の道筋になります。この章は、後手が右四間に組んだときの受け方です。",
+                                                                                                                                                                                  "branches": []
+                                                                                                                                                                                }
+                                                                                                                                                                              }
+                                                                                                                                                                            ]
+                                                                                                                                                                          }
+                                                                                                                                                                        }
+                                                                                                                                                                      ]
+                                                                                                                                                                    }
+                                                                                                                                                                  }
+                                                                                                                                                                ]
+                                                                                                                                                              }
+                                                                                                                                                            }
+                                                                                                                                                          ]
+                                                                                                                                                        }
+                                                                                                                                                      }
+                                                                                                                                                    ]
+                                                                                                                                                  }
+                                                                                                                                                }
+                                                                                                                                              ]
+                                                                                                                                            }
+                                                                                                                                          }
+                                                                                                                                        ]
+                                                                                                                                      }
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                      "usi": "7c7d",
+                                                                                                                                      "kind": "deviation",
+                                                                                                                                      "note": "相手が7筋の歩を突き出して、7五の歩に当ててきました。",
+                                                                                                                                      "punishNote": "7四の歩は、7六の飛車が後ろから支えている7五の歩の前に出てきた形です。▲同歩と取れば、歩を一枚得できます。取った歩は7四にいて、飛車がそのうしろにつき、7筋が開いて飛車の通り道になります。エンジンの測定では、この△7四歩は後手が300点以上損をする手で、▲同歩のあとは先手から見て+294〜313点です。相手の駒組みが整わないうちに突き出す、無理な仕掛けです。",
+                                                                                                                                      "child": {
+                                                                                                                                        "id": "d22",
+                                                                                                                                        "sfen": "ln3g1nl/1r2gksb1/p2spp1p1/2pp2p1p/1pP6/2RP4P/PP2PPPP1/1B2G1SK1/LNS2G1NL b - 1",
+                                                                                                                                        "branches": [
+                                                                                                                                          {
+                                                                                                                                            "usi": "7e7d",
+                                                                                                                                            "kind": "main",
+                                                                                                                                            "note": "7四の歩を、同じ歩で取ります。歩を一枚得して、取った歩のうしろに飛車がついて7筋が開きます。",
+                                                                                                                                            "child": {
+                                                                                                                                              "id": "d22_1",
+                                                                                                                                              "sfen": "ln3g1nl/1r2gksb1/p2spp1p1/2Pp2p1p/1p7/2RP4P/PP2PPPP1/1B2G1SK1/LNS2G1NL w P 1",
+                                                                                                                                              "branches": []
+                                                                                                                                            }
+                                                                                                                                          }
+                                                                                                                                        ]
+                                                                                                                                      }
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                      "usi": "8e8f",
+                                                                                                                                      "kind": "deviation",
+                                                                                                                                      "note": "相手が8筋の歩を突き出して、8六に歩を進めました。",
+                                                                                                                                      "punishNote": "8六の歩は、7六の飛車で取ることができます。▲同飛に△同飛と飛車を取り返されても、▲同歩と取れば、先手は歩を一枚得して、飛車の交換になります。取り合いのあと、お互いに飛車を持ち駒にした形で、先手が歩を一枚得しています。もし△同飛と取らずに△9二飛と逃げたら、8筋が空いていて、▲8一飛成と、8一の桂を取りながら飛車が成ります。エンジンの評価はそこで先手から見て+1100点になります。エンジンの測定では、飛車を取り合う本筋の△8六歩の評価は先手から見て+336点で、後手が350点以上損をする手です。",
+                                                                                                                                      "child": {
+                                                                                                                                        "id": "d22",
+                                                                                                                                        "sfen": "ln3g1nl/1r2gksb1/p1pspp1p1/3p2p1p/2P6/1pRP4P/PP2PPPP1/1B2G1SK1/LNS2G1NL b - 1",
+                                                                                                                                        "branches": [
+                                                                                                                                          {
+                                                                                                                                            "usi": "7f8f",
+                                                                                                                                            "kind": "main",
+                                                                                                                                            "note": "8六の歩を、飛車で取ります。8筋の歩を取ると、飛車が8筋に出ます。",
+                                                                                                                                            "child": {
+                                                                                                                                              "id": "d22_1",
+                                                                                                                                              "sfen": "ln3g1nl/1r2gksb1/p1pspp1p1/3p2p1p/2P6/1R1P4P/PP2PPPP1/1B2G1SK1/LNS2G1NL w P 1",
+                                                                                                                                              "branches": [
+                                                                                                                                                {
+                                                                                                                                                  "usi": "8b8f",
+                                                                                                                                                  "kind": "main",
+                                                                                                                                                  "note": "相手は飛車で、8六の飛車を取り返しました。",
+                                                                                                                                                  "child": {
+                                                                                                                                                    "id": "d22_2",
+                                                                                                                                                    "sfen": "ln3g1nl/4gksb1/p1pspp1p1/3p2p1p/2P6/1r1P4P/PP2PPPP1/1B2G1SK1/LNS2G1NL b Pr 1",
+                                                                                                                                                    "branches": [
+                                                                                                                                                      {
+                                                                                                                                                        "usi": "8g8f",
+                                                                                                                                                        "kind": "main",
+                                                                                                                                                        "note": "歩で、8六の飛車を取ります。飛車の交換になり、先手は最初の歩を一枚得しています。エンジンの評価は先手から見て+336点です。",
+                                                                                                                                                        "child": {
+                                                                                                                                                          "id": "d22_3",
+                                                                                                                                                          "sfen": "ln3g1nl/4gksb1/p1pspp1p1/3p2p1p/2P6/1P1P4P/P3PPPP1/1B2G1SK1/LNS2G1NL w RPr 1",
+                                                                                                                                                          "branches": []
+                                                                                                                                                        }
+                                                                                                                                                      }
+                                                                                                                                                    ]
+                                                                                                                                                  }
+                                                                                                                                                }
+                                                                                                                                              ]
+                                                                                                                                            }
+                                                                                                                                          }
+                                                                                                                                        ]
+                                                                                                                                      }
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                      "usi": "8b6b",
+                                                                                                                                      "kind": "deviation",
+                                                                                                                                      "variation": true,
+                                                                                                                                      "note": "相手が飛車を6二に振りました。右四間飛車の、定番の組み方です。",
+                                                                                                                                      "punishNote": "△6二飛は悪い手ではありません(エンジンの最善手との差は86点で、許容の範囲です)。右四間では、ごく普通の一手です。この△6二飛には、▲7七桂と跳ねて6五の守りを増やします(常盤台メイの説明)。ここで相手が定番の△5四銀と続けると、すぐに▲7四歩!と突き出されます。エンジンの測定では、この△5四銀は後手が約260点損をする悪手で、▲7四歩のあと先手から見て+284点です。なぜ▲7四歩が効くのかは、盤面から確かめられる範囲では、後手の飛車が6筋に、銀が5四に出て、7筋の守りが薄いことくらいです(推測です)。詳しい理由はエンジンの発見で、確かめていません。",
+                                                                                                                                      "child": {
+                                                                                                                                        "id": "d22",
+                                                                                                                                        "sfen": "ln3g1nl/3rgksb1/p1pspp1p1/3p2p1p/1pP6/2RP4P/PP2PPPP1/1B2G1SK1/LNS2G1NL b - 1",
+                                                                                                                                        "branches": [
+                                                                                                                                          {
+                                                                                                                                            "usi": "8i7g",
+                                                                                                                                            "kind": "main",
+                                                                                                                                            "note": "桂を7七へ跳ねます。6五の地点の守りを増やします(常盤台メイの説明)。相手が△6二飛と振った形でも、右四間への受けは同じ、▲7七桂です。",
+                                                                                                                                            "aim": "相手が組み方を変えても慌てず、備えの駒を一枚増やしておきたい。",
+                                                                                                                                            "accepted": [
+                                                                                                                                              "8i7g",
+                                                                                                                                              "9g9f",
+                                                                                                                                              "6f6e",
+                                                                                                                                              "8h7g",
+                                                                                                                                              "4i3i",
+                                                                                                                                              "7i7h",
+                                                                                                                                              "4g4f",
+                                                                                                                                              "7i6h",
+                                                                                                                                              "4i5i",
+                                                                                                                                              "5g5f",
+                                                                                                                                              "5h4h",
+                                                                                                                                              "5h6g"
+                                                                                                                                            ],
+                                                                                                                                            "child": {
+                                                                                                                                              "id": "d22_1",
+                                                                                                                                              "sfen": "ln3g1nl/3rgksb1/p1pspp1p1/3p2p1p/1pP6/2RP4P/PPN1PPPP1/1B2G1SK1/L1S2G1NL w - 1",
+                                                                                                                                              "branches": [
+                                                                                                                                                {
+                                                                                                                                                  "usi": "6c5d",
+                                                                                                                                                  "kind": "main",
+                                                                                                                                                  "note": "相手は定番の△5四銀と出ました。ここが悪手です。7筋の守りが薄くなり、▲7四歩の突き出しを受けます。",
+                                                                                                                                                  "child": {
+                                                                                                                                                    "id": "d22_2",
+                                                                                                                                                    "sfen": "ln3g1nl/3rgksb1/p1p1pp1p1/3ps1p1p/1pP6/2RP4P/PPN1PPPP1/1B2G1SK1/L1S2G1NL b - 1",
+                                                                                                                                                    "branches": [
+                                                                                                                                                      {
+                                                                                                                                                        "usi": "7e7d",
+                                                                                                                                                        "kind": "main",
+                                                                                                                                                        "note": "7筋の歩を7四に突き出します。エンジンが見つけた手で、△同歩や△7二飛のあとにも、先手がよい形が続きます。この手で、先手から見て+284点です。",
+                                                                                                                                                        "aim": "相手の守りが薄いところへ、駒を突き出して攻めを先に仕掛けたい。",
+                                                                                                                                                        "accepted": [
+                                                                                                                                                          "7e7d",
+                                                                                                                                                          "8g8f"
+                                                                                                                                                        ],
+                                                                                                                                                        "child": {
+                                                                                                                                                          "id": "d22_3",
+                                                                                                                                                          "sfen": "ln3g1nl/3rgksb1/p1p1pp1p1/2Pps1p1p/1p7/2RP4P/PPN1PPPP1/1B2G1SK1/L1S2G1NL w - 1",
+                                                                                                                                                          "branches": []
+                                                                                                                                                        }
+                                                                                                                                                      }
+                                                                                                                                                    ]
+                                                                                                                                                  }
+                                                                                                                                                }
+                                                                                                                                              ]
+                                                                                                                                            }
+                                                                                                                                          }
+                                                                                                                                        ]
+                                                                                                                                      }
+                                                                                                                                    }
+                                                                                                                                  ]
+                                                                                                                                }
+                                                                                                                              }
+                                                                                                                            ]
+                                                                                                                          }
+                                                                                                                        }
+                                                                                                                      ]
+                                                                                                                    }
+                                                                                                                  }
+                                                                                                                ]
+                                                                                                              }
+                                                                                                            }
+                                                                                                          ]
+                                                                                                        }
+                                                                                                      }
+                                                                                                    ]
+                                                                                                  }
+                                                                                                }
+                                                                                              ]
+                                                                                            }
+                                                                                          }
+                                                                                        ]
+                                                                                      }
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              }
+                                                                            ]
+                                                                          }
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                              }
+                                                            }
+                                                          ]
+                                                        }
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
