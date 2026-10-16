@@ -47,6 +47,7 @@ import sankenbishaIshidaDeashiRaw from "../data/joseki/sankenbisha-ishida--deash
 import sankenbishaIshidaKakugawariRaw from "../data/joseki/sankenbisha-ishida--kakugawari.json?raw";
 import sankenbishaIshidaHonkumiRaw from "../data/joseki/sankenbisha-ishida--honkumi.json?raw";
 import sankenbishaIshidaMigishikenRaw from "../data/joseki/sankenbisha-ishida--migishiken.json?raw";
+import sankenbishaIshidaHidariminoRaw from "../data/joseki/sankenbisha-ishida--hidarimino.json?raw";
 import hayaishidaBasicRaw from "../data/joseki/hayaishida--basic.json?raw";
 import ibishaVsHayaishida42Raw from "../data/joseki/ibisha-vs-hayaishida--42gyoku.json?raw";
 import sankenbishaVsNakabishaAifuriRaw from "../data/joseki/sankenbisha-vs-nakabisha--aifuri.json?raw";
@@ -870,9 +871,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     group: "基本の組み方",
     opponentLabel: "居飛車",
     sideLabel: "先手",
-    label: "本組みに組む",
+    label: "本組みに組む(▲9七角型)",
     kind: "持久戦",
-    summary: "美濃囲いのあと、▲7七桂 → ▲6八銀 → ▲6七銀 → ▲9六歩 → ▲9七角と、石田流の標準の形に組むまで。△6五歩への返し方も覚える。",
+    summary: "後手が左美濃(△6三銀・△3三角-2二玉型)に組むのに対して、美濃囲いのあと、▲7七桂 → ▲6八銀 → ▲6七銀 → ▲9六歩 → ▲9七角と、▲9七角型の本組みに組むまで。△6五歩への返し方も覚える。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaIshidaHonkumiRaw), "sankenbisha-ishida--honkumi.json"),
   },
   {
@@ -887,6 +888,19 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "急戦",
     summary: "後手が△6三銀から右四間飛車に組んできたとき、▲1六歩 → ▲7七桂と受けて、互角に組み直すまで。△7四歩・△8六歩の仕掛けの咎め方も覚える。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaIshidaMigishikenRaw), "sankenbisha-ishida--migishiken.json"),
+  },
+  {
+    id: "sankenbisha-ishida--hidarimino",
+    strategyId: "sankenbisha",
+    opponentId: "ibisha-kyusen",
+    recommend: 14,
+    group: "基本の組み方",
+    opponentLabel: "居飛車",
+    sideLabel: "先手",
+    label: "左美濃には▲7七角型",
+    kind: "持久戦",
+    summary: "後手が△3一玉から左美濃に組んできたとき、▲9七角型ではなく▲7七角 → ▲6八銀 → ▲6七銀 → ▲5六銀と、▲7七角型に組むまで。",
+    load: () => assertJosekiCourse(parseRaw(sankenbishaIshidaHidariminoRaw), "sankenbisha-ishida--hidarimino.json"),
   },
   {
     id: "sujichigaikaku--basic",
