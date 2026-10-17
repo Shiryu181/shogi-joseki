@@ -23609,6 +23609,758 @@
    "courses": [
     "sankenbisha-ishida--migishiken"
    ]
+  },
+  "ln3g1n1/1r1sgksbl/p1p1pp1p1/3p2p1p/1pP6/2RP5/PP2PPPPP/1B2G1SK1/LNS2G1NL b -": {
+   "best": "1g1f",
+   "cp": 31,
+   "gap": 27,
+   "accepted": [
+    "1g1f",
+    "8h7g",
+    "8i7g",
+    "2g2f",
+    "7i7h",
+    "7i6h",
+    "5g5f",
+    "3g3f",
+    "9g9f",
+    "4g4f",
+    "5h6g",
+    "4i3i"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1n1/1r2gksbl/p1pspp1p1/3p2p1p/1pP6/2RP4P/PP2PPPP1/1B2G1SK1/LNS2G1NL b -": {
+   "best": "7i7h",
+   "cp": 28,
+   "gap": 2,
+   "accepted": [
+    "7i7h",
+    "7i6h",
+    "8h7g",
+    "9g9f",
+    "3g3f",
+    "8i7g",
+    "2g2f",
+    "4g4f",
+    "5g5f",
+    "4i3i",
+    "5h5i",
+    "5h6g"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3gkn1/1r2g1sbl/p1pspp1p1/3p2p1p/1pP6/2RP4P/PP2PPPP1/1BS1G1SK1/LN3G1NL b -": {
+   "best": "9g9f",
+   "cp": 4,
+   "gap": 1,
+   "accepted": [
+    "9g9f",
+    "7h6g",
+    "8h7g",
+    "4g4f",
+    "4i3i",
+    "8h7i",
+    "8i7g",
+    "2g2f",
+    "5g5f",
+    "5h4h",
+    "9i9h",
+    "7h7g"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3gkn1/1r2g1s1l/p1psppbp1/3p2p1p/1pP6/P1RP4P/1P2PPPP1/1BS1G1SK1/LN3G1NL b -": {
+   "best": "8i7g",
+   "cp": -6,
+   "gap": 0,
+   "accepted": [
+    "8i7g",
+    "7h6g",
+    "8h9g",
+    "8h7g",
+    "2g2f",
+    "4g4f",
+    "9f9e",
+    "5h4h",
+    "3g3f",
+    "4i3i",
+    "5h6g",
+    "5h5i"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3gkn1/1r3gs1l/p1psppbp1/3p2p1p/1pP6/P1RP4P/1PN1PPPP1/1BS1G1SK1/L4G1NL b -": {
+   "best": "8h9g",
+   "cp": -14,
+   "gap": 0,
+   "accepted": [
+    "8h9g",
+    "7h6g",
+    "2h3i",
+    "9f9e",
+    "5h4h",
+    "3g3f",
+    "8h7i",
+    "5h5i",
+    "4i3i",
+    "5g5f",
+    "4i4h",
+    "2g2f"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3gkn1/1r3gs1l/p1psppb2/3p2ppp/1pP6/P1RP4P/BPN1PPPP1/2S1G1SK1/L4G1NL b -": {
+   "best": "7h6g",
+   "cp": 54,
+   "gap": 92,
+   "accepted": [
+    "7h6g",
+    "5g5f"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1n1/1r3gskl/p1psppb2/3p2ppp/1pP6/P1RP4P/BPNSPPPP1/4G1SK1/L4G1NL b -": {
+   "best": "6f6e",
+   "cp": 121,
+   "gap": 77,
+   "accepted": [
+    "6f6e",
+    "8g8f"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1n1/1r3gskl/p1psppb2/6ppp/1pPp5/P1R5P/BPNSPPPP1/4G1SK1/L4G1NL b p": {
+   "best": "7g6e",
+   "cp": 7,
+   "gap": 13,
+   "accepted": [
+    "7g6e",
+    "6g5f",
+    "9i9h",
+    "4i3i",
+    "5g5f",
+    "9g7i",
+    "4g4f",
+    "9f9e"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1n1/1r3gskl/p1pspp3/6ppp/1pPN5/P1R5P/BP1SPPPP1/4G1SK1/+b4G1NL b Plp": {
+   "best": "7e7d",
+   "cp": 14,
+   "gap": 46,
+   "accepted": [
+    "7e7d",
+    "6e5c+"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1n1/1r3gskl/p2spp3/2p3ppp/1p1N5/P1R5P/BP1SPPPP1/4G1SK1/+b4G1NL b Pl2p": {
+   "best": "6e5c+",
+   "cp": -2,
+   "gap": 205,
+   "accepted": [
+    "6e5c+"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1n1/1r1sgks1l/p1p1ppbp1/3p2p1p/1pP6/2RP4P/PP2PPPP1/1B2G1SK1/LNS2G1NL b -": {
+   "best": "7i7h",
+   "cp": -7,
+   "gap": 0,
+   "accepted": [
+    "7i7h",
+    "7i6h",
+    "8h7g",
+    "9g9f",
+    "4g4f",
+    "5g5f",
+    "5h6g",
+    "8i7g",
+    "2g2f",
+    "4i3i",
+    "3g3f",
+    "6f6e"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1n1/1r2gks1l/p1psppbp1/3p2p1p/1pP6/2RP4P/PP2PPPP1/1BS1G1SK1/LN3G1NL b -": {
+   "best": "7h6g",
+   "cp": 24,
+   "gap": 29,
+   "accepted": [
+    "7h6g",
+    "4g4f",
+    "2g2f",
+    "8h7g",
+    "3g3f",
+    "8i7g",
+    "9g9f",
+    "5h4h",
+    "8h7i",
+    "4i3i",
+    "5g5f",
+    "9i9h"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3gkn1/1r2g1s1l/p1psppbp1/3p2p1p/1pP6/2RP4P/PP1SPPPP1/1B2G1SK1/LN3G1NL b -": {
+   "best": "6g5f",
+   "cp": 40,
+   "gap": 39,
+   "accepted": [
+    "6g5f",
+    "8i7g",
+    "4g4f",
+    "9g9f",
+    "8h7g",
+    "2g2f",
+    "5h4h",
+    "5g5f",
+    "9i9h",
+    "4i3i",
+    "8h7i",
+    "5h5i"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1n1/1r2g1skl/p1psppbp1/3p2p1p/1pP6/2RPS3P/PP2PPPP1/1B2G1SK1/LN3G1NL b -": {
+   "best": "5f4e",
+   "cp": 154,
+   "gap": 149,
+   "accepted": [
+    "5f4e"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1nk/1r2g1s1l/p1psppbp1/3p2p1p/1pP2S3/2RP4P/PP2PPPP1/1B2G1SK1/LN3G1NL b -": {
+   "best": "1f1e",
+   "cp": 311,
+   "gap": 27,
+   "accepted": [
+    "1f1e",
+    "4e3d",
+    "8i7g"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1n1/1r2g1skl/p1psppbp1/3p2p1p/1pP6/P1RP4P/1PN1PPPP1/1BS1G1SK1/L4G1NL b -": {
+   "best": "7h6g",
+   "cp": -16,
+   "gap": 0,
+   "accepted": [
+    "7h6g",
+    "8h9g",
+    "9f9e",
+    "2g2f",
+    "3g3f",
+    "5h4h",
+    "9i9h",
+    "8h7i",
+    "5g5f",
+    "4i4h",
+    "4g4f",
+    "5h5i"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1nk/1r2g1s1l/p1psppbp1/3p2p1p/1pP6/P1RP4P/1PNSPPPP1/1B2G1SK1/L4G1NL b -": {
+   "best": "8h9g",
+   "cp": -21,
+   "gap": 3,
+   "accepted": [
+    "8h9g",
+    "6g5f",
+    "3g3f",
+    "4i3i",
+    "2g2f",
+    "5g5f",
+    "8h7i",
+    "9f9e",
+    "5h5i",
+    "4i4h",
+    "5h4h",
+    "6f6e"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln4gnk/1r2g1s1l/p1psppbp1/3p2p1p/1pP6/P1RP4P/BPNSPPPP1/4G1SK1/L4G1NL b -": {
+   "best": "6g5f",
+   "cp": 107,
+   "gap": 103,
+   "accepted": [
+    "6g5f"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln4gnk/1r2g1s1l/p1psppbp1/3p4p/1pP3p2/P1RPS3P/BPN1PPPP1/4G1SK1/L4G1NL b -": {
+   "best": "6f6e",
+   "cp": 181,
+   "gap": 55,
+   "accepted": [
+    "6f6e",
+    "8g8f",
+    "5f4e",
+    "7e7d"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln4gnk/2r1g1s1l/p1psppbp1/3p4p/1pPP2p2/P1R1S3P/BPN1PPPP1/4G1SK1/L4G1NL b -": {
+   "best": "6e6d",
+   "cp": 378,
+   "gap": 173,
+   "accepted": [
+    "6e6d"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln4gnk/2r1g1s1l/p1p1ppbp1/3Ps3p/1pP3p2/P1R1S3P/BPN1PPPP1/4G1SK1/L4G1NL b P": {
+   "best": "5f6e",
+   "cp": 461,
+   "gap": 235,
+   "accepted": [
+    "5f6e"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln4gnk/2r1g1s1l/p1p1ppbp1/3P4p/1pPSs1p2/P1R5P/BPN1PPPP1/4G1SK1/L4G1NL b P": {
+   "best": "5h6g",
+   "cp": 427,
+   "gap": 113,
+   "accepted": [
+    "5h6g"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln4gnk/2r1g1s1l/2p1ppbp1/p2P4p/1pPSs1p2/P1R5P/BPNGPPPP1/6SK1/L4G1NL b P": {
+   "best": "5g5f",
+   "cp": 420,
+   "gap": 17,
+   "accepted": [
+    "5g5f",
+    "7e7d"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1n1/1r1sgksbl/p1p1p2p1/3p1pp1p/1pP6/2RP5/PPN1PPPPP/1B2G1SK1/L1S2G1NL b -": {
+   "best": "7i7h",
+   "cp": 20,
+   "gap": 0,
+   "accepted": [
+    "7i7h",
+    "1g1f",
+    "7i6h",
+    "9g9f",
+    "4g4f",
+    "6f6e",
+    "4i3i",
+    "5h6g",
+    "2g2f",
+    "3g3f",
+    "4i4h",
+    "5h4h"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1n1/1r2gksbl/p1psp2p1/3p1pp1p/1pP6/2RP5/PPN1PPPPP/1B1SG1SK1/L4G1NL b -": {
+   "best": "1g1f",
+   "cp": -1,
+   "gap": 0,
+   "accepted": [
+    "1g1f",
+    "9g9f",
+    "6h6g",
+    "4g4f",
+    "6f6e",
+    "5h4h",
+    "2g2f",
+    "4i3i",
+    "4i4h",
+    "3g3f",
+    "8h7i",
+    "5g5f"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3gkn1/1r2g1sbl/p1psp2p1/3p1pp1p/1pP6/2RP5/PPNSPPPPP/1B2G1SK1/L4G1NL b -": {
+   "best": "1g1f",
+   "cp": 10,
+   "gap": 0,
+   "accepted": [
+    "1g1f",
+    "6g5f",
+    "9g9f",
+    "6f6e",
+    "4g4f",
+    "2g2f",
+    "5h5i",
+    "4i3i",
+    "8h7i",
+    "5h4h",
+    "5g5f",
+    "3g3f"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3gkn1/1r2g1s1l/p1psp1bp1/3p1pp1p/1pP6/P1RP5/1PNSPPPPP/1B2G1SK1/L4G1NL b -": {
+   "best": "1g1f",
+   "cp": -13,
+   "gap": 4,
+   "accepted": [
+    "1g1f",
+    "6g5f",
+    "6f6e",
+    "8h9g",
+    "4g4f",
+    "9f9e",
+    "9i9h",
+    "3g3f",
+    "2g2f",
+    "7e7d",
+    "4i3i",
+    "5h4h"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1n1/1r2g1skl/p1psp1bp1/3p1pp1p/1pP6/P1RP5/BPNSPPPPP/4G1SK1/L4G1NL b -": {
+   "best": "6g5f",
+   "cp": 8,
+   "gap": 23,
+   "accepted": [
+    "6g5f",
+    "6f6e",
+    "4g4f",
+    "1g1f",
+    "7e7d",
+    "9i9h",
+    "4i3i",
+    "5h4h",
+    "5g5f",
+    "2g2f"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1nk/1r2g1s1l/p1psp1bp1/3p1pp1p/1pP6/P1RPS4/BPN1PPPPP/4G1SK1/L4G1NL b -": {
+   "best": "1g1f",
+   "cp": 15,
+   "gap": 21,
+   "accepted": [
+    "1g1f",
+    "6f6e",
+    "7e7d",
+    "4g4f",
+    "4i3i",
+    "2g2f",
+    "5h4h",
+    "9g7i"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1nk/1r2g1s1l/p1psp1bp1/3p2p1p/1pP2p3/P1RPS3P/BPN1PPPP1/4G1SK1/L4G1NL b -": {
+   "best": "5f4e",
+   "cp": 61,
+   "gap": 56,
+   "accepted": [
+    "5f4e",
+    "7e7d",
+    "6f6e",
+    "2g2f"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1nk/1r4s1l/p1pspgbp1/3p2p1p/1pP2S3/P1RP4P/BPN1PPPP1/4G1SK1/L4G1NL b P": {
+   "best": "9g7i",
+   "cp": 22,
+   "gap": 1,
+   "accepted": [
+    "9g7i",
+    "4e3f",
+    "5g5f",
+    "4g4f",
+    "9i9h",
+    "9f9e",
+    "6f6e",
+    "2g2f",
+    "7e7d",
+    "9g8h",
+    "5h5i",
+    "4i3i"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1nk/1r2g1s1l/p1psppb2/3p2ppp/1pP6/P1RP4P/BPNSPPPP1/4G1SK1/L4G1NL b -": {
+   "best": "6g5f",
+   "cp": 6,
+   "gap": 30,
+   "accepted": [
+    "6g5f",
+    "8g8f",
+    "7e7d",
+    "6f6e",
+    "5g5f",
+    "4i3i",
+    "5h4h",
+    "4g4f",
+    "9i9h",
+    "5h5i",
+    "3g3f",
+    "9g7i",
+    "2g2f"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1nk/1r2g1s1l/p1psppb2/6ppp/1pPp5/P1R5P/BPNSPPPP1/4G1SK1/L4G1NL b p": {
+   "best": "7g6e",
+   "cp": -31,
+   "gap": 19,
+   "accepted": [
+    "7g6e",
+    "5h4h",
+    "6g5f",
+    "5g5f",
+    "2g2f",
+    "4g4f",
+    "9i9h",
+    "5h5i",
+    "4i3i"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1nk/1r2g1s1l/p1p1ppb2/3s2ppp/1pPN5/P1R5P/BP1SPPPP1/4G1SK1/L4G1NL b Pp": {
+   "best": "P*6f",
+   "cp": -195,
+   "gap": 15,
+   "accepted": [
+    "P*6f",
+    "6e7c",
+    "6e7c+",
+    "6g5f"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1nk/1r4s1l/p1pgppb2/3s2ppp/1pPN5/P1RP4P/BP1SPPPP1/4G1SK1/L4G1NL b p": {
+   "best": "5g5f",
+   "cp": -213,
+   "gap": 15,
+   "accepted": [
+    "5g5f",
+    "4i3i",
+    "5h4h",
+    "9i9h",
+    "4g4f",
+    "9f9e",
+    "2g2f",
+    "7f7h",
+    "6g5f",
+    "5h5i",
+    "7f7i",
+    "2h1h"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1nk/1r4s1l/p1pg1pb2/3sp1ppp/1pPN5/P1RPP3P/BP1S1PPP1/4G1SK1/L4G1NL b p": {
+   "best": "9i9h",
+   "cp": -154,
+   "gap": 0,
+   "accepted": [
+    "9i9h",
+    "4g4f",
+    "9g7i",
+    "5f5e",
+    "9f9e",
+    "4i3i",
+    "3g3f",
+    "5h4h",
+    "7f7h",
+    "5h5g",
+    "2g2f"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1nk/1r4s1l/2pg1pb2/p2sp1ppp/1pPN5/P1RPP3P/BP1S1PPP1/L3G1SK1/5G1NL b p": {
+   "best": "4g4f",
+   "cp": -151,
+   "gap": 3,
+   "accepted": [
+    "4g4f",
+    "3g3f",
+    "2g2f",
+    "5h4h",
+    "5f5e",
+    "6g7h",
+    "9g7i",
+    "2h1h",
+    "4i3i",
+    "7f7h",
+    "2h1g",
+    "4i4h"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1nk/6s1l/2pg1pb2/pr1sp1ppp/1pPN5/P1RPPP2P/BP1S2PP1/L3G1SK1/5G1NL b p": {
+   "best": "3g3f",
+   "cp": -117,
+   "gap": 7,
+   "accepted": [
+    "3g3f",
+    "5h4g",
+    "2g2f",
+    "4f4e",
+    "5h4h",
+    "4i4h",
+    "4i5i",
+    "2h3i",
+    "4i3i",
+    "9g7i",
+    "7f7h",
+    "5h5g"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1nk/4g1s1l/p1psppb2/1r1p2ppp/1pP6/P1RPS3P/BPN1PPPP1/4G1SK1/L4G1NL b -": {
+   "best": "5f4e",
+   "cp": -40,
+   "gap": 5,
+   "accepted": [
+    "5f4e",
+    "7e7d",
+    "9i9h",
+    "4g4f",
+    "6f6e",
+    "5h6g",
+    "5h5i",
+    "2g2f",
+    "8g8f",
+    "5h4h",
+    "3g3f",
+    "4i3i"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1nk/4g3l/p1psppbs1/1r1p2ppp/1pP2S3/P1RP4P/BPN1PPPP1/4G1SK1/L4G1NL b -": {
+   "best": "8g8f",
+   "cp": -14,
+   "gap": 24,
+   "accepted": [
+    "8g8f",
+    "7e7d",
+    "2h3i",
+    "2g2f",
+    "4e3f",
+    "5g5f",
+    "4i3i",
+    "4i4h",
+    "5h6g",
+    "5h5i",
+    "4g4f",
+    "9f9e"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1nk/4g3l/p1psppbs1/1r1p2ppp/2P2S3/PpRP4P/B1N1PPPP1/4G1SK1/L4G1NL b p": {
+   "best": "7e7d",
+   "cp": -42,
+   "gap": 40,
+   "accepted": [
+    "7e7d",
+    "7f8f",
+    "9g8f"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln3g1nk/4g3l/p2sppbs1/1rpp2ppp/5S3/PpRP4P/B1N1PPPP1/4G1SK1/L4G1NL b 2p": {
+   "best": "7f8f",
+   "cp": -24,
+   "gap": 164,
+   "accepted": [
+    "7f8f"
+   ],
+   "courses": [
+    "_lab"
+   ]
   }
  }
 }

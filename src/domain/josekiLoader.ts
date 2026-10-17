@@ -48,6 +48,7 @@ import sankenbishaIshidaKakugawariRaw from "../data/joseki/sankenbisha-ishida--k
 import sankenbishaIshidaHonkumiRaw from "../data/joseki/sankenbisha-ishida--honkumi.json?raw";
 import sankenbishaIshidaMigishikenRaw from "../data/joseki/sankenbisha-ishida--migishiken.json?raw";
 import sankenbishaIshidaHidariminoRaw from "../data/joseki/sankenbisha-ishida--hidarimino.json?raw";
+import sankenbishaIshidaAnagumaRaw from "../data/joseki/sankenbisha-ishida--anaguma.json?raw";
 import hayaishidaBasicRaw from "../data/joseki/hayaishida--basic.json?raw";
 import ibishaVsHayaishida42Raw from "../data/joseki/ibisha-vs-hayaishida--42gyoku.json?raw";
 import sankenbishaVsNakabishaAifuriRaw from "../data/joseki/sankenbisha-vs-nakabisha--aifuri.json?raw";
@@ -901,6 +902,19 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "持久戦",
     summary: "後手が△3一玉から左美濃に組んできたとき、▲9七角型ではなく▲7七角 → ▲6八銀 → ▲6七銀 → ▲5六銀と、▲7七角型に組むまで。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaIshidaHidariminoRaw), "sankenbisha-ishida--hidarimino.json"),
+  },
+  {
+    id: "sankenbisha-ishida--anaguma",
+    strategyId: "sankenbisha",
+    opponentId: "ibisha-kyusen",
+    recommend: 15,
+    group: "基本の組み方",
+    opponentLabel: "居飛車",
+    sideLabel: "先手",
+    label: "居飛車穴熊には▲1六歩から",
+    kind: "持久戦",
+    summary: "後手が△1二香から居飛車穴熊に組んできたとき、▲1六歩を先に突いてから、本組み(▲7七桂 → ▲6七銀 → ▲9七角 → ▲5六銀)に組むまで。互角の形を目ざす。",
+    load: () => assertJosekiCourse(parseRaw(sankenbishaIshidaAnagumaRaw), "sankenbisha-ishida--anaguma.json"),
   },
   {
     id: "sujichigaikaku--basic",
