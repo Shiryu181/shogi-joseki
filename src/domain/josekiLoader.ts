@@ -49,6 +49,7 @@ import sankenbishaIshidaHonkumiRaw from "../data/joseki/sankenbisha-ishida--honk
 import sankenbishaIshidaMigishikenRaw from "../data/joseki/sankenbisha-ishida--migishiken.json?raw";
 import sankenbishaIshidaHidariminoRaw from "../data/joseki/sankenbisha-ishida--hidarimino.json?raw";
 import sankenbishaIshidaAnagumaRaw from "../data/joseki/sankenbisha-ishida--anaguma.json?raw";
+import sankenbishaIshidaAifuriRaw from "../data/joseki/sankenbisha-ishida--aifuri.json?raw";
 import hayaishidaBasicRaw from "../data/joseki/hayaishida--basic.json?raw";
 import ibishaVsHayaishida42Raw from "../data/joseki/ibisha-vs-hayaishida--42gyoku.json?raw";
 import sankenbishaVsNakabishaAifuriRaw from "../data/joseki/sankenbisha-vs-nakabisha--aifuri.json?raw";
@@ -915,6 +916,19 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "持久戦",
     summary: "後手が△1二香から居飛車穴熊に組んできたとき、▲1六歩を先に突いてから、本組み(▲7七桂 → ▲6七銀 → ▲9七角 → ▲5六銀)に組むまで。互角の形を目ざす。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaIshidaAnagumaRaw), "sankenbisha-ishida--anaguma.json"),
+  },
+  {
+    id: "sankenbisha-ishida--aifuri",
+    strategyId: "sankenbisha",
+    opponentId: "gokigen",
+    recommend: 16,
+    group: "基本の組み方",
+    opponentLabel: "中飛車(相振り)",
+    sideLabel: "先手",
+    label: "相振り(相手が中飛車)",
+    kind: "駒組み",
+    summary: "後手が△5四歩から中飛車に振ってきたとき、▲6六歩 → ▲7八銀 → ▲6七銀 → ▲7八飛と三間に振り、7筋の歩を交換して美濃囲いに向かうまで。",
+    load: () => assertJosekiCourse(parseRaw(sankenbishaIshidaAifuriRaw), "sankenbisha-ishida--aifuri.json"),
   },
   {
     id: "sujichigaikaku--basic",
