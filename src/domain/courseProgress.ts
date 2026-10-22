@@ -37,8 +37,8 @@ const BLURB: Record<string, { card: string; sheet: string }> = {
     sheet: "後手が飛車を中央に振る戦法。先手の出方ごとの受け方と反撃を覚えます。",
   },
   sankenbisha: {
-    card: "飛車を7筋に振る振り飛車。先手は石田流に組みます。",
-    sheet: "飛車を7筋に振る振り飛車。先手は石田流に組みます。",
+    card: "飛車を7筋に振る振り飛車。先手は石田流、後手は通常の三間飛車に組みます。",
+    sheet: "飛車を7筋に振る振り飛車。先手は石田流、後手は通常の三間飛車に組みます。",
   },
 };
 export function blurbOf(s: Strategy): { card: string; sheet: string } {
