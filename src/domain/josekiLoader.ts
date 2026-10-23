@@ -51,6 +51,7 @@ import sankenbishaIshidaHidariminoRaw from "../data/joseki/sankenbisha-ishida--h
 import sankenbishaIshidaAnagumaRaw from "../data/joseki/sankenbisha-ishida--anaguma.json?raw";
 import sankenbishaIshidaAifuriRaw from "../data/joseki/sankenbisha-ishida--aifuri.json?raw";
 import sankenbishaGoteDeashiRaw from "../data/joseki/sankenbisha-gote--deashi.json?raw";
+import sankenbishaGoteMinokanseiRaw from "../data/joseki/sankenbisha-gote--minokansei.json?raw";
 import hayaishidaBasicRaw from "../data/joseki/hayaishida--basic.json?raw";
 import ibishaVsHayaishida42Raw from "../data/joseki/ibisha-vs-hayaishida--42gyoku.json?raw";
 import sankenbishaVsNakabishaAifuriRaw from "../data/joseki/sankenbisha-vs-nakabisha--aifuri.json?raw";
@@ -943,6 +944,19 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "駒組み",
     summary: "角道を開けて閉じ、飛車を3筋に振って、玉を美濃囲いに向けて運ぶまで。相手が別の手を指したときの返し方も覚える。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaGoteDeashiRaw), "sankenbisha-gote--deashi.json"),
+  },
+  {
+    id: "sankenbisha-gote--minokansei",
+    strategyId: "sankenbisha",
+    opponentId: "ibisha-kyusen",
+    recommend: 1,
+    group: "基本の組み方",
+    opponentLabel: "居飛車",
+    sideLabel: "後手",
+    label: "美濃囲いを完成させる",
+    kind: "駒組み",
+    summary: "第1章の続き。△7二銀で美濃囲いを完成させ、△4三銀と右の銀を出し、△1四歩と端の歩を突き返すまで。先手が玉を寄せたり桂を跳ねたりしたときの返し方も覚える。",
+    load: () => assertJosekiCourse(parseRaw(sankenbishaGoteMinokanseiRaw), "sankenbisha-gote--minokansei.json"),
   },
   {
     id: "sujichigaikaku--basic",
