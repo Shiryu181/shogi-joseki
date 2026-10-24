@@ -52,6 +52,7 @@ import sankenbishaIshidaAnagumaRaw from "../data/joseki/sankenbisha-ishida--anag
 import sankenbishaIshidaAifuriRaw from "../data/joseki/sankenbisha-ishida--aifuri.json?raw";
 import sankenbishaGoteDeashiRaw from "../data/joseki/sankenbisha-gote--deashi.json?raw";
 import sankenbishaGoteMinokanseiRaw from "../data/joseki/sankenbisha-gote--minokansei.json?raw";
+import sankenbishaGoteBoginRaw from "../data/joseki/sankenbisha-gote--bogin.json?raw";
 import hayaishidaBasicRaw from "../data/joseki/hayaishida--basic.json?raw";
 import ibishaVsHayaishida42Raw from "../data/joseki/ibisha-vs-hayaishida--42gyoku.json?raw";
 import sankenbishaVsNakabishaAifuriRaw from "../data/joseki/sankenbisha-vs-nakabisha--aifuri.json?raw";
@@ -957,6 +958,19 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "駒組み",
     summary: "第1章の続き。△7二銀で美濃囲いを完成させ、△4三銀と右の銀を出し、△1四歩と端の歩を突き返すまで。先手が玉を寄せたり桂を跳ねたりしたときの返し方も覚える。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaGoteMinokanseiRaw), "sankenbisha-gote--minokansei.json"),
+  },
+  {
+    id: "sankenbisha-gote--bogin",
+    strategyId: "sankenbisha",
+    opponentId: "ibisha-kyusen",
+    recommend: 2,
+    group: "基本の組み方",
+    opponentLabel: "居飛車",
+    sideLabel: "後手",
+    label: "棒銀を受ける",
+    kind: "急戦",
+    summary: "第1章の22手目から、先手が▲3七銀〜▲2六銀と棒銀で攻めてくる形。△4三銀・△5三金で受け、▲3五歩には△同歩と取らず△5一角と引いて、銀を押し返すまで。三間飛車には少し無理とされる攻めを、正しく受ける。",
+    load: () => assertJosekiCourse(parseRaw(sankenbishaGoteBoginRaw), "sankenbisha-gote--bogin.json"),
   },
   {
     id: "sujichigaikaku--basic",

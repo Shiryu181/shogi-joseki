@@ -2,7 +2,7 @@
  "meta": {
   "ms": 2000,
   "tol": 100,
-  "updated": "2026-10-22"
+  "updated": "2026-10-24"
  },
  "positions": {
   "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b -": {
@@ -27117,6 +27117,736 @@
    ],
    "courses": [
     "_lab"
+   ]
+  },
+  "lnsg3nl/1k2gsr2/1ppp2bpp/p3ppp2/7P1/P1P1PPP2/1P1P2S1P/1BK1G2R1/LNSG3NL w -": {
+   "best": "4b5c",
+   "cp": 12,
+   "gap": 8,
+   "accepted": [
+    "6a7b",
+    "7a7b",
+    "9a9b",
+    "5b6b",
+    "7c7d",
+    "4b5c",
+    "6c6d",
+    "8c8d",
+    "4b4c",
+    "5b4c",
+    "1c1d",
+    "6a6b",
+    "5b5a",
+    "5b5c",
+    "1a1b",
+    "7a6b",
+    "3b3a",
+    "3b2b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg3nl/1k2g1r2/1ppp1sbpp/p3ppp2/7P1/P1PPPPP2/1P4S1P/1BK1G2R1/LNSG3NL w -": {
+   "best": "9a9b",
+   "cp": 61,
+   "gap": 74,
+   "accepted": [
+    "9a9b",
+    "7a7b",
+    "7c7d",
+    "1c1d",
+    "8c8d",
+    "3c4b",
+    "6a7b",
+    "5b6b",
+    "3c5a"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "1nsg3nl/lk2g1r2/1ppp1sbpp/p3ppp2/7P1/P1PPPPP2/1P4S1P/1BKSG2R1/LN1G3NL w -": {
+   "best": "8b9a",
+   "cp": 60,
+   "gap": 0,
+   "accepted": [
+    "8b9a",
+    "7c7d",
+    "6a7b",
+    "6c6d",
+    "5b6b",
+    "6a6b",
+    "1c1d",
+    "8c8d",
+    "3c5a",
+    "3c1e",
+    "5b5c",
+    "1a1b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "knsg3nl/l3g1r2/1ppp1sbpp/p3ppp2/7P1/P1PPPPP2/1P1G2S1P/1BKS3R1/LN1G3NL w -": {
+   "best": "6a7b",
+   "cp": 53,
+   "gap": 11,
+   "accepted": [
+    "6a7b",
+    "7a8b",
+    "5b6b",
+    "3c4b",
+    "7c7d",
+    "6c6d",
+    "1c1d",
+    "6a6b",
+    "5b5a",
+    "3c5a",
+    "5b5c",
+    "7a7b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "kns4nl/l1g1g1r2/1ppp1sbpp/p3ppp2/3P3P1/P1P1PPP2/1P1G2S1P/1BKS3R1/LN1G3NL w -": {
+   "best": "7a8b",
+   "cp": 60,
+   "gap": 17,
+   "accepted": [
+    "7a8b",
+    "5b5c",
+    "3c4b",
+    "5b6b",
+    "6c6d",
+    "7c7d",
+    "3c5a",
+    "1c1d",
+    "8c8d",
+    "5b5a",
+    "3b2b",
+    "3b3a"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "kn5nl/lsg1g1r2/1ppp1sbpp/p3ppp2/3P3P1/P1P1PPP2/1PBG2S1P/2KS3R1/LN1G3NL w -": {
+   "best": "8c8d",
+   "cp": 77,
+   "gap": 4,
+   "accepted": [
+    "8c8d",
+    "5b6b",
+    "7c7d",
+    "5b5c",
+    "6c6d",
+    "5b5a",
+    "1c1d",
+    "3c5a",
+    "3c4b",
+    "3b3a",
+    "3c1e",
+    "7b6b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg3nl/1k2g1r2/1ppp1sbpp/p3ppp2/7P1/P1P1PPPS1/1P1P4P/1BK1G2R1/LNSG3NL w -": {
+   "best": "7a7b",
+   "cp": 60,
+   "gap": 27,
+   "accepted": [
+    "7a7b",
+    "7c7d",
+    "5b5c",
+    "6a7b",
+    "3c4b",
+    "3c5a",
+    "1c1d",
+    "8c8d",
+    "6c6d",
+    "6a6b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln1g3nl/1ks1g1r2/1ppp1sbpp/p3ppp2/7P1/P1P1PPPS1/1P1P4P/1BK1GR3/LNSG3NL w -": {
+   "best": "5b5c",
+   "cp": 88,
+   "gap": 35,
+   "accepted": [
+    "5b5c",
+    "7c7d",
+    "1c1d",
+    "6c6d",
+    "8c8d",
+    "6a6b",
+    "5b4b",
+    "5b6b",
+    "6a7a",
+    "1a1b",
+    "3b4b",
+    "3c2b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln1g3nl/1ks3r2/1pppgsbpp/p3ppp2/7P1/P1P1PPPS1/1P1P4P/1BK1G1R2/LNSG3NL w -": {
+   "best": "7c7d",
+   "cp": 83,
+   "gap": 2,
+   "accepted": [
+    "7c7d",
+    "5d5e",
+    "3c5a",
+    "3c4b",
+    "1c1d",
+    "4d4e",
+    "5c6d",
+    "6c6d",
+    "3c2b",
+    "6a7a",
+    "8c8d",
+    "6a5b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln1g3nl/1ks3r2/1p1pgsbpp/p1p1ppp2/7P1/P1P1PPPS1/1P1P4P/1BKGG1R2/LNS4NL w -": {
+   "best": "1c1d",
+   "cp": 105,
+   "gap": 14,
+   "accepted": [
+    "1c1d",
+    "8c8d",
+    "3c5a",
+    "9a9b",
+    "1a1b",
+    "4d4e",
+    "3c4b",
+    "6c6d",
+    "6a7a",
+    "5d5e",
+    "6a5b",
+    "7b7c"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln1g3nl/1ks3r2/1p1pgsbp1/p1p1ppp1p/7P1/P1P1PPPS1/1P1P4P/1BKGG4/LNS3RNL w -": {
+   "best": "4d4e",
+   "cp": 128,
+   "gap": 2,
+   "accepted": [
+    "4d4e",
+    "3c5a",
+    "1d1e",
+    "8c8d",
+    "9a9b",
+    "6a7a",
+    "5d5e",
+    "3b3a",
+    "5c6d",
+    "3c2b",
+    "6c6d",
+    "6a5b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsgkgsnl/1r5b1/ppppp2pp/5pp2/9/2P4P1/PP1PPPP1P/1B4SR1/LNSGKG1NL w -": {
+   "best": "4a3b",
+   "cp": -62,
+   "gap": 0,
+   "accepted": [
+    "4a3b",
+    "8c8d",
+    "3a3b",
+    "7a6b",
+    "9c9d",
+    "6a5b",
+    "8b4b",
+    "2b3c",
+    "1c1d",
+    "3a4b",
+    "8b5b",
+    "8b3b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsgkgsnl/6rb1/ppppp2pp/5pp2/7P1/2P6/PP1PPPP1P/1B4SR1/LNSGKG1NL w -": {
+   "best": "2b3c",
+   "cp": -83,
+   "gap": 128,
+   "accepted": [
+    "2b3c"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsgkgsnl/6r2/ppppp1bpp/5pp2/7P1/2P6/PP1PPPPSP/1B5R1/LNSGKG1NL w -": {
+   "best": "9c9d",
+   "cp": 2,
+   "gap": 0,
+   "accepted": [
+    "9c9d",
+    "5a6b",
+    "3a4b",
+    "5c5d",
+    "7a7b",
+    "3b4b",
+    "4a5b",
+    "8c8d",
+    "1c1d",
+    "6a5b",
+    "6c6d",
+    "7c7d"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsgkg1nl/5sr2/ppppp1bpp/5pp2/7P1/2P4S1/PP1PPPP1P/1B5R1/LNSGKG1NL w -": {
+   "best": "9c9d",
+   "cp": 8,
+   "gap": 0,
+   "accepted": [
+    "9c9d",
+    "5a6b",
+    "4b4c",
+    "5c5d",
+    "4a5b",
+    "1c1d",
+    "7a7b",
+    "6a5b",
+    "5a5b",
+    "6c6d",
+    "4d4e"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsgkg1nl/5sr2/1pppp1bpp/p4pp2/7P1/2P3PS1/PP1PPP2P/1B5R1/LNSGKG1NL w -": {
+   "best": "5a6b",
+   "cp": 8,
+   "gap": 8,
+   "accepted": [
+    "5a6b",
+    "4b4c",
+    "4a5b",
+    "9d9e",
+    "1c1d",
+    "5c5d",
+    "7a7b",
+    "4d4e",
+    "5a5b",
+    "8c8d",
+    "6a5b",
+    "6c6d"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg1g1nl/3k1sr2/1pppp1bpp/p4pp2/7P1/2P3PS1/PP1PPP2P/1B1K3R1/LNSG1G1NL w -": {
+   "best": "6b7b",
+   "cp": -20,
+   "gap": 1,
+   "accepted": [
+    "6b7b",
+    "4a5b",
+    "1c1d",
+    "4b4c",
+    "9d9e",
+    "4d4e",
+    "7a7b",
+    "7c7d",
+    "4a5a",
+    "5c5d",
+    "4a3a",
+    "6a5b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg1g1nl/2k2sr2/1pppp1bpp/p4pp2/7P1/P1P3PS1/1P1PPP2P/1B1K3R1/LNSG1G1NL w -": {
+   "best": "7b8b",
+   "cp": 7,
+   "gap": 0,
+   "accepted": [
+    "7b8b",
+    "4b4c",
+    "1c1d",
+    "4d4e",
+    "4a5b",
+    "5c5d",
+    "7c7d",
+    "6a6b",
+    "8c8d",
+    "4a5a",
+    "6c6d",
+    "1a1b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg1g1nl/1k3sr2/1pppp1bpp/p4pp2/7P1/P1P3PS1/1P1PPP2P/1B1KG2R1/LNSG3NL w -": {
+   "best": "4b4c",
+   "cp": 17,
+   "gap": 19,
+   "accepted": [
+    "4b4c",
+    "4a5b",
+    "1c1d",
+    "5c5d",
+    "6a7b",
+    "7c7d",
+    "7a7b",
+    "8c8d",
+    "7a6b",
+    "4a5a",
+    "6a6b",
+    "6c6d"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg3nl/1k2gsr2/1p1p2bpp/p1p1ppp2/7P1/P1P1PPPS1/1P1P4P/1BK1G2R1/LNSG3NL w -": {
+   "best": "7a7b",
+   "cp": 47,
+   "gap": 13,
+   "accepted": [
+    "6a7b",
+    "4b5c",
+    "4b4c",
+    "1c1d",
+    "5b5c",
+    "7a7b",
+    "5b4c",
+    "6c6d",
+    "6a6b",
+    "7a6b",
+    "8c8d",
+    "5b6b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln1g3nl/1ks1gsr2/1p1p2bpp/p1p1ppp2/7P1/P1PPPPPS1/1P6P/1BK1G2R1/LNSG3NL w -": {
+   "best": "4b4c",
+   "cp": 46,
+   "gap": 13,
+   "accepted": [
+    "4b4c",
+    "8c8d",
+    "1c1d",
+    "4b5c",
+    "6c6d",
+    "8a7c",
+    "9a9b",
+    "5b4c",
+    "5b6b",
+    "6a7a",
+    "4d4e",
+    "1a1b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln1g3nl/1ks1g1r2/1p1p1sbpp/p1p1ppp2/7P1/P1PPPPPS1/1P2G3P/1BK4R1/LNSG3NL w -": {
+   "best": "8c8d",
+   "cp": 87,
+   "gap": 22,
+   "accepted": [
+    "8c8d",
+    "3c5a",
+    "6c6d",
+    "9a9b",
+    "8a7c",
+    "1c1d",
+    "6a7a",
+    "3c4b",
+    "3b3a",
+    "6a6b",
+    "3b2b",
+    "5b6b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln1g3nl/1ks1g1r2/3p1sbpp/ppp1ppp2/7P1/P1PPPPPS1/1P2G3P/1BKS3R1/LN1G3NL w -": {
+   "best": "6c6d",
+   "cp": 120,
+   "gap": 15,
+   "accepted": [
+    "6c6d",
+    "7b8c",
+    "1c1d",
+    "8a7c",
+    "6a7a",
+    "3c4b",
+    "9a9b",
+    "6a6b",
+    "3c5a"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "ln1g3nl/1ks1g1r2/5sbpp/ppppppp2/7P1/P1PPPPPS1/1P2G3P/1B1S3R1/LNKG3NL w -": {
+   "best": "8a7c",
+   "cp": 154,
+   "gap": 1,
+   "accepted": [
+    "8a7c",
+    "7b8c",
+    "1c1d",
+    "5b6c",
+    "9a9b",
+    "3c5a",
+    "6a7a",
+    "5b6b",
+    "6a6b",
+    "5b5c",
+    "3c4b",
+    "3b2b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "l2g3nl/1ks1g1r2/2n2sbpp/ppppppp2/7P1/P1PPPPPS1/1PB1G3P/3S3R1/LNKG3NL w -": {
+   "best": "7b8c",
+   "cp": 191,
+   "gap": 0,
+   "accepted": [
+    "7b8c",
+    "5b6c",
+    "1c1d",
+    "6a7a",
+    "6a6b",
+    "9a9b",
+    "6d6e",
+    "3b3a",
+    "3c5a",
+    "5b6b",
+    "5b5c",
+    "1a1b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg3nl/1k2g1r2/1p1p1sbpp/p1p1ppp2/7P1/P1P1PPPS1/1P1P4P/1BK1G1R2/LNSG3NL w -": {
+   "best": "5b5c",
+   "cp": 51,
+   "gap": 55,
+   "accepted": [
+    "5b5c",
+    "6a7b",
+    "3c5a",
+    "7a7b",
+    "5b6b",
+    "3c2b",
+    "6c6d",
+    "1c1d",
+    "3c4b",
+    "6a6b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsgb2nl/1k2g1r2/1p1p1s1pp/p1p1ppp2/5P1P1/P1P1P1PS1/1P1P4P/1BK1G1R2/LNSG3NL w -": {
+   "best": "5a3c",
+   "cp": -65,
+   "gap": 31,
+   "accepted": [
+    "5a3c",
+    "5a6b",
+    "5b5c",
+    "5d5e"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg3nl/1k2g1r2/1p1p1sbpp/p1p1ppp2/5PPP1/P1P1P2S1/1P1P4P/1BK1G1R2/LNSG3NL w -": {
+   "best": "3d3e",
+   "cp": -34,
+   "gap": 211,
+   "accepted": [
+    "3d3e"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg3nl/1k2g1r2/1p1p1sbpp/p1p1pp3/5PSP1/P1P1P4/1P1P4P/1BK1G1R2/LNSG3NL w Pp": {
+   "best": "4d4e",
+   "cp": -294,
+   "gap": 113,
+   "accepted": [
+    "4d4e"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg3nl/1k2g1r2/1p1p1s+Bpp/p1p1p4/5pSP1/P1P1P4/1P1P4P/2K1G1R2/LNSG3NL w BP2p": {
+   "best": "3b3c",
+   "cp": -281,
+   "gap": 233,
+   "accepted": [
+    "3b3c"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg3nl/1k4r2/1p1pgsbpp/p1p1ppp2/6PP1/P1P1PP1S1/1P1P4P/1BK1G1R2/LNSG3NL w -": {
+   "best": "3c5a",
+   "cp": 11,
+   "gap": 179,
+   "accepted": [
+    "3c5a"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsgb2nl/1k4r2/1p1pgs1pp/p1p1ppp2/6PP1/P1P1PPRS1/1P1P4P/1BK1G4/LNSG3NL w -": {
+   "best": "3d3e",
+   "cp": 77,
+   "gap": 9,
+   "accepted": [
+    "3d3e",
+    "5a7c",
+    "1a1b",
+    "5d5e",
+    "7d7e",
+    "5a6b",
+    "6a7b"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsgb2nl/1k4r2/1p1pgs1pp/p1p1pp3/6SP1/P1P1PPR2/1P1P4P/1BK1G4/LNSG3NL w Pp": {
+   "best": "P*3d",
+   "cp": 96,
+   "gap": 196,
+   "accepted": [
+    "P*3d"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsgb2nl/1k4r2/1p1pgs1pp/p1p1ppp2/7P1/P1P1PPRS1/1P1P4P/1BK1G4/LNSG3NL w P": {
+   "best": "5a7c",
+   "cp": 96,
+   "gap": 28,
+   "accepted": [
+    "6a7b",
+    "5c6d",
+    "7a7b",
+    "7d7e",
+    "5a7c",
+    "1c1d",
+    "5d5e",
+    "5a8d",
+    "1a1b",
+    "5a6b",
+    "6c6d",
+    "6a5b",
+    "8c8d"
+   ],
+   "courses": [
+    "_lab"
+   ]
+  },
+  "lnsg3nl/1k2gsr2/1p1p2bpp/p1p1ppp2/7P1/P1P1PPP1P/1P1P2S2/1BK1G2R1/LNSG3NL w -": {
+   "best": "4b5c",
+   "cp": 15,
+   "gap": 3,
+   "accepted": [
+    "4b5c",
+    "6a7b",
+    "5b4c",
+    "5b5c",
+    "6c6d",
+    "6a6b",
+    "7a7b",
+    "4b4c",
+    "8c8d",
+    "1c1d",
+    "3b3a",
+    "8a7c",
+    "7a6b",
+    "5b6b",
+    "9a9b",
+    "1a1b",
+    "6a5a",
+    "8b7b",
+    "7d7e"
+   ],
+   "courses": [
+    "sankenbisha-gote--bogin"
+   ]
+  },
+  "lnsg3nl/1k2g1r2/1p1p1sbpp/p1p1ppp2/6PP1/P1P1PP1S1/1P1P4P/1BK1G2R1/LNSG3NL w -": {
+   "best": "5b5c",
+   "cp": 0,
+   "gap": 11,
+   "accepted": [
+    "5b5c",
+    "3c5a",
+    "7a7b",
+    "3d3e",
+    "6a7b",
+    "5b4b",
+    "5b6b",
+    "1c1d",
+    "6a6b",
+    "6c6d",
+    "3c4b",
+    "6a5a",
+    "8c8d",
+    "4d4e",
+    "1a1b"
+   ],
+   "courses": [
+    "sankenbisha-gote--bogin"
+   ]
+  },
+  "lnsgb2nl/1k4r2/1p1pgs1pp/p1p1ppP2/7P1/P1P1PP1S1/1P1P4P/1BK1G1R2/LNSG3NL w P": {
+   "best": "4c3d",
+   "cp": 24,
+   "gap": 181,
+   "accepted": [
+    "4c3d"
+   ],
+   "courses": [
+    "sankenbisha-gote--bogin"
    ]
   }
  }
