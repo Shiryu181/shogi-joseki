@@ -54,6 +54,7 @@ import sankenbishaGoteDeashiRaw from "../data/joseki/sankenbisha-gote--deashi.js
 import sankenbishaGoteMinokanseiRaw from "../data/joseki/sankenbisha-gote--minokansei.json?raw";
 import sankenbishaGoteBoginRaw from "../data/joseki/sankenbisha-gote--bogin.json?raw";
 import sankenbishaGoteHayashikakeRaw from "../data/joseki/sankenbisha-gote--hayashikake.json?raw";
+import sankenbishaGoteAnagumaRaw from "../data/joseki/sankenbisha-gote--anaguma.json?raw";
 import hayaishidaBasicRaw from "../data/joseki/hayaishida--basic.json?raw";
 import ibishaVsHayaishida42Raw from "../data/joseki/ibisha-vs-hayaishida--42gyoku.json?raw";
 import sankenbishaVsNakabishaAifuriRaw from "../data/joseki/sankenbisha-vs-nakabisha--aifuri.json?raw";
@@ -985,6 +986,19 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "急戦",
     summary: "第2章の26手目から、先手が▲3七桂〜▲4五歩と4筋の歩をぶつけてくる形。△2二飛と飛車を回し、▲4五歩は△同歩と取らず、▲4四歩には△4四銀と取り返して受け止めるまで。先手がやや指しやすい形だが、取ってはいけない手を覚える。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaGoteHayashikakeRaw), "sankenbisha-gote--hayashikake.json"),
+  },
+  {
+    id: "sankenbisha-gote--anaguma",
+    strategyId: "sankenbisha",
+    opponentId: "ibisha-kyusen",
+    recommend: 4,
+    group: "基本の組み方",
+    opponentLabel: "居飛車",
+    sideLabel: "後手",
+    label: "居飛車穴熊には向かい飛車に振り直す",
+    kind: "持久戦",
+    summary: "第1章の14手目から、先手が▲5七銀〜▲9八香と居飛車穴熊に向かう形。▲9八香を見てから△2二飛と振り直し、△2四歩 ▲同歩 △同角と取り返し、△3三角と戻して2筋を開くまで。先手がやや指しやすい形だが、穴熊を急ぐと銀や飛車を取られる。",
+    load: () => assertJosekiCourse(parseRaw(sankenbishaGoteAnagumaRaw), "sankenbisha-gote--anaguma.json"),
   },
   {
     id: "sujichigaikaku--basic",

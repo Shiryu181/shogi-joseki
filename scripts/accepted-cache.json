@@ -2,7 +2,7 @@
  "meta": {
   "ms": 2000,
   "tol": 100,
-  "updated": "2026-10-24"
+  "updated": "2026-10-25"
  },
  "positions": {
   "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b -": {
@@ -27960,6 +27960,493 @@
    ],
    "courses": [
     "sankenbisha-gote--hayashikake"
+   ]
+  },
+  "lnsg1g1nl/2k2sr2/ppppp1bpp/5pp2/7P1/2P1P4/PP1PSPP1P/1BK4R1/LNSG1G1NL w -": {
+   "best": "4b4c",
+   "cp": -77,
+   "gap": 1,
+   "accepted": [
+    "4b4c",
+    "9c9d",
+    "5c5d",
+    "6a6b",
+    "4a5b",
+    "7c7d",
+    "3b3a",
+    "7b8b",
+    "1c1d",
+    "3b2b",
+    "7a8b",
+    "6a5b"
+   ],
+   "courses": [
+    "sankenbisha-gote--anaguma"
+   ]
+  },
+  "lnsg1g1nl/1k3sr2/ppppp1bpp/5pp2/7P1/2P1P4/PPBPSPP1P/2K4R1/LNSG1G1NL w -": {
+   "best": "9c9d",
+   "cp": -77,
+   "gap": 7,
+   "accepted": [
+    "9c9d",
+    "4a5b",
+    "7c7d",
+    "6a7b",
+    "4b4c",
+    "5c5d",
+    "1c1d",
+    "7a7b",
+    "4a5a",
+    "6a6b",
+    "9a9b",
+    "6c6d"
+   ],
+   "courses": [
+    "sankenbisha-gote--anaguma"
+   ]
+  },
+  "lnsg1g1nl/1k4r2/pppppsbpp/5pp2/7P1/2P1P4/PPBPSPP1P/1K5R1/LNSG1G1NL w -": {
+   "best": "4c5d",
+   "cp": -61,
+   "gap": 14,
+   "accepted": [
+    "4c5d",
+    "4a5b",
+    "3d3e",
+    "9c9d",
+    "7a7b",
+    "5c5d",
+    "7c7d",
+    "8c8d",
+    "3c4b",
+    "3c5a",
+    "1c1d",
+    "6c6d"
+   ],
+   "courses": [
+    "sankenbisha-gote--anaguma"
+   ]
+  },
+  "ln1g1g1nl/1ks3r2/pppppsbpp/5pp2/7P1/2P1P4/PPBPSPP1P/LK5R1/1NSG1G1NL w -": {
+   "best": "3b2b",
+   "cp": -60,
+   "gap": 8,
+   "accepted": [
+    "3b2b",
+    "3b5b",
+    "6c6d",
+    "4c5d",
+    "3b4b",
+    "1c1d",
+    "9c9d",
+    "5c5d",
+    "3d3e",
+    "3c4b",
+    "8c8d",
+    "3b3a"
+   ],
+   "courses": [
+    "sankenbisha-gote--anaguma"
+   ]
+  },
+  "ln1g1g1nl/1ks4r1/pppppsbpp/5pp2/7P1/2P1P4/PPBPSPP1P/L6R1/KNSG1G1NL w -": {
+   "best": "4c5d",
+   "cp": -3,
+   "gap": 63,
+   "accepted": [
+    "4c5d",
+    "2c2d",
+    "9c9d",
+    "1c1d",
+    "4a3b"
+   ],
+   "courses": [
+    "sankenbisha-gote--anaguma"
+   ]
+  },
+  "ln1g1g1nl/1ks4r1/pppppsb1p/5ppP1/9/2P1P4/PPBPSPP1P/L6R1/KNSG1G1NL w P": {
+   "best": "2b2d",
+   "cp": -41,
+   "gap": 46,
+   "accepted": [
+    "2b2d",
+    "3c2d",
+    "4a3b"
+   ],
+   "courses": [
+    "sankenbisha-gote--anaguma"
+   ]
+  },
+  "ln1g1g1nl/1ks4r1/ppppps2p/5ppb1/9/2P1P4/PPBPSPP1P/LS5R1/KN1G1G1NL w Pp": {
+   "best": "4a3b",
+   "cp": -46,
+   "gap": 40,
+   "accepted": [
+    "4a3b",
+    "1c1d",
+    "9c9d",
+    "5c5d",
+    "6c6d",
+    "8c8d"
+   ],
+   "courses": [
+    "sankenbisha-gote--anaguma"
+   ]
+  },
+  "ln1g3nl/1ks3gr1/ppppps2p/5ppb1/9/2P1PP3/PPBPS1P1P/LS5R1/KN1G1G1NL w Pp": {
+   "best": "2d3c",
+   "cp": -46,
+   "gap": 20,
+   "accepted": [
+    "2d3c",
+    "3d3e",
+    "2d4b",
+    "1c1d",
+    "2d5a",
+    "2d1e",
+    "9c9d",
+    "5c5d",
+    "8b7a",
+    "6a5a",
+    "8c8d",
+    "1a1b"
+   ],
+   "courses": [
+    "sankenbisha-gote--anaguma"
+   ]
+  },
+  "ln1g3nl/1ks3gr1/pppppsb1p/5pp2/9/2P1PP1P1/PPBPS1P1P/LS5R1/KN1G1G1NL w p": {
+   "best": "9c9d",
+   "cp": -82,
+   "gap": 0,
+   "accepted": [
+    "9c9d",
+    "3d3e",
+    "4d4e",
+    "4c5d",
+    "6a6b",
+    "3c1e",
+    "1c1d",
+    "8c8d",
+    "5c5d",
+    "3c4b",
+    "7c7d",
+    "6c6d"
+   ],
+   "courses": [
+    "sankenbisha-gote--anaguma"
+   ]
+  },
+  "ln1g3nl/1ks3gr1/pppppsb1p/5p3/6p2/2P1PP1P1/PPBPS1P1P/LS5R1/KNG2G1NL w p": {
+   "best": "9c9d",
+   "cp": -76,
+   "gap": 9,
+   "accepted": [
+    "9c9d",
+    "1c1d",
+    "4c3d",
+    "2b2d",
+    "4d4e",
+    "8c8d",
+    "5c5d",
+    "4c5d",
+    "6c6d",
+    "6a6b",
+    "3b2c",
+    "7c7d"
+   ],
+   "courses": [
+    "sankenbisha-gote--anaguma"
+   ]
+  },
+  "ln1g3nl/1ks3gr1/pppppsb1p/5pp2/9/2P1PP3/PPBPS1P1P/LS5R1/KNG2G1NL w Pp": {
+   "best": "2b2h+",
+   "cp": 2760,
+   "gap": 2658,
+   "accepted": [
+    "2b2h+"
+   ],
+   "courses": [
+    "sankenbisha-gote--anaguma"
+   ]
+  },
+  "ln1g3nl/1ks3gr1/ppppps2p/5ppb1/9/2P1P4/PPBPSPP1P/LS5R1/KNG2G1NL w Pp": {
+   "best": "2d5g+",
+   "cp": 912,
+   "gap": 486,
+   "accepted": [
+    "2d5g+"
+   ],
+   "courses": [
+    "sankenbisha-gote--anaguma"
+   ]
+  },
+  "ln1g3nl/1ks3g+R1/ppppps2p/5pp2/9/2P1P4/PPBP+bPP1P/LS7/KNG2G1NL w RPsp": {
+   "best": "3b2b",
+   "cp": 935,
+   "gap": 802,
+   "accepted": [
+    "3b2b"
+   ],
+   "courses": [
+    "sankenbisha-gote--anaguma"
+   ]
+  },
+  "ln1g1g1nl/1ks4r1/ppppps2p/5ppb1/9/2P1PP3/PPBPS1P1P/L6R1/KNSG1G1NL w Pp": {
+   "best": "4a3b",
+   "cp": -102,
+   "gap": 3,
+   "accepted": [
+    "4a3b",
+    "9c9d",
+    "3d3e",
+    "1c1d",
+    "5c5d",
+    "4a4b",
+    "4a3a",
+    "1a1b",
+    "6a5a",
+    "6a7a",
+    "6a5b",
+    "2d3c"
+   ],
+   "courses": [
+    "sankenbisha-gote--anaguma"
+   ]
+  },
+  "ln1g1g1nl/1ks4r1/pppppsbpp/5pp2/7P1/2P1P4/PPBPSPP1P/LK2G2R1/1NSG3NL w -": {
+   "best": "4a3b",
+   "cp": -42,
+   "gap": 14,
+   "accepted": [
+    "4a3b",
+    "2c2d",
+    "3d3e",
+    "9c9d",
+    "4a5b",
+    "4c5d",
+    "6c6d",
+    "5c5d",
+    "7c7d",
+    "8c8d",
+    "1c1d",
+    "4d4e"
+   ],
+   "courses": [
+    "sankenbisha-gote--anaguma"
+   ]
+  },
+  "ln1g1g1nl/1ks4r1/pppppsbpp/5pp2/7P1/2P1P4/PP1PSPP1P/LK1B3R1/1NSG1G1NL w -": {
+   "best": "4d4e",
+   "cp": -35,
+   "gap": 17,
+   "accepted": [
+    "4d4e",
+    "2c2d",
+    "4c5d",
+    "9c9d",
+    "6c6d",
+    "4a5b",
+    "1c1d",
+    "4a5a",
+    "7c7d",
+    "8c8d",
+    "6a6b",
+    "3d3e"
+   ],
+   "courses": [
+    "sankenbisha-gote--anaguma"
+   ]
+  },
+  "ln1g1g1nl/1ks3r2/pppppsbpp/5pp2/7P1/P1P1P4/1PBPSPP1P/1K5R1/LNSG1G1NL w -": {
+   "best": "9c9d",
+   "cp": -78,
+   "gap": 20,
+   "accepted": [
+    "9c9d",
+    "8c8d",
+    "1c1d",
+    "7c7d",
+    "6c6d",
+    "3d3e",
+    "5c5d",
+    "4a5b",
+    "3c4b",
+    "4c5d",
+    "6a7a",
+    "6a6b"
+   ],
+   "courses": [
+    "sankenbisha-gote--anaguma"
+   ]
+  },
+  "lnsgb2nl/1k4r2/1p1pgs1pp/p1p1pppS1/7P1/P1P1PPR2/1P1P4P/1BK1G4/LNSG3NL w P": {
+   "best": "2c2d",
+   "cp": 487,
+   "gap": 113,
+   "accepted": [
+    "2c2d"
+   ],
+   "courses": [
+    "sankenbisha-gote--bogin"
+   ]
+  },
+  "lnsgb2nl/1k4r2/1p1pgs1pp/p1p1pp3/6pP1/P1P1PP1S1/1P1P2R1P/1BK1G4/LNSG3NL w p": {
+   "best": "3e3f",
+   "cp": 324,
+   "gap": 36,
+   "accepted": [
+    "3e3f",
+    "4c3d"
+   ],
+   "courses": [
+    "sankenbisha-gote--bogin"
+   ]
+  },
+  "lnsgkgsnl/6rb1/ppppp2pp/5pp2/9/P1P4P1/1P1PPPP1P/1B3S1R1/LNSGKG1NL w -": {
+   "best": "9c9d",
+   "cp": -105,
+   "gap": 30,
+   "accepted": [
+    "9c9d",
+    "7a7b",
+    "5a6b",
+    "3a4b",
+    "7a8b",
+    "2b3c",
+    "8c8d",
+    "5c5d",
+    "6a5b",
+    "1c1d",
+    "7c7d",
+    "6a6b"
+   ],
+   "courses": [
+    "sankenbisha-gote--deashi"
+   ]
+  },
+  "lnsgkgsnl/6rb1/ppppp2pp/5pp2/9/2P4P1/PP1PPPP1P/1B1K1S1R1/LNSG1G1NL w -": {
+   "best": "9c9d",
+   "cp": -83,
+   "gap": 7,
+   "accepted": [
+    "9c9d",
+    "5a6b",
+    "3a4b",
+    "5c5d",
+    "4a5b",
+    "2b3c",
+    "7a7b",
+    "1c1d",
+    "6a6b",
+    "6a5b",
+    "3b4b",
+    "6c6d"
+   ],
+   "courses": [
+    "sankenbisha-gote--deashi"
+   ]
+  },
+  "lnsgkgsnl/1r5b1/ppppp2pp/5pp2/7P1/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL w -": {
+   "best": "2b3c",
+   "cp": -45,
+   "gap": 67,
+   "accepted": [
+    "2b3c",
+    "3a3b"
+   ],
+   "courses": [
+    "sankenbisha-gote--deashi"
+   ]
+  },
+  "lnsgkgsnl/1r5b1/ppppp2pp/5pp2/9/2P4P1/PP1PPPP1P/1B1K3R1/LNSG1GSNL w -": {
+   "best": "8c8d",
+   "cp": -63,
+   "gap": 1,
+   "accepted": [
+    "8c8d",
+    "3a4b",
+    "7a6b",
+    "4a3b",
+    "5c5d",
+    "8b3b",
+    "9c9d",
+    "8b5b",
+    "3a3b",
+    "1c1d",
+    "2b3c",
+    "7c7d"
+   ],
+   "courses": [
+    "sankenbisha-gote--deashi"
+   ]
+  },
+  "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P6/PP1PPPPPP/1B1S3R1/LN1GKGSNL w -": {
+   "best": "2b8h+",
+   "cp": 3294,
+   "gap": 3293,
+   "accepted": [
+    "2b8h+"
+   ],
+   "courses": [
+    "sankenbisha-gote--deashi"
+   ]
+  },
+  "ln1g3nl/1ks1g2r1/1p1p1sbpp/p1p1pBp2/5P1P1/P1P1P1P2/1P1P2N1P/2KGGS1R1/LNS5L w P": {
+   "best": "4c4d",
+   "cp": 453,
+   "gap": 487,
+   "accepted": [
+    "4c4d"
+   ],
+   "courses": [
+    "sankenbisha-gote--hayashikake"
+   ]
+  },
+  "ln1g3nl/1ks1g2r1/1p1p2bpp/p1p1pPp2/7P1/P1P1P1P2/1P1P2N1P/2KGGS1R1/LNS5L w SPb": {
+   "best": "3c4d",
+   "cp": 504,
+   "gap": 138,
+   "accepted": [
+    "3c4d"
+   ],
+   "courses": [
+    "sankenbisha-gote--hayashikake"
+   ]
+  },
+  "ln1g3nl/1ks1g1r2/1p1p1sbpp/p1p1ppp2/6PP1/P1P1PP3/1PBP2N1P/2KGGS1R1/LNS5L w -": {
+   "best": "3d3e",
+   "cp": 191,
+   "gap": 44,
+   "accepted": [
+    "3d3e",
+    "7d7e"
+   ],
+   "courses": [
+    "sankenbisha-gote--hayashikake"
+   ]
+  },
+  "ln1g3nl/1ks1gsr2/1ppp2bpp/p3ppp2/7P1/P1P1PPP2/1PBP2N1P/2K1GS1R1/LNSG4L w -": {
+   "best": "4b5c",
+   "cp": -56,
+   "gap": 9,
+   "accepted": [
+    "4b5c",
+    "1c1d",
+    "7c7d",
+    "8c8d",
+    "5b4c",
+    "3b2b",
+    "5d5e",
+    "4b4c",
+    "5b5c",
+    "6a6b",
+    "6a7a",
+    "6c6d"
+   ],
+   "courses": [
+    "sankenbisha-gote--minokansei"
    ]
   }
  }

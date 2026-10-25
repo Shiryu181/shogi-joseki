@@ -431,6 +431,20 @@
                                                   "kind": "main",
                                                   "note": "端の歩を突き返します。ほかの手より約50点よい手です(測定)。",
                                                   "aim": "端の歩を突かれたら、こちらも突き返して端を受けたい。",
+                                                  "accepted": [
+                                                    "9c9d",
+                                                    "7a7b",
+                                                    "5a6b",
+                                                    "3a4b",
+                                                    "7a8b",
+                                                    "2b3c",
+                                                    "8c8d",
+                                                    "5c5d",
+                                                    "6a5b",
+                                                    "1c1d",
+                                                    "7c7d",
+                                                    "6a6b"
+                                                  ],
                                                   "child": {
                                                     "id": "d7_1",
                                                     "sfen": "lnsgkgsnl/6rb1/1pppp2pp/p4pp2/9/P1P4P1/1P1PPPP1P/1B3S1R1/LNSGKG1NL b - 1",
@@ -455,6 +469,20 @@
                                                   "kind": "main",
                                                   "note": "先手が玉を寄せたので、こちらも玉を6二へ寄せます。美濃囲いに向かう玉の動きの、最初の一歩です。",
                                                   "aim": "相手が先に玉を動かしたので、こちらも玉を囲いへ向けて動かしたい。",
+                                                  "accepted": [
+                                                    "9c9d",
+                                                    "5a6b",
+                                                    "3a4b",
+                                                    "5c5d",
+                                                    "4a5b",
+                                                    "2b3c",
+                                                    "7a7b",
+                                                    "1c1d",
+                                                    "6a6b",
+                                                    "6a5b",
+                                                    "3b4b",
+                                                    "6c6d"
+                                                  ],
                                                   "child": {
                                                     "id": "d7_1",
                                                     "sfen": "lnsg1gsnl/3k2rb1/ppppp2pp/5pp2/9/2P4P1/PP1PPPP1P/1B1K1S1R1/LNSG1G1NL b - 1",
@@ -485,6 +513,10 @@
                                       "kind": "main",
                                       "note": "角を3三に上げます。3三の角は2四にも利いているので、▲2四歩と突かれても、△同歩と取って受けられます。飛車を振るのは、このあとです。",
                                       "aim": "歩を突き進められる前に、大駒を動かして受けの形を作りたい。",
+                                      "accepted": [
+                                        "2b3c",
+                                        "3a3b"
+                                      ],
                                       "child": {
                                         "id": "d5_1",
                                         "sfen": "lnsgkgsnl/1r7/ppppp1bpp/5pp2/7P1/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL b - 1",
@@ -509,6 +541,20 @@
                                       "kind": "main",
                                       "note": "先手が玉を寄せても、こちらの方針は変わりません。飛車を3筋に振って、三間飛車にします。",
                                       "aim": "相手の指し方にかかわらず、予定どおり大駒を振りたい。",
+                                      "accepted": [
+                                        "8c8d",
+                                        "3a4b",
+                                        "7a6b",
+                                        "4a3b",
+                                        "5c5d",
+                                        "8b3b",
+                                        "9c9d",
+                                        "8b5b",
+                                        "3a3b",
+                                        "1c1d",
+                                        "2b3c",
+                                        "7c7d"
+                                      ],
                                       "child": {
                                         "id": "d5_1",
                                         "sfen": "lnsgkgsnl/6rb1/ppppp2pp/5pp2/9/2P4P1/PP1PPPP1P/1B1K3R1/LNSG1GSNL b - 1",
