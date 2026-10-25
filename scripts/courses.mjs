@@ -67,6 +67,7 @@ import c_sankenbisha_gote__minokansei from "./courses/sankenbisha-gote--minokans
 import c_sankenbisha_gote__bogin from "./courses/sankenbisha-gote--bogin.mjs";
 import c_sankenbisha_gote__hayashikake from "./courses/sankenbisha-gote--hayashikake.mjs";
 import c_sankenbisha_gote__anaguma from "./courses/sankenbisha-gote--anaguma.mjs";
+import c_sankenbisha_gote__hidarimino from "./courses/sankenbisha-gote--hidarimino.mjs";
 import c_nakabisha__shote from "./courses/nakabisha--shote.mjs";
 import c_sankenbisha_vs_ibisha__sente from "./courses/sankenbisha-vs-ibisha--sente.mjs";
 import c_nakabisha_vs_ibisha__sente from "./courses/nakabisha-vs-ibisha--sente.mjs";
@@ -196,6 +197,7 @@ const USI_COURSES = [
   c_sankenbisha_gote__bogin,
   c_sankenbisha_gote__hayashikake,
   c_sankenbisha_gote__anaguma,
+  c_sankenbisha_gote__hidarimino,
 ];
 
 for (const def of USI_COURSES) {

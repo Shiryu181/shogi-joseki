@@ -28448,6 +28448,123 @@
    "courses": [
     "sankenbisha-gote--minokansei"
    ]
+  },
+  "l2g3nl/1ks1g1r2/1pnp1sbpp/p1p1ppp2/5P1P1/P1P1P1P2/1PBP2N1P/1KS1GS1R1/LN1G4L w -": {
+   "best": "3b4b",
+   "cp": -64,
+   "gap": 14,
+   "accepted": [
+    "3b4b",
+    "3b2b",
+    "3d3e",
+    "5d5e",
+    "6c6d"
+   ],
+   "courses": [
+    "sankenbisha-gote--hidarimino"
+   ]
+  },
+  "l2g3nl/1ks1gr3/1pnp1sbpp/p1p1ppp2/5P1P1/PPP1P1P2/2BP2N1P/1KS1GS1R1/LN1G4L w -": {
+   "best": "4b4a",
+   "cp": -25,
+   "gap": 15,
+   "accepted": [
+    "4b4a",
+    "6c6d",
+    "8c8d",
+    "1c1d",
+    "5b5a",
+    "6a6b",
+    "5b6b",
+    "5b5c",
+    "6a7a",
+    "7c6e",
+    "1a1b",
+    "4b2b"
+   ],
+   "courses": [
+    "sankenbisha-gote--hidarimino"
+   ]
+  },
+  "l2g3nl/1ks1gr3/1pn2sbpp/p1ppppp2/5P1P1/PPP1P1P2/1SBP2N1P/1K2GS1R1/LN1G4L w -": {
+   "best": "8c8d",
+   "cp": -23,
+   "gap": 7,
+   "accepted": [
+    "8c8d",
+    "1c1d",
+    "5b6c",
+    "5b6b",
+    "5b5c",
+    "6a6b",
+    "4b4a",
+    "6a7a",
+    "7b6c",
+    "1a1b",
+    "8b8a",
+    "7c6e"
+   ],
+   "courses": [
+    "sankenbisha-gote--hidarimino"
+   ]
+  },
+  "l2g3nl/1ks1gr3/1pnp1sbpp/p1p1pPp2/7P1/P1P1P1P2/1PBP2N1P/1KS1GS1R1/LN1G4L w P": {
+   "best": "4c4d",
+   "cp": -52,
+   "gap": 39,
+   "accepted": [
+    "4c4d",
+    "7c6e"
+   ],
+   "courses": [
+    "sankenbisha-gote--hidarimino"
+   ]
+  },
+  "l2g3nl/1ks1gr3/1pnp1sbpp/p1p1pppP1/5P3/P1P1P1P2/1PBP2N1P/1KS1GS1R1/LN1G4L w -": {
+   "best": "2c2d",
+   "cp": 7,
+   "gap": 219,
+   "accepted": [
+    "2c2d"
+   ],
+   "courses": [
+    "sankenbisha-gote--hidarimino"
+   ]
+  },
+  "l2g3nl/1ks1g1r2/1pnp1sbpp/p1p1ppp2/6PP1/P1P1PP3/1PBP2N1P/1KS1GS1R1/LN1G4L w -": {
+   "best": "3d3e",
+   "cp": 197,
+   "gap": 37,
+   "accepted": [
+    "3d3e",
+    "6c6d",
+    "7c6e"
+   ],
+   "courses": [
+    "sankenbisha-gote--hidarimino"
+   ]
+  },
+  "ln1g3nl/1ks1g1r2/1p1p1sbpp/p1p1ppp2/5P1P1/P1P1P1P2/1PBP4P/1KS1GS1R1/LN1G3NL w -": {
+   "best": "6c6d",
+   "cp": -42,
+   "gap": 3,
+   "accepted": [
+    "6c6d",
+    "3b4b",
+    "8c8d",
+    "8a7c",
+    "1c1d",
+    "3b2b",
+    "5b6b",
+    "3d3e",
+    "7d7e",
+    "6a7a",
+    "7b7c",
+    "5b5a"
+   ],
+   "courses": [
+    "sankenbisha-gote--hidarimino"
+   ]
   }
  }
 }
