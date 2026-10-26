@@ -56,6 +56,7 @@ import sankenbishaGoteBoginRaw from "../data/joseki/sankenbisha-gote--bogin.json
 import sankenbishaGoteHayashikakeRaw from "../data/joseki/sankenbisha-gote--hayashikake.json?raw";
 import sankenbishaGoteAnagumaRaw from "../data/joseki/sankenbisha-gote--anaguma.json?raw";
 import sankenbishaGoteHidariminoRaw from "../data/joseki/sankenbisha-gote--hidarimino.json?raw";
+import sankenbishaGoteAifuriMukaiRaw from "../data/joseki/sankenbisha-gote--aifuri-mukai.json?raw";
 import hayaishidaBasicRaw from "../data/joseki/hayaishida--basic.json?raw";
 import ibishaVsHayaishida42Raw from "../data/joseki/ibisha-vs-hayaishida--42gyoku.json?raw";
 import sankenbishaVsNakabishaAifuriRaw from "../data/joseki/sankenbisha-vs-nakabisha--aifuri.json?raw";
@@ -1013,6 +1014,19 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "持久戦",
     summary: "第2章の25手目の変化から、先手が▲8八玉〜▲7八銀と左美濃に組む形。▲3七桂〜▲4五歩の仕掛けには、歩を取らずに△4二飛(か△2二飛)と飛車を回って受け、先手が▲8六歩〜▲8七銀と固めてきたら△6四歩・△8四歩で形を整えるまで。互角の範囲で先手がやや指しやすい。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaGoteHidariminoRaw), "sankenbisha-gote--hidarimino.json"),
+  },
+  {
+    id: "sankenbisha-gote--aifuri-mukai",
+    strategyId: "sankenbisha",
+    opponentId: "mukaibisha",
+    recommend: 6,
+    group: "基本の組み方",
+    opponentLabel: "向かい飛車(相振り)",
+    sideLabel: "後手",
+    label: "相振り飛車・先手向かい飛車",
+    kind: "持久戦",
+    summary: "3手目に先手が▲6六歩と角道を止める形。△4四歩・△3二飛と三間飛車に振り、先手の▲7七角・▲8八飛(向かい飛車)を見ながら、△7四歩を先に突いてから玉を8二に囲うまで。囲いは銀を7三に上げる形になる。先手がやや指しやすい。",
+    load: () => assertJosekiCourse(parseRaw(sankenbishaGoteAifuriMukaiRaw), "sankenbisha-gote--aifuri-mukai.json"),
   },
   {
     id: "sujichigaikaku--basic",
