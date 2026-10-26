@@ -49,6 +49,10 @@ interface ReviewState {
   cards: ReviewCard[];
   index: number;
   position: Position;
+  /** 出題の手番(学習者の色)。正解して駒が動いたあとも、盤の向きはこれで決める。 */
+  myColor: Color;
+  /** 正解して盤に指した手。出題中は null。 */
+  lastMoveUsi: string | null;
   selected: Selection | null;
   moveDests: MoveDests;
   dropDests: DropDests;
@@ -96,7 +100,7 @@ function lookup(course: JosekiCourse, sfen: string, usi: string): MoveInfo {
 const questionState = (sfen: string) => {
   const position = positionOf(sfen);
   return {
-    position, selected: null, misses: 0, wrong: null, result: null,
+    position, myColor: position.color, lastMoveUsi: null, selected: null, misses: 0, wrong: null, result: null,
     moveDests: computeMoveDests(position, position.color),
     dropDests: computeDropDests(position, position.color),
   };
@@ -106,6 +110,8 @@ export const useReviewStore = create<ReviewState>((set, get) => ({
   cards: [],
   index: 0,
   position: new Position(),
+  myColor: Color.BLACK,
+  lastMoveUsi: null,
   selected: null,
   moveDests: new Map(),
   dropDests: new Map(),
@@ -208,7 +214,12 @@ function judge(usi: string, text: string) {
     if (firstTry) {
       progress.record(key, true, card.sharp);
     }
+    // 正解の手を盤に指す(学習画面と同じく、駒を動かしてから結果を見せる)。
+    const after = positionOf(card.sfen);
+    const move = after.createMoveByUSI(usi);
+    if (move) after.doMove(move);
     useReviewStore.setState({
+      position: after, lastMoveUsi: usi,
       result: { text: card.correctText, firstTry }, wrong: null, selected: null,
       correctCount: correctCount + (firstTry ? 1 : 0),
     });

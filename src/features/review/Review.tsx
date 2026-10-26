@@ -26,6 +26,8 @@ export function Review({ courses, onBack }: ReviewProps) {
   const cards = useReviewStore((s) => s.cards);
   const index = useReviewStore((s) => s.index);
   const position = useReviewStore((s) => s.position);
+  const myColor = useReviewStore((s) => s.myColor);
+  const lastMoveUsi = useReviewStore((s) => s.lastMoveUsi);
   const selected = useReviewStore((s) => s.selected);
   const moveDests = useReviewStore((s) => s.moveDests);
   const dropDests = useReviewStore((s) => s.dropDests);
@@ -83,7 +85,6 @@ export function Review({ courses, onBack }: ReviewProps) {
 
   if (!card) return null;
 
-  const myColor = position.color;
   const flipped = myColor === Color.WHITE;
   const solved = !!result;
 
@@ -96,6 +97,12 @@ export function Review({ courses, onBack }: ReviewProps) {
   const ghost: GhostPiece | null = answer && !(answer.from instanceof Square)
     ? { key: answer.to.usi, color: position.color, type: answer.from }
     : null;
+
+  // 正解して指した手を、学習画面と同じく強調する。
+  const last = lastMoveUsi ? parseUSIMove(lastMoveUsi) : null;
+  const lastKeys = last
+    ? new Set(last.from instanceof Square ? [last.from.usi, last.to.usi] : [last.to.usi])
+    : undefined;
 
   const selectedHandType = selected?.kind === "hand" ? selected.pieceType : null;
   const pick = (type: PieceType, color: Color) => selectHand(type, color);
@@ -119,6 +126,9 @@ export function Review({ courses, onBack }: ReviewProps) {
         fromHand={null}
         destKeys={destKeys}
         ghost={ghost}
+        lastKeys={lastKeys}
+        emphasizeLast
+        lastToKey={last ? last.to.usi : null}
         onSquareClick={(sq: Square) => selectSquare(sq)}
         onHandPieceClick={() => {}}
         clickableHandColor="none"
