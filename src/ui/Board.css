@@ -340,3 +340,31 @@
   fill: var(--arrow);
   opacity: 0.92;
 }
+
+/*
+ * 答え合わせの枠。指した悪い手は赤(--red)、正解の手は緑(--good)の細い線で、マスの内側を囲む。
+ * 塗り・影・点滅は付けない。選択(金の内側の線)・行き先の丸・直前の手の強調はマスの端か中央に出るので、
+ * 枠はそれより内側(端から 4px)に置いて重ならないようにする。
+ * 同じマスに赤と緑が重なったときは、赤を外側、緑をその内側(端から 7px)に二重で描く。
+ */
+.cell .frame {
+  position: absolute;
+  inset: 4px;
+  border: 2px solid;
+  border-radius: 2px;
+  pointer-events: none;
+}
+.cell .frame-miss {
+  border-color: var(--red);
+}
+.cell .frame-answer {
+  border-color: var(--good);
+}
+.cell .frame-miss ~ .frame-answer {
+  inset: 7px;
+}
+/* 枠のあるマスで取れる升の輪(.dest.occupied)は、枠の内側に収まるよう小さくする。 */
+.cell.framed.dest.occupied::after {
+  width: 44%;
+  height: 44%;
+}

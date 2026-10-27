@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Color, PieceType, Square, parseUSIMove } from "../../domain/shogi";
 import type { GhostPiece } from "../../ui/Board";
 import { Board } from "../../ui/Board";
+import { usiSquareKeys } from "../../domain/moveText";
 import { Screen, TopBar, ProgressLine, SubLabel } from "../../ui/DojoParts";
 import { HandChip } from "../learn/Learn";
 import { useReviewStore } from "../../store/reviewStore";
@@ -19,7 +20,7 @@ export interface ReviewProps {
  * 今日の復習(確定版モック 18〜20)。
  * 学習画面と同じ組み立て(看板 → 進み線 → 章名 → 持ち駒 → 盤 → 板のパネル)で、
  * コースを辿らず、期日が来た手を1問ずつ単独で出す。ねらいは「ヒント」を押した人にだけ見せる。
- * 外し方は学習画面と同じ: 1回目は赤い一行、2回目は盤の矢印で答えを示す。
+ * 外し方は学習画面と同じ: 1回目は赤い一行と赤枠、2回目からは正解を緑の枠で示す。
  */
 export function Review({ courses, onBack }: ReviewProps) {
   const start = useReviewStore((s) => s.start);
@@ -88,12 +89,12 @@ export function Review({ courses, onBack }: ReviewProps) {
   const flipped = myColor === Color.WHITE;
   const solved = !!result;
 
-  // 答えの矢印: 2回目以降の誤答、または「悪くない手」(別の良い手)を指したとき。
+  // 答えの緑枠: 2回目以降の誤答、または「悪くない手」(別の良い手)を指したとき。
+  // 赤枠: 指した悪い手(駒は動かさず元の位置のまま)。次に正解するか別の手を指すまで出す。
   const showAnswer = !!wrong && (wrong.kind !== "bad" || misses >= 2);
   const answer = showAnswer && wrong?.correctUsi ? parseUSIMove(wrong.correctUsi) : null;
-  const arrow = answer
-    ? { from: answer.from instanceof Square ? answer.from.usi : null, to: answer.to.usi }
-    : null;
+  const answerKeys = answer ? usiSquareKeys(wrong?.correctUsi) : undefined;
+  const missKeys = wrong?.kind === "bad" ? usiSquareKeys(wrong.attemptedUsi) : undefined;
   const ghost: GhostPiece | null = answer && !(answer.from instanceof Square)
     ? { key: answer.to.usi, color: position.color, type: answer.from }
     : null;
@@ -134,7 +135,8 @@ export function Review({ courses, onBack }: ReviewProps) {
         clickableHandColor="none"
         flipped={flipped}
         hideHands
-        arrow={arrow}
+        missKeys={missKeys}
+        answerKeys={answerKeys}
       />
 
       <section className="dojo-panel learn-panel" aria-live="polite">
@@ -149,7 +151,7 @@ export function Review({ courses, onBack }: ReviewProps) {
   );
 }
 
-/** 出題: 「この局面で指す手は？」+ ヒント(押すとねらい)。外したときは赤い一行 / 矢印+答え。 */
+/** 出題: 「この局面で指す手は？」+ ヒント(押すとねらい)。外したときは赤い一行 / 緑枠+答え。 */
 function QuestionPanel({ card, wrong, misses }: { card: ReviewCard; wrong: ReviewWrong | null; misses: number }) {
   const [hintOpen, setHintOpen] = useState(false);
 
@@ -177,7 +179,7 @@ function QuestionPanel({ card, wrong, misses }: { card: ReviewCard; wrong: Revie
         <p className="miss-l">× {wrong.attemptedText} — 定跡の手ではありません。もう一度</p>
       )}
       {wrong && wrong.kind === "bad" && misses >= 2 && (
-        <p className="ans-l">答えは {wrong.correctText}。矢印のとおり指してください</p>
+        <p className="ans-l">答えは {wrong.correctText}。緑の枠のとおり指してください</p>
       )}
     </>
   );

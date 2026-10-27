@@ -61,7 +61,7 @@ export interface AckMove {
 
 /** 自分の手番での「次の一手」クイズの状態。 */
 export interface BookQuizState {
-  /** ここまでに外した回数。1回目は赤い一行、2回目からは矢印で答えを示す。 */
+  /** ここまでに外した回数。1回目は赤い一行と赤枠、2回目からは緑の枠で答えを示す。 */
   misses: number;
   /**
    * 直近の誤答。null なら未回答。

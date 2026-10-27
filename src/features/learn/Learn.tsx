@@ -10,7 +10,7 @@ import { useExamStore } from "../../store/examStore";
 import { chapterStat } from "../../domain/courseProgress";
 import { toKanjiNumber } from "../../domain/kanjiNumber";
 import { buildHint } from "../../domain/hint";
-import { oneLineIntent, plainMove } from "../../domain/moveText";
+import { oneLineIntent, plainMove, usiSquareKeys } from "../../domain/moveText";
 import { Board } from "../../ui/Board";
 import { PieceView } from "../../ui/Piece";
 import { Screen, TopBar } from "../../ui/DojoParts";
@@ -43,13 +43,6 @@ function positionFromSfen(sfen: string): Position {
   const p = new Position();
   p.resetBySFEN(sfen);
   return p;
-}
-
-/** USI の移動元・移動先を強調用の集合にする。 */
-function usiKeys(usi: string | null): Set<string> {
-  if (!usi) return new Set();
-  const to = usi.slice(2, 4);
-  return usi[1] === "*" ? new Set([to]) : new Set([usi.slice(0, 2), to]);
 }
 
 interface DemoFrame { pos: Position; text: string; lastKeys: Set<string>; lastTo: string | null }
@@ -262,12 +255,13 @@ export function Learn({
   // ── 盤に出すもの ──
   const guide = bookQuiz ? mainBranchOf(currentNode) : null;
   const wrong = bookQuiz?.wrong ?? null;
-  // 答えの矢印: 2回目以降の誤答、または「悪くない手」(許容手)を指したとき。
+  // 答えの緑枠: 2回目以降の誤答、または「悪くない手」(許容手)を指したとき。
+  // 赤枠: 指した悪い手(駒は動かさず元の位置のまま)。次に正解するか別の手を指すまで出す。
+  // 「指すとどうなる？」の再生中・デモ中は、盤が別の局面になるので枠は出さない。
   const showAnswer = !!wrong && !trying && !demo && (wrong.kind !== "bad" || (bookQuiz?.misses ?? 0) >= 2);
   const answer = showAnswer && wrong?.correctUsi ? parseUSIMove(wrong.correctUsi) : null;
-  const arrow = answer
-    ? { from: answer.from instanceof Square ? answer.from.usi : null, to: answer.to.usi }
-    : null;
+  const answerKeys = answer ? usiSquareKeys(wrong?.correctUsi) : undefined;
+  const missKeys = wrong?.kind === "bad" && !trying && !demo ? usiSquareKeys(wrong.attemptedUsi) : undefined;
   let ghost: GhostPiece | null = null;
   if (answer && !(answer.from instanceof Square)) {
     ghost = { key: answer.to.usi, color: position.color, type: answer.from };
@@ -282,7 +276,7 @@ export function Learn({
   const lastToKey = lastParsed ? lastParsed.to.usi : null;
 
   const shownPosition = tryPreview ? positionFromSfen(tryPreview.sfen) : demo ? demo.frames[demo.step].pos : position;
-  const shownLastKeys = tryPreview ? usiKeys(tryPreview.lastUsi) : demo ? demo.frames[demo.step].lastKeys : lastKeys;
+  const shownLastKeys = tryPreview ? usiSquareKeys(tryPreview.lastUsi) : demo ? demo.frames[demo.step].lastKeys : lastKeys;
   const shownLastTo = tryPreview ? (tryPreview.lastUsi ? tryPreview.lastUsi.slice(2, 4) : null) : demo ? demo.frames[demo.step].lastTo : lastToKey;
 
   // 自分で手を探すので、選んだ駒の行き先を光らせる。
@@ -335,7 +329,8 @@ export function Learn({
         // 後手番のコースでは盤を後手側から見た向きにする(自分の駒が手前を向く)
         flipped={flipped}
         hideHands
-        arrow={arrow}
+        missKeys={missKeys}
+        answerKeys={answerKeys}
       />
 
       <section className="dojo-panel learn-panel" aria-live="polite">
@@ -391,7 +386,7 @@ export function Learn({
   );
 }
 
-/** 自分の番: 「あなたの番 ・ n手目」+ 相手の手 + ねらい。外したときは赤い一行 / 矢印+答え。 */
+/** 自分の番: 「あなたの番 ・ n手目」+ 相手の手 + ねらい。外したときは赤い一行 / 緑枠+答え。 */
 function QuestionPanel({
   quiz, moveNumber, lastOpponent, aim, sharp, introNote, onTry,
 }: {
@@ -405,14 +400,14 @@ function QuestionPanel({
 }) {
   const wrong = quiz.wrong;
 
-  // 別の良い手(許容手・同じくらい良い手): 認めたうえで、定跡の手を矢印で示す。
+  // 別の良い手(許容手・同じくらい良い手): 認めたうえで、定跡の手を緑の枠で示す。
   if (wrong && wrong.kind !== "bad") {
     const mark = wrong.attemptedText.slice(0, 1);
     return (
       <>
         <p className="soft-t">{mark} その手も悪くありません。定跡は {wrong.correctText} です</p>
         <p className="expl">
-          {wrong.attemptedText} も有力ですが、この章では {wrong.correctText} で覚えます。矢印の手を指してください。
+          {wrong.attemptedText} も有力ですが、この章では {wrong.correctText} で覚えます。緑の枠の手を指してください。
         </p>
       </>
     );
@@ -446,7 +441,7 @@ function QuestionPanel({
       )}
       {wrong && quiz.misses >= 2 && (
         <>
-          <p className="ans-l">答えは {wrong.correctText}。矢印のとおり指してください</p>
+          <p className="ans-l">答えは {wrong.correctText}。緑の枠のとおり指してください</p>
           <button type="button" className="btn-secondary full" onClick={onTry}>
             ▶ {wrong.attemptedText}を指すとどうなる？
           </button>

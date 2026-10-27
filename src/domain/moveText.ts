@@ -56,3 +56,13 @@ export function evalWords(cp: number): string {
     : "相手が勝勢";
   return `${words}(${num})`;
 }
+
+/**
+ * USI の指し手の「動かす前の升」と「動かした先の升」を集合にする(盤の枠・強調用)。
+ * 持ち駒を打つ手は打った先の升だけ。usi が無ければ空。
+ */
+export function usiSquareKeys(usi: string | null | undefined): Set<string> {
+  if (!usi) return new Set();
+  const to = usi.slice(2, 4);
+  return usi[1] === "*" ? new Set([to]) : new Set([usi.slice(0, 2), to]);
+}

@@ -41,6 +41,8 @@ export interface ReviewCard extends QuizItem {
 export interface ReviewWrong {
   kind: "bad" | "accepted" | "openEnded";
   attemptedText: string;
+  /** 指した手の USI。盤の赤枠に使う。 */
+  attemptedUsi: string;
   correctText: string;
   correctUsi: string;
 }
@@ -56,7 +58,7 @@ interface ReviewState {
   selected: Selection | null;
   moveDests: MoveDests;
   dropDests: DropDests;
-  /** この問題で外した回数。1回目は赤い一行、2回目からは矢印で答えを示す。 */
+  /** この問題で外した回数。1回目は赤い一行と赤枠、2回目からは緑の枠で答えを示す。 */
   misses: number;
   wrong: ReviewWrong | null;
   /** 正解した。null なら出題中。firstTry は一発で当てたか。 */
@@ -231,6 +233,6 @@ function judge(usi: string, text: string) {
   useReviewStore.setState({
     selected: null,
     misses: misses + 1,
-    wrong: { kind, attemptedText: plainMove(text), correctText: card.correctText, correctUsi: card.usi },
+    wrong: { kind, attemptedText: plainMove(text), attemptedUsi: usi, correctText: card.correctText, correctUsi: card.usi },
   });
 }

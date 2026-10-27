@@ -36,17 +36,25 @@ function BoardCell({
   className,
   label,
   onTap,
+  miss = false,
+  answer = false,
   children,
 }: {
   className: string;
   label: string;
   onTap: () => void;
+  /** 赤い細枠(指した悪い手)を内側に描く。 */
+  miss?: boolean;
+  /** 緑の細枠(正解の手)を内側に描く。 */
+  answer?: boolean;
   children?: React.ReactNode;
 }) {
   const tap = useTapHandlers(onTap);
   return (
     <button type="button" className={className} aria-label={label} {...tap} onClick={() => {}}>
       {children}
+      {miss && <i className="frame frame-miss" aria-hidden="true" />}
+      {answer && <i className="frame frame-answer" aria-hidden="true" />}
     </button>
   );
 }
@@ -154,6 +162,13 @@ export interface BoardProps {
   arrow?: BoardArrow | null;
   /** 誤答の行き先など、薄い点線の枠で印を付ける升(usi)。 */
   markKeys?: Set<string>;
+  /**
+   * 赤い細枠で囲む升(クイズで指した悪い手の、動かす前と動かした先。打つ手は打った先だけ)。
+   * 駒は動かさず元の位置のまま。選択・行き先の丸・直前の手の強調とは別に、マスの内側に重ねる。
+   */
+  missKeys?: Set<string>;
+  /** 緑の細枠で囲む升(正解の手の、動かす前と動かした先。打つ手は打つ先だけ)。赤枠と重なれば赤の内側に出る。 */
+  answerKeys?: Set<string>;
 }
 
 /** USI の升を、盤の描画上の列・行(0..8, 左上が 0)にする。 */
@@ -260,11 +275,15 @@ export function Board({
   hideHands = false,
   arrow = null,
   markKeys,
+  missKeys,
+  answerKeys,
 }: BoardProps) {
   const grid = useMemo(() => boardGrid(position), [position]);
   const glow = glowKeys ?? EMPTY_SET;
   const dests = destKeys ?? EMPTY_SET;
   const last = lastKeys ?? EMPTY_SET;
+  const misses = missKeys ?? EMPTY_SET;
+  const answers = answerKeys ?? EMPTY_SET;
   // 描画順だけを反転させ、升の座標(Square)は常に実際の値を使う。
   // こうすることで、クリック処理や強調表示のロジックは反転を意識しなくてよい。
   const order = flipped ? REVERSED_ORDER : NORMAL_ORDER;
@@ -307,6 +326,7 @@ export function Board({
                   dests.has(key) ? "dest" : "",
                   dests.has(key) && piece ? "occupied" : "",
                   markKeys?.has(key) ? "marked" : "",
+                  misses.has(key) || answers.has(key) ? "framed" : "",
                 ]
                   .filter(Boolean)
                   .join(" ");
@@ -316,6 +336,8 @@ export function Board({
                     className={classes}
                     label={`${FILES[x]}${RANKS[y]}`}
                     onTap={() => onSquareClick(square)}
+                    miss={misses.has(key)}
+                    answer={answers.has(key)}
                   >
                     {piece && <PieceView type={piece.type} color={piece.color} flipped={flipped} />}
                     {showGhost && <PieceView type={ghost.type} color={ghost.color} ghost flipped={flipped} />}
