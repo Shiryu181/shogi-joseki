@@ -50,6 +50,9 @@
   --koma-rim: #cba85e;
   --koma-ink: #2b2013;
   --komared: #8f1f15;
+  /* 盤の上の答え合わせの枠。盤は暗いテーマでも明るい木のままなので、--red / --good の暗いテーマ用の淡い色は使わない */
+  --frame-miss: #a8281c;
+  --frame-answer: #25593f;
   --arrow: #a8281c;
   --cellred: rgba(168, 40, 28, 0.15);
   --cellred2: rgba(168, 40, 28, 0.22);
