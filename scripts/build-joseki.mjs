@@ -44,6 +44,7 @@ const KNOWN_BOOK_OVER_ENGINE = new Set([
   "sankenbisha-ishida--migishiken 3手目", // ▲7五歩(第1章と同じ。戦法を選ぶ手、2026-10-16)
   "sankenbisha-ishida--anaguma 3手目", // ▲7五歩(第1章と同じ。戦法を選ぶ手、2026-10-17)
   "nakabisha--shote 4手目", // △5四歩(ゴキゲン中飛車を選ぶ手。最善△4二銀との差103〜106、2026-10-10)
+  "sankenbisha-gote--aifuri-naka 6手目", // △3二飛(後手が三間飛車を選ぶ手。最善△6二銀・△8四歩との差61〜64、深さ固定d16/d18、2026-10-27)
 ]);
 
 /**
