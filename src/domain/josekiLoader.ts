@@ -51,6 +51,7 @@ import sankenbishaIshidaHidariminoRaw from "../data/joseki/sankenbisha-ishida--h
 import sankenbishaIshidaAnagumaRaw from "../data/joseki/sankenbisha-ishida--anaguma.json?raw";
 import sankenbishaIshidaAifuriRaw from "../data/joseki/sankenbisha-ishida--aifuri.json?raw";
 import sankenbishaIshidaSugairyuRaw from "../data/joseki/sankenbisha-ishida--sugairyu.json?raw";
+import sankenbishaIshidaBokinRaw from "../data/joseki/sankenbisha-ishida--bokin.json?raw";
 import sankenbishaGoteDeashiRaw from "../data/joseki/sankenbisha-gote--deashi.json?raw";
 import sankenbishaGoteMinokanseiRaw from "../data/joseki/sankenbisha-gote--minokansei.json?raw";
 import sankenbishaGoteBoginRaw from "../data/joseki/sankenbisha-gote--bogin.json?raw";
@@ -954,6 +955,19 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "持久戦",
     summary: "飛車を7六に上げた直後に△8八角成と角を交換されたとき、▲同銀 → ▲7七桂と飛車を支え、美濃囲いに組むまで。△4五角・△5四角などの別の手への返し方も覚える。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaIshidaSugairyuRaw), "sankenbisha-ishida--sugairyu.json"),
+  },
+  {
+    id: "sankenbisha-ishida--bokin",
+    strategyId: "sankenbisha",
+    opponentId: "ibisha-kyusen",
+    recommend: 18,
+    group: "基本の組み方",
+    opponentLabel: "居飛車",
+    sideLabel: "先手",
+    label: "棒金には▲7七桂を保留して",
+    kind: "急戦",
+    summary: "後手が△7二金から△8三金・△8四金の棒金で押さえ込んでくるとき、▲7八金 → ▲6八銀〜▲6七銀〜▲5六銀と備え、▲7七桂を保留してから跳ねて、▲6五歩でさばくまで。△7二飛(袖飛車)・△7四歩・△6五歩などの別の手への返し方も覚える。",
+    load: () => assertJosekiCourse(parseRaw(sankenbishaIshidaBokinRaw), "sankenbisha-ishida--bokin.json"),
   },
   {
     id: "sankenbisha-gote--deashi",
