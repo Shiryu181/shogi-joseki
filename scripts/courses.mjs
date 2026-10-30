@@ -64,6 +64,7 @@ import c_sankenbisha_ishida__anaguma from "./courses/sankenbisha-ishida--anaguma
 import c_sankenbisha_ishida__aifuri from "./courses/sankenbisha-ishida--aifuri.mjs";
 import c_sankenbisha_ishida__sugairyu from "./courses/sankenbisha-ishida--sugairyu.mjs";
 import c_sankenbisha_ishida__bokin from "./courses/sankenbisha-ishida--bokin.mjs";
+import c_sankenbisha_ishida__aifuri_shiken from "./courses/sankenbisha-ishida--aifuri-shiken.mjs";
 import c_sankenbisha_gote__deashi from "./courses/sankenbisha-gote--deashi.mjs";
 import c_sankenbisha_gote__minokansei from "./courses/sankenbisha-gote--minokansei.mjs";
 import c_sankenbisha_gote__bogin from "./courses/sankenbisha-gote--bogin.mjs";
@@ -201,6 +202,7 @@ const USI_COURSES = [
   c_sankenbisha_ishida__aifuri,
   c_sankenbisha_ishida__sugairyu,
   c_sankenbisha_ishida__bokin,
+  c_sankenbisha_ishida__aifuri_shiken,
   c_sankenbisha_gote__deashi,
   c_sankenbisha_gote__minokansei,
   c_sankenbisha_gote__bogin,

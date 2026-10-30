@@ -52,6 +52,7 @@ import sankenbishaIshidaAnagumaRaw from "../data/joseki/sankenbisha-ishida--anag
 import sankenbishaIshidaAifuriRaw from "../data/joseki/sankenbisha-ishida--aifuri.json?raw";
 import sankenbishaIshidaSugairyuRaw from "../data/joseki/sankenbisha-ishida--sugairyu.json?raw";
 import sankenbishaIshidaBokinRaw from "../data/joseki/sankenbisha-ishida--bokin.json?raw";
+import sankenbishaIshidaAifuriShikenRaw from "../data/joseki/sankenbisha-ishida--aifuri-shiken.json?raw";
 import sankenbishaGoteDeashiRaw from "../data/joseki/sankenbisha-gote--deashi.json?raw";
 import sankenbishaGoteMinokanseiRaw from "../data/joseki/sankenbisha-gote--minokansei.json?raw";
 import sankenbishaGoteBoginRaw from "../data/joseki/sankenbisha-gote--bogin.json?raw";
@@ -968,6 +969,19 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "急戦",
     summary: "後手が△7二金から△8三金・△8四金の棒金で押さえ込んでくるとき、▲7八金 → ▲6八銀〜▲6七銀〜▲5六銀と備え、▲7七桂を保留してから跳ねて、▲6五歩でさばくまで。△7二飛(袖飛車)・△7四歩・△6五歩などの別の手への返し方も覚える。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaIshidaBokinRaw), "sankenbisha-ishida--bokin.json"),
+  },
+  {
+    id: "sankenbisha-ishida--aifuri-shiken",
+    strategyId: "sankenbisha",
+    opponentId: "shikenbisha",
+    recommend: 19,
+    group: "基本の組み方",
+    opponentLabel: "四間飛車(相振り)",
+    sideLabel: "先手",
+    label: "相振り(相手が四間飛車)",
+    kind: "駒組み",
+    summary: "後手が△4四歩から△4二飛と四間飛車に振ってきたとき、▲6八銀・▲1六歩・▲3八銀・▲4八玉と囲いを進め、▲7四歩 △同歩 ▲同飛と7筋の歩を交換して▲7六飛と浮き、美濃囲いに組んで▲7八飛と戻すまで。△3二飛(相三間)・△5二飛(相中飛車)・△4五歩・△7四歩などの別の手への返し方も覚える。",
+    load: () => assertJosekiCourse(parseRaw(sankenbishaIshidaAifuriShikenRaw), "sankenbisha-ishida--aifuri-shiken.json"),
   },
   {
     id: "sankenbisha-gote--deashi",
