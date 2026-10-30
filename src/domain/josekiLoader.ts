@@ -71,6 +71,7 @@ import nakabishaVsSankenbishaAifuriRaw from "../data/joseki/nakabisha-vs-sankenb
 import sankenbishaVsMukaibishaAifuriRaw from "../data/joseki/sankenbisha-vs-mukaibisha--aifuri.json?raw";
 import nakabishaShoteRaw from "../data/joseki/nakabisha--shote.json?raw";
 import nakabishaShoteSenteRaw from "../data/joseki/nakabisha--shote-sente.json?raw";
+import nakabishaVs5yonfuHoryuRaw from "../data/joseki/nakabisha-vs-5yonfu--horyu.json?raw";
 import nakabishaVsAnagumaSenteRaw from "../data/joseki/nakabisha-vs-anaguma--sente.json?raw";
 import nakabishaVsSankenbishaSenteRaw from "../data/joseki/nakabisha-vs-sankenbisha--sente.json?raw";
 import nakabishaVsChousokuSenteRaw from "../data/joseki/nakabisha-vs-chousoku--sente.json?raw";
@@ -787,6 +788,19 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "駒組み",
     summary: "初手は▲5六歩。角道を開けてから飛車を振ると、角交換から△4五角で馬を作られる。",
     load: () => assertJosekiCourse(parseRaw(nakabishaShoteSenteRaw), "nakabisha--shote-sente.json"),
+  },
+  {
+    id: "nakabisha-vs-5yonfu--horyu",
+    strategyId: "gokigen",
+    opponentId: "ibisha-kyusen",
+    recommend: 3,
+    group: "基本と受け方",
+    opponentLabel: "居飛車(5四歩型)",
+    sideLabel: "先手",
+    label: "5四歩型には角を7七に残して",
+    kind: "駒組み",
+    summary: "相手が5筋の歩を突いて(△5四歩)位取りを止めてきたら、▲7六歩・▲4八玉・▲3八玉と進め、▲7七角と角を換えずに残して、美濃囲いに組む。△7七角成や△3二銀などの別の手への返し方も覚える。",
+    load: () => assertJosekiCourse(parseRaw(nakabishaVs5yonfuHoryuRaw), "nakabisha-vs-5yonfu--horyu.json"),
   },
   {
     id: "nakabisha--shote",
