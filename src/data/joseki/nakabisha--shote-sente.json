@@ -75,6 +75,7 @@
                           "child": {
                             "id": "n4",
                             "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/1p4p2/9/4P4/PPPP1PPPP/1B2R4/LNSGKGSNL b - 1",
+                            "comment": null,
                             "branches": [
                               {
                                 "usi": "7g7f",
@@ -407,6 +408,44 @@
                                       }
                                     }
                                   ]
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "usi": "5c5d",
+                          "kind": "deviation",
+                          "variation": true,
+                          "note": "相手が5筋の歩を突きました。",
+                          "punishNote": "相手が5筋の歩を突いて、中飛車の5筋の位を止める形です。それでも、こちらは角道を開けて駒組みを進めます。続きは第5章で扱います。",
+                          "child": {
+                            "id": "d4",
+                            "sfen": "lnsgkgsnl/1r5b1/pppp1p1pp/4p1p2/9/4P4/PPPP1PPPP/1B2R4/LNSGKGSNL b - 1",
+                            "branches": [
+                              {
+                                "usi": "7g7f",
+                                "kind": "main",
+                                "note": "角道を開けます。相手が5筋を突いてきても、飛車を5筋に振った方針は変わりません。角を換えずに残して美濃囲いに組む続きは、第5章で扱います。",
+                                "aim": "大駒の通り道を開けて、駒組みを進めたい。",
+                                "accepted": [
+                                  "5i4h",
+                                  "1g1f",
+                                  "7g7f",
+                                  "6i7h",
+                                  "3i4h",
+                                  "6g6f",
+                                  "3g3f",
+                                  "7i6h",
+                                  "4g4f",
+                                  "9g9f",
+                                  "4i4h",
+                                  "5i6h"
+                                ],
+                                "child": {
+                                  "id": "d4_1",
+                                  "sfen": "lnsgkgsnl/1r5b1/pppp1p1pp/4p1p2/9/2P1P4/PP1P1PPPP/1B2R4/LNSGKGSNL w - 1",
+                                  "branches": []
                                 }
                               }
                             ]
