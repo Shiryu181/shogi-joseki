@@ -74,6 +74,7 @@ import nakabishaShoteSenteRaw from "../data/joseki/nakabisha--shote-sente.json?r
 import nakabishaVs5yonfuHoryuRaw from "../data/joseki/nakabisha-vs-5yonfu--horyu.json?raw";
 import nakabishaVs5yonfuKakukoukanRaw from "../data/joseki/nakabisha-vs-5yonfu--kakukoukan.json?raw";
 import nakabishaVsIbishaJikyusenRaw from "../data/joseki/nakabisha-vs-ibisha--jikyusen.json?raw";
+import nakabishaVs8yonfuKakukoukanRaw from "../data/joseki/nakabisha-vs-8yonfu--kakukoukan.json?raw";
 import nakabishaVsAnagumaSenteRaw from "../data/joseki/nakabisha-vs-anaguma--sente.json?raw";
 import nakabishaVsSankenbishaSenteRaw from "../data/joseki/nakabisha-vs-sankenbisha--sente.json?raw";
 import nakabishaVsChousokuSenteRaw from "../data/joseki/nakabisha-vs-chousoku--sente.json?raw";
@@ -829,6 +830,19 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "持久戦",
     summary: "相手が超速で急がず、角を3三へ上げて持久戦に構えたら、▲6六歩・▲2八玉と進め、飛車を7筋へ回して、銀を4七・金を3八と5八に置く。相手が居飛車穴熊に組む間に、桂を3七へ跳ねて駒組みを進める。△6四銀や△3二銀、△7五歩への返し方も覚える。",
     load: () => assertJosekiCourse(parseRaw(nakabishaVsIbishaJikyusenRaw), "nakabisha-vs-ibisha--jikyusen.json"),
+  },
+  {
+    id: "nakabisha-vs-8yonfu--kakukoukan",
+    strategyId: "gokigen",
+    opponentId: "ibisha-kyusen",
+    recommend: 10,
+    group: "角交換",
+    opponentLabel: "居飛車(角交換)",
+    sideLabel: "先手",
+    label: "角交換には銀で取り返して",
+    kind: "駒組み",
+    summary: "相手が角を換えてきたら(△8八角成)、▲同銀と取り返す。そのあと玉を6八・7八・8八と左へ寄せ、銀を7七・金を7八に置いて固める。飛車は5八のまま。相手が△2八角と打ち込んできたら、▲3七角と打って受ける。△4二銀や△8五歩には▲7七銀、△4四歩には▲3六歩と返す。△3二銀や△3八角のような無理な手は、そのまま取れる。",
+    load: () => assertJosekiCourse(parseRaw(nakabishaVs8yonfuKakukoukanRaw), "nakabisha-vs-8yonfu--kakukoukan.json"),
   },
   {
     id: "nakabisha--shote",
