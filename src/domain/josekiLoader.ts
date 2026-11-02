@@ -82,6 +82,7 @@ import nakabishaVsAnaguma7sujiRaw from "../data/joseki/nakabisha-vs-anaguma--7su
 import nakabishaVsChokyusenRaw from "../data/joseki/nakabisha-vs-chokyusen--kaihi.json?raw";
 import nakabishaVsUfoginRaw from "../data/joseki/nakabisha-vs-ufogin--gote.json?raw";
 import nakabishaVsUreshinoRaw from "../data/joseki/nakabisha-vs-ureshino--gote.json?raw";
+import nakabishaVsMaruyamaRaw from "../data/joseki/nakabisha-vs-maruyama--gote.json?raw";
 import branchNavDemoRaw from "../data/joseki/_branchNavDemo.json?raw";
 
 /**
@@ -882,6 +883,19 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "急戦",
     summary: "7手目▲5八金右は超急戦の狙い。△5五歩だと20手以上の激戦になるが、△6二玉なら同じ評価で避けられる。",
     load: () => assertJosekiCourse(parseRaw(nakabishaVsChokyusenRaw), "nakabisha-vs-chokyusen--kaihi.json"),
+  },
+  {
+    id: "nakabisha-vs-maruyama--gote",
+    strategyId: "gokigen",
+    opponentId: "ibisha-kyusen",
+    recommend: 3,
+    group: "基本と受け方",
+    opponentLabel: "居飛車",
+    sideLabel: "後手",
+    label: "丸山ワクチンには馬で逆襲",
+    kind: "急戦",
+    summary: "相手が角を換えてきたら(▲2二角成)、△同銀と取り返す。そのあと△4四角と打って5筋の歩を突き進め、馬を作って逆襲する。相手が角を打つ手(▲5三角)や飛車を出す手(▲2六飛)には、そのまま駒が取れる。▲7八銀・▲9六歩・▲8八銀への返し方も覚える。",
+    load: () => assertJosekiCourse(parseRaw(nakabishaVsMaruyamaRaw), "nakabisha-vs-maruyama--gote.json"),
   },
   {
     id: "nakabisha-vs-ureshino--gote",
