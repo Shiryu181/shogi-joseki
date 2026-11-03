@@ -17385,21 +17385,29 @@
   },
   "lnsg1g1nl/1k2rs3/pppp1pbpp/6p2/4p2P1/P1P6/1PBPPPP1P/1K2GS1R1/LNSG3NL w -": {
    "best": "9c9d",
-   "cp": -100,
-   "gap": 1,
+   "cp": -108,
+   "gap": 0,
    "accepted": [
-    "9c9d",
     "4b5c",
+    "9c9d",
+    "4c4d",
     "7c7d",
+    "6a7b",
+    "7a7b",
     "9a9b",
     "6c6d",
-    "7a7b",
-    "6a7b",
     "8c8d",
-    "4c4d",
-    "4a3b",
     "1c1d",
-    "6a6b"
+    "6a6b",
+    "4a3b",
+    "4a5a",
+    "5b5a",
+    "7a6b",
+    "3d3e",
+    "1a1b",
+    "4a3a",
+    "5b6b",
+    "5b5d"
    ],
    "courses": [
     "_lab"
@@ -34281,6 +34289,348 @@
    ],
    "courses": [
     "nakabisha-vs-chousoku-kakukoukan--gote"
+   ]
+  },
+  "lnsg1g1nl/1k2rs3/pppp1pbpp/6p2/4p2P1/2P6/PPBPPPP1P/1KS1GS1R1/LN1G3NL w -": {
+   "best": "4b5c",
+   "cp": -114,
+   "gap": 1,
+   "accepted": [
+    "4b5c",
+    "9c9d",
+    "9a9b",
+    "6a7b",
+    "4c4d",
+    "7a7b",
+    "1c1d",
+    "7c7d",
+    "4a3b",
+    "8c8d",
+    "6a6b",
+    "6c6d",
+    "5b5a",
+    "7a6b",
+    "3d3e",
+    "4a3a",
+    "4a5a",
+    "1a1b",
+    "5b5d",
+    "6a5a"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--gote"
+   ]
+  },
+  "lnsg1g1nl/1k2r4/ppppspbpp/6p2/4p2P1/2P3P2/PPBPPP2P/1KS1GS1R1/LN1G3NL w -": {
+   "best": "9c9d",
+   "cp": -107,
+   "gap": 1,
+   "accepted": [
+    "9c9d",
+    "5c4d",
+    "5c5d",
+    "6c6d",
+    "4c4d",
+    "5b3b",
+    "6a7b",
+    "9a9b",
+    "7a7b",
+    "7c7d",
+    "8c8d",
+    "1c1d",
+    "4a3b",
+    "5c6d",
+    "6a6b",
+    "4a4b",
+    "7a6b",
+    "5b5a",
+    "4a5a",
+    "5b4b"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--gote"
+   ]
+  },
+  "lnsg1g1nl/1k2r4/pppp1pbpp/3s2p2/4p2P1/2PP2P2/PPB1PP2P/1KS1GS1R1/LN1G3NL w -": {
+   "best": "7c7d",
+   "cp": -120,
+   "gap": 10,
+   "accepted": [
+    "7c7d",
+    "5b7b",
+    "9c9d",
+    "9a9b",
+    "1c1d",
+    "6a7b",
+    "3c5a",
+    "6d5c",
+    "4a3b",
+    "3c4b",
+    "4a4b",
+    "7a7b",
+    "8c8d",
+    "5b5a",
+    "4c4d",
+    "5b3b",
+    "6a6b"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--gote"
+   ]
+  },
+  "lnsg1g1nl/1k2r4/pp1p1pbpp/2ps2p2/4p2P1/2PP2P2/PPBGPP2P/1KS2S1R1/LN1G3NL w -": {
+   "best": "7d7e",
+   "cp": -146,
+   "gap": 12,
+   "accepted": [
+    "5b7b",
+    "9c9d",
+    "6a7b",
+    "7d7e",
+    "9a9b",
+    "1c1d",
+    "4a3b",
+    "3c4b",
+    "7a7b",
+    "3c5a",
+    "5b5a",
+    "6a6b",
+    "6d5c",
+    "6d7c",
+    "8c8d",
+    "3c1e",
+    "4c4d",
+    "4a4b",
+    "7a6b",
+    "4a3a"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--gote"
+   ]
+  },
+  "lnsg1g1nl/1kr6/pp1p1pbpp/2ps2p2/4p2P1/1BPP2P2/PP1GPP2P/1KS2S1R1/LN1G3NL w -": {
+   "best": "7d7e",
+   "cp": -70,
+   "gap": 47,
+   "accepted": [
+    "7d7e",
+    "9c9d",
+    "8c8d",
+    "1c1d",
+    "6a5b",
+    "6a6b",
+    "4a5b",
+    "4a3b",
+    "4a4b",
+    "8b9b"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--gote"
+   ]
+  },
+  "lnsg1g1nl/1kr6/pp1p1pbpp/3s2pP1/2p1p4/1BPP2P2/PP1GPP2P/1KS2S1R1/LN1G3NL w -": {
+   "best": "2c2d",
+   "cp": -74,
+   "gap": 169,
+   "accepted": [
+    "2c2d"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--gote"
+   ]
+  },
+  "lnsg1g1nl/1kr6/pp1p1pb1p/3s2pp1/2P1p4/1B1P2P2/PP1GPP2P/1KS2S1R1/LN1G3NL w Pp": {
+   "best": "6d7e",
+   "cp": -62,
+   "gap": 81,
+   "accepted": [
+    "6d7e",
+    "P*7g",
+    "9c9d",
+    "8c8d"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--gote"
+   ]
+  },
+  "lnsg1g1nl/1kr6/pp1p1pb1p/6pp1/2B1p4/3P2P2/PP1GPP2P/1KS2S1R1/LN1G3NL w SP2p": {
+   "best": "7b7e",
+   "cp": -61,
+   "gap": 586,
+   "accepted": [
+    "7b7e"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--gote"
+   ]
+  },
+  "lnsg1g1nl/1kr6/pp1p1pb1p/3s2pR1/2p1p4/1BPP2P2/PP1GPP2P/1KS2S3/LN1G3NL w Pp": {
+   "best": "3c2d",
+   "cp": 1577,
+   "gap": 1790,
+   "accepted": [
+    "3c2d"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--gote"
+   ]
+  },
+  "lnsg1g1nl/1k2r4/ppppspbpp/6p2/4B2P1/2P6/PP1PPPP1P/1KS1GS1R1/LN1G3NL w P": {
+   "best": "3c5e",
+   "cp": 1185,
+   "gap": 1372,
+   "accepted": [
+    "3c5e"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--gote"
+   ]
+  },
+  "lnsg1g1nl/1k2rs3/pppp1pbpp/6p2/4p2P1/2PP5/PPB1PPP1P/1K2GS1R1/LNSG3NL w -": {
+   "best": "7c7d",
+   "cp": -98,
+   "gap": 14,
+   "accepted": [
+    "9c9d",
+    "4b5c",
+    "6a7b",
+    "7a7b",
+    "6c6d",
+    "9a9b",
+    "4c4d",
+    "5b5a",
+    "7c7d",
+    "4a3b",
+    "8c8d",
+    "1c1d",
+    "7a6b",
+    "6a6b",
+    "3d3e",
+    "4a3a",
+    "1a1b",
+    "3c1e",
+    "4a5a"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--gote"
+   ]
+  },
+  "lnsg1g1nl/1k2rs3/pp1p1pbpp/2p3p2/4p2P1/2PP5/PPB1PPP1P/1KS1GS1R1/LN1G3NL w -": {
+   "best": "4b5c",
+   "cp": -123,
+   "gap": 9,
+   "accepted": [
+    "4b5c",
+    "9c9d",
+    "9a9b",
+    "6a7b",
+    "4c4d",
+    "8c8d",
+    "1c1d",
+    "7a7b",
+    "6c6d",
+    "5b7b",
+    "7a6b",
+    "8a7c",
+    "6a6b",
+    "4a3b",
+    "3c1e",
+    "5b5a",
+    "7d7e",
+    "3d3e",
+    "4a5a",
+    "4a3a"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--gote"
+   ]
+  },
+  "lnsg1g1nl/1k2rs3/1p1p1pbpp/p1p3p2/4p2P1/P1PP5/1PB1PPP1P/1KS1GS1R1/LN1G3NL w -": {
+   "best": "4b5c",
+   "cp": -108,
+   "gap": 0,
+   "accepted": [
+    "6a7b",
+    "4b5c",
+    "7a7b",
+    "4c4d",
+    "8c8d",
+    "6c6d",
+    "8a7c",
+    "1c1d",
+    "7a6b",
+    "5b5a",
+    "9a9b",
+    "3d3e",
+    "5b7b",
+    "4a3b",
+    "3c1e",
+    "6a6b",
+    "1a1b",
+    "4a3a",
+    "4a5a",
+    "6a5a"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--gote"
+   ]
+  },
+  "lnsg1g1nl/1k2rs3/pp1p1pbpp/2p3p2/4p2P1/P1P6/1PBPPPP1P/1KS1GS1R1/LN1G3NL w -": {
+   "best": "6a7b",
+   "cp": -93,
+   "gap": 9,
+   "accepted": [
+    "8a7c",
+    "6a7b",
+    "6c6d",
+    "4b5c",
+    "9c9d",
+    "7d7e",
+    "9a9b",
+    "7a7b",
+    "8c8d",
+    "1c1d",
+    "6a6b",
+    "5b7b",
+    "4c4d",
+    "3d3e",
+    "4a3b",
+    "7a6b",
+    "4a5a",
+    "1a1b",
+    "5b5a"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--gote"
+   ]
+  },
+  "l1sg1g1nl/1k2rs3/ppnp1pbpp/2p3p2/4p2P1/P1P4R1/1PBPPPP1P/1KS1GS3/LN1G3NL w -": {
+   "best": "9c9d",
+   "cp": -71,
+   "gap": 11,
+   "accepted": [
+    "9c9d",
+    "8c8d",
+    "7a7b",
+    "6a7b",
+    "6c6d",
+    "4c4d",
+    "3c4d",
+    "6a6b",
+    "5b5a",
+    "1c1d",
+    "4a5a",
+    "7a6b",
+    "5b5d",
+    "4a3b",
+    "4b5c",
+    "9a9b",
+    "8b8a",
+    "8b7b",
+    "3c1e"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--gote"
    ]
   }
  }

@@ -84,6 +84,7 @@ import nakabishaVsUfoginRaw from "../data/joseki/nakabisha-vs-ufogin--gote.json?
 import nakabishaVsUreshinoRaw from "../data/joseki/nakabisha-vs-ureshino--gote.json?raw";
 import nakabishaVsMaruyamaRaw from "../data/joseki/nakabisha-vs-maruyama--gote.json?raw";
 import nakabishaVsChousokuKakukoukanRaw from "../data/joseki/nakabisha-vs-chousoku-kakukoukan--gote.json?raw";
+import nakabishaVsHidariminoRaw from "../data/joseki/nakabisha-vs-hidarimino--gote.json?raw";
 import branchNavDemoRaw from "../data/joseki/_branchNavDemo.json?raw";
 
 /**
@@ -638,6 +639,19 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "持久戦",
     summary: "5筋では穴熊に通らない。銀を6四へ運び、飛車を7二へ回して守りの薄い7筋を攻める。",
     load: () => assertJosekiCourse(parseRaw(nakabishaVsAnaguma7sujiRaw), "nakabisha-vs-anaguma--7suji.json"),
+  },
+  {
+    id: "nakabisha-vs-hidarimino--gote",
+    strategyId: "gokigen",
+    opponentId: "anaguma",
+    recommend: 6,
+    group: "対居飛車穴熊",
+    opponentLabel: "居飛車の左美濃",
+    sideLabel: "後手",
+    label: "居飛車の左美濃には",
+    kind: "持久戦",
+    summary: "相手が穴熊にしないで、▲7八銀と上がって左美濃に組んだら。穴熊の章と同じ、銀を6四・飛車を7二へ運ぶ構えで、7筋から戦う。形勢は先手がやや良い。相手が5五へ角を出す手(▲5五角)や、2四へ飛車を出す手(▲2四飛)には、そのまま駒が取れる。▲6六歩・▲9六歩から始める手順への返し方も覚える。",
+    load: () => assertJosekiCourse(parseRaw(nakabishaVsHidariminoRaw), "nakabisha-vs-hidarimino--gote.json"),
   },
   {
     id: "nakabisha-vs-ibisha--gokigen24",

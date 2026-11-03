@@ -91,6 +91,7 @@ import c_nakabisha_vs_8yonfu__kakukoukan from "./courses/nakabisha-vs-8yonfu--ka
 import c_nakabisha_vs_ufogin__gote from "./courses/nakabisha-vs-ufogin--gote.mjs";
 import c_nakabisha_vs_chokyusen__kaihi from "./courses/nakabisha-vs-chokyusen--kaihi.mjs";
 import c_nakabisha_vs_anaguma__7suji from "./courses/nakabisha-vs-anaguma--7suji.mjs";
+import c_nakabisha_vs_hidarimino__gote from "./courses/nakabisha-vs-hidarimino--gote.mjs";
 import c_nakabisha_vs_ureshino__gote from "./courses/nakabisha-vs-ureshino--gote.mjs";
 import c_nakabisha_vs_maruyama__gote from "./courses/nakabisha-vs-maruyama--gote.mjs";
 import c_nakabisha_vs_chousoku_kakukoukan__gote from "./courses/nakabisha-vs-chousoku-kakukoukan--gote.mjs";
@@ -201,6 +202,7 @@ const USI_COURSES = [
   c_nakabisha_vs_ufogin__gote,
   c_nakabisha_vs_chokyusen__kaihi,
   c_nakabisha_vs_anaguma__7suji,
+  c_nakabisha_vs_hidarimino__gote,
   c_nakabisha_vs_ureshino__gote,
   c_nakabisha_vs_maruyama__gote,
   c_nakabisha_vs_chousoku_kakukoukan__gote,
