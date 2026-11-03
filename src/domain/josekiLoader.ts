@@ -83,6 +83,7 @@ import nakabishaVsChokyusenRaw from "../data/joseki/nakabisha-vs-chokyusen--kaih
 import nakabishaVsUfoginRaw from "../data/joseki/nakabisha-vs-ufogin--gote.json?raw";
 import nakabishaVsUreshinoRaw from "../data/joseki/nakabisha-vs-ureshino--gote.json?raw";
 import nakabishaVsMaruyamaRaw from "../data/joseki/nakabisha-vs-maruyama--gote.json?raw";
+import nakabishaVsChousokuKakukoukanRaw from "../data/joseki/nakabisha-vs-chousoku-kakukoukan--gote.json?raw";
 import branchNavDemoRaw from "../data/joseki/_branchNavDemo.json?raw";
 
 /**
@@ -896,6 +897,19 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     kind: "急戦",
     summary: "相手が角を換えてきたら(▲2二角成)、△同銀と取り返す。そのあと△4四角と打って5筋の歩を突き進め、馬を作って逆襲する。相手が角を打つ手(▲5三角)や飛車を出す手(▲2六飛)には、そのまま駒が取れる。▲7八銀・▲9六歩・▲8八銀への返し方も覚える。",
     load: () => assertJosekiCourse(parseRaw(nakabishaVsMaruyamaRaw), "nakabisha-vs-maruyama--gote.json"),
+  },
+  {
+    id: "nakabisha-vs-chousoku-kakukoukan--gote",
+    strategyId: "gokigen",
+    opponentId: "chousoku",
+    recommend: 4,
+    group: "基本と受け方",
+    opponentLabel: "超速▲3七銀",
+    sideLabel: "後手",
+    label: "超速に角を換えられたら",
+    kind: "急戦",
+    summary: "相手が▲3三角成と角を換えてきたら、△同桂と取り返す。そのあと、相手の2筋の突き捨て(▲2四歩)を△同歩▲同飛△2三歩と受け、飛車を2一へ回して反撃する。角を換えた直後は先手がはっきり良く、後手が苦しい形だが、2筋の受け方と飛車の回し方は覚えられる。相手が銀を動かして角を取られる手(▲7八銀)や、▲3六歩で香を取られる手には、そのまま咎められる。▲8八銀・▲6八金・▲7七桂への返し方も覚える。",
+    load: () => assertJosekiCourse(parseRaw(nakabishaVsChousokuKakukoukanRaw), "nakabisha-vs-chousoku-kakukoukan--gote.json"),
   },
   {
     id: "nakabisha-vs-ureshino--gote",
