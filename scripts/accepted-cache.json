@@ -2,7 +2,7 @@
  "meta": {
   "ms": 2000,
   "tol": 100,
-  "updated": "2026-11-03"
+  "updated": "2026-11-05"
  },
  "positions": {
   "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b -": {
@@ -34631,6 +34631,267 @@
    ],
    "courses": [
     "nakabisha-vs-hidarimino--gote"
+   ]
+  },
+  "ln3g1nl/1r1sg1sk1/p1ppppbpp/6p2/1p2P4/2P6/PPBPSPPPP/4R2K1/LN1G1GSNL b -": {
+   "best": "1g1f",
+   "cp": -4,
+   "gap": 23,
+   "accepted": [
+    "5g5f",
+    "3i3h",
+    "1g1f",
+    "5g6f",
+    "4i3h",
+    "4g4f",
+    "3g3f",
+    "5g4f",
+    "1i1h",
+    "2g2f",
+    "5h4h",
+    "9g9f",
+    "7f7e",
+    "6g6f",
+    "4i4h",
+    "3i4h",
+    "6i7h",
+    "5h5i",
+    "6i6h",
+    "5h7h"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--sente"
+   ]
+  },
+  "ln3g1nl/1r1sg1sk1/p1ppp1bpp/5pp2/1p2P4/2P2S3/PPBP1PPPP/4R2K1/LN1G1GSNL b -": {
+   "best": "5h3h",
+   "cp": -76,
+   "gap": 22,
+   "accepted": [
+    "5h3h",
+    "1i1h",
+    "1g1f",
+    "3g3f",
+    "2g2f",
+    "4i3h",
+    "6i7h",
+    "9g9f",
+    "4f5g",
+    "7f7e",
+    "6i6h",
+    "3i3h",
+    "6g6f",
+    "5h5i",
+    "4i4h",
+    "7g6h",
+    "6i5i",
+    "5h5f",
+    "6i7i",
+    "5h6h"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--sente"
+   ]
+  },
+  "ln3g1nl/1r1s2sk1/p1pppgbpp/5pp2/1p2P4/2P2SP2/PPBP1P1PP/4R2K1/LN1G1GSNL b -": {
+   "best": "5h3h",
+   "cp": -45,
+   "gap": 16,
+   "accepted": [
+    "5h3h",
+    "3f3e",
+    "1g1f",
+    "1i1h",
+    "2g2f",
+    "6i5i",
+    "7f7e",
+    "9g9f"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--sente"
+   ]
+  },
+  "ln3g1nl/1r1s1bsk1/p1pppg1pp/5pp2/1p2P4/2P2SP2/PPBP1P1PP/6RK1/LN1G1GSNL b -": {
+   "best": "1g1f",
+   "cp": -61,
+   "gap": 2,
+   "accepted": [
+    "3f3e",
+    "1g1f",
+    "2g2f",
+    "1i1h",
+    "9g9f",
+    "6i5i",
+    "6i7h",
+    "3h5h",
+    "6i5h",
+    "6g6f",
+    "6i6h",
+    "9i9h",
+    "7f7e"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--sente"
+   ]
+  },
+  "ln3g1nl/1r1s1bsk1/p1pppg1pp/5p3/1p2P1p2/2P2S3/PPBP1P1PP/6RK1/LN1G1GSNL b p": {
+   "best": "4f3e",
+   "cp": -64,
+   "gap": 57,
+   "accepted": [
+    "4f3e",
+    "1g1f",
+    "1i1h",
+    "9g9f",
+    "6i7h",
+    "7f7e"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--sente"
+   ]
+  },
+  "ln3g1nl/1r1s1bsk1/p1pp1g1pp/4pp3/1p2P1S2/2P6/PPBP1P1PP/6RK1/LN1G1GSNL b Pp": {
+   "best": "5e5d",
+   "cp": -21,
+   "gap": 209,
+   "accepted": [
+    "5e5d"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--sente"
+   ]
+  },
+  "ln3g1nl/1r1s1bsk1/p1ppp2pp/4gpp2/1p2P1P2/2P2S3/PPBP1P1PP/6RK1/LN1G1GSNL b -": {
+   "best": "5e5d",
+   "cp": 1502,
+   "gap": 1111,
+   "accepted": [
+    "5e5d"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--sente"
+   ]
+  },
+  "ln3g1nl/1r1s2sk1/p1pppgbpp/6p2/1p2Pp3/2P2SP2/PPBP1P1PP/6RK1/LN1G1GSNL b -": {
+   "best": "4f4e",
+   "cp": -31,
+   "gap": 175,
+   "accepted": [
+    "4f4e"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--sente"
+   ]
+  },
+  "ln3g1nl/1r1s2sk1/p1pppgbpp/6p2/4PS3/1pP3P2/PPBP1P1PP/6RK1/LN1G1GSNL b P": {
+   "best": "8g8f",
+   "cp": -54,
+   "gap": 197,
+   "accepted": [
+    "8g8f",
+    "3f3e"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--sente"
+   ]
+  },
+  "ln3g1nl/1r1s2sk1/p1pp1gbpp/4p1p2/4PS3/1PP3P2/P1BP1P1PP/6RK1/LN1G1GSNL b 2P": {
+   "best": "4e5d",
+   "cp": -38,
+   "gap": 64,
+   "accepted": [
+    "4e5d",
+    "3h5h",
+    "3f3e"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--sente"
+   ]
+  },
+  "ln3g1nl/1r1sg1sk1/p1ppppb1p/6pp1/1p2P4/2P2S3/PPBP1PPPP/4R2K1/LN1G1GSNL b -": {
+   "best": "3g3f",
+   "cp": -48,
+   "gap": 3,
+   "accepted": [
+    "3g3f",
+    "5h3h",
+    "4f4e",
+    "1i1h",
+    "6g6f",
+    "4i3h",
+    "6i6h",
+    "3i3h",
+    "1g1f",
+    "7f7e",
+    "4f5g",
+    "9g9f",
+    "5h6h",
+    "6i7h",
+    "2g2f",
+    "7g5i",
+    "5h5f",
+    "6i5i",
+    "7g6h"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--sente"
+   ]
+  },
+  "ln3g1nl/1r1sg2k1/p1ppppbsp/6pp1/1p2P4/2P2SP2/PPBP1P1PP/4R2K1/LN1G1GSNL b -": {
+   "best": "5h3h",
+   "cp": 15,
+   "gap": 18,
+   "accepted": [
+    "5h3h",
+    "1i1h",
+    "1g1f",
+    "6g6f",
+    "4i3h",
+    "9g9f",
+    "3f3e",
+    "2g2f",
+    "4f4e",
+    "6i7h",
+    "4f5g",
+    "3i3h",
+    "6i6h",
+    "4i4h",
+    "5h6h",
+    "7g5i",
+    "2i3g",
+    "7f7e",
+    "5h5f"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--sente"
+   ]
+  },
+  "ln5nl/1r1sg1gk1/p1ppppbsp/6pp1/1p2P4/2P2SP2/PPBP1P1PP/6RK1/LN1G1GSNL b -": {
+   "best": "3f3e",
+   "cp": 50,
+   "gap": 81,
+   "accepted": [
+    "3f3e",
+    "1g1f",
+    "2g2f",
+    "4i4h",
+    "6i5i",
+    "9g9f"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--sente"
+   ]
+  },
+  "ln3g1nl/1r1sg1sk1/p1pppp1pp/6p2/1p2b4/2P2S3/PPBP1PPPP/4R2K1/LN1G1GSNL b p": {
+   "best": "4f5e",
+   "cp": 1396,
+   "gap": 69,
+   "accepted": [
+    "4f5e",
+    "7g5e"
+   ],
+   "courses": [
+    "nakabisha-vs-hidarimino--sente"
    ]
   }
  }

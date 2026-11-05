@@ -83,6 +83,7 @@ import c_shikenbisha_vs_ibisha__sente from "./courses/shikenbisha-vs-ibisha--sen
 import c_nakabisha_vs_chousoku__sente from "./courses/nakabisha-vs-chousoku--sente.mjs";
 import c_nakabisha_vs_sankenbisha__sente from "./courses/nakabisha-vs-sankenbisha--sente.mjs";
 import c_nakabisha_vs_anaguma__sente from "./courses/nakabisha-vs-anaguma--sente.mjs";
+import c_nakabisha_vs_hidarimino__sente from "./courses/nakabisha-vs-hidarimino--sente.mjs";
 import c_nakabisha__shote_sente from "./courses/nakabisha--shote-sente.mjs";
 import c_nakabisha_vs_5yonfu__horyu from "./courses/nakabisha-vs-5yonfu--horyu.mjs";
 import c_nakabisha_vs_5yonfu__kakukoukan from "./courses/nakabisha-vs-5yonfu--kakukoukan.mjs";
@@ -194,6 +195,7 @@ const USI_COURSES = [
   c_nakabisha_vs_chousoku__sente,
   c_nakabisha_vs_sankenbisha__sente,
   c_nakabisha_vs_anaguma__sente,
+  c_nakabisha_vs_hidarimino__sente,
   c_nakabisha__shote_sente,
   c_nakabisha_vs_5yonfu__horyu,
   c_nakabisha_vs_5yonfu__kakukoukan,
