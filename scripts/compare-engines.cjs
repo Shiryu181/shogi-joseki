@@ -18,7 +18,8 @@ const { createUsi } = require("./lib/usi-engine.cjs");
 const args = process.argv.slice(2);
 const [casesPath, outPath] = args.filter((a, i) => !a.startsWith("--") && !(i > 0 && args[i - 1].startsWith("--")));
 const argVal = (n, d) => { const i = args.indexOf(n); return i >= 0 ? args[i + 1] : d; };
-const DEPTHS = argVal("--depths", "16,18,20").split(",").map(Number);
+const NODES = Number(argVal("--nodes", 0)); // >0 なら go nodes N(深さ固定でなくノード数固定)。結果は深さの代わりにキー "n" に入る
+const DEPTHS = NODES ? ["n"] : argVal("--depths", "16,18,20").split(",").map(Number);
 const PV = Number(argVal("--pv", 8));
 
 function after(sfen, usi) {
@@ -62,18 +63,27 @@ function after(sfen, usi) {
         } else if (l.startsWith("bestmove")) { waiter = null; res(l.split(/\s+/)[1]); }
       };
     });
-    send(`go depth ${maxDepth}`);
+    send(NODES ? `go nodes ${NODES}` : `go depth ${maxDepth}`);
     const best = await done;
     const out = {};
     for (const [d, m] of Object.entries(byDepth)) out[d] = [...m.entries()].sort((a, b) => a[0] - b[0]).map((e) => e[1]);
-    return { byDepth: out, best, ms: Date.now() - t0, nodes };
+    let reached = null;
+    if (NODES) {
+      // 最後の反復が途中で切れると候補が欠けるので、候補の数が揃っている最も深い深さを使う
+      const ds = Object.keys(out).map(Number).sort((a, b) => b - a);
+      const full = Math.min(pv, ds.length > 1 ? out[ds[1]].length : pv);
+      reached = ds.find((d) => out[d].length >= full) ?? ds[0];
+      out.n = out[reached];
+    }
+    return { byDepth: out, best, ms: Date.now() - t0, nodes, reached };
   }
 
   const cases = JSON.parse(fs.readFileSync(casesPath, "utf-8"));
   const results = [];
   for (const c of cases) {
     const r = { ...c, depths: {}, ms: 0 };
-    const s = await search(c.sfen, PV, Math.max(...DEPTHS)); r.ms += s.ms;
+    const s = await search(c.sfen, PV, NODES ? 0 : Math.max(...DEPTHS)); r.ms += s.ms;
+    r.nodes = s.nodes; r.reachedDepth = s.reached; r.nps = s.ms ? Math.round(s.nodes / (s.ms / 1000)) : null;
     const nextSfen = after(c.sfen, c.move);
     let child = null;
     for (const d of DEPTHS) {
@@ -83,7 +93,7 @@ function after(sfen, usi) {
       let loss, via;
       if (hit) { loss = list[0].cp - hit.cp; via = "list"; }
       else {
-        if (!child) { child = await search(nextSfen, 1, Math.max(...DEPTHS)); r.ms += child.ms; }
+        if (!child) { child = await search(nextSfen, 1, NODES ? 0 : Math.max(...DEPTHS)); r.ms += child.ms; }
         const cl = child.byDepth[d];
         loss = cl && cl.length ? list[0].cp + cl[0].cp : null; via = "child";
       }
@@ -91,7 +101,7 @@ function after(sfen, usi) {
       r.depths[d] = { best: list[0].usi, bestCp: list[0].cp, loss, margin, via, second: list[1] ? list[1].usi : null, top: list.slice(0, 3) };
     }
     results.push(r);
-    console.error(`${c.id} ${c.kind} ${c.move}: ` + DEPTHS.map((d) => { const x = r.depths[d]; return x ? `d${d} best=${x.best}(${x.bestCp}) loss=${x.loss} m=${x.margin}` : `d${d} -`; }).join(" | ") + `  (${Math.round(r.ms / 1000)}s)`);
+    console.error(`${c.id} ${c.kind} ${c.move}: ` + DEPTHS.map((d) => { const x = r.depths[d]; return x ? `${d === "n" ? "n(d" + r.reachedDepth + ")" : "d" + d} best=${x.best}(${x.bestCp}) loss=${x.loss} m=${x.margin}` : `d${d} -`; }).join(" | ") + `  (${Math.round(r.ms / 1000)}s)`);
     fs.writeFileSync(outPath, JSON.stringify({ engine: eng.kind, pv: PV, depths: DEPTHS, results }, null, 1));
   }
   eng.close();
