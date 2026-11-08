@@ -105,3 +105,70 @@
 - [ ] 代表局面で旧新を比較し、評価値の目盛りの差・判定の食い違いを数値で出す。
 - [ ] 結果を見て、章の基準の当て直しと全章の測り直しを決める(ユーザーと相談)。
 - [ ] 完了後、docs/engine-license.md の「水匠は未確認」の項を、つようら王の記述に更新し、アプリの「このアプリについて」の表記(評価値は やねうら王 + つようら王 による、MIT の著作権表示)を決める。MIT は著作権表示と許諾文の保持が条件なので、配布物を同梱しない場合も、礼儀として表記しておくのが安全(義務の範囲は未確認)。
+
+## 8. 入手の条件(2026-11-08 調査)
+
+### 結論(先頭)
+
+1. **無料で取れる(見込み)。** 作者の公式ブログも報道(Forest Watch、2026-10-16)も「pixivFANBOX で無償公開、MIT License、二次配布・商用利用可」と書く。FANBOX 記事のタイトルも「つようら王11mini/microを無料公開」。支援者限定ではない。ただし記事の本文(ファイル名・サイズの実測・LICENSE の文面)は今回も取得できず、**配布物の中身は未確認**。
+2. **型は未確認。** どの公開情報にも NNUE の型の名前が出ていない。報道は「入力は実質、駒の情報だけ(玉位置を使わない)」とだけ言う。公式 wiki の更新履歴2026(読めた範囲)にも、つようら王や「駒だけ」の特徴量の記述は見つからなかった。
+3. **対応エンジンは、作者が FANBOX で配布する専用ビルド(Windows 64bit のみ)。** Mac 版の配布は確認できず。公式 GitHub の V9.00 は 2025-09 のリリースで、つようら王の型に対応しているかは未確認(2026-10 の公開より前のため、載っていない可能性が高いと推測)。
+4. **Mac で動かすなら、最新ソースからのビルドが本線。** 公式 wiki に Apple Silicon 向けの手順がある(下記)。ただし、つようら王の型を指定するビルド名が何かは、配布物の説明を見ないと分からない。
+5. **取れなかった場合の次点**は、既存の候補(1章の表)に、条件が明記されたものは他に見当たらない。下記 5 を参照。
+
+### 1. 配布場所
+
+| 場所 | 内容 | 出典 |
+|---|---|---|
+| 作者の pixivFANBOX | 無償公開。記事タイトルに「無料公開」。プランの金額の記載なし。本文は取得できず | https://yaneurao.fanbox.cc/posts/12761272 |
+| 作者の公式ブログ | 告知のみ。「ダウンロードは FANBOX の記事から」。ファイル名なし | https://yaneuraou.yaneu.com/2026/10/14/tsuyou-11-mini-micro-released-under-mit-license/ |
+| 報道 | 「FANBOX で無償公開」「MIT」 | https://forest.watch.impress.co.jp/docs/news/2148597.html |
+| GitHub のリリース・第三者の再配布 | 検索では見つからず(未確認)。MIT なので再配布は可能だが、改ざん・取り違えの危険があるので、作者の FANBOX から取るのが安全 | 検索結果なし |
+
+- FANBOX は未ログインでも、無料公開の記事はたいてい見られるが、ファイル添付のダウンロードにログインが要るかは未確認。ログインや登録が必要なら、ユーザー本人の操作(今回、エージェントは登録・ダウンロードをしていない)。
+
+### 2. 配布物の中身
+
+- ファイル名: 未確認。サイズは mini 約8.5MB、micro 約4.5MB(進行度パラメーター込み。公式ブログ・報道)。水匠5は約63MB。
+- LICENSE の文面: 未確認。公式ブログは「これらをMIT Licenseで頒布します」とだけ書き、全文は載せていない。追加条件の有無は、配布物の同梱ファイルで確認が必要。
+- NNUE の型: 未確認(上記)。報道の「玉位置×駒をやめ、実質、駒だけ。入力層付近のパラメーター数が1/81」から、既存の halfKP / K-P とは別物と推測。名前は配布物の説明で確かめる。
+- 設定の手順(報道): エンジンを展開し、実行ファイルの隣に `eval` フォルダを作り、評価関数の書庫の中身を置く。ShogiHome や将棋所に登録して使う。
+- 必要なバージョン・コンパイルオプション: 公式ブログに記載なし。「評価関数の構造に対応したビルドが必要」と報道は書く。未確認。
+
+### 3. Mac(Apple Silicon)でエンジンを用意する方法
+
+- 公式リリースの Mac 版は、やねうら王 V9.00 GitHub版(yaneuraou-V900-git-mac-all.7z。M1 以降向けを含む)と V8.30 版。最新のふかうら王は Windows のみ。これらで読めるのは、V9.00 に入っている型だけ。つようら王の型が載っているかは未確認。
+  - https://github.com/yaneurao/YaneuraOu/releases
+- ソースからのビルド(公式 wiki「やねうら王のビルド手順」より。Mac 向けの専用節はなく、Linux/Windows の例を `TARGET_CPU=APPLEM1` で読み替える):
+  - 準備: `xcode-select --install`、`brew install git p7zip`。
+  - `git clone https://github.com/yaneurao/YaneuraOu.git`、`cd YaneuraOu/source`
+  - 標準 NNUE: `make clean YANEURAOU_EDITION=YANEURAOU_ENGINE_NNUE` のあと `make -j8 tournament COMPILER=clang++ YANEURAOU_EDITION=YANEURAOU_ENGINE_NNUE TARGET_CPU=APPLEM1`
+  - 任意の型: Makefile の `PYTHON = python3` を設定し、`YANEURAOU_EDITION=YANEURAOU_ENGINE_NNUE_<特徴量名>_<隠れ層>` を指定。未知の名前なら `source/eval/nnue/architectures/nnue_arch_gen.py` が型のヘッダを生成する(特徴量名の例: halfkp、halfkahm2、ka2)。SFNN は `YANEURAOU_ENGINE_SFNN_...`。
+  - 評価関数は `eval/nn.bin`、または `EVAL_EMBEDDING=ON` で埋め込み。
+  - 出典: https://github.com/yaneurao/YaneuraOu/wiki/やねうら王のビルド手順
+- つようら王の「駒だけ」の特徴量が、上の `nnue_arch_gen.py` の既存の特徴量名で表せるかは未確認。表せない場合は、作者が FANBOX で配ったビルドのソース(公開されているか)が要る。ソースが GitHub 本体にまだ入っていない可能性がある(未確認。推測)。
+- 補足: 2026-10-01 の更新履歴に SFNN のアーキテクチャ名(`SFNN_ka2_2048_8_64_progress8` など)の追加があるが、つようら王との関係は書かれていない。
+
+### 4. 実際の入手の手順(提案。ユーザーの操作が要る)
+
+1. ユーザーが FANBOX の記事を開き、本文(ファイル名・型・必要なエンジン・LICENSE)を読む。添付をダウンロードする(登録が要るなら本人が行う)。
+2. 同梱の LICENSE が MIT 全文か、追加条件がないかを確認する。
+3. 説明に書かれたエンジンの型を、`nnue_arch_gen.py` か公式の Makefile で Mac 向けにビルドする。ビルドできたら `usi` → `isready` → 代表局面で `go` を試す。
+4. 本文のコピーを docs/ に貼ってもらえれば、この節の「未確認」を一気に埋められる。
+
+### 5. 無料で取れなかった場合の次の候補
+
+- 条件がはっきりしていて、かつ強い候補は、現時点で他に見つからない(1章の表のとおり)。
+- 次点の考え方
+  1. つようら王11micro(同じ記事・同じ条件。型も同じ見込み)。
+  2. リゼロ評価関数(やねうら王公式。README に「一切の権利は主張しません」)。弱いが条件は明確。強さが足りるかは、代表局面で測って決める。
+  3. 現状のまま(水匠 SuishoPetite の WASM)で、出力だけを使う。評価関数の条件は不明なまま。docs/engine-license.md の整理に従う。
+- 今回は、第三者の評価関数(AobaNNUE 等)の個別の条件は調べていない(未調査)。
+
+### 出典(今回)
+- https://yaneurao.fanbox.cc/posts/12761272 (タイトルのみ取得: 無料公開)
+- https://yaneuraou.yaneu.com/2026/10/14/tsuyou-11-mini-micro-released-under-mit-license/
+- https://forest.watch.impress.co.jp/docs/news/2148597.html
+- https://github.com/yaneurao/YaneuraOu/releases
+- https://github.com/yaneurao/YaneuraOu/wiki/やねうら王のビルド手順
+- https://github.com/yaneurao/YaneuraOu/wiki/やねうら王の更新履歴2026
