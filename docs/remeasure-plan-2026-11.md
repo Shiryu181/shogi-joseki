@@ -130,3 +130,15 @@ note・aim・咎めの返しの説明・節のコメントに「唯一」があ�
 | sankenbisha-gote--migishiken | 後 | 2 | 4/2 | 3 | 9/9 | 17/17 | 2 | 2 | 29 | 55 |
 | sankenbisha-gote--nanamebogin | 後 | 1 | 2/1 | 3 | 7/9 | 19/19 | 2 | 5 | 27 | 54 |
 | **合計(延べ)** | | 57 | 98/60 | 83 | 161/138 | 627/609 | 119 | 57 | 647 | 1634 |
+
+## 回し方(A の範囲。2026-11-08 起動)
+スクリプト: `scripts/remeasure-cases.mjs`(対象の一覧)、`scripts/remeasure-run.cjs`(測定)。出力はすべて `scripts/lab-out/`(git に入っていない)。エンジンは同時に1つ(Threads 1、MultiPV 8)。
+- **対象の一覧**: `node scripts/remeasure-cases.mjs` → `remeasure-A-cases.json`(574局面。局面・種類・調べる手・どの章の何手目か)。
+- **1段目の起動**(scripts/lab-out で実行。セッションが終わっても続き、Mac はスリープしない):
+  `cd scripts/lab-out && nohup caffeinate -i node ../remeasure-run.cjs --stage 1 > remeasure-A-stage1.log 2>&1 &`
+  1局面ごとに `remeasure-A-stage1.jsonl` へ1行追記する(500万ノード)。
+- **進み具合**: `node scripts/remeasure-run.cjs --status`(済/全体、平均時間、残り、終了見込み、実行中か)。経過のログは `tail remeasure-A-stage1.log`。
+- **止め方**: `pkill -f remeasure-run.cjs`(エンジンも一緒に終わる。記録済みの行は残る)。
+- **再開**: 上の起動コマンドをもう一度打つだけ。jsonl にある局面は飛ばして続きから回る(`>` でログを上書きするので、残したいときは `>>`)。
+- **2段目**: 1段目が終わると自動で `remeasure-A-stage2-cases.json`(境目に入った局面)を書く。手動なら `node scripts/remeasure-run.cjs --make-stage2`。境目 = 100以内の損60〜140、咎めの損250〜350、唯一の差60〜140。回すときは `--stage 1` を `--stage 2` に替える(4000万ノード、結果は `remeasure-A-stage2.jsonl`、`--status --stage 2` で進み具合)。
+- 1局面の記録: `best/bestCp/top(候補8手)` と、調べる手ごとの `loss`(最善との差。候補外は指した後を探索して求め via:"child")・`margin`(その手が最善のときの次善との差)。
