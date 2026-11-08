@@ -2,11 +2,11 @@
  * エンジン本体を載せる子プロセス。親(lib/engine.cjs)から {id,sfen,pv,ms} を受け取り、
  * MultiPV の結果 [{usi,cp}] を返す。落ちても親が作り直せるように、別プロセスにしてある。
  */
-const factory = require("@mizarjp/yaneuraou.k-p");
+// ENGINE=native でネイティブ版(つようら王11mini)、既定は wasm(水匠)。詳細は lib/usi-engine.cjs
+const { createUsi } = require("./usi-engine.cjs");
 
 let handler = () => {};
 const orig = console.log;
-console.log = (...a) => { for (const l of a.join(" ").split("\n")) handler(l); };
 
 const sc = (t) => {
   const i = t.indexOf("score"); if (i < 0) return null;
@@ -14,11 +14,13 @@ const sc = (t) => {
 };
 
 (async () => {
-  const mod = await factory({});
-  const send = (c) => mod.postMessage(c);
+  const eng = await createUsi();
+  eng.setHandler((l) => handler(l));
+  const send = (c) => eng.send(c);
   const once = (pred) => new Promise((res) => { handler = (l) => { if (pred(l)) { handler = () => {}; res(l); } }; });
 
   let p = once((l) => l === "usiok"); send("usi"); await p;
+  for (const c of eng.initOptions()) send(c);
   p = once((l) => l === "readyok"); send("isready"); await p;
   process.send({ ready: true });
 
