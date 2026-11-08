@@ -172,3 +172,12 @@
 - https://github.com/yaneurao/YaneuraOu/releases
 - https://github.com/yaneurao/YaneuraOu/wiki/やねうら王のビルド手順
 - https://github.com/yaneurao/YaneuraOu/wiki/やねうら王の更新履歴2026
+
+## 9. 配布記事で確かめたこと(2026-11-08、ユーザーが FANBOX の全体公開記事の本文を共有)
+- 記事は全体公開(支援者でなくても読める)。配布物は記事のリンクから直接ダウンロードでき、ログインは不要の見込み。
+- ライセンス:評価関数のファイル(nn.bin・progress.bin)は MIT。二次配布・商用利用は自由と明記。エンジン本体(やねうら王)は GPLv3。
+- 型(arch):つようら王11mini は SFNN_ka2_4096_8_64_progress8、つようら王11micro は SFNN_ka2_2048_8_64_progress8。どちらも進行度つき(progress.bin が別に約1MB)。FV_SCALE の最適値は 24。
+- 置き方:実行ファイルのあるフォルダに eval フォルダを作り、解凍した5つのファイルを入れる。
+- 配布物:storage.yaneu.com の TuyouraOu11mini-SFNN_ka2_4096_8_64_progress8-epoch0010-20261003.7z(約8.5MB)。
+- 対応エンジン:作者の配布は Windows 64bit 版だけ。macOS 版は付属しない(News Letter の V9.90 開発版、または次の正式版で GitHub に載る予定)。
+- Mac での見込み:GitHub の master の Makefile は SFNN_*_progress8 と half_ka2 のビルドに対応している(2026-11-08 に確認)。`YANEURAOU_EDITION=YANEURAOU_ENGINE_SFNN_ka2_4096_8_64_progress8`、`TARGET_CPU=APPLEM1` でソースからビルドできる見込み(未実行)。
