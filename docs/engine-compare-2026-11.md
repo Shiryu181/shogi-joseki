@@ -24,8 +24,8 @@
 | A | sankenbisha-gote--aifuri-naka | 31 | 先手 ▲1七桂 | 咎め(PLAN: 損279) |
 | B | sankenbisha-gote--aisanken | 15 | 先手 ▲4六歩 | 咎め(PLAN: 損270〜310) |
 | C | sankenbisha-ishida--aifuri-shiken | 14 | 後手 △7四歩 | 咎め(PLAN: 262〜483) |
-| D | nakabisha-vs-ibisha--gokigen24 | 13 | 後手 △2一飛成 (2d2a+) | 咎め(新で走査: 損241) |
-| E | nakabisha-vs-anaguma--7suji | 23 | 先手 ▲6八角? (7g6h) | 咎め(新で走査: 損322) |
+| D | nakabisha-vs-ibisha--gokigen24 | 13 | 手番側が 2d2a+ | 咎め(新で走査: 損241) |
+| E | nakabisha-vs-anaguma--7suji | 23 | 手番側が 7g6h | 咎め(新で走査: 損322) |
 | F | sankenbisha-ishida--aifuri-shiken | 15 | ▲7四歩 (7e7d) | 唯一(PLAN: 差84〜238) |
 | G | sankenbisha-ishida--bokin | 29 | ▲6五歩 (6f6e) | 唯一(PLAN: 差167〜249) |
 | H | nakabisha-vs-8yonfu--kakukoukan | 29 | ▲同銀 (4h3g) | 唯一(PLAN: 174/101/139/206) |
@@ -33,7 +33,6 @@
 | J | nakabisha-vs-maruyama--gote | 7 | ▲2二角成 | 最善との差100に近い手(PLAN: 92/68/77/90) |
 | K | nakabisha-vs-hidarimino--sente | 26 | △4二角 (3c4b) | 100に近い手(PLAN: d18 90) |
 
-(E と D は手の表記を USI から起こしたもので、駒名は未確認。D の 2d2a+ は盤上の駒を確かめていない。)
 中飛車(gokigen)側は D・E・H・I・J・K、三間飛車側は A・B・C・F・G。
 
 ## 測定結果(d16 / d18 / d20)
