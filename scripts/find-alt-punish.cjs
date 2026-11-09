@@ -15,7 +15,8 @@ const { createUsi } = require("./lib/usi-engine.cjs");
 const out = path.join(__dirname, "lab-out");
 const root = path.join(__dirname, "..");
 
-const TARGETS = [
+// ALT_TARGETS(JSON の配列 [{id, ply, bad}])を環境変数で渡すと、そちらを探す(第2弾の3回目: 手順を差し替えた章の新しい局面)。
+const TARGETS = process.env.ALT_TARGETS ? JSON.parse(process.env.ALT_TARGETS) : [
   { id: "nakabisha-vs-anaguma--7suji", ply: 23, bad: "7g6h" },
   { id: "nakabisha-vs-ibisha--gokigen24", ply: 13, bad: "2d2a+" },
   { id: "nakabisha-vs-sankenbisha--aifuri", ply: 17, bad: "5i5h" },

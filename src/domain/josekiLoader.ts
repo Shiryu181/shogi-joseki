@@ -1196,7 +1196,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     sideLabel: "後手",
     label: "相振り飛車・先手中飛車",
     kind: "持久戦",
-    summary: "3手目に先手が▲5六歩と突き、▲5八飛と中飛車に振る形。△4四歩・△3二飛と三間飛車に振り、玉を6二から8二へ寄せて美濃囲いに組み、△3五歩の3筋の動きから、5筋の位を取られても△4五銀と出るまで。互角。",
+    summary: "3手目に先手が▲5六歩と突き、▲5八飛と中飛車に振る形。△4四歩・△3二飛と三間飛車に振り、玉を6二から8二へ寄せて美濃囲いに組み、△4五歩・△3五歩と4筋・3筋から動いて角を交換し、4筋の歩の取り合いに△4六歩と打つまで。互角。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaGoteAifuriNakaRaw), "sankenbisha-gote--aifuri-naka.json"),
   },
   {
