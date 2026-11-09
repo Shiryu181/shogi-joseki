@@ -597,10 +597,10 @@
                                                                       "sfen": "lnsgkgs1l/4r4/pppp1pnpp/4p1p2/7P1/2P6/PP1PPPP1P/1S3S1R1/LN1GKG1NL w Bb 1",
                                                                       "branches": [
                                                                         {
-                                                                          "usi": "1c1d",
+                                                                          "usi": "4a3b",
                                                                           "kind": "main",
-                                                                          "note": "端の歩を突きます。最善より少し劣る場合もありますが、指せる手です。△2二飛・△2二銀・△6二金・△9四歩も指せる手です。",
-                                                                          "aim": "端に一手入れて、争点になりやすい場所に備えたい。",
+                                                                          "note": "金を3二へ上げます。",
+                                                                          "aim": "守りの駒を寄せて、形を整えたい。",
                                                                           "accepted": [
                                                                             "5b2b",
                                                                             "4a3b",
@@ -614,73 +614,42 @@
                                                                           ],
                                                                           "child": {
                                                                             "id": "d11_1",
-                                                                            "sfen": "lnsgkgs1l/4r4/pppp1pnp1/4p1p1p/7P1/2P6/PP1PPPP1P/1S3S1R1/LN1GKG1NL b Bb 1",
+                                                                            "sfen": "lnsgk1s1l/4r1g2/pppp1pnpp/4p1p2/7P1/2P6/PP1PPPP1P/1S3S1R1/LN1GKG1NL b Bb 1",
                                                                             "branches": [
                                                                               {
-                                                                                "usi": "5i6h",
+                                                                                "usi": "9g9f",
                                                                                 "kind": "main",
-                                                                                "note": "相手は玉を6八へ寄せます。本線と同じ手です。最善に近い手で、▲4六歩・▲5八金右・▲9六歩も同じくらいの手です。",
+                                                                                "note": "相手は端の歩を突きました。",
                                                                                 "child": {
                                                                                   "id": "d11_2",
-                                                                                  "sfen": "lnsgkgs1l/4r4/pppp1pnp1/4p1p1p/7P1/2P6/PP1PPPP1P/1S1K1S1R1/LN1G1G1NL w Bb 1",
+                                                                                  "sfen": "lnsgk1s1l/4r1g2/pppp1pnpp/4p1p2/7P1/P1P6/1P1PPPP1P/1S3S1R1/LN1GKG1NL w Bb 1",
                                                                                   "branches": [
                                                                                     {
-                                                                                      "usi": "4a3b",
+                                                                                      "usi": "9c9d",
                                                                                       "kind": "main",
-                                                                                      "note": "金を3二へ上げます。最善の手で、△2二銀・△6二金・△9四歩も指せる手です。",
-                                                                                      "aim": "取り返した駒のそばに守りの駒を足して、形を固めたい。",
-                                                                                      "accepted": [
-                                                                                        "4a3b",
-                                                                                        "5b2b",
-                                                                                        "9c9d",
-                                                                                        "3a2b",
-                                                                                        "7c7d",
-                                                                                        "7a6b",
-                                                                                        "7a8b",
-                                                                                        "6a6b",
-                                                                                        "B*4d",
-                                                                                        "1d1e",
-                                                                                        "8c8d",
-                                                                                        "5b8b",
-                                                                                        "B*5e",
-                                                                                        "9a9b",
-                                                                                        "4a4b"
-                                                                                      ],
+                                                                                      "note": "端の歩を突きます。",
+                                                                                      "aim": "端の歩を突いて、将来の攻めと玉の逃げ道を作りたい。",
                                                                                       "child": {
                                                                                         "id": "d11_3",
-                                                                                        "sfen": "lnsgk1s1l/4r1g2/pppp1pnp1/4p1p1p/7P1/2P6/PP1PPPP1P/1S1K1S1R1/LN1G1G1NL b Bb 1",
+                                                                                        "sfen": "lnsgk1s1l/4r1g2/1ppp1pnpp/p3p1p2/7P1/P1P6/1P1PPPP1P/1S3S1R1/LN1GKG1NL b Bb 1",
                                                                                         "branches": [
                                                                                           {
-                                                                                            "usi": "6h7h",
+                                                                                            "usi": "5i6h",
                                                                                             "kind": "main",
-                                                                                            "note": "相手は玉を7八へ寄せます。最善に近い手で、▲5九金右・▲9六歩・▲7七銀も同じくらいの手です。",
+                                                                                            "note": "相手は玉を6八へ寄せます。本線と同じ手です。",
                                                                                             "child": {
                                                                                               "id": "d11_4",
-                                                                                              "sfen": "lnsgk1s1l/4r1g2/pppp1pnp1/4p1p1p/7P1/2P6/PP1PPPP1P/1SK2S1R1/LN1G1G1NL w Bb 1",
+                                                                                              "sfen": "lnsgk1s1l/4r1g2/1ppp1pnpp/p3p1p2/7P1/P1P6/1P1PPPP1P/1S1K1S1R1/LN1G1G1NL w Bb 1",
                                                                                               "branches": [
                                                                                                 {
-                                                                                                  "usi": "9c9d",
+                                                                                                  "usi": "5a6b",
                                                                                                   "kind": "main",
-                                                                                                  "note": "端の歩を突きます。最善に近い手で、△6二玉・△2二銀も指せる手です。",
-                                                                                                  "aim": "端に一手入れて、争点になりやすい場所に備えたい。",
-                                                                                                  "accepted": [
-                                                                                                    "3a4b",
-                                                                                                    "6a7b",
-                                                                                                    "6a6b",
-                                                                                                    "7c7d",
-                                                                                                    "5a6b",
-                                                                                                    "1d1e",
-                                                                                                    "3a2b",
-                                                                                                    "9c9d",
-                                                                                                    "7a8b",
-                                                                                                    "5a4a",
-                                                                                                    "B*4d",
-                                                                                                    "4c4d"
-                                                                                                  ],
+                                                                                                  "note": "玉を6二へ寄せます。",
+                                                                                                  "aim": "玉を囲いの方へ寄せて、守りの形を作りたい。",
                                                                                                   "child": {
                                                                                                     "id": "d11_5",
-                                                                                                    "sfen": "lnsgk1s1l/4r1g2/1ppp1pnp1/p3p1p1p/7P1/2P6/PP1PPPP1P/1SK2S1R1/LN1G1G1NL b Bb 1",
-                                                                                                    "comment": "ここで止めます。後手から見て先手が良い形勢です(本線の16手目のあとと同じくらいです)。▲8八銀と指されても、端と玉の形を整えながら、駒組みを進められます。",
+                                                                                                    "sfen": "lnsg2s1l/3kr1g2/1ppp1pnpp/p3p1p2/7P1/P1P6/1P1PPPP1P/1S1K1S1R1/LN1G1G1NL b Bb 1",
+                                                                                                    "comment": "ここで止めます。先手が良い形勢です。▲8八銀と指されても、金・端・玉の形を整えながら、駒組みを進められます。",
                                                                                                     "branches": []
                                                                                                   }
                                                                                                 }
