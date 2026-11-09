@@ -46,7 +46,8 @@ const KNOWN_BOOK_OVER_ENGINE = new Set([
   "sankenbisha-ishida--sugairyu 3手目", // ▲7五歩(第1章と同じ。戦法を選ぶ手、2026-10-29)
   "sankenbisha-ishida--bokin 3手目", // ▲7五歩(第1章と同じ。戦法を選ぶ手、2026-10-29)
   "sankenbisha-ishida--aifuri-shiken 3手目", // ▲7五歩(第1章と同じ。戦法を選ぶ手、2026-10-30)
-  "nakabisha--shote 4手目", // △5四歩(ゴキゲン中飛車を選ぶ手。最善△4二銀との差103〜106、2026-10-10)
+  "nakabisha--shote 4手目", // △5四歩(ゴキゲン中飛車を選ぶ手。最善△4二銀との差103〜106、2026-10-10。新エンジンでは最善△4四歩との差104、2026-11-09)
+  "hayaishida--basic 3手目", // ▲7五歩(早石田を選ぶ手。新エンジン2段目で最善▲2六歩との差185、石田流の3手目と同じ局面、2026-11-09)
   "sankenbisha-gote--aifuri-naka 6手目", // △3二飛(後手が三間飛車を選ぶ手。最善△6二銀・△8四歩との差61〜64、深さ固定d16/d18、2026-10-27)
   "sankenbisha-gote--aisanken 6手目", // △3二飛(先手の石田流に三間で振る手。最善△3二銀・△6二銀との差102〜103で100をわずかに超える。戦法を選ぶ手として例外、深さ固定d16/d18、2026-10-27)
 ]);
@@ -189,6 +190,18 @@ function checkDemos(demos, sfenAfter, label) {
   return demos;
 }
 
+/**
+ * 検証メモ(evidence)の置き場。notes[i] の5つ目、逸れ手 dev の evidence、咎めの手順 line の各手の evidence、
+ * m() を Object.assign で拡張した手の evidence に書ける。文字列か文字列の配列。
+ * 画面に出る文(note・comment・punishNote・aim・demos の text)には評価値・損・差・深さ・ノード数を書かない
+ * 決まりなので(PLAN.md 2026-11-09)、その数字はここに残す。build-joseki.mjs は JSON に出さない。
+ */
+function checkEvidence(evidence, label) {
+  if (evidence === undefined || evidence === null) return;
+  const ok = typeof evidence === "string" || (Array.isArray(evidence) && evidence.every((e) => typeof e === "string"));
+  if (!ok) throw new Error(`${label}: evidence は文字列か文字列の配列にしてください`);
+}
+
 export function buildCourse({ id, title, myStrategy, opponentStrategy, mySide, source, goalFormation, goalLabel, rootComment, moves }) {
   const position = new Position();
   position.resetBySFEN(InitialPositionSFEN.STANDARD);
@@ -200,6 +213,7 @@ export function buildCourse({ id, title, myStrategy, opponentStrategy, mySide, s
     // 逸れ手(相手が定跡を外す手)は、本線を適用する前の局面から枝を伸ばす。
     // 学習画面で「相手がこう指してきたらどう咎めるか」を出題するために使う。
     // 本線を常に branches[0] に置くため、逸れ手は本線を積んでから後ろに足す。
+    checkEvidence(spec.evidence, `${id} ${i + 1}手目`);
     const devBranches = (spec.devs ?? []).map((dev) => buildDeviation(position, dev, i + 1, { id, mySide }));
 
     const move = resolveMove(position, spec, i + 1);
@@ -260,6 +274,7 @@ function resolveDevMove(position, spec, label) {
  */
 function buildDeviation(position, dev, moveNo, ctx = {}) {
   const work = position.clone();
+  checkEvidence(dev.evidence, `${moveNo}手目の逸れ手`);
   const devMove = resolveDevMove(work, dev, `${moveNo}(逸れ手)`);
   if (!work.doMove(devMove)) throw new Error(`${moveNo}手目の逸れ手 ${devMove.usi}: 適用に失敗`);
 
@@ -267,6 +282,7 @@ function buildDeviation(position, dev, moveNo, ctx = {}) {
   let cursor = head;
   (dev.line ?? []).forEach((spec, j) => {
     const sfenBefore = work.sfen;
+    checkEvidence(spec.evidence, `${moveNo}手目の咎め${j + 1}`);
     const mv = resolveDevMove(work, spec, `${moveNo}(咎め${j + 1})`);
     if (!work.doMove(mv)) throw new Error(`${moveNo}手目の咎め手 ${mv.usi}: 適用に失敗`);
     const child = { id: `d${moveNo}_${j + 1}`, sfen: work.sfen, comment: spec.comment, branches: [] };
@@ -308,8 +324,10 @@ export function buildCourseFromUsi({ id, title, myStrategy, opponentStrategy, my
     if (!move) throw new Error(`${i + 1}手目 ${usi}: 手を作れません`);
     if (parsed.promote) move = move.withPromote();
     if (!position.isValidMove(move)) throw new Error(`${i + 1}手目 ${usi}: 非合法です`);
-    // notes[i] = [解説, 局面の解説, 実演(任意), 咎めクイズ(任意)]
-    const [note, comment, demos, devs] = notes[i] ?? [];
+    // notes[i] = [解説, 局面の解説, 実演(任意), 咎めクイズ(任意), 検証メモ(任意)]
+    // 5つ目の evidence は画面に出ない検証メモ(測った数字・条件・出典)。JSON には出さず、型だけ検査する。
+    const [note, comment, demos, devs, evidence] = notes[i] ?? [];
+    checkEvidence(evidence, `${id} ${i + 1}手目`);
     // 逸れ手は本線を適用する「前」の局面から枝を伸ばす(buildCourse と同じ扱い)。
     const devBranches = (devs ?? []).map((dev) => buildDeviation(position, dev, i + 1, { id, mySide }));
     if (!position.doMove(move)) throw new Error(`${i + 1}手目 ${usi}: 適用に失敗`);

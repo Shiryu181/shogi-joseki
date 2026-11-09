@@ -43,6 +43,7 @@
               "child": {
                 "id": "n2",
                 "sfen": "lnsgkgsnl/1r5b1/pppp1pppp/4p4/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 1",
+                "comment": "エンジンの最善手は△8四歩で、この△5四歩はそれより評価が低い手です。ただし、これは戦法を選ぶ手です。この講座では、中飛車を指すためにこの手を採用します。",
                 "branches": [
                   {
                     "usi": "6g6f",
