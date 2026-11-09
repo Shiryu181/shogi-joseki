@@ -10,10 +10,15 @@
  *   3. 咎め終わった局面が自分から見て有利であること
  *
  * 使い方: node scripts/verify-deviations.cjs [コースid] [--ms 3000] [--slack 80]
+ * 新エンジン(つようら王11mini、基準は PLAN.md「エンジンと基準の数字(2026-11-08 改定)」)で回すとき:
+ *   ENGINE=native node scripts/verify-deviations.cjs [コースid] [--nodes 5000000]
+ *   (ENGINE=native では既定が --nodes 5000000 --slack 100 --devmin 300。ENGINE 未指定は従来どおり水匠の movetime)
  */
 const fs = require("node:fs");
 const path = require("node:path");
-const factory = require("@mizarjp/yaneuraou.k-p");
+const { createUsi } = require("./lib/usi-engine.cjs");
+const out = (...a) => process.stdout.write(a.join(" ") + "\n"); // wasm 版は console.log を差し替えるので使わない
+const NATIVE = (process.env.ENGINE || "wasm").toLowerCase() === "native";
 const { Position, parseUSIMove } = require("tsshogi");
 
 const args = process.argv.slice(2);
@@ -22,12 +27,13 @@ const args = process.argv.slice(2);
 const only = args.find((a, i) => !a.startsWith("--") && !(i > 0 && args[i - 1].startsWith("--")));
 const argVal = (n, d) => { const i = args.indexOf(n); return i >= 0 && args[i + 1] ? Number(args[i + 1]) : d; };
 const MS = argVal("--ms", 3000);
-const SLACK = argVal("--slack", 80);      // 咎め手が最善手より何点まで劣ってよいか
+const NODES = argVal("--nodes", NATIVE ? 5000000 : 0); // >0 なら go nodes N(ノード数固定)。0 なら movetime
+const SLACK = argVal("--slack", NATIVE ? 100 : 80);      // 咎め手が最善手より何点まで劣ってよいか
 // 咎め手は次善手より最低これだけ良くないと、ユーザーの別解を誤って不正解にしてしまう。
 // 2.5秒程度の探索では評価が±20点ほど揺れるため、40点を下限にしている。
 // これを下回る手は出題手順から外し、解説文で触れる方針。
 const UNIQUE_MIN = argVal("--unique", 40);
-const DEV_MIN = argVal("--devmin", 120);  // 逸れ手が最低これだけ損でなければ出題する意味が無い
+const DEV_MIN = argVal("--devmin", NATIVE ? 300 : 120);  // 逸れ手が最低これだけ損でなければ出題する意味が無い
 
 const dir = path.join(__dirname, "..", "src", "data", "joseki");
 const files = fs.readdirSync(dir)
@@ -68,11 +74,10 @@ function collectQuizzes(course) {
 }
 
 (async () => {
-  const CAP = []; const orig = console.log;
-  const hook = () => { console.log = (...a) => CAP.push(a.join(" ")); };
-  const unhook = () => { console.log = orig; };
-  hook(); const mod = await factory({}); unhook();
-  const send = (c) => mod.postMessage(c);
+  const CAP = [];
+  const eng = await createUsi();
+  eng.setHandler((l) => CAP.push(l));
+  const send = (c) => eng.send(c);
   const waitFor = (pred, ms) => new Promise((res, rej) => {
     const start = Date.now();
     const timer = setInterval(() => {
@@ -81,17 +86,19 @@ function collectQuizzes(course) {
       else if (Date.now() - start > ms) { clearInterval(timer); rej(new Error("timeout")); }
     }, 30);
   });
-  hook(); send("usi"); await waitFor((l) => l === "usiok", 30000);
+  const hook = () => {}; const unhook = () => {}; // 旧実装の名残(エンジンの出力は setHandler で集める)
+  for (const c of eng.initOptions()) send(c);
+  send("usi"); await waitFor((l) => l === "usiok", 30000);
   send("setoption name Threads value 1"); send("isready");
-  await waitFor((l) => l === "readyok", 60000); unhook();
+  await waitFor((l) => l === "readyok", 60000);
 
   /** 手番側から見た評価値つき候補手リスト(MultiPV)。 */
   async function top(sfen, pv) {
     CAP.length = 0; hook();
     send(`setoption name MultiPV value ${pv}`);
     send(`position sfen ${sfen}`);
-    send(`go movetime ${MS}`);
-    await waitFor((l) => l.startsWith("bestmove"), MS + 30000);
+    send(NODES ? `go nodes ${NODES}` : `go movetime ${MS}`);
+    await waitFor((l) => l.startsWith("bestmove"), (NODES ? 600000 : MS) + 30000);
     // MultiPV が 1 のとき、エンジンは multipv トークンを付けずに出力する。
     // それを弾いてしまうと評価値が取れず「損が測れない = 出題に向かない」と誤判定する。
     const infos = CAP.filter((l) => l.startsWith("info ") && l.includes(" score cp ") && l.includes(" pv "));
@@ -132,12 +139,12 @@ function collectQuizzes(course) {
     const course = JSON.parse(fs.readFileSync(path.join(dir, file), "utf-8"));
     const quizzes = collectQuizzes(course);
     if (quizzes.length === 0) continue;
-    console.log(`\n=== ${course.title}`);
+    out(`\n=== ${course.title}`);
     for (const q of quizzes) {
       total++;
       const devLoss = await lossOf(q.anchor.sfen, q.dev.usi);
       const okDev = devLoss !== null && devLoss >= DEV_MIN;
-      console.log(`  ${q.moveNo}手目 逸れ手 ${q.dev.usi}: 相手の損 ${devLoss}点 ${okDev ? "OK" : "← 損が小さい(出題に向かない)"}`);
+      out(`  ${q.moveNo}手目 逸れ手 ${q.dev.usi}: 相手の損 ${devLoss}点 ${okDev ? "OK" : "← 損が小さい(出題に向かない)"}`);
       if (!okDev) ng++;
 
       // 咎めの手順を1手ずつたどり、自分が指す手だけを検証する。
@@ -153,7 +160,7 @@ function collectQuizzes(course) {
           // 不正解と出てしまう。手順をそこで終える(または別の手順にする)必要がある。
           const unique = margin === null ? loss === 0 : margin >= UNIQUE_MIN;
           const note = !ok ? "← 要確認" : unique ? "OK" : `← 別解あり(次善手との差 ${margin}点)`;
-          console.log(`      咎め手 ${mv.usi}: 最善手との差 ${loss}点 ${note}`);
+          out(`      咎め手 ${mv.usi}: 最善手との差 ${loss}点 ${note}`);
           if (!ok || !unique) bad = true;
         }
         node = mv.child;
@@ -164,11 +171,12 @@ function collectQuizzes(course) {
       const list = await top(node.sfen, 1);
       if (list.length > 0) {
         const cp = sideToMove(node.sfen) === course.mySide ? list[0].cp : -list[0].cp;
-        console.log(`      咎め終わりの評価 ${cp > 0 ? "+" : ""}${cp}(自分から見て)${cp > 0 ? "" : " ← 有利になっていない"}`);
+        out(`      咎め終わりの評価 ${cp > 0 ? "+" : ""}${cp}(自分から見て)${cp > 0 ? "" : " ← 有利になっていない"}`);
         if (cp <= 0) ng++;
       }
     }
   }
-  console.log(`\n検証した出題: ${total}件 / 要確認: ${ng}件`);
+  out(`\n検証した出題: ${total}件 / 要確認: ${ng}件`);
+  eng.close();
   process.exit(ng === 0 ? 0 : 1);
 })().catch((e) => { console.error("失敗:", e && e.message); process.exit(1); });
