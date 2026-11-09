@@ -754,7 +754,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     sideLabel: "後手",
     label: "相振り飛車・受けと反撃",
     kind: "急戦",
-    summary: "相手も振り飛車のとき。5筋の位を取って銀を繰り出し、美濃囲いから反撃する。",
+    summary: "相手も振り飛車のとき。5筋の位を取り、飛車を2二に回して2筋に歩を伸ばし、玉を囲って7筋の歩を交換する。",
     load: () => assertJosekiCourse(parseRaw(nakabishaVsSankenbishaAifuriRaw), "nakabisha-vs-sankenbisha--aifuri.json"),
   },
   {
