@@ -532,28 +532,6 @@
                                                                                                                                                                                     }
                                                                                                                                                                                   ]
                                                                                                                                                                                 }
-                                                                                                                                                                              },
-                                                                                                                                                                              {
-                                                                                                                                                                                "usi": "6e6d",
-                                                                                                                                                                                "kind": "deviation",
-                                                                                                                                                                                "note": "先手が▲9六歩の代わりに、6筋の歩を突き捨てました(▲6四歩)。",
-                                                                                                                                                                                "punishNote": "6筋の歩を突き捨てるのは、攻めに見えますが、△同歩と取られて歩を損します。取り返す手がありません。測定では、先手の損は250点・243点(深さ16・18)、後手から見て+156点でした。10手の指し継ぎでも、後手から見て+113〜+181点を保ちます。",
-                                                                                                                                                                                "child": {
-                                                                                                                                                                                  "id": "d29",
-                                                                                                                                                                                  "sfen": "ln5nl/1kg1g1rb1/ppspp2pp/2pPspp2/1P7/2PS5/P1B1PPPPP/1R2G1S2/LN3GKNL w - 1",
-                                                                                                                                                                                  "branches": [
-                                                                                                                                                                                    {
-                                                                                                                                                                                      "usi": "6c6d",
-                                                                                                                                                                                      "kind": "main",
-                                                                                                                                                                                      "note": "6四の歩を取ります。突き捨てられた歩は、取って得をします。",
-                                                                                                                                                                                      "child": {
-                                                                                                                                                                                        "id": "d29_1",
-                                                                                                                                                                                        "sfen": "ln5nl/1kg1g1rb1/pps1p2pp/2ppspp2/1P7/2PS5/P1B1PPPPP/1R2G1S2/LN3GKNL b p 1",
-                                                                                                                                                                                        "branches": []
-                                                                                                                                                                                      }
-                                                                                                                                                                                    }
-                                                                                                                                                                                  ]
-                                                                                                                                                                                }
                                                                                                                                                                               }
                                                                                                                                                                             ]
                                                                                                                                                                           }
