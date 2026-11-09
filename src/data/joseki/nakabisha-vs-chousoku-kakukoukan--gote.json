@@ -173,7 +173,7 @@
                                                                   {
                                                                     "usi": "5i6h",
                                                                     "kind": "main",
-                                                                    "note": "相手は玉を6八へ寄せます。超速の章と同じ手です。最善に近い手で、▲8八銀・▲6八金・▲7七桂・▲7八金も同じくらいの手です(どれが最善かは入れ替わります)。▲8八銀・▲6八金・▲7七桂は変化の枝で見られます。形勢は、後手が苦しい形です。",
+                                                                    "note": "相手は玉を6八へ寄せます。超速の章と同じ手です。最善に近い手で、▲8八銀・▲6八金・▲7七桂・▲7八金も同じくらいの手です(どれが最善かは入れ替わります)。▲8八銀・▲6八金は変化の枝で見られます。形勢は、後手が苦しい形です。",
                                                                     "child": {
                                                                       "id": "n11",
                                                                       "sfen": "lnsgkgs1l/4r4/pppp1pnpp/4p1p2/7P1/2P6/PP1PPPP1P/3K1S1R1/LNSG1G1NL w Bb 1",
@@ -857,105 +857,6 @@
                                                                                                     "id": "d11_5",
                                                                                                     "sfen": "lnsg2s1l/3kr1g2/1ppp1pnpp/p3p1p2/7P1/2P6/PP1PPPP1P/2KG1S1R1/LNS2G1NL b Bb 1",
                                                                                                     "comment": "ここで止めます。後手から見て先手が良い形勢です(本線の16手目のあとと同じくらいです)。▲6八金と指されても、玉を囲いながら、駒組みを進められます。",
-                                                                                                    "branches": []
-                                                                                                  }
-                                                                                                }
-                                                                                              ]
-                                                                                            }
-                                                                                          }
-                                                                                        ]
-                                                                                      }
-                                                                                    }
-                                                                                  ]
-                                                                                }
-                                                                              }
-                                                                            ]
-                                                                          }
-                                                                        }
-                                                                      ]
-                                                                    }
-                                                                  },
-                                                                  {
-                                                                    "usi": "8i7g",
-                                                                    "kind": "deviation",
-                                                                    "variation": true,
-                                                                    "note": "相手が桂を7七へ跳ねました。",
-                                                                    "punishNote": "▲7七桂は、桂を7七に置いて、△5五角の筋(5五-6六-7七-8八-9九。盤で確かめた)をふさぐ手で、最善より少し劣る手です(本線の▲6八玉は最善です)。",
-                                                                    "child": {
-                                                                      "id": "d11",
-                                                                      "sfen": "lnsgkgs1l/4r4/pppp1pnpp/4p1p2/7P1/2P6/PPNPPPP1P/5S1R1/L1SGKG1NL w Bb 1",
-                                                                      "branches": [
-                                                                        {
-                                                                          "usi": "4a3b",
-                                                                          "kind": "main",
-                                                                          "note": "金を3二へ上げます。最善に近い手で、△7四歩・△2二銀・△9四歩も指せる手です。",
-                                                                          "aim": "取り返した駒のそばに守りの駒を足して、形を固めたい。",
-                                                                          "accepted": [
-                                                                            "7c7d",
-                                                                            "5b2b",
-                                                                            "4a3b",
-                                                                            "3a2b",
-                                                                            "7a8b",
-                                                                            "5b7b",
-                                                                            "B*4d",
-                                                                            "5d5e"
-                                                                          ],
-                                                                          "child": {
-                                                                            "id": "d11_1",
-                                                                            "sfen": "lnsgk1s1l/4r1g2/pppp1pnpp/4p1p2/7P1/2P6/PPNPPPP1P/5S1R1/L1SGKG1NL b Bb 1",
-                                                                            "branches": [
-                                                                              {
-                                                                                "usi": "6i7h",
-                                                                                "kind": "main",
-                                                                                "note": "相手は金を7八へ上げます。最善の手で、次善の▲8八銀・▲3八金・▲5八玉は少し劣ります。",
-                                                                                "child": {
-                                                                                  "id": "d11_2",
-                                                                                  "sfen": "lnsgk1s1l/4r1g2/pppp1pnpp/4p1p2/7P1/2P6/PPNPPPP1P/2G2S1R1/L1S1KG1NL w Bb 1",
-                                                                                  "branches": [
-                                                                                    {
-                                                                                      "usi": "5a6b",
-                                                                                      "kind": "main",
-                                                                                      "note": "玉を6二へ寄せます。最善に近い手で、△9四歩・△6二金・△2二銀も同じくらいの手です。",
-                                                                                      "aim": "玉を安全な場所へ寄せて、囲いに向かいたい。",
-                                                                                      "accepted": [
-                                                                                        "5a6b",
-                                                                                        "3a2b",
-                                                                                        "9c9d",
-                                                                                        "3a4b",
-                                                                                        "5d5e",
-                                                                                        "6a6b",
-                                                                                        "7c7d",
-                                                                                        "6a7b",
-                                                                                        "5b7b",
-                                                                                        "1c1d",
-                                                                                        "B*8d",
-                                                                                        "4c4d"
-                                                                                      ],
-                                                                                      "child": {
-                                                                                        "id": "d11_3",
-                                                                                        "sfen": "lnsg2s1l/3kr1g2/pppp1pnpp/4p1p2/7P1/2P6/PPNPPPP1P/2G2S1R1/L1S1KG1NL b Bb 1",
-                                                                                        "branches": [
-                                                                                          {
-                                                                                            "usi": "2e2d",
-                                                                                            "kind": "main",
-                                                                                            "note": "相手が2筋の歩を突き捨てます。最善に近い手で、▲9六歩・▲6六歩・▲6八銀も指せる手です。",
-                                                                                            "child": {
-                                                                                              "id": "d11_4",
-                                                                                              "sfen": "lnsg2s1l/3kr1g2/pppp1pnpp/4p1pP1/9/2P6/PPNPPPP1P/2G2S1R1/L1S1KG1NL w Bb 1",
-                                                                                              "branches": [
-                                                                                                {
-                                                                                                  "usi": "2c2d",
-                                                                                                  "kind": "main",
-                                                                                                  "note": "歩は取ります。唯一の手です。",
-                                                                                                  "aim": "突き捨てられた歩を取って、飛車先を破られないようにしたい。",
-                                                                                                  "accepted": [
-                                                                                                    "2c2d"
-                                                                                                  ],
-                                                                                                  "sharp": true,
-                                                                                                  "child": {
-                                                                                                    "id": "d11_5",
-                                                                                                    "sfen": "lnsg2s1l/3kr1g2/pppp1pn1p/4p1pp1/9/2P6/PPNPPPP1P/2G2S1R1/L1S1KG1NL b Bbp 1",
-                                                                                                    "comment": "ここで止めます。後手から見て先手が良い形勢です(本線の16手目のあとと同じくらいです)。▲7七桂と指されても、2筋を取って受けられます。",
                                                                                                     "branches": []
                                                                                                   }
                                                                                                 }
