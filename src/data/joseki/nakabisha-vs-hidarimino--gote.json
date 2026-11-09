@@ -829,7 +829,7 @@
                                                                                                                     "kind": "deviation",
                                                                                                                     "variation": true,
                                                                                                                     "note": "相手が端の歩を突きました。",
-                                                                                                                    "punishNote": "▲9六歩は19手目の最善と同じくらいの手です。後手は7筋の歩を突いて、桂を7三へ跳ねて対応します。",
+                                                                                                                    "punishNote": "▲9六歩は19手目の最善と同じくらいの手です。後手は7筋の歩を突き、桂を7三へ跳ねて、銀を5三へ上げて対応します。",
                                                                                                                     "child": {
                                                                                                                       "id": "d19",
                                                                                                                       "sfen": "lnsg1g1nl/1k2rs3/pppp1pbpp/6p2/4p2P1/P1P6/1PBPPPP1P/1K2GS1R1/LNSG3NL w - 1",
@@ -904,43 +904,22 @@
                                                                                                                                         "sfen": "l1sg1g1nl/1k2rs3/ppnp1pbpp/2p3p2/4p2P1/P1P6/1PBPPPP1P/1KS1GS1R1/LN1G3NL b - 1",
                                                                                                                                         "branches": [
                                                                                                                                           {
-                                                                                                                                            "usi": "2h2f",
+                                                                                                                                            "usi": "6g6f",
                                                                                                                                             "kind": "main",
-                                                                                                                                            "note": "相手は飛車を2六へ回します。最善手より少し劣る場合もありますが、近い手です。▲9五歩・▲2四歩・▲6六歩・▲3六歩も近い手です。",
+                                                                                                                                            "note": "相手は6筋の歩を、6六へ突きました。",
                                                                                                                                             "child": {
                                                                                                                                               "id": "d19_4",
-                                                                                                                                              "sfen": "l1sg1g1nl/1k2rs3/ppnp1pbpp/2p3p2/4p2P1/P1P4R1/1PBPPPP1P/1KS1GS3/LN1G3NL w - 1",
+                                                                                                                                              "sfen": "l1sg1g1nl/1k2rs3/ppnp1pbpp/2p3p2/4p2P1/P1PP5/1PB1PPP1P/1KS1GS1R1/LN1G3NL w - 1",
                                                                                                                                               "branches": [
                                                                                                                                                 {
-                                                                                                                                                  "usi": "6a7b",
+                                                                                                                                                  "usi": "4b5c",
                                                                                                                                                   "kind": "main",
-                                                                                                                                                  "note": "金を7二へ寄せます。最善に近い手です。△7二銀・△9四歩・△6二金・△5三銀も近い手です。",
-                                                                                                                                                  "aim": "守りの駒を玉のそばへ寄せて、囲いを固めたい。",
-                                                                                                                                                  "accepted": [
-                                                                                                                                                    "9c9d",
-                                                                                                                                                    "8c8d",
-                                                                                                                                                    "7a7b",
-                                                                                                                                                    "6a7b",
-                                                                                                                                                    "6c6d",
-                                                                                                                                                    "4c4d",
-                                                                                                                                                    "3c4d",
-                                                                                                                                                    "6a6b",
-                                                                                                                                                    "5b5a",
-                                                                                                                                                    "1c1d",
-                                                                                                                                                    "4a5a",
-                                                                                                                                                    "7a6b",
-                                                                                                                                                    "5b5d",
-                                                                                                                                                    "4a3b",
-                                                                                                                                                    "4b5c",
-                                                                                                                                                    "9a9b",
-                                                                                                                                                    "8b8a",
-                                                                                                                                                    "8b7b",
-                                                                                                                                                    "3c1e"
-                                                                                                                                                  ],
+                                                                                                                                                  "note": "銀を5三へ上げます。",
+                                                                                                                                                  "aim": "攻めにも守りにも使える位置へ、駒を一つ上げておきたい。",
                                                                                                                                                   "child": {
                                                                                                                                                     "id": "d19_5",
-                                                                                                                                                    "sfen": "l1s2g1nl/1kg1rs3/ppnp1pbpp/2p3p2/4p2P1/P1P4R1/1PBPPPP1P/1KS1GS3/LN1G3NL b - 1",
-                                                                                                                                                    "comment": "先手がやや良い形勢です。▲9六歩と端を突かれても、7筋の歩を突き、桂を7三へ跳ねて、金を寄せながら駒組みを進められます。",
+                                                                                                                                                    "sfen": "l1sg1g1nl/1k2r4/ppnpspbpp/2p3p2/4p2P1/P1PP5/1PB1PPP1P/1KS1GS1R1/LN1G3NL b - 1",
+                                                                                                                                                    "comment": "先手が少し良い形勢です。▲9六歩と端を突かれても、7筋の歩を突き、桂を7三へ跳ねて、銀を5三へ上げながら駒組みを進められます。",
                                                                                                                                                     "branches": []
                                                                                                                                                   }
                                                                                                                                                 }
