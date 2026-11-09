@@ -8,7 +8,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { listEntries } from "./count-screen-numbers.mjs";
+import { listEntries, screenTexts } from "./count-screen-numbers.mjs";
 import { AIM_BY_NOTE } from "./aims.mjs";
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -141,7 +141,7 @@ function stats() {
   const shapeWords = {};
   for (const [w, re] of [["ほぼ互角", /ほぼ互角/], ["互角", /(?<!ほぼ)互角/], ["少し良い/苦しい", /少し(?:良|苦し|悪)/], ["やや良い/苦しい", /やや(?:良|苦し|悪)/], ["良い(単独)", /が良い/], ["大きく", /大きく(?:良|苦し|悪)/]]) {
     let n = 0;
-    for (const e of listEntries()) { const c = load(e.id); n += JSON.stringify(c).split(re).length - 1; }
+    for (const e of listEntries()) for (const t of screenTexts(load(e.id))) n += t.text.split(re).length - 1;
     shapeWords[w] = n;
   }
   return { table, kinds, aimMy, aimKeyed, termCount, meas, parts, shapeWords, shape };
