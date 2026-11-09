@@ -793,7 +793,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     sideLabel: "先手",
     label: "居飛車穴熊には3筋から",
     kind: "持久戦",
-    summary: "5筋では穴熊に通らない。銀を4六へ運び、飛車を3八へ回して守りの薄い3筋を攻める。",
+    summary: "5筋では穴熊に通らない。銀を4六から4五へ運んで3筋を狙い、角交換から5筋の歩も使って攻める。",
     load: () => assertJosekiCourse(parseRaw(nakabishaVsAnagumaSenteRaw), "nakabisha-vs-anaguma--sente.json"),
   },
   {
