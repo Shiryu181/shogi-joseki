@@ -55,6 +55,7 @@
   - 学ぶ側の手(`build-joseki.mjs` の `KNOWN_BOOK_OVER_ENGINE` にも置いた): 後手三間の △4四歩(aisanken・aifuri-naka・deashi の変化の枝2本。損103〜117)、△3二飛(aisanken、損223)、石田流・中飛車の ▲6六歩(ishida--aifuri・ishida--deashi の変化の枝。損121)、8yonfu の ▲6八玉(玉を左へ運ぶ章の骨格、損199。案C)、石田流 vs 左美濃の ▲7七角(▲7七角型の章の題材、損108)。
   - 相手の手(KNOWN_BOOK_OVER_ENGINE は学ぶ側の手だけを見るので、章の evidence に理由を書いた): ▲5六歩(後手三間 aifuri-naka・deashi の変化の枝、損192)、▲6六歩(nakabisha-vs-sankenbisha--aifuri、損121)、▲2四歩(gokigen24、損307)、△4四歩(石田流 aifuri-shiken・deashi の変化の枝、損103)、△3二飛・△5二飛(aifuri-shiken の変化の枝、損223・146)、△5四歩(ibisha-vs-gokigen--chousoku、損104)、9手目 ▲5八金右(7suji・hidarimino--gote、損121)、19手目 ▲9八香(7suji、損105)、16手目 △3三角(nakabisha-vs-anaguma--sente・hidarimino--sente、損150)。
   - 例外にしないと決めたもの: 石田流 deashi の変化の枝 △3五歩(決定7。作戦選びとは言えないので枝を消した)。入口の損が100を超え300に届かない変化の枝は、例外にせず枝ごと消す(決定30〜37)。損が300以上のものは咎めの枝に付け替える(決定38 honkumi の △6五歩)。
+- 本線の手の差し替えを入れた(2026-11-09 決定。docs/fix-proposal-2.md 決定11・15・17・18・19・20・21・22)。差し替えた手から先は、新エンジンの両者最善の手順にし、各手を500万ノードで測り直した(学ぶ側の手・相手の手とも最善との差100以内)。章の終わりの形勢が変わった章(5yonfu-kakukoukan、anaguma--7suji、anaguma--sente、chousoku--gote、chousoku-kakukoukan--gote、maruyama--gote、nakabisha-vs-sankenbisha--aifuri、sankenbisha-vs-nakabisha--aifuri)は、目標の文を評価の言葉(互角・少し良い・良い・大きく良い)で書き直した。差し替えた手より先にあった咎めの枝は、新しい局面で成り立たないので消し、chousoku--gote だけ新しい局面(29手目の ▲5五銀左)で咎めの枝を付け替えた。ほかの章は、探した範囲で基準に合う枝が見つからず、枝を持たない。決定19(chousoku--gote の39手目)は決定18の差し替えで手順ごと外れた。
 - これより下の節にある 230 や d16〜d22 の数字は、旧エンジン(水匠)で測ったもの。測り直しが済んだ章から新しい数字に置き換える。
 
 ## マイルストーン
