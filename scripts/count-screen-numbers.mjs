@@ -46,23 +46,35 @@ export function screenTexts(course) {
 
 export const hit = (t) => ENGINE_RE.test(t) || NUM_RE.test(t);
 
+// 2026-11-09 追加: 出典の名前・「出典にない」と、章の作り方の説明(測り方・読み筋・「変化にしません」など)。
+// 出典の名前は画面に書かない(検証メモ evidence へ)。SRC_RE / PROC_RE は目印で、文の意味で判断する(残った文は理由を書く)。
+export const SRC_RE = /Wikibooks|Wikipedia|ウィキ|将棋大図書館|thirdfilerook|note「|出典にない|出典に[^。]{0,14}(?:ない|ありません)/;
+export const PROC_RE = /変化にし|変化にはし|目安より|読み筋|探索|測定|測り|検証|確認済|点数|数字/;
+export const hit2 = (t) => hit(t) || SRC_RE.test(t) || PROC_RE.test(t);
+
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const load = (id) => JSON.parse(fs.readFileSync(path.join(root, "src/data/joseki", `${id}.json`), "utf8"));
   const dumpIdx = process.argv.indexOf("--dump");
   if (dumpIdx > 0) {
     const id = process.argv[dumpIdx + 1];
-    for (const s of screenTexts(load(id))) if (hit(s.text)) console.log(JSON.stringify({ ply: s.ply, where: s.where, trail: s.trail, eng: ENGINE_RE.test(s.text), num: NUM_RE.test(s.text), text: s.text }));
+    const all2 = process.argv.includes("--all"); // --all: 出典の名前・作り方の説明も出す
+    for (const s of screenTexts(load(id))) if (all2 ? hit2(s.text) : hit(s.text)) console.log(JSON.stringify({ ply: s.ply, where: s.where, trail: s.trail, eng: ENGINE_RE.test(s.text), num: NUM_RE.test(s.text), src: SRC_RE.test(s.text), proc: PROC_RE.test(s.text), text: s.text }));
   } else {
     const rows = [];
-    let total = 0, tEng = 0, tNum = 0, tAll = 0;
+    let total = 0, tEng = 0, tNum = 0, tAll = 0, tSrc = 0, tProc = 0, tN2 = 0;
     for (const e of listEntries()) {
       const hits = screenTexts(load(e.id)).filter((s) => hit(s.text));
       const all = screenTexts(load(e.id)).length;
       const eng = hits.filter((s) => ENGINE_RE.test(s.text)).length;
       const num = hits.filter((s) => NUM_RE.test(s.text)).length;
-      rows.push({ id: e.id, strategy: e.strategy, all, n: hits.length, eng, num });
+      const texts = screenTexts(load(e.id));
+      const src = texts.filter((s) => SRC_RE.test(s.text)).length;
+      const proc = texts.filter((s) => PROC_RE.test(s.text)).length;
+      const n2 = texts.filter((s) => hit2(s.text)).length;
+      rows.push({ id: e.id, strategy: e.strategy, all, n: hits.length, eng, num, src, proc, n2 });
+      tSrc += src; tProc += proc; tN2 += n2;
       total += hits.length; tEng += eng; tNum += num; tAll += all;
     }
-    console.log(JSON.stringify({ total, tEng, tNum, tAll, rows }, null, 1));
+    console.log(JSON.stringify({ total, tEng, tNum, tAll, tSrc, tProc, tN2, rows }, null, 1));
   }
 }
