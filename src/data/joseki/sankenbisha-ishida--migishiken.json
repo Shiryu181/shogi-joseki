@@ -558,7 +558,7 @@
                                                                                                                                       "kind": "deviation",
                                                                                                                                       "variation": true,
                                                                                                                                       "note": "相手が飛車を6二に振りました。右四間飛車の、定番の組み方です。",
-                                                                                                                                      "punishNote": "△6二飛は少し劣る手ですが、指せる手です。右四間では、ごく普通の一手です。この△6二飛には、▲7七桂と跳ねて6五の守りを増やします。ここで相手が定番の△5四銀と続けると、すぐに▲7四歩!と突き出されます。この△5四銀は後手が損をする悪手で、▲7四歩のあと先手が良くなります。なぜ▲7四歩が効くのかは、盤面から確かめられる範囲では、後手の飛車が6筋に、銀が5四に出て、7筋の守りが薄いことくらいです(推測です)。詳しい理由は確かめていません。",
+                                                                                                                                      "punishNote": "△6二飛は最善より少し劣る手ですが、指せる手です。右四間では、ごく普通の一手です。この△6二飛には、▲7七桂と跳ねて6五の守りを増やします。後手が△3三角と角を上げたら、▲8五桂と跳ねて、7三の歩に当てます。",
                                                                                                                                       "child": {
                                                                                                                                         "id": "d22",
                                                                                                                                         "sfen": "ln3g1nl/3rgksb1/p1pspp1p1/3p2p1p/1pP6/2RP4P/PP2PPPP1/1B2G1SK1/LNS2G1NL b - 1",
@@ -587,25 +587,21 @@
                                                                                                                                               "sfen": "ln3g1nl/3rgksb1/p1pspp1p1/3p2p1p/1pP6/2RP4P/PPN1PPPP1/1B2G1SK1/L1S2G1NL w - 1",
                                                                                                                                               "branches": [
                                                                                                                                                 {
-                                                                                                                                                  "usi": "6c5d",
+                                                                                                                                                  "usi": "2b3c",
                                                                                                                                                   "kind": "main",
-                                                                                                                                                  "note": "相手は定番の△5四銀と出ました。ここが悪手です。7筋の守りが薄くなり、▲7四歩の突き出しを受けます。",
+                                                                                                                                                  "note": "相手は角を3三へ上げました。",
                                                                                                                                                   "child": {
                                                                                                                                                     "id": "d22_2",
-                                                                                                                                                    "sfen": "ln3g1nl/3rgksb1/p1p1pp1p1/3ps1p1p/1pP6/2RP4P/PPN1PPPP1/1B2G1SK1/L1S2G1NL b - 1",
+                                                                                                                                                    "sfen": "ln3g1nl/3rgks2/p1psppbp1/3p2p1p/1pP6/2RP4P/PPN1PPPP1/1B2G1SK1/L1S2G1NL b - 1",
                                                                                                                                                     "branches": [
                                                                                                                                                       {
-                                                                                                                                                        "usi": "7e7d",
+                                                                                                                                                        "usi": "7g8e",
                                                                                                                                                         "kind": "main",
-                                                                                                                                                        "note": "7筋の歩を7四に突き出します。△同歩や△7二飛のあとにも、先手がよい形が続きます。この手で先手が良くなります。",
-                                                                                                                                                        "aim": "相手の守りが薄いところへ、駒を突き出して攻めを先に仕掛けたい。",
-                                                                                                                                                        "accepted": [
-                                                                                                                                                          "7e7d",
-                                                                                                                                                          "8g8f"
-                                                                                                                                                        ],
+                                                                                                                                                        "note": "桂を8五へ跳ねます。7三の歩に当てる手です。",
+                                                                                                                                                        "aim": "跳ねた駒で、相手の歩に狙いをつけたい。",
                                                                                                                                                         "child": {
                                                                                                                                                           "id": "d22_3",
-                                                                                                                                                          "sfen": "ln3g1nl/3rgksb1/p1p1pp1p1/2Pps1p1p/1p7/2RP4P/PPN1PPPP1/1B2G1SK1/L1S2G1NL w - 1",
+                                                                                                                                                          "sfen": "ln3g1nl/3rgks2/p1psppbp1/3p2p1p/1NP6/2RP4P/PP2PPPP1/1B2G1SK1/L1S2G1NL w P 1",
                                                                                                                                                           "branches": []
                                                                                                                                                         }
                                                                                                                                                       }
