@@ -895,7 +895,7 @@
                                                                                                                                                         "kind": "deviation",
                                                                                                                                                         "variation": true,
                                                                                                                                                         "note": "先手が▲4八飛の代わりに、金を6八に上げました(▲6八金上)。",
-                                                                                                                                                        "punishNote": "▲6八金上は、最善の手のひとつです。ミスではなく、飛車を4八に回さないで囲いを固める手です。返しは銀を7二に上げて美濃囲いを完成させる△7二銀です。△5三銀も近い手です。この変化は先手が最善を指したことになるので、後手が少し苦しく、先手が少し指しやすい形です。続きの手(▲8六歩 △7四歩 ▲3七桂 △5三銀)は一例です。",
+                                                                                                                                                        "punishNote": "▲6八金上は、最善の手のひとつです。ミスではなく、飛車を4八に回さないで囲いを固める手です。返しは銀を7二に上げて美濃囲いを完成させる△7二銀です。△5三銀も近い手です。この変化は先手が最善を指したことになるので、後手が少し苦しく、先手が少し指しやすい形です。続きの手(▲3七桂 △5三銀 ▲1六歩 △8四歩)は一例です。",
                                                                                                                                                         "child": {
                                                                                                                                                           "id": "d25",
                                                                                                                                                           "sfen": "lnsg3nl/1k2gsr2/1ppp2bp1/p3ppp1p/7P1/P1P1PPP2/1P1PS3P/1BKGG2R1/LNS4NL w - 1",
@@ -924,63 +924,38 @@
                                                                                                                                                                 "sfen": "ln1g3nl/1ks1gsr2/1ppp2bp1/p3ppp1p/7P1/P1P1PPP2/1P1PS3P/1BKGG2R1/LNS4NL b - 1",
                                                                                                                                                                 "branches": [
                                                                                                                                                                   {
-                                                                                                                                                                    "usi": "8g8f",
+                                                                                                                                                                    "usi": "2i3g",
                                                                                                                                                                     "kind": "main",
-                                                                                                                                                                    "note": "先手は8筋の歩を突きました。",
+                                                                                                                                                                    "note": "先手は桂を3七に跳ねました。",
                                                                                                                                                                     "child": {
                                                                                                                                                                       "id": "d25_2",
-                                                                                                                                                                      "sfen": "ln1g3nl/1ks1gsr2/1ppp2bp1/p3ppp1p/7P1/PPP1PPP2/3PS3P/1BKGG2R1/LNS4NL w - 1",
+                                                                                                                                                                      "sfen": "ln1g3nl/1ks1gsr2/1ppp2bp1/p3ppp1p/7P1/P1P1PPP2/1P1PS1N1P/1BKGG2R1/LNS5L w - 1",
                                                                                                                                                                       "branches": [
                                                                                                                                                                         {
-                                                                                                                                                                          "usi": "7c7d",
+                                                                                                                                                                          "usi": "4b5c",
                                                                                                                                                                           "kind": "main",
-                                                                                                                                                                          "note": "7筋の歩を突きます。7筋に手をかけて、攻めの足場を作る手です(狙いは推測です)。",
-                                                                                                                                                                          "aim": "反撃に使う筋の歩を突いて、攻めの足場を作りたい。",
-                                                                                                                                                                          "accepted": [
-                                                                                                                                                                            "4b5c",
-                                                                                                                                                                            "4b4c",
-                                                                                                                                                                            "6c6d",
-                                                                                                                                                                            "7c7d",
-                                                                                                                                                                            "5b4c",
-                                                                                                                                                                            "6a7a",
-                                                                                                                                                                            "5b6b",
-                                                                                                                                                                            "3b3a",
-                                                                                                                                                                            "8c8d",
-                                                                                                                                                                            "1d1e",
-                                                                                                                                                                            "3b2b",
-                                                                                                                                                                            "6a6b"
-                                                                                                                                                                          ],
+                                                                                                                                                                          "note": "銀を5三に上げます。本線の26手目と同じ手です。",
+                                                                                                                                                                          "aim": "攻めにも守りにも使える位置へ、駒を一つ上げておきたい。",
                                                                                                                                                                           "child": {
                                                                                                                                                                             "id": "d25_3",
-                                                                                                                                                                            "sfen": "ln1g3nl/1ks1gsr2/1p1p2bp1/p1p1ppp1p/7P1/PPP1PPP2/3PS3P/1BKGG2R1/LNS4NL b - 1",
+                                                                                                                                                                            "sfen": "ln1g3nl/1ks1g1r2/1ppps1bp1/p3ppp1p/7P1/P1P1PPP2/1P1PS1N1P/1BKGG2R1/LNS5L b - 1",
                                                                                                                                                                             "branches": [
                                                                                                                                                                               {
-                                                                                                                                                                                "usi": "2i3g",
+                                                                                                                                                                                "usi": "1g1f",
                                                                                                                                                                                 "kind": "main",
-                                                                                                                                                                                "note": "先手は桂を3七に跳ねました。",
+                                                                                                                                                                                "note": "先手は端の歩を突きました。",
                                                                                                                                                                                 "child": {
                                                                                                                                                                                   "id": "d25_4",
-                                                                                                                                                                                  "sfen": "ln1g3nl/1ks1gsr2/1p1p2bp1/p1p1ppp1p/7P1/PPP1PPP2/3PS1N1P/1BKGG2R1/LNS5L w - 1",
+                                                                                                                                                                                  "sfen": "ln1g3nl/1ks1g1r2/1ppps1bp1/p3ppp1p/7P1/P1P1PPP1P/1P1PS1N2/1BKGG2R1/LNS5L w - 1",
                                                                                                                                                                                   "branches": [
                                                                                                                                                                                     {
-                                                                                                                                                                                      "usi": "4b5c",
+                                                                                                                                                                                      "usi": "8c8d",
                                                                                                                                                                                       "kind": "main",
-                                                                                                                                                                                      "note": "銀を5三に上げます。本線の26手目と同じ手です。",
-                                                                                                                                                                                      "aim": "攻めにも守りにも使える位置へ、駒を一つ上げておきたい。",
-                                                                                                                                                                                      "accepted": [
-                                                                                                                                                                                        "4b5c",
-                                                                                                                                                                                        "4b4c",
-                                                                                                                                                                                        "3b3a",
-                                                                                                                                                                                        "5b4c",
-                                                                                                                                                                                        "3b2b",
-                                                                                                                                                                                        "6c6d",
-                                                                                                                                                                                        "3c1e",
-                                                                                                                                                                                        "1a1c",
-                                                                                                                                                                                        "8a7c"
-                                                                                                                                                                                      ],
+                                                                                                                                                                                      "note": "8筋の歩を突いて、銀の動く道を作ります(狙いは推測です)。",
+                                                                                                                                                                                      "aim": "駒の動く道を作って、攻防の形を整えたい。",
                                                                                                                                                                                       "child": {
                                                                                                                                                                                         "id": "d25_5",
-                                                                                                                                                                                        "sfen": "ln1g3nl/1ks1g1r2/1p1ps1bp1/p1p1ppp1p/7P1/PPP1PPP2/3PS1N1P/1BKGG2R1/LNS5L b - 1",
+                                                                                                                                                                                        "sfen": "ln1g3nl/1ks1g1r2/2pps1bp1/pp2ppp1p/7P1/P1P1PPP1P/1P1PS1N2/1BKGG2R1/LNS5L b - 1",
                                                                                                                                                                                         "branches": []
                                                                                                                                                                                       }
                                                                                                                                                                                     }
