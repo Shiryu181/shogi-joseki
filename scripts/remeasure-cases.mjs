@@ -53,6 +53,7 @@ for (const f of fs.readdirSync(labDir).filter((f) => f.endsWith(".json"))) {
 
 
 const flagRe = /唯一/;
+const posC = new Map(); // C: 本線のうち旧の記録がない局面(A に入る局面は後で除く)
 const pos = new Map(); // key -> {id, sfen, courses:[{course,ply}], moves: Map(usi -> Set(kind)), kinds:Set}
 function addPos(k, sfen, course, ply, kind, usi) {
   if (!pos.has(k)) pos.set(k, { id: k, sfen: k + " 1", courses: [], moves: new Map(), kinds: new Set() });
@@ -86,6 +87,15 @@ for (const e of entries) {
       if (isTrunkMove) {
         const g = old.get(`${k}|${b.usi}`);
         if (g && g.some((x) => x >= 60 && x <= 140)) addPos(k, null, e, ply, "境目(本線)", b.usi);
+        if (!g) {
+          if (!posC.has(k)) posC.set(k, { id: k, sfen: k + " 1", courses: [], moves: new Map(), kinds: new Set() });
+          const pc = posC.get(k);
+          if (!pc.courses.some((c) => c.course === e.id && c.ply === ply)) pc.courses.push({ course: e.id, ply });
+          const kd = mineMove ? "本線の自分の手(記録なし)" : "本線の相手の手(記録なし)";
+          pc.kinds.add(kd);
+          if (!pc.moves.has(b.usi)) pc.moves.set(b.usi, new Set());
+          pc.moves.get(b.usi).add(kd);
+        }
       } else if (b.kind === "deviation" && !b.variation) {
         addPos(k, null, e, ply, "咎めの外れる手", b.usi);
       } else if (b.kind === "deviation" && b.variation) {
@@ -116,3 +126,11 @@ fs.writeFileSync(path.join(labDir, "remeasure-A-cases.json"), JSON.stringify(out
 const byKind = {};
 out.forEach((p) => p.kinds.forEach((k) => (byKind[k] = (byKind[k] || 0) + 1)));
 console.log(`対象の局面: ${out.length}`, byKind);
+
+// C: 本線の記録なし局面のうち、A の対象に入っていないもの(A で測る局面は C で測り直さない)
+const outC = [...posC.values()].filter((p) => !pos.has(p.id)).map((p) => ({
+  id: p.id, sfen: p.sfen, kinds: [...p.kinds], courses: p.courses,
+  moves: [...p.moves.entries()].map(([usi, ks]) => ({ usi, kinds: [...ks] })),
+}));
+fs.writeFileSync(path.join(labDir, "remeasure-C-cases.json"), JSON.stringify(outC, null, 1));
+console.log(`C(本線の記録なし、A除く): ${outC.length} (記録なし全体 ${posC.size}、うち A と重なる ${posC.size - outC.length})`);

@@ -4,6 +4,8 @@
  *   node scripts/remeasure-run.cjs --stage 2            2段目(4000万ノード)。対象は stage2-cases.json
  *   node scripts/remeasure-run.cjs --make-stage2        1段目の結果から2段目の対象を書き出す(1段目の最後にも自動で行う)
  *   node scripts/remeasure-run.cjs --status [--stage 2] 進み具合を1行で出す
+ * 組の選択: --set C(本線の記録なし局面。既定は A)。入力・出力名の remeasure-A- が remeasure-C- になる。
+ *   --limit N  先頭から N 局面だけ測る(試し)。環境変数 REMEASURE_TAG=TRIAL で出力名に TRIAL を付け、本番データと分ける。
  * 入力 : scripts/lab-out/remeasure-A-cases.json (node scripts/remeasure-cases.mjs で作る)
  * 出力 : scripts/lab-out/remeasure-A-stage1.jsonl / remeasure-A-stage2-cases.json / remeasure-A-stage2.jsonl
  * 1局面の記録: {id, sfen, kinds, courses, nodes, reachedDepth, ms, nps, best, bestCp, top[8], moves:[{usi,kinds,loss,via,margin,second,cp}]}
@@ -23,12 +25,16 @@ const argVal = (n, d) => { const i = args.indexOf(n); return i >= 0 ? args[i + 1
 const STAGE = Number(argVal("--stage", 1));
 const NODES = Number(argVal("--nodes", STAGE === 2 ? 40000000 : 5000000));
 const PV = 8;
+const SET = argVal("--set", "A"); // 対象の組: A / C。出力ファイル名の remeasure-<SET>- が変わる
+if (!/^[A-Z]$/.test(SET)) { console.error("--set は A か C"); process.exit(1); }
+const TAG = process.env.REMEASURE_TAG || ""; // 試し用: 出力名に付ける(例 TRIAL)。A の既存データを汚さない
 const F = {
-  cases: path.join(out, "remeasure-A-cases.json"),
-  s1: path.join(out, "remeasure-A-stage1.jsonl"),
-  s2cases: path.join(out, "remeasure-A-stage2-cases.json"),
-  s2: path.join(out, "remeasure-A-stage2.jsonl"),
+  cases: path.join(out, `remeasure-${SET}-cases${TAG}.json`),
+  s1: path.join(out, `remeasure-${SET}-stage1${TAG}.jsonl`),
+  s2cases: path.join(out, `remeasure-${SET}-stage2-cases${TAG}.json`),
+  s2: path.join(out, `remeasure-${SET}-stage2${TAG}.jsonl`),
 };
+const LIMIT = Number(argVal("--limit", 0)); // 試し用: 先頭からこの数だけ測る
 const casesFile = STAGE === 2 ? F.s2cases : F.cases;
 const resultFile = STAGE === 2 ? F.s2 : F.s1;
 
@@ -75,8 +81,8 @@ function status() {
   const left = total - done;
   const last = fs.existsSync(resultFile) ? fs.statSync(resultFile).mtimeMs : 0;
   let running = "不明";
-  try { running = require("node:child_process").execSync("pgrep -f 'remeasure-run.cjs --stage'", { encoding: "utf8" }).trim().split("\n").length > 0 ? "実行中" : "止まっている"; } catch { running = "止まっている"; }
-  console.log(`段${STAGE}: ${done}/${total}局面 済 | 平均${Math.round(avg / 1000)}秒/局面 | 残り${left}局面 約${fmt(left * avg)} | 終了見込み ${left ? clock(Date.now() + left * avg) : "完了"} | ${running} | 最終記録 ${last ? clock(last) : "-"}`);
+  try { running = require("node:child_process").execSync("pgrep -f 'remeasure-run.cjs.*--stage'", { encoding: "utf8" }).trim().split("\n").length > 0 ? "実行中" : "止まっている"; } catch { running = "止まっている"; }
+  console.log(`組${SET} 段${STAGE}: ${done}/${total}局面 済 | 平均${Math.round(avg / 1000)}秒/局面 | 残り${left}局面 約${fmt(left * avg)} | 終了見込み ${left ? clock(Date.now() + left * avg) : "完了"} | ${running} | 最終記録 ${last ? clock(last) : "-"}`);
 }
 
 if (args.includes("--status")) { status(); process.exit(0); }
@@ -136,8 +142,11 @@ function after(sfen, usi) {
   const cases = JSON.parse(fs.readFileSync(casesFile, "utf8"));
   const doneIds = new Set(readJsonl(resultFile).map((r) => r.id));
   console.error(`段${STAGE} 開始: 全${cases.length}、済${doneIds.size}、nodes=${NODES} ${new Date().toISOString()}`);
+  let ran = 0;
   for (const c of cases) {
     if (doneIds.has(c.id)) continue;
+    if (LIMIT && ran >= LIMIT) break;
+    ran++;
     const s = await search(c.sfen, PV);
     let ms = s.ms;
     if (!s.list.length) { console.error(`${c.id}: 探索結果なし(スキップ)`); continue; }
@@ -166,7 +175,8 @@ function after(sfen, usi) {
     fs.appendFileSync(resultFile, JSON.stringify(rec) + "\n");
     console.error(`${new Date().toISOString()} ${c.id} ${c.kinds[0]} best=${rec.best}(${rec.bestCp}) ` + moves.map((m) => `${m.usi}:loss=${m.loss}${m.margin != null ? ",m=" + m.margin : ""}`).join(" ") + ` (${Math.round(ms / 1000)}s)`);
   }
-  if (STAGE === 1) console.error("2段目の対象:", JSON.stringify(makeStage2()));
+  if (STAGE === 1 && !LIMIT) console.error("2段目の対象:", JSON.stringify(makeStage2()));
+  if (STAGE === 1 && LIMIT) console.error("試し(--limit)なので2段目の対象は作らない");
   console.error(`段${STAGE} 完了 ${new Date().toISOString()}`);
   eng.close();
   setTimeout(() => process.exit(0), 700);

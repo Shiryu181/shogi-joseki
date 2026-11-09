@@ -142,3 +142,14 @@ note・aim・咎めの返しの説明・節のコメントに「唯一」があ�
 - **再開**: 上の起動コマンドをもう一度打つだけ。jsonl にある局面は飛ばして続きから回る(`>` でログを上書きするので、残したいときは `>>`)。
 - **2段目**: 1段目が終わると自動で `remeasure-A-stage2-cases.json`(境目に入った局面)を書く。手動なら `node scripts/remeasure-run.cjs --make-stage2`。境目 = 100以内の損60〜140、咎めの損250〜350、唯一の差60〜140。回すときは `--stage 1` を `--stage 2` に替える(4000万ノード、結果は `remeasure-A-stage2.jsonl`、`--status --stage 2` で進み具合)。
 - 1局面の記録: `best/bestCp/top(候補8手)` と、調べる手ごとの `loss`(最善との差。候補外は指した後を探索して求め via:"child")・`margin`(その手が最善のときの次善との差)。
+
+## 回し方(C の残り。2026-11-09 準備)
+C の残り = 本線の学ぶ側・相手の手の局面のうち、旧の記録がなく、A の対象にも入っていないもの。**262局面**(見込みの352は A との重なりを除く前の数。記録なし全体は366、うち104が A と重なる)。A で測った局面は C で測り直さない。
+- **対象の一覧**: `node scripts/remeasure-cases.mjs` が `remeasure-A-cases.json`(A。中身は変えない)と一緒に `remeasure-C-cases.json` も書く。
+- **組の選択**: `remeasure-run.cjs --set C`。入出力名の `remeasure-A-` が `remeasure-C-` になる(`remeasure-C-stage1.jsonl` / `remeasure-C-stage2-cases.json` / `remeasure-C-stage2.jsonl` / `remeasure-C-stage1.log`、`remeasure-C-stage2.log`)。`--set` なしは A のまま。`--status --set C [--stage 2]` で進み具合。試し用に `--limit N` と環境変数 `REMEASURE_TAG=-TRIAL`(出力名に付く)。
+- **22:00 に自動起動**(待ってから1段目、終わったら2段目まで続けて回る。エンジンは1つ):
+  `cd scripts/lab-out && nohup sh -c "sleep <22:00までの秒数>; caffeinate -i sh -c 'node ../remeasure-run.cjs --set C --stage 1 >> remeasure-C-stage1.log 2>&1 && node ../remeasure-run.cjs --set C --stage 2 >> remeasure-C-stage2.log 2>&1'" > /dev/null 2>&1 &`
+  1段目の終わりに2段目の対象(境目に入った局面)を自動で書く。
+- **止め方**: 待っている間は `pkill -f "sleep 44474"` のように sleep の sh を止める(PID を `pgrep -fl "remeasure-run"` で確認)。回り始めたら `pkill -f remeasure-run.cjs`。再開は同じ起動コマンド(済みの局面は飛ばす)。
+- **見込み**: 1段目 262×約23秒 = 約1.7時間(22:00→23:45頃)、2段目 約35局面×約4分 = 約2.5時間(→翌2:15頃)。
+- 注意: C の局面で A の局面と重ならないものだけ測るので、A の局面に載る本線の手(104局面分)の損は A の記録の top(候補8手)から読む。
