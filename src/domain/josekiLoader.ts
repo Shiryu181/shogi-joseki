@@ -638,7 +638,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     sideLabel: "後手",
     label: "居飛車穴熊には7筋から",
     kind: "持久戦",
-    summary: "5筋では穴熊に通らない。銀を6四へ運び、飛車を7二へ回して守りの薄い7筋を攻める。",
+    summary: "5筋では穴熊に通らない。銀を6四へ運び、飛車を7二へ回して7筋に構える。",
     load: () => assertJosekiCourse(parseRaw(nakabishaVsAnaguma7sujiRaw), "nakabisha-vs-anaguma--7suji.json"),
   },
   {
