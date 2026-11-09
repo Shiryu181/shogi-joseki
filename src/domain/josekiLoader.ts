@@ -519,7 +519,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     load: () => assertJosekiCourse(parseRaw(sankenbishaSenteRaw), "sankenbisha-vs-ibisha--sente.json"),
   },
   // 「先手番の組み方」(nakabisha-vs-ibisha--sente)は 2026-10-11 に道筋から外した。
-  // 先手の対居飛車穴熊は「居飛車穴熊には3筋から」に一本化(古い章は終局 -150 前後で、最終手が相手の悪手だった)。
+  // 先手の対居飛車穴熊は「居飛車穴熊には銀を4五へ」に一本化(古い章は終局 -150 前後で、最終手が相手の悪手だった)。
   {
     id: "kakugawari--bougin",
     strategyId: "kakugawari",
@@ -752,7 +752,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     group: "相振り飛車",
     opponentLabel: "三間飛車(相振り)",
     sideLabel: "後手",
-    label: "相振り飛車・受けと反撃",
+    label: "相振り飛車・中飛車側",
     kind: "急戦",
     summary: "相手も振り飛車のとき。5筋の位を取り、飛車を2二に回して2筋に歩を伸ばし、玉を囲って7筋の歩を交換する。",
     load: () => assertJosekiCourse(parseRaw(nakabishaVsSankenbishaAifuriRaw), "nakabisha-vs-sankenbisha--aifuri.json"),
@@ -791,9 +791,9 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     group: "対居飛車穴熊",
     opponentLabel: "居飛車穴熊",
     sideLabel: "先手",
-    label: "居飛車穴熊には3筋から",
+    label: "居飛車穴熊には銀を4五へ",
     kind: "持久戦",
-    summary: "5筋では穴熊に通らない。銀を4六から4五へ運んで3筋を狙い、角交換から5筋の歩も使って攻める。",
+    summary: "5筋では穴熊に通らない。銀を4六から4五へ運び、角を交換して5筋の歩を5四へ突き進め、桂を6五へ跳ねて中央から攻める。",
     load: () => assertJosekiCourse(parseRaw(nakabishaVsAnagumaSenteRaw), "nakabisha-vs-anaguma--sente.json"),
   },
   {
@@ -806,7 +806,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     sideLabel: "先手",
     label: "居飛車の左美濃には",
     kind: "持久戦",
-    summary: "相手が穴熊にしないで、△3二銀と上がって左美濃に組んだら。穴熊の章と同じ、銀を4六・飛車を3八へ運ぶ構えで、3筋から戦う。3筋で歩と銀を取り合って、5四に歩が入る。形勢はほぼ互角で、後手がわずかに良い。相手が角を5五へ出す手(△5五角)や金を5四へ出す手(△5四金)には、そのまま駒が取れる。△4五歩・△2四歩への返し方も覚える。",
+    summary: "相手が穴熊にしないで、△3二銀と上がって左美濃に組んだら。穴熊の章と同じ、銀を4六・飛車を3八へ運ぶ構えで、3筋から戦う。3筋で歩と銀を取り合って、5四に歩が入る。形勢はほぼ互角。相手が角を5五へ出す手(△5五角)や金を5四へ出す手(△5四金)には、そのまま駒が取れる。△4五歩・△2四歩への返し方も覚える。",
     load: () => assertJosekiCourse(parseRaw(nakabishaVsHidariminoSenteRaw), "nakabisha-vs-hidarimino--sente.json"),
   },
   {
@@ -1014,7 +1014,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     sideLabel: "先手",
     label: "右四間飛車の急戦",
     kind: "急戦",
-    summary: "後手が△6三銀から右四間飛車に組んできたとき、▲1六歩 → ▲7七桂と受けて、互角に組み直すまで。△7四歩・△8六歩の仕掛けの咎め方も覚える。",
+    summary: "後手が△6三銀から右四間飛車に組んできたとき、▲1六歩 → ▲7七桂と受けて、落ち着いて組み直すまで。△7四歩・△8六歩の仕掛けの咎め方も覚える。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaIshidaMigishikenRaw), "sankenbisha-ishida--migishiken.json"),
   },
   {
@@ -1040,7 +1040,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     sideLabel: "先手",
     label: "居飛車穴熊には▲1六歩から",
     kind: "持久戦",
-    summary: "後手が△1二香から居飛車穴熊に組んできたとき、▲1六歩を先に突いてから、本組み(▲7七桂 → ▲6七銀 → ▲9七角 → ▲5六銀)に組むまで。互角の形を目ざす。",
+    summary: "後手が△1二香から居飛車穴熊に組んできたとき、▲1六歩を先に突いてから、本組み(▲7七桂 → ▲6七銀 → ▲9七角 → ▲5六銀)に組むまで。穴熊に組まれても、本組みで戦う。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaIshidaAnagumaRaw), "sankenbisha-ishida--anaguma.json"),
   },
   {
@@ -1144,7 +1144,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     sideLabel: "後手",
     label: "▲4五歩早仕掛けを受ける",
     kind: "急戦",
-    summary: "第2章の26手目から、先手が▲3七桂〜▲4五歩と4筋の歩をぶつけてくる形。△2二飛と飛車を回し、▲4五歩は△同歩と取らず、▲4四歩には△4四銀と取り返して受け止めるまで。先手がやや指しやすい形だが、取ってはいけない手を覚える。",
+    summary: "第2章の26手目から、先手が▲3七桂〜▲4五歩と4筋の歩をぶつけてくる形。△2二飛と飛車を回し、▲4五歩は△同歩と取らず、▲4四歩には△4四銀と取り返して受け止めるまで。先手が良い形だが、取ってはいけない手を覚える。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaGoteHayashikakeRaw), "sankenbisha-gote--hayashikake.json"),
   },
   {
@@ -1170,7 +1170,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     sideLabel: "後手",
     label: "左美濃・銀冠を受ける",
     kind: "持久戦",
-    summary: "第2章の25手目の変化から、先手が▲8八玉〜▲7八銀と左美濃に組む形。▲3七桂〜▲4五歩の仕掛けには、歩を取らずに△4二飛(か△2二飛)と飛車を回って受け、先手が▲8六歩〜▲8七銀と固めてきたら△6四歩・△8四歩で形を整えるまで。互角の範囲で先手がやや指しやすい。",
+    summary: "第2章の25手目の変化から、先手が▲8八玉〜▲7八銀と左美濃に組む形。▲3七桂〜▲4五歩の仕掛けには、歩を取らずに△4二飛(か△2二飛)と飛車を回って受け、先手が▲8六歩〜▲8七銀と固めてきたら△6四歩・△8四歩で形を整えるまで。先手が少し良い形。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaGoteHidariminoRaw), "sankenbisha-gote--hidarimino.json"),
   },
   {
@@ -1183,7 +1183,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     sideLabel: "後手",
     label: "相振り飛車・先手向かい飛車",
     kind: "持久戦",
-    summary: "3手目に先手が▲6六歩と角道を止める形。△4四歩・△3二飛と三間飛車に振り、先手の▲7七角・▲8八飛(向かい飛車)を見ながら、△7四歩を先に突いてから玉を8二に囲うまで。囲いは銀を7三に上げる形になる。先手がやや指しやすい。",
+    summary: "3手目に先手が▲6六歩と角道を止める形。△4四歩・△3二飛と三間飛車に振り、先手の▲7七角・▲8八飛(向かい飛車)を見ながら、△7四歩を先に突いてから玉を8二に囲うまで。囲いは銀を7三に上げる形になる。先手が良い形。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaGoteAifuriMukaiRaw), "sankenbisha-gote--aifuri-mukai.json"),
   },
   {
@@ -1209,7 +1209,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     sideLabel: "後手",
     label: "相三間飛車・先手石田流",
     kind: "持久戦",
-    summary: "3手目に先手が▲7五歩と突き、▲7八飛と石田流に振る形。△4四歩・△3二飛と三間に振り、▲7六飛 △3三角 のあと、▲7四歩 △同歩 ▲同飛 の7筋の歩の交換を受けて△4二飛と寄り、△3二銀まで。囲いはまだできない。互角。",
+    summary: "3手目に先手が▲7五歩と突き、▲7八飛と石田流に振る形。△4四歩・△3二飛と三間に振り、▲7六飛 △3三角 のあと、▲7四歩 △同歩 ▲同飛 の7筋の歩の交換を受けて△4二飛と寄り、△3二銀まで。囲いはまだできない。先手が少し良い形。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaGoteAisankenRaw), "sankenbisha-gote--aisanken.json"),
   },
   {
@@ -1222,7 +1222,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     sideLabel: "後手",
     label: "右四間飛車を受ける",
     kind: "急戦",
-    summary: "先手が▲5七銀から▲4八飛と右四間飛車にして、4筋の歩を突き出してくる形。△5三銀 △7二銀で美濃囲いを完成させ、▲4五歩には△4二飛、▲4四歩 △同銀 ▲4六銀に△3五歩と反撃するまで。互角〜後手がやや指しやすい。",
+    summary: "先手が▲5七銀から▲4八飛と右四間飛車にして、4筋の歩を突き出してくる形。△5三銀 △7二銀で美濃囲いを完成させ、▲4五歩には△4二飛、▲4四歩 △同銀 ▲4六銀に△3五歩と反撃するまで。先手が少し良い形。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaGoteMigishikenRaw), "sankenbisha-gote--migishiken.json"),
   },
   {
