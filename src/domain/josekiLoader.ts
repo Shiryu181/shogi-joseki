@@ -1170,7 +1170,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     sideLabel: "後手",
     label: "左美濃・銀冠を受ける",
     kind: "持久戦",
-    summary: "第2章の25手目の変化から、先手が▲8八玉〜▲7八銀と左美濃に組む形。▲3七桂〜▲4五歩の仕掛けには、歩を取らずに△4二飛(か△2二飛)と飛車を回って受け、先手が▲8六歩〜▲8七銀と固めてきたら△6四歩・△8四歩で形を整えるまで。先手が少し良い形。",
+    summary: "第2章の25手目の変化から、先手が▲8八玉〜▲7八銀と左美濃に組む形。▲3七桂〜▲4五歩の仕掛けには、歩を取らずに△4二飛(か△2二飛)と飛車を回って受け、先手が▲8六歩と固めてきたら△6四歩で形を整え、2筋の突き捨て(▲2四歩)は△同歩と取るまで。先手が良い形。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaGoteHidariminoRaw), "sankenbisha-gote--hidarimino.json"),
   },
   {
