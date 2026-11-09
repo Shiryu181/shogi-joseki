@@ -728,7 +728,7 @@ export const COURSE_ENTRIES: CourseEntry[] = [
     sideLabel: "先手",
     label: "相振り飛車・石田流",
     kind: "急戦",
-    summary: "相手も振り飛車のとき。5筋を銀で守って石田流に組み、金無双に囲って7筋から攻める。",
+    summary: "相手も振り飛車のとき。5筋を銀で守って石田流に組み、美濃囲いに囲って7筋の歩を交換する。",
     load: () => assertJosekiCourse(parseRaw(sankenbishaVsNakabishaAifuriRaw), "sankenbisha-vs-nakabisha--aifuri.json"),
   },
   {
