@@ -5,6 +5,8 @@
  *   node scripts/find-alt-punish.cjs confirm <sfen> <usi> [label]   候補1手を確かめる(根の最善・子の損を4000万ノード、20手指し継ぎ)→ lab-out/alt-punish-confirm.jsonl
  * 走査: 1段目 1500万ノード・MultiPV 40(損300以上の候補を拾う用。値は目安)。
  * 確認: 根と子を 4000万ノード(2段目)。指し継ぎは両者最善・1手 200万ノード、20手後の評価を咎める側から見て出す。
+ *   node scripts/find-alt-punish.cjs scan2 <章id,章id,...>   (段階1・全章に広げる用)各章の本線の相手の番の局面で、浅い読み(depth 4 と 10万ノード、MultiPV 12)と深い読み(500万ノード、MultiPV 40)を取り、
+ *        浅い読みで上位なのに深い読みで損300以上の手を拾う → lab-out/punish1-scan.jsonl(1局面1行)。共通の序盤(SHARED_PLY)は除く。
  * 同時に動かすエンジンは1つだけ。
  */
 const fs = require("node:fs");
@@ -61,6 +63,22 @@ function positionsFor(t) {
   return res;
 }
 
+// 章が借りている共通の序盤の手数(その元の章で扱うので走査しない)
+const SHARED_PLY = { "sankenbisha-gote--aifuri-mukai": 2, "sankenbisha-gote--bogin": 22, "sankenbisha-gote--minokansei": 22, "sankenbisha-ishida--anaguma": 19,
+  "sankenbisha-ishida--hidarimino": 19, "sankenbisha-ishida--kakugawari": 5, "nakabisha-vs-anaguma--sente": 16 };
+// 章の本線で相手の番の局面(ply 手目を指す直前の局面)を返す。終端の局面も含む
+function opponentPositions(id) {
+  const c = JSON.parse(fs.readFileSync(path.join(root, "src/data/joseki", `${id}.json`), "utf8"));
+  const oppBlack = c.mySide === "gote"; // 相手が先手なら奇数手目
+  const res = []; let n = c.root; let ply = 1;
+  while (n) {
+    if (ply > (SHARED_PLY[id] || 0) && (ply % 2 === 1) === oppBlack) res.push({ ply, sfen: n.sfen, devs: n.branches.filter((b) => b.kind !== "main").map((b) => b.usi), mains: n.branches.filter((b) => b.kind === "main").map((b) => b.usi) });
+    const mb = n.branches.find((b) => b.kind === "main");
+    n = mb && mb.child; ply++;
+  }
+  return res;
+}
+
 (async () => {
   const eng = await createUsi();
   let waiter = null;
@@ -86,7 +104,7 @@ function positionsFor(t) {
         } else if (l.startsWith("bestmove")) { waiter = null; res(l.split(/\s+/)[1]); }
       };
     });
-    send(`go nodes ${nodes}`);
+    send(typeof nodes === "string" ? `go ${nodes}` : `go nodes ${nodes}`); // 文字列なら "depth 4" のようにそのまま go に渡す
     const bm = await done;
     const o = {}; for (const [d, m] of Object.entries(byDepth)) o[d] = [...m.entries()].sort((a, b) => a[0] - b[0]).map((e) => e[1]);
     const ds = Object.keys(o).map(Number).sort((a, b) => b - a);
@@ -110,6 +128,27 @@ function positionsFor(t) {
         const rec = { key, course: t.id, ply: ps.ply, sfen: ps.sfen, existingDeviations: ps.devs, mains: ps.mains, bestCp: best, depth: r.depth, ms: r.ms, n: cands.length, cands };
         fs.appendFileSync(f, JSON.stringify(rec) + "\n");
         console.error(key, "best", cands[0].jp, best, "損300以上:", cands.filter((c) => c.loss >= 300).map((c) => c.jp + ":" + c.loss).join(" "), `(${Math.round(r.ms / 1000)}s)`);
+      }
+    }
+  } else if (mode === "scan2") {
+    const f = path.join(out, "punish1-scan.jsonl");
+    const done = new Set(fs.existsSync(f) ? fs.readFileSync(f, "utf8").split("\n").filter(Boolean).map((l) => JSON.parse(l).key) : []);
+    for (const id of process.argv[3].split(",")) {
+      for (const ps of opponentPositions(id)) {
+        const key = `${id}@${ps.ply}`;
+        if (done.has(key)) continue;
+        const sh1 = await search(ps.sfen, 12, "depth 4");
+        const sh2 = await search(ps.sfen, 12, 100000);
+        const r = await search(ps.sfen, 40, 5000000);
+        if (!r.list.length) { console.error("結果なし", key); continue; }
+        const best = r.list[0].cp;
+        const rank = (list, usi) => { const i = list.findIndex((x) => x.usi === usi); return i < 0 ? null : i + 1; };
+        const loss = (list, usi) => { const h = list.find((x) => x.usi === usi); return h ? list[0].cp - h.cp : null; };
+        const cands = r.list.map((x) => ({ usi: x.usi, jp: jp(ps.sfen, x.usi), cp: x.cp, loss: best - x.cp, pv: x.pv,
+          rD4: rank(sh1.list, x.usi), lossD4: loss(sh1.list, x.usi), rN100k: rank(sh2.list, x.usi), lossN100k: loss(sh2.list, x.usi) }));
+        const rec = { key, course: id, ply: ps.ply, sfen: ps.sfen, existingDeviations: ps.devs, mains: ps.mains, bestCp: best, depth: r.depth, ms: r.ms, shallowD4: sh1.list.map((x) => x.usi), shallowN: sh2.list.map((x) => x.usi), cands };
+        fs.appendFileSync(f, JSON.stringify(rec) + "\n");
+        console.error(key, "best", cands[0].jp, best, "損300以上で浅い上位(D4<=6 or N<=6):", cands.filter((c) => c.loss >= 300 && ((c.rD4 && c.rD4 <= 6) || (c.rN100k && c.rN100k <= 6))).map((c) => `${c.jp}:損${c.loss}/D4#${c.rD4}/N#${c.rN100k}`).join(" "), `(${Math.round(r.ms / 1000)}s)`);
       }
     }
   } else if (mode === "measure") {
