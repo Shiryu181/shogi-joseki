@@ -21,7 +21,7 @@ const nIdx = args.indexOf("--nodes");
 const NODES = nIdx >= 0 ? Number(args[nIdx + 1]) : 3000000;
 const FINAL = 5000000;
 const key3 = (s) => s.split(" ").slice(0, 3).join(" ");
-const cacheF = path.join(out, "proposal2-cache.jsonl");
+const cacheF = path.join(out, process.env.PL_CACHE || "proposal2-cache.jsonl");
 const cache = new Map();
 if (fs.existsSync(cacheF)) for (const l of fs.readFileSync(cacheF, "utf8").split("\n").filter(Boolean)) { try { const r = JSON.parse(l); cache.set(`${r.key}|${r.nodes}`, r); } catch {} }
 
@@ -62,7 +62,7 @@ const after = (sfen, usi) => { const p = Position.newBySFEN(sfen); const m = mv(
   }
 
   const sc = JSON.parse(fs.readFileSync(path.resolve(file), "utf8"));
-  const outF = path.join(out, "proposal2-lines.jsonl");
+  const outF = path.join(out, process.env.PL_OUT || "proposal2-lines.jsonl");
   const done = new Set(fs.existsSync(outF) ? fs.readFileSync(outF, "utf8").split("\n").filter(Boolean).map((l) => JSON.parse(l).id) : []);
   for (const s of sc) {
     if (done.has(s.id)) continue;
