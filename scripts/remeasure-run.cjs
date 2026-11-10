@@ -18,6 +18,7 @@ const path = require("node:path");
 const { Position, parseUSIMove } = require("tsshogi");
 process.env.ENGINE = process.env.ENGINE || "native";
 const { createUsi } = require("./lib/usi-engine.cjs");
+const { clearSearchMemory } = require("./lib/usi-clear.cjs");
 
 const out = path.join(__dirname, "lab-out");
 const args = process.argv.slice(2);
@@ -110,7 +111,7 @@ function after(sfen, usi) {
 
   async function search(sfen, pv) {
     const byDepth = {}; const t0 = Date.now(); let nodes = 0;
-    send("usinewgame");
+    await clearSearchMemory(eng, wait); // 局面ごとに置換表を消す
     send(`setoption name MultiPV value ${pv}`);
     send(`position sfen ${sfen}`);
     const done = new Promise((res) => {

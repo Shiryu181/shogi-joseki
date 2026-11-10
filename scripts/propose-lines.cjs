@@ -13,6 +13,7 @@ const path = require("node:path");
 const { Position, parseUSIMove, formatMove } = require("tsshogi");
 process.env.ENGINE = process.env.ENGINE || "native";
 const { createUsi } = require("./lib/usi-engine.cjs");
+const { clearSearchMemory } = require("./lib/usi-clear.cjs");
 const out = path.join(__dirname, "lab-out");
 const args = process.argv.slice(2);
 const file = args.find((a) => !a.startsWith("--"));
@@ -40,7 +41,7 @@ const after = (sfen, usi) => { const p = Position.newBySFEN(sfen); const m = mv(
   async function search(sfen, nodes, pv = 2) {
     const k = `${key3(sfen)}|${nodes}`; if (cache.has(k)) return cache.get(k);
     const byDepth = {}; const t0 = Date.now();
-    send("usinewgame"); send(`setoption name MultiPV value ${pv}`); send(`position sfen ${sfen}`);
+    await clearSearchMemory(eng, wait); send(`setoption name MultiPV value ${pv}`); send(`position sfen ${sfen}`);
     const done = new Promise((res) => {
       waiter = (l) => {
         if (l.startsWith("info ") && l.includes(" pv ") && l.includes(" score ")) {

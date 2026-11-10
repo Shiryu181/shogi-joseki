@@ -153,3 +153,15 @@ C の残り = 本線の学ぶ側・相手の手の局面のうち、旧の記録
 - **止め方**: 待っている間は `pkill -f "sleep 44474"` のように sleep の sh を止める(PID を `pgrep -fl "remeasure-run"` で確認)。回り始めたら `pkill -f remeasure-run.cjs`。再開は同じ起動コマンド(済みの局面は飛ばす)。
 - **見込み**: 1段目 262×約23秒 = 約1.7時間(22:00→23:45頃)、2段目 約35局面×約4分 = 約2.5時間(→翌2:15頃)。
 - 注意: C の局面で A の局面と重ならないものだけ測るので、A の局面に載る本線の手(104局面分)の損は A の記録の top(候補8手)から読む。
+
+## D: 境目の測り直し(置換表を消す測り方。2026-11-10 起動)
+理由: 測定のとき局面ごとに置換表が消えておらず(usinewgame だけでは消えない)、前の局面の探索が混ざっていた。`scripts/lib/usi-clear.cjs` で1局面ごとに消す形に直し(remeasure-run・find-alt-punish・propose-lines)、同じ2局面を ABAB で測って同じ結果(最善・評価値・ノード数まで一致)になるのを確かめた。境目に近い判定だけを、4000万ノード・Threads 1・MultiPV 8 で測り直す。
+- **対象の拾い方**: `node scripts/remeasure-D-pick.mjs` → `scripts/lab-out/remeasure-D-cases.json`。今の章データを歩き、これまでの新エンジンの記録(A・C の1段目と2段目、第2弾の proposal2-cache)で、咎めの外れる手の損250〜350、ほかの手の損60〜140、最善の手の次善との差60〜140(「唯一」と書いたか否かを問わない)、第2弾で測った局面の差60〜140を拾う。作戦選びの例外(「より良い手(…)もありますが」)は除く。100・300との差が小さい順に並ぶ。
+- **起動**(scripts/lab-out で実行。セッションが終わっても続き、Mac はスリープしない):
+  `cd scripts/lab-out && nohup caffeinate -i node ../remeasure-run.cjs --set D --stage 1 --nodes 40000000 >> remeasure-D-stage1.log 2>&1 &`
+  1局面ごとに `remeasure-D-stage1.jsonl` へ1行追記する。
+- **進み具合**: `node scripts/remeasure-run.cjs --set D --status`(済/全体、平均時間、残り、終了見込み)。経過は `tail scripts/lab-out/remeasure-D-stage1.log`。
+- **止め方**: `pkill -f remeasure-run.cjs`(エンジンも一緒に終わる。記録済みの行は残る)。
+- **再開**: 上の起動コマンドをもう一度打つだけ(済みの局面は飛ばす)。
+- 終わりに「2段目の対象」を自動で書くが、D は1段目がすでに4000万ノードなので使わない。結果の読み方は A と同じ(`best/bestCp/top`、手ごとの `loss`・`margin`)。
+- 注意: 記録が無い局面(章データ全体 2177 のうち約 1365。第3回の差し替えの500万ノードの測定など、上の記録に入っていないもの)は拾えていない。必要なら記録の元を足して拾い直す。
