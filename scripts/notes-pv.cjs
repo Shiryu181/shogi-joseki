@@ -5,6 +5,7 @@ process.env.ENGINE="native";
 const fs=require("fs");
 const { Position, parseUSIMove, formatMove } = require("tsshogi");
 const { createUsi } = require("./lib/usi-engine.cjs");
+const { clearSearchMemory } = require("./lib/usi-clear.cjs");
 (async()=>{
   const cases=JSON.parse(fs.readFileSync(process.argv[2]));
   const eng=await createUsi(); let waiter=null; eng.setHandler(l=>{if(waiter)waiter(l)});
@@ -15,7 +16,7 @@ const { createUsi } = require("./lib/usi-engine.cjs");
   const out=[];
   for(const c of cases){
     const best={};
-    eng.send("usinewgame"); eng.send("setoption name MultiPV value 5"); eng.send(`position sfen ${c.sfen}`);
+    await clearSearchMemory(eng,wait); eng.send("setoption name MultiPV value 5"); eng.send(`position sfen ${c.sfen}`);
     const done=new Promise(res=>{waiter=l=>{
       if(l.startsWith("info ")&&l.includes(" pv ")&&l.includes(" score ")){const t=l.split(/\s+/);const mi=t.indexOf("multipv"),si=t.indexOf("score"),pi=t.indexOf("pv"),di=t.indexOf("depth");
         const cp=t[si+1]==="cp"?Number(t[si+2]):(Number(t[si+2])>0?30000:-30000);best[t[mi+1]]={cp,pv:t.slice(pi+1,pi+9),d:t[di+1]};}

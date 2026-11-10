@@ -18,7 +18,7 @@ async function createUsi() {
     const readline = require("node:readline");
     const dir = process.env.YO_DIR || path.resolve(__dirname, "..", "..", "..", "engines", "yo-tuyo11mini");
     const exe = path.join(dir, process.env.YO_EXE || "YaneuraOu-tuyo11mini");
-    const child = spawn(exe, [], { cwd: dir, stdio: ["pipe", "pipe", "ignore"] });
+    const child = spawn(exe, [], { cwd: dir, stdio: ["pipe", "pipe", process.env.YO_DEBUG ? "inherit" : "ignore"] });
     child.stdin.on("error", () => {});
     readline.createInterface({ input: child.stdout }).on("line", (l) => handler(l));
     const kill = () => { try { child.kill("SIGKILL"); } catch {} };
