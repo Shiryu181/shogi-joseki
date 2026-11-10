@@ -293,7 +293,7 @@
                                                                                                       {
                                                                                                         "usi": "1g1f",
                                                                                                         "kind": "main",
-                                                                                                        "note": "端の歩を1六へ突いて、相手の端歩に合わせます。▲9六歩や▲3八玉でも同じくらいの場面です。",
+                                                                                                        "note": "端の歩を1六へ突いて、相手の端歩に合わせます。",
                                                                                                         "aim": "相手に合わせて端に手をかけ、後で使える広がりを残したい。",
                                                                                                         "accepted": [
                                                                                                           "1g1f",
@@ -312,7 +312,7 @@
                                                                                                         "child": {
                                                                                                           "id": "n17",
                                                                                                           "sfen": "ln1gkg1nl/2s1r2b1/ppppsp1p1/2P3p1p/4p4/3P4P/PP1SPPPP1/1BR2K3/LN1G1GSNL w - 1",
-                                                                                                          "comment": null,
+                                                                                                          "comment": "▲9六歩や▲3八玉でも同じくらいの場面です。",
                                                                                                           "branches": [
                                                                                                             {
                                                                                                               "usi": "7c7d",
@@ -352,7 +352,7 @@
                                                                                                                               {
                                                                                                                                 "usi": "4h3h",
                                                                                                                                 "kind": "main",
-                                                                                                                                "note": "玉を4八から3八へ寄せて、美濃囲いの形に近づけます。▲9六歩や▲5八金左でも同じくらいの場面です。",
+                                                                                                                                "note": "玉を4八から3八へ寄せて、美濃囲いの形に近づけます。",
                                                                                                                                 "aim": "囲いの定位置に向けて、一歩ずつ進めたい。",
                                                                                                                                 "accepted": [
                                                                                                                                   "4h3h",
@@ -371,7 +371,7 @@
                                                                                                                                 "child": {
                                                                                                                                   "id": "n21",
                                                                                                                                   "sfen": "ln1gkg1nl/2s1r2b1/pp1p1p1p1/2R1s1p1p/4p4/3P4P/PP1SPPPP1/1B4K2/LN1G1GSNL w Pp 1",
-                                                                                                                                  "comment": null,
+                                                                                                                                  "comment": "▲9六歩や▲5八金左でも同じくらいの場面です。",
                                                                                                                                   "branches": [
                                                                                                                                     {
                                                                                                                                       "usi": "7b7c",

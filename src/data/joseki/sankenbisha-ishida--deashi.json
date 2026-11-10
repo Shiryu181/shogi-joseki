@@ -643,7 +643,7 @@
                                           {
                                             "usi": "1g1f",
                                             "kind": "main",
-                                            "note": "端の歩を1六へ突きます。▲3八銀・▲4八銀・▲7八金でも同じくらいの手です。",
+                                            "note": "端の歩を1六へ突きます。",
                                             "aim": "端に手をかけて、後で使える広がりを作りたい。",
                                             "accepted": [
                                               "2g2f",
@@ -662,6 +662,7 @@
                                             "child": {
                                               "id": "d4_3",
                                               "sfen": "lnsgkgsnl/1r7/p1pppp1pp/1p4p2/2P6/8P/PP1PPPPP1/1S5R1/LN1GKGSNL w Bb 1",
+                                              "comment": "▲3八銀・▲4八銀・▲7八金でも同じくらいの手です。",
                                               "branches": [
                                                 {
                                                   "usi": "1c1d",
@@ -674,11 +675,12 @@
                                                       {
                                                         "usi": "8h7g",
                                                         "kind": "main",
-                                                        "note": "銀を8八から7七へ上げます。▲3八銀でも同じくらいの手です。",
+                                                        "note": "銀を8八から7七へ上げます。",
                                                         "aim": "取り返した駒を動かして、攻めに使える位置へ上げたい。",
                                                         "child": {
                                                           "id": "d4_5",
                                                           "sfen": "lnsgkgsnl/1r7/p1pppp1p1/1p4p1p/2P6/8P/PPSPPPPP1/7R1/LN1GKGSNL w Bb 1",
+                                                          "comment": "▲3八銀でも同じくらいの手です。",
                                                           "branches": [
                                                             {
                                                               "usi": "4a3b",
@@ -708,12 +710,12 @@
                                                                               {
                                                                                 "usi": "2g2f",
                                                                                 "kind": "main",
-                                                                                "note": "2筋の歩を2六へ突きます。▲3六歩でも同じくらいの手です。",
+                                                                                "note": "2筋の歩を2六へ突きます。",
                                                                                 "aim": "飛車の前の歩を進めて、その筋の攻めの準備をしたい。",
                                                                                 "child": {
                                                                                   "id": "d4_9",
                                                                                   "sfen": "ln1gk1snl/1r1s2g2/p1pppp1p1/1p4p1p/2P6/7PP/PPSPPPP2/6SR1/LN1GKG1NL w Bb 1",
-                                                                                  "comment": "ここで止めます。形勢は互角です。",
+                                                                                  "comment": "ここで止めます。形勢は互角です。▲3六歩でも同じくらいの手です。",
                                                                                   "branches": []
                                                                                 }
                                                                               }

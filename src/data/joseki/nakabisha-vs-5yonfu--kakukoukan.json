@@ -168,11 +168,11 @@
                                                             {
                                                               "usi": "4b3b",
                                                               "kind": "main",
-                                                              "note": "相手は玉を3二へ逃げました。△3三玉のほうが少し良い手で(変化の枝で見られます)、△3二玉は少し劣ります。王手の受け方には、合い駒(王手の筋に駒を打って防ぐこと)の△5三角や△6四角もあります。△6四角は後手が損をする手です。",
+                                                              "note": "相手は玉を3二へ逃げました。王手の受け方には、合い駒(王手の筋に駒を打って防ぐこと)の△5三角や△6四角もあります。△6四角は後手が損をする手です。",
                                                               "child": {
                                                                 "id": "n10",
                                                                 "sfen": "lnsg1g1nl/1r4ks1/pppp1p1pp/4p1p2/9/1BP1P4/PP1P1PPPP/4R4/LNSGKGSNL b b 1",
-                                                                "comment": null,
+                                                                "comment": "△3三玉のほうが少し良い手で(変化の枝で見られます)、△3二玉は少し劣ります。",
                                                                 "branches": [
                                                                   {
                                                                     "usi": "8f5c+",
@@ -191,11 +191,11 @@
                                                                         {
                                                                           "usi": "B*4d",
                                                                           "kind": "main",
-                                                                          "note": "相手が角を4四に打って、5三の馬を狙ってきました。最善に近い手です。",
+                                                                          "note": "相手が角を4四に打って、5三の馬を狙ってきました。",
                                                                           "child": {
                                                                             "id": "n12",
                                                                             "sfen": "lnsg1g1nl/1r4ks1/pppp+Bp1pp/4pbp2/9/2P1P4/PP1P1PPPP/4R4/LNSGKGSNL b - 1",
-                                                                            "comment": null,
+                                                                            "comment": "最善に近い手です。",
                                                                             "branches": [
                                                                               {
                                                                                 "usi": "5c4d",
@@ -374,12 +374,12 @@
                                                                                                                                                                   {
                                                                                                                                                                     "usi": "5i4h",
                                                                                                                                                                     "kind": "main",
-                                                                                                                                                                    "note": "玉を5九から4八へ寄せて、囲いに向かいます。▲7九金でも同じくらいの場面です。",
+                                                                                                                                                                    "note": "玉を5九から4八へ寄せて、囲いに向かいます。",
                                                                                                                                                                     "aim": "玉を寄せて、守りの形を作りたい。",
                                                                                                                                                                     "child": {
                                                                                                                                                                       "id": "n27",
                                                                                                                                                                       "sfen": "ln1g2knl/1r3g1s1/ppps3pp/5pp2/4+B4/2P1p4/PP1P1PPPP/3SRK3/LN1G1GSNL w Pbp 1",
-                                                                                                                                                                      "comment": null,
+                                                                                                                                                                      "comment": "▲7九金でも同じくらいの場面です。",
                                                                                                                                                                       "branches": [
                                                                                                                                                                         {
                                                                                                                                                                           "usi": "8b5b",
@@ -529,10 +529,11 @@
                                                                                     {
                                                                                       "usi": "4c4d",
                                                                                       "kind": "main",
-                                                                                      "note": "相手は歩で取り返します。最善です(△同玉は少し劣ります)。",
+                                                                                      "note": "相手は歩で取り返します。",
                                                                                       "child": {
                                                                                         "id": "d10_4",
                                                                                         "sfen": "lnsg1g1nl/1r5s1/pppp2kpp/4ppp2/9/2P1P4/PP1P1PPPP/4R4/LNSGKGSNL b Bb 1",
+                                                                                        "comment": "最善です(△同玉は少し劣ります)。",
                                                                                         "branches": [
                                                                                           {
                                                                                             "usi": "5f5e",
@@ -636,7 +637,7 @@
                                                                               {
                                                                                 "usi": "7i8h",
                                                                                 "kind": "main",
-                                                                                "note": "銀を8八へ上げて、左の銀を前へ出す準備をします。最善に近い手で、▲7八銀も同じくらい良い手です。",
+                                                                                "note": "銀を8八へ上げて、左の銀を前へ出す準備をします。",
                                                                                 "aim": "控えの駒を一つ進めて、攻めの準備をしたい。",
                                                                                 "accepted": [
                                                                                   "5i4h",
@@ -655,6 +656,7 @@
                                                                                 "child": {
                                                                                   "id": "d10_3",
                                                                                   "sfen": "lnsg1g1nl/1r5s1/ppppkp1pp/4p1p2/9/2P1P4/PP1P1PPPP/1S2R4/LN1GKGSNL w Bb 1",
+                                                                                  "comment": "最善に近い手で、▲7八銀も同じくらい良い手です。",
                                                                                   "branches": [
                                                                                     {
                                                                                       "usi": "7a6b",
@@ -667,7 +669,7 @@
                                                                                           {
                                                                                             "usi": "8h7g",
                                                                                             "kind": "main",
-                                                                                            "note": "銀を7七へ進めて、左の銀を前線へ出します。最善に近い手で、▲1六歩も同じくらい良い手です。",
+                                                                                            "note": "銀を7七へ進めて、左の銀を前線へ出します。",
                                                                                             "aim": "控えの駒をさらに前へ進めて、攻めの形を作りたい。",
                                                                                             "accepted": [
                                                                                               "5i4h",
@@ -686,6 +688,7 @@
                                                                                             "child": {
                                                                                               "id": "d10_5",
                                                                                               "sfen": "ln1g1g1nl/1r1s3s1/ppppkp1pp/4p1p2/9/2P1P4/PPSP1PPPP/4R4/LN1GKGSNL w Bb 1",
+                                                                                              "comment": "最善に近い手で、▲1六歩も同じくらい良い手です。",
                                                                                               "branches": [
                                                                                                 {
                                                                                                   "usi": "5c4b",
@@ -698,7 +701,7 @@
                                                                                                       {
                                                                                                         "usi": "5i4h",
                                                                                                         "kind": "main",
-                                                                                                        "note": "玉を4八へ寄せて、囲いに向かいます。最善に近い手です。",
+                                                                                                        "note": "玉を4八へ寄せて、囲いに向かいます。",
                                                                                                         "aim": "玉を寄せて、守りの形を作りたい。",
                                                                                                         "accepted": [
                                                                                                           "5i4h",
@@ -717,7 +720,7 @@
                                                                                                         "child": {
                                                                                                           "id": "d10_7",
                                                                                                           "sfen": "ln1g1g1nl/1r1s1k1s1/pppp1p1pp/4p1p2/9/2P1P4/PPSP1PPPP/4RK3/LN1G1GSNL w Bb 1",
-                                                                                                          "comment": "互角の形です。",
+                                                                                                          "comment": "互角の形です。最善に近い手です。",
                                                                                                           "branches": []
                                                                                                         }
                                                                                                       }

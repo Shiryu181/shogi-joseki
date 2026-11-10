@@ -170,7 +170,7 @@
                                                             {
                                                               "usi": "3a4b",
                                                               "kind": "main",
-                                                              "note": "銀を3一から4二へ上げて、次に5三へ出す準備をします。△6二銀や△1四歩でも同じくらいの場面です。",
+                                                              "note": "銀を3一から4二へ上げて、次に5三へ出す準備をします。",
                                                               "aim": "攻めに使う駒を一枚、前へ繰り出す準備をしたい。",
                                                               "accepted": [
                                                                 "5a4b",
@@ -189,7 +189,7 @@
                                                               "child": {
                                                                 "id": "n10",
                                                                 "sfen": "lnsgkg1nl/4rs1b1/pppp1p1pp/6p2/4p4/2PP5/PP1SPPPPP/1BR6/LN1GKGSNL b - 1",
-                                                                "comment": null,
+                                                                "comment": "△6二銀や△1四歩でも同じくらいの場面です。",
                                                                 "branches": [
                                                                   {
                                                                     "usi": "7f7e",
@@ -326,13 +326,13 @@
                                                                                                                         {
                                                                                                                           "usi": "5a6a",
                                                                                                                           "kind": "main",
-                                                                                                                          "note": "玉を5一から6一へ寄せて、7二の金のそばに入れます。△3三桂や△2五歩でも同じくらいの場面です。",
+                                                                                                                          "note": "玉を5一から6一へ寄せて、7二の金のそばに入れます。",
                                                                                                                           "aim": "玉を囲いの方へ寄せ始めたい。",
                                                                                                                           "openEnded": true,
                                                                                                                           "child": {
                                                                                                                             "id": "n20",
                                                                                                                             "sfen": "lnsk1g1nl/2g1r4/ppppsp2p/5bpp1/2P1p4/P1RP5/1P1SPPPPP/1B3KS2/LN1G1G1NL b - 1",
-                                                                                                                            "comment": null,
+                                                                                                                            "comment": "△3三桂や△2五歩でも同じくらいの場面です。",
                                                                                                                             "branches": [
                                                                                                                               {
                                                                                                                                 "usi": "6i5h",
@@ -346,13 +346,13 @@
                                                                                                                                     {
                                                                                                                                       "usi": "7a6b",
                                                                                                                                       "kind": "main",
-                                                                                                                                      "note": "銀を7一から6二へ上げて、6一の玉のそばを固めます。ほかの手より少し良い手です。",
+                                                                                                                                      "note": "銀を7一から6二へ上げて、6一の玉のそばを固めます。",
                                                                                                                                       "aim": "守りの駒を上げて、囲いを固めたい。",
                                                                                                                                       "openEnded": true,
                                                                                                                                       "child": {
                                                                                                                                         "id": "n22",
                                                                                                                                         "sfen": "ln1k1g1nl/2gsr4/ppppsp2p/5bpp1/2P1p4/P1RP5/1P1SPPPPP/1B2GKS2/LN3G1NL b - 1",
-                                                                                                                                        "comment": null,
+                                                                                                                                        "comment": "ほかの手より少し良い手です。",
                                                                                                                                         "branches": [
                                                                                                                                           {
                                                                                                                                             "usi": "8i7g",
@@ -386,13 +386,13 @@
                                                                                                                                                             {
                                                                                                                                                               "usi": "5b2b",
                                                                                                                                                               "kind": "main",
-                                                                                                                                                              "note": "飛車を5二から2二へ回して、2五の歩の後ろにつけます。△3三桂でも同じくらいの場面です。",
+                                                                                                                                                              "note": "飛車を5二から2二へ回して、2五の歩の後ろにつけます。",
                                                                                                                                                               "aim": "大駒を歩の後ろへ回して、歩の攻めを支えたい。",
                                                                                                                                                               "openEnded": true,
                                                                                                                                                               "child": {
                                                                                                                                                                 "id": "n26",
                                                                                                                                                                 "sfen": "ln1k1g1nl/2gs3r1/ppppsp2p/5bp2/2P1p2p1/P1RP5/1PNSPPPPP/1B2G1S2/L4GKNL b - 1",
-                                                                                                                                                                "comment": null,
+                                                                                                                                                                "comment": "△3三桂でも同じくらいの場面です。",
                                                                                                                                                                 "branches": [
                                                                                                                                                                   {
                                                                                                                                                                     "usi": "4g4f",
