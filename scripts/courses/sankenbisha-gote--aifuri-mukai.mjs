@@ -4,6 +4,7 @@
 import deashi from "./sankenbisha-gote--deashi.mjs";
 
 // 第1章の1〜2手目の解説。変化の枝(1手目の▲2六歩)は持ち込まない。
+<<<<<<< HEAD
 
 // 解説の直し(2026-11-10): 第1章(deashi)から借りる解説のうち、この章で書き直した分。元の文は evidence(画面に出ない検証メモ)に残す。
 const NOTE_FIX = new Map([
@@ -22,6 +23,9 @@ const applyFix = ([note, comment], i, last) => {
   return ev.length ? [n2, last ? null : (c2 ?? null), null, null, ev] : head;
 };
 const sharedNotes = deashi.notes.slice(0, 2).map((n, i) => applyFix(n, i, false));
+=======
+const sharedNotes = deashi.notes.slice(0, 2).map(([note, comment, , , ev]) => [note, comment ?? null, null, null, ev]);
+>>>>>>> worktree-agent-a43eb02dd7e335530
 
 export default {
   id: "sankenbisha-gote--aifuri-mukai",
