@@ -7,6 +7,7 @@
  * 確認: 根と子を 4000万ノード(2段目)。指し継ぎは両者最善・1手 200万ノード、20手後の評価を咎める側から見て出す。
  *   node scripts/find-alt-punish.cjs scan2 <章id,章id,...>   (段階1・全章に広げる用)各章の本線の相手の番の局面で、浅い読み(depth 4 と 10万ノード、MultiPV 12)と深い読み(500万ノード、MultiPV 40)を取り、
  *        浅い読みで上位なのに深い読みで損300以上の手を拾う → lab-out/punish1-scan.jsonl(1局面1行)。共通の序盤(SHARED_PLY)は除く。
+ *   node scripts/find-alt-punish.cjs trace <sfen> <ノード数> <MultiPV> <手数> [先に指す手...]   咎めの枝の手順づくり用。指定の手のあと、各手番の上位を出しながら最善手で指し継ぐ(各手番で最善・次善の差を見る)
  * 同時に動かすエンジンは1つだけ。
  */
 const fs = require("node:fs");
@@ -15,6 +16,7 @@ const { Position, parseUSIMove, formatMove } = require("tsshogi");
 process.env.ENGINE = process.env.ENGINE || "native";
 const { createUsi } = require("./lib/usi-engine.cjs");
 const { clearSearchMemory } = require("./lib/usi-clear.cjs");
+const { features } = require("./lib/punish-features.cjs");
 const out = path.join(__dirname, "lab-out");
 const root = path.join(__dirname, "..");
 
@@ -75,6 +77,25 @@ function opponentPositions(id) {
     if (ply > (SHARED_PLY[id] || 0) && (ply % 2 === 1) === oppBlack) res.push({ ply, sfen: n.sfen, devs: n.branches.filter((b) => b.kind !== "main").map((b) => b.usi), mains: n.branches.filter((b) => b.kind === "main").map((b) => b.usi) });
     const mb = n.branches.find((b) => b.kind === "main");
     n = mb && mb.child; ply++;
+  }
+  return res;
+}
+
+// 章の変化の枝(variation)の中で、相手の番の局面(枝の終わりの、相手が指す直前の局面も含む)。段階1の探す場所の拡張(2026-11-11)
+function branchOpponentPositions(id) {
+  const c = JSON.parse(fs.readFileSync(path.join(root, "src/data/joseki", `${id}.json`), "utf8"));
+  const oppBlack = c.mySide === "gote"; // 相手が先手なら奇数手目
+  const res = [];
+  (function walk(n, ply) {
+    for (const b of n.branches) {
+      if (b.kind === "deviation" && b.child) walkv(b.child, ply + 1, b.usi, ply);
+      else if (b.child) walk(b.child, ply + 1);
+    }
+  })(c.root, 1);
+  function walkv(n, ply, tag, devPly) {
+    if ((ply % 2 === 1) === oppBlack) res.push({ ply, sfen: n.sfen, tag: `${devPly}${tag}`, devs: n.branches.filter((b) => b.kind !== "main").map((b) => b.usi), mains: n.branches.filter((b) => b.kind === "main").map((b) => b.usi) });
+    const mb = n.branches.find((b) => b.kind === "main");
+    if (mb && mb.child) walkv(mb.child, ply + 1, tag, devPly);
   }
   return res;
 }
@@ -150,6 +171,58 @@ function opponentPositions(id) {
         fs.appendFileSync(f, JSON.stringify(rec) + "\n");
         console.error(key, "best", cands[0].jp, best, "損300以上で浅い上位(D4<=6 or N<=6):", cands.filter((c) => c.loss >= 300 && ((c.rD4 && c.rD4 <= 6) || (c.rN100k && c.rN100k <= 6))).map((c) => `${c.jp}:損${c.loss}/D4#${c.rD4}/N#${c.rN100k}`).join(" "), `(${Math.round(r.ms / 1000)}s)`);
       }
+    }
+  } else if (mode === "scan3") {
+    // 変化の枝の中の相手の番の局面を scan2 と同じ条件で走査 → lab-out/punish2-scan.jsonl
+    const f = path.join(out, "punish2-scan.jsonl");
+    const done = new Set(fs.existsSync(f) ? fs.readFileSync(f, "utf8").split("\n").filter(Boolean).map((l) => JSON.parse(l).key) : []);
+    for (const id of process.argv[3].split(",")) {
+      for (const ps of branchOpponentPositions(id)) {
+        const key = `${id}@${ps.tag}@${ps.ply}`;
+        if (done.has(key)) continue;
+        const sh1 = await search(ps.sfen, 12, "depth 4");
+        const sh2 = await search(ps.sfen, 12, 100000);
+        const r = await search(ps.sfen, 40, 5000000);
+        if (!r.list.length) { console.error("結果なし", key); continue; }
+        const best = r.list[0].cp;
+        const rank = (list, usi) => { const i = list.findIndex((x) => x.usi === usi); return i < 0 ? null : i + 1; };
+        const loss = (list, usi) => { const h = list.find((x) => x.usi === usi); return h ? list[0].cp - h.cp : null; };
+        const cands = r.list.map((x) => ({ usi: x.usi, jp: jp(ps.sfen, x.usi), cp: x.cp, loss: best - x.cp, pv: x.pv,
+          rD4: rank(sh1.list, x.usi), lossD4: loss(sh1.list, x.usi), rN100k: rank(sh2.list, x.usi), lossN100k: loss(sh2.list, x.usi) }));
+        const rec = { key, course: id, ply: ps.ply, branch: ps.tag, sfen: ps.sfen, existingDeviations: ps.devs, mains: ps.mains, bestCp: best, depth: r.depth, ms: r.ms, cands };
+        fs.appendFileSync(f, JSON.stringify(rec) + "\n");
+        console.error(key, "best", cands[0].jp, best, "損300以上で浅い上位:", cands.filter((c) => c.loss >= 300 && ((c.rD4 && c.rD4 <= 12 && c.lossD4 <= 250) || (c.rN100k && c.rN100k <= 12 && c.lossN100k <= 250))).map((c) => `${c.jp}:損${c.loss}`).join(" "), `(${Math.round(r.ms / 1000)}s)`);
+      }
+    }
+  } else if (mode === "pre") {
+    // 候補(JSON の配列 [{key,sfen,usi,jp,loss}])の下調べ: 1手指したあと両者最善(1手100万ノード)で16手指し継ぎ、盤の得の手がかりを数える → lab-out/punish2-pre.jsonl
+    const list = JSON.parse(fs.readFileSync(process.argv[3], "utf8"));
+    const f = path.join(out, "punish2-pre.jsonl");
+    const done = new Set(fs.existsSync(f) ? fs.readFileSync(f, "utf8").split("\n").filter(Boolean).map((l) => { const r = JSON.parse(l); return r.key + "|" + r.usi; }) : []);
+    for (const c of list) {
+      if (done.has(c.key + "|" + c.usi)) continue;
+      let cur = after(c.sfen, c.usi); const moves = [c.usi]; const jps = [jp(c.sfen, c.usi)];
+      for (let i = 0; i < 16 && cur; i++) {
+        const r = await search(cur, 1, 1000000);
+        if (!r.list.length) break;
+        jps.push(jp(cur, r.list[0].usi)); moves.push(r.list[0].usi); cur = after(cur, r.list[0].usi);
+      }
+      const ft = features(c.sfen, moves);
+      const rec = { key: c.key, usi: c.usi, jp: c.jp, loss: c.loss, line: jps, moves, matGain: (ft.mat[ft.mat.length - 1] - ft.mat0) / 2, matTrace: ft.mat.map((v) => (v - ft.mat0) / 2), made: ft.made, checks: ft.checks, checkRun: ft.checkRun, endHorseDragon: ft.endHorseDragon };
+      fs.appendFileSync(f, JSON.stringify(rec) + "\n");
+      console.error(c.key, c.jp, `損${c.loss}`, `駒得${rec.matGain}`, "終わりの竜馬", JSON.stringify(ft.endHorseDragon), "王手の連続", ft.checkRun, jps.slice(0, 10).join(" "));
+    }
+  } else if (mode === "trace") {
+    const [sfen0, nodes, pvn, cnt, ...pre] = process.argv.slice(3);
+    let cur = sfen0;
+    for (const u of pre) { cur = after(cur, u); if (!cur) throw new Error("非合法: " + u); }
+    for (let i = 0; i < Number(cnt); i++) {
+      const r = await search(cur, Number(pvn), Number(nodes));
+      if (!r.list.length) break;
+      const best = r.list[0].cp;
+      console.error(`#${pre.length + i + 1} ${cur.split(" ")[1]}番 ` + r.list.map((x) => `${jp(cur, x.usi)}[${x.usi}] ${x.cp}(${best - x.cp})`).join(" | "));
+      cur = after(cur, r.list[0].usi);
+      if (!cur) break;
     }
   } else if (mode === "measure") {
     const [sfen, ...usis] = process.argv.slice(3);
