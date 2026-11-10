@@ -5,13 +5,13 @@
   "opponentStrategy": "ureshino",
   "mySide": "gote",
   "source": "嬉野流側の駒組み(▲6八銀〜▲5六歩〜▲5七銀〜▲7八金〜▲7九角〜▲4六銀〜3筋)は『嬉野流の基本定跡と指し方』(hibitonshi.com)『嬉野流の基本、初手からの駒組み』(shogi-joutatsu.com)に準拠。こちらの応手はエンジンで生成し、26手すべてを1手ずつ評価して確認した(2026-10-05)。先手視点 -23 → -281 【形勢の言葉の根拠(2026-11-09、PLAN.md「画面の文の書き方」。新エンジン つようら王11mini、500万ノード・Threads 1。B=+37(平手初期局面、4000万ノード)。先手から見た値 v と v−B)】終わり: 先手から-281→v−B=-318(後手が良い)。2手目の例(飛車を5筋へ振った線の終わり): 先手から+261→v−B=+224(先手が良い)。",
-  "goalFormation": "8筋を突破して飛車を走らせ、7筋からも攻めを足した形。相手の玉は5九のまま囲えていない。",
+  "goalFormation": "8筋に飛車を出し、7筋からも攻めを足した形。相手の玉は5九のまま囲えていない。",
   "goalLabel": "嬉野流を受け切り、後手が良くなりました",
   "goalSfen": "l2gkg1nl/2s3sb1/p2pp2pp/5p3/2pn2pP1/1r2PS3/P1PP1P2P/1PG2S1R1/LNB1KG1NL b 2p 1",
   "root": {
     "id": "n0",
     "sfen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
-    "comment": "平手の初形です。相手の初手▲6八銀は嬉野流。角道を開けずに銀を繰り出し、飛車角銀で角頭を攻めてくる奇襲です。ここでは中飛車に振りません。飛車を5筋へ振ると相手の斜め棒銀と角で角頭を攻められ、後手が苦しくなります。",
+    "comment": "平手の初形です。相手の初手▲6八銀は嬉野流(奇襲の一つで、いきなり攻める指し方)。角道を開けずに銀を繰り出し、飛車・角・銀で、後手の角の前の歩(角頭)を攻めてきます。斜め棒銀は、銀を5七から4六、3五へ斜めに進めて攻める指し方です。ここでは中飛車に振りません。飛車を5筋へ振ると、相手の斜め棒銀と角で角頭を攻められ、先手が良くなります。",
     "branches": [
       {
         "usi": "7i6h",
@@ -25,8 +25,7 @@
             {
               "usi": "3c3d",
               "kind": "main",
-              "note": "角道を開けます。相手が角道を開けていないので、早石田も筋違い角もありません。",
-              "aim": "相手が奇襲に来られない形なので、先に大駒の道を開けておきたい。",
+              "note": "角道を開けます。相手は角道を閉じたままなので、早石田(7筋の歩を7五へ突いて攻める石田流)も筋違い角(角を使った奇襲)もありません。",
               "accepted": [
                 "3c3d",
                 "8c8d",
@@ -57,7 +56,7 @@
                     "3d3e",
                     "4f3e"
                   ],
-                  "text": "飛車を5筋へ振ると、相手の銀が5七→4六→3五と出てきて角頭に迫ります。玉を囲っても角頭は守れないので、この組み方は後手が苦しくなります。だから中飛車にしません。"
+                  "text": "飛車を5筋へ振ると、相手の銀が5七→4六→3五と出てきて角頭に迫ります。玉を囲っても角頭は守れないので、この組み方は先手が良くなります。だから中飛車にしません。"
                 }
               ],
               "child": {
@@ -68,16 +67,16 @@
                   {
                     "usi": "5g5f",
                     "kind": "main",
-                    "note": "相手が5筋を突きました。引いた角の道を通す準備です。",
+                    "note": "相手が5筋の歩を突きました。銀が5七へ上がれるようになります。",
                     "child": {
                       "id": "n3",
                       "sfen": "lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/4P4/PPPP1PPPP/1B1S3R1/LN1GKGSNL w - 1",
+                      "comment": null,
                       "branches": [
                         {
                           "usi": "8c8d",
                           "kind": "main",
-                          "note": "飛車先を突きます。ここで5筋を突いて中飛車に向かうと、相手の斜め棒銀と角に角頭を攻められます。",
-                          "aim": "相手の攻め筋に付き合わず、こちらから攻める筋を開けたい。",
+                          "note": "飛車の前の歩を8四へ突きます。5筋を突いて中飛車に向かうと、相手の斜め棒銀と角に角頭を攻められます。",
                           "accepted": [
                             "9c9d",
                             "1c1d",
@@ -95,6 +94,7 @@
                           "child": {
                             "id": "n4",
                             "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/1p4p2/9/4P4/PPPP1PPPP/1B1S3R1/LN1GKGSNL b - 1",
+                            "comment": null,
                             "branches": [
                               {
                                 "usi": "6h5g",
@@ -107,8 +107,7 @@
                                     {
                                       "usi": "8d8e",
                                       "kind": "main",
-                                      "note": "飛車先をもう一歩伸ばします。",
-                                      "aim": "攻めたい筋の歩を伸ばして、相手に受けを強いたい。",
+                                      "note": "飛車の前の歩を8五まで進めます。のちに8六へ突いて攻める準備と考えられます。",
                                       "accepted": [
                                         "8d8e",
                                         "7c7d",
@@ -126,20 +125,21 @@
                                       "child": {
                                         "id": "n6",
                                         "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/6p2/1p7/4P4/PPPPSPPPP/1B5R1/LN1GKGSNL b - 1",
+                                        "comment": null,
                                         "branches": [
                                           {
                                             "usi": "6i7h",
                                             "kind": "main",
-                                            "note": "相手が金を上がって飛車先を受けました。",
+                                            "note": "相手が金を7八へ上げました。7八の金は8七・8八に利きます。",
                                             "child": {
                                               "id": "n7",
                                               "sfen": "lnsgkgsnl/1r5b1/p1pppp1pp/6p2/1p7/4P4/PPPPSPPPP/1BG4R1/LN2KGSNL w - 1",
+                                              "comment": null,
                                               "branches": [
                                                 {
                                                   "usi": "7c7d",
                                                   "kind": "main",
-                                                  "note": "7筋の歩を突いて、桂馬の跳ねる道を作ります。",
-                                                  "aim": "眠っている攻め駒が使えるよう、前の歩を動かしたい。",
+                                                  "note": "7筋の歩を7四へ進めて、7三を空けます。8一の桂が7三へ跳ねられるようになります。",
                                                   "accepted": [
                                                     "5a5b",
                                                     "4a3b",
@@ -157,6 +157,7 @@
                                                   "child": {
                                                     "id": "n8",
                                                     "sfen": "lnsgkgsnl/1r5b1/p2ppp1pp/2p3p2/1p7/4P4/PPPPSPPPP/1BG4R1/LN2KGSNL b - 1",
+                                                    "comment": null,
                                                     "branches": [
                                                       {
                                                         "usi": "8h7i",
@@ -169,8 +170,7 @@
                                                             {
                                                               "usi": "8a7c",
                                                               "kind": "main",
-                                                              "note": "桂を7三へ跳ねます。攻めの駒を一枚増やします。",
-                                                              "aim": "攻めに使える駒を一枚増やしたい。",
+                                                              "note": "8一の桂を7三へ跳ねます。次に6五へ跳ねられる位置です。",
                                                               "accepted": [
                                                                 "8a7c",
                                                                 "7a7b",
@@ -188,6 +188,7 @@
                                                               "child": {
                                                                 "id": "n10",
                                                                 "sfen": "l1sgkgsnl/1r5b1/p1nppp1pp/2p3p2/1p7/4P4/PPPPSPPPP/2G4R1/LNB1KGSNL b - 1",
+                                                                "comment": null,
                                                                 "branches": [
                                                                   {
                                                                     "usi": "3i4h",
@@ -200,8 +201,7 @@
                                                                         {
                                                                           "usi": "7a7b",
                                                                           "kind": "main",
-                                                                          "note": "銀を上がって陣形を整えます。",
-                                                                          "aim": "守りの駒を上げて、陣形の隙を無くしたい。",
+                                                                          "note": "7一の銀を7二へ上げて、7三の桂を守ります。",
                                                                           "accepted": [
                                                                             "1c1d",
                                                                             "4a3b",
@@ -219,6 +219,7 @@
                                                                           "child": {
                                                                             "id": "n12",
                                                                             "sfen": "l2gkgsnl/1rs4b1/p1nppp1pp/2p3p2/1p7/4P4/PPPPSPPPP/2G2S1R1/LNB1KG1NL b - 1",
+                                                                            "comment": null,
                                                                             "branches": [
                                                                               {
                                                                                 "usi": "5g4f",
@@ -231,8 +232,7 @@
                                                                                     {
                                                                                       "usi": "4c4d",
                                                                                       "kind": "main",
-                                                                                      "note": "4四に歩を突いて、銀がこれ以上前に出られないようにします。",
-                                                                                      "aim": "相手の攻め駒の進路を塞いで、前に出られないようにしたい。",
+                                                                                      "note": "4四に歩を突いて、4五に歩の利きを付けます。4六の銀は4五へ進みにくくなります。",
                                                                                       "accepted": [
                                                                                         "3a3b",
                                                                                         "9c9d",
@@ -250,6 +250,7 @@
                                                                                       "child": {
                                                                                         "id": "n14",
                                                                                         "sfen": "l2gkgsnl/1rs4b1/p1npp2pp/2p2pp2/1p7/4PS3/PPPP1PPPP/2G2S1R1/LNB1KG1NL b - 1",
+                                                                                        "comment": null,
                                                                                         "branches": [
                                                                                           {
                                                                                             "usi": "3g3f",
@@ -262,8 +263,7 @@
                                                                                                 {
                                                                                                   "usi": "3a3b",
                                                                                                   "kind": "main",
-                                                                                                  "note": "銀を上がって3筋を補強します。",
-                                                                                                  "aim": "攻められている筋に守りの駒を足したい。",
+                                                                                                  "note": "右の銀を3二へ上げます。3筋の守りを固める狙いと考えられます。",
                                                                                                   "accepted": [
                                                                                                     "7b8c",
                                                                                                     "4a3b",
@@ -281,6 +281,7 @@
                                                                                                   "child": {
                                                                                                     "id": "n16",
                                                                                                     "sfen": "l2gkg1nl/1rs3sb1/p1npp2pp/2p2pp2/1p7/4PSP2/PPPP1P1PP/2G2S1R1/LNB1KG1NL b - 1",
+                                                                                                    "comment": null,
                                                                                                     "branches": [
                                                                                                       {
                                                                                                         "usi": "3f3e",
@@ -293,8 +294,7 @@
                                                                                                             {
                                                                                                               "usi": "3d3e",
                                                                                                               "kind": "main",
-                                                                                                              "note": "歩で取ります。ここで取らずにいると、3四に歩を成られます。",
-                                                                                                              "aim": "取れる駒は取って、相手に成り込ませないようにしたい。",
+                                                                                                              "note": "3四の歩で、3五の歩を取ります。取らないと、3五の歩に3四の歩を取られます。",
                                                                                                               "accepted": [
                                                                                                                 "7b8c",
                                                                                                                 "3d3e",
@@ -309,20 +309,21 @@
                                                                                                               "child": {
                                                                                                                 "id": "n18",
                                                                                                                 "sfen": "l2gkg1nl/1rs3sb1/p1npp2pp/2p2p3/1p4p2/4PS3/PPPP1P1PP/2G2S1R1/LNB1KG1NL b p 1",
+                                                                                                                "comment": null,
                                                                                                                 "branches": [
                                                                                                                   {
                                                                                                                     "usi": "2g2f",
                                                                                                                     "kind": "main",
-                                                                                                                    "note": "相手が飛車先を突きました。",
+                                                                                                                    "note": "相手が飛車の前の歩を2六へ突きました。",
                                                                                                                     "child": {
                                                                                                                       "id": "n19",
                                                                                                                       "sfen": "l2gkg1nl/1rs3sb1/p1npp2pp/2p2p3/1p4p2/4PS1P1/PPPP1P2P/2G2S1R1/LNB1KG1NL w p 1",
+                                                                                                                      "comment": null,
                                                                                                                       "branches": [
                                                                                                                         {
                                                                                                                           "usi": "7c6e",
                                                                                                                           "kind": "main",
-                                                                                                                          "note": "桂を6五へ跳ねて、相手陣に迫ります。",
-                                                                                                                          "aim": "攻め駒を前に出して、相手陣に迫りたい。",
+                                                                                                                          "note": "桂を6五へ跳ねます。7七の歩に利きが付きます。",
                                                                                                                           "accepted": [
                                                                                                                             "3b4c",
                                                                                                                             "8e8f",
@@ -336,20 +337,21 @@
                                                                                                                           "child": {
                                                                                                                             "id": "n20",
                                                                                                                             "sfen": "l2gkg1nl/1rs3sb1/p2pp2pp/2p2p3/1p1n2p2/4PS1P1/PPPP1P2P/2G2S1R1/LNB1KG1NL b p 1",
+                                                                                                                            "comment": null,
                                                                                                                             "branches": [
                                                                                                                               {
                                                                                                                                 "usi": "2f2e",
                                                                                                                                 "kind": "main",
-                                                                                                                                "note": "相手が飛車先を伸ばします。",
+                                                                                                                                "note": "相手が飛車の前の歩を2五へ進めました。",
                                                                                                                                 "child": {
                                                                                                                                   "id": "n21",
                                                                                                                                   "sfen": "l2gkg1nl/1rs3sb1/p2pp2pp/2p2p3/1p1n2pP1/4PS3/PPPP1P2P/2G2S1R1/LNB1KG1NL w p 1",
+                                                                                                                                  "comment": null,
                                                                                                                                   "branches": [
                                                                                                                                     {
                                                                                                                                       "usi": "8e8f",
                                                                                                                                       "kind": "main",
-                                                                                                                                      "note": "8筋の歩をぶつけます。ここから飛車先を破ります。",
-                                                                                                                                      "aim": "大駒の通り道を開けるため、歩をぶつけて戦いを起こしたい。",
+                                                                                                                                      "note": "8筋の歩を8六へ突きます。歩で取られたら、飛車で取り返せます。",
                                                                                                                                       "accepted": [
                                                                                                                                         "7d7e",
                                                                                                                                         "8e8f",
@@ -366,6 +368,7 @@
                                                                                                                                       "child": {
                                                                                                                                         "id": "n22",
                                                                                                                                         "sfen": "l2gkg1nl/1rs3sb1/p2pp2pp/2p2p3/3n2pP1/1p2PS3/PPPP1P2P/2G2S1R1/LNB1KG1NL b p 1",
+                                                                                                                                        "comment": null,
                                                                                                                                         "branches": [
                                                                                                                                           {
                                                                                                                                             "usi": "8g8f",
@@ -378,8 +381,7 @@
                                                                                                                                                 {
                                                                                                                                                   "usi": "8b8f",
                                                                                                                                                   "kind": "main",
-                                                                                                                                                  "note": "飛車で取り返して、8筋を突破しました。",
-                                                                                                                                                  "aim": "取り返しながら、大駒の利きを相手陣まで通したい。",
+                                                                                                                                                  "note": "飛車で8六の歩を取り返し、8筋に飛車を出します。",
                                                                                                                                                   "accepted": [
                                                                                                                                                     "8b8f"
                                                                                                                                                   ],
@@ -387,6 +389,7 @@
                                                                                                                                                   "child": {
                                                                                                                                                     "id": "n24",
                                                                                                                                                     "sfen": "l2gkg1nl/2s3sb1/p2pp2pp/2p2p3/3n2pP1/1r2PS3/P1PP1P2P/2G2S1R1/LNB1KG1NL b P2p 1",
+                                                                                                                                                    "comment": null,
                                                                                                                                                     "branches": [
                                                                                                                                                       {
                                                                                                                                                         "usi": "P*8h",
@@ -400,8 +403,7 @@
                                                                                                                                                             {
                                                                                                                                                               "usi": "7d7e",
                                                                                                                                                               "kind": "main",
-                                                                                                                                                              "note": "7筋からも攻めを足します。相手は玉が5九のままで、攻めの形も作れていません。",
-                                                                                                                                                              "aim": "攻め口をもう一つ増やして、相手に受けきれない形を作りたい。",
+                                                                                                                                                              "note": "7筋の歩を7五へ進めます。8筋の飛車に加えて、7筋からも攻める形にします。相手の玉は5九のままです。",
                                                                                                                                                               "accepted": [
                                                                                                                                                                 "7d7e",
                                                                                                                                                                 "8f5f",
@@ -411,7 +413,7 @@
                                                                                                                                                               "child": {
                                                                                                                                                                 "id": "n26",
                                                                                                                                                                 "sfen": "l2gkg1nl/2s3sb1/p2pp2pp/5p3/2pn2pP1/1r2PS3/P1PP1P2P/1PG2S1R1/LNB1KG1NL b 2p 1",
-                                                                                                                                                                "comment": "嬉野流を受け切りました。相手の斜め棒銀は4六で止まり、こちらは8筋を破って7筋からも攻めています。\n\n【ここからの方針】相手の玉は5九のままで、囲いがありません。8筋に走った飛車と7筋の歩、6五の桂で玉の近くを直接攻めます。守りに手を戻す必要はほとんどないので、攻め続けるのが正解です。",
+                                                                                                                                                                "comment": "嬉野流を受け切りました。相手の斜め棒銀は4六で止まり、こちらは8筋に飛車を出して7筋からも攻めています。\n\n【ここからの方針】相手の玉は5九のままで、囲いがありません。8筋の飛車、7筋の歩、6五の桂で玉の近くを攻めます。",
                                                                                                                                                                 "branches": []
                                                                                                                                                               }
                                                                                                                                                             }
@@ -422,7 +424,7 @@
                                                                                                                                                         "usi": "7h8h",
                                                                                                                                                         "kind": "deviation",
                                                                                                                                                         "note": "相手が金を8八へ寄せて受けてきました。",
-                                                                                                                                                        "punishNote": "8筋は一旦置いて、別の筋から攻め口を作ります。4五に歩を突いて銀を追い、飛車で8八の金を取って成ります。",
+                                                                                                                                                        "punishNote": "8筋は一旦置いて、別の筋から攻め口を作ります。4五に歩を突いて銀を攻め、飛車で8八の金を取って成ります。",
                                                                                                                                                         "child": {
                                                                                                                                                           "id": "d25",
                                                                                                                                                           "sfen": "l2gkg1nl/2s3sb1/p2pp2pp/2p2p3/3n2pP1/1r2PS3/P1PP1P2P/1G3S1R1/LNB1KG1NL w P2p 1",
@@ -430,7 +432,7 @@
                                                                                                                                                             {
                                                                                                                                                               "usi": "4d4e",
                                                                                                                                                               "kind": "main",
-                                                                                                                                                              "note": "4五に歩を突いて、相手の銀に当てます。",
+                                                                                                                                                              "note": "4五に歩を突いて、4六の銀を攻めます。",
                                                                                                                                                               "child": {
                                                                                                                                                                 "id": "d25_1",
                                                                                                                                                                 "sfen": "l2gkg1nl/2s3sb1/p2pp2pp/2p6/3n1ppP1/1r2PS3/P1PP1P2P/1G3S1R1/LNB1KG1NL b P2p 1",
@@ -446,7 +448,7 @@
                                                                                                                                                                         {
                                                                                                                                                                           "usi": "8f8h+",
                                                                                                                                                                           "kind": "main",
-                                                                                                                                                                          "note": "飛車で、8八の金を取って成ります。",
+                                                                                                                                                                          "note": "飛車で、8八の金を取って成ります(成った飛車を竜と呼びます)。",
                                                                                                                                                                           "child": {
                                                                                                                                                                             "id": "d25_3",
                                                                                                                                                                             "sfen": "l2gkg1nl/2s3sb1/p2pp2pp/2p6/3n1pSP1/4P4/P1PP1P2P/1+r3S1R1/LNB1KG1NL b 2Pg2p 1",
