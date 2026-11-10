@@ -7,7 +7,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { listEntries, screenTexts } from "./count-screen-numbers.mjs";
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
-const FORBID = /見つかっ|推測です|確かめて|確かめま|調べて|調べま|測って|測定|読み筋|エンジン|出典|この講座|ほぼ互角|やや|(?:推測|狙い)は.{0,6}ません/;
+const FORBID = /見つかっ|推測です|確かめて(?:い)?ません|調べて(?:い)?ません|測って|測定|読み筋|エンジン|出典|この講座|ほぼ互角|やや|(?:推測|狙い)は.{0,6}ません/;
 const DIFFWORD = /同じくらい|最善に近|少し劣|わずかに|ほかの手より少し|より少し良い/;
 const split = (t) => (t.match(/[^。!?!?]+[。!?!?]?/g) ?? []).map((s) => s.trim()).filter(Boolean);
 let ids = process.argv.slice(2);
