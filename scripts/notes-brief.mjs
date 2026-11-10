@@ -1,5 +1,5 @@
 // 解説の直し用の一覧を作る(読むだけ)。章の全ての手を手数順に、今の文と、自分の手には読み筋(notes-pv.cjs の出力)を添えて出す。
-// 使い方: node scripts/notes-brief.mjs <章ID> --pv <pv-all.json>
+// 使い方: node scripts/notes-brief.mjs <章ID> --pv <pv.json[,pv2.json]>
 // 読み筋の値は「自分から見た最善との差」(大きいほど劣る)。画面には数字を書かない。3位以下は探索が浅いことがあり、順位と差は目安。
 import fs from "node:fs";
 import path from "node:path";
@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const id = process.argv[2];
 const pvPath = process.argv[process.argv.indexOf("--pv") + 1];
-const pv = new Map(JSON.parse(fs.readFileSync(pvPath, "utf8")).map((r) => [r.id, r]));
+const pv = new Map(pvPath.split(",").flatMap((f) => { try { return JSON.parse(fs.readFileSync(f, "utf8")); } catch { return []; } }).map((r) => [r.id, r]));
 const c = JSON.parse(fs.readFileSync(path.join(root, "src/data/joseki", id + ".json"), "utf8"));
 const sign = c.mySide === "sente" ? 1 : -1; // sente 値 → 自分から見た値
 const me = c.mySide === "sente" ? "b" : "w";
