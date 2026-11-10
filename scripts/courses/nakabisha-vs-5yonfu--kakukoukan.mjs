@@ -9,10 +9,7 @@
 import shoteSente from "./nakabisha--shote-sente.mjs";
 
 // 第1章の1〜3手目の解説。第1章の変化の枝(1手目の△4五角の実演など)は持ち込まない(コピーは1・3手目の文と局面の解説だけ)。
-const sharedNotes = shoteSente.notes.slice(0, 3).map(([note, comment], i) =>
-  i === 0 && comment
-    ? [note, "ここが先手中飛車の第一歩です。初手を▲7六歩にして角道を開けてから飛車を振ると、角交換から△4五角と打ち込まれて馬を作られ、先手が苦しくなります。この順番ならそれが起きません。", null, null, "消した文(comment): ここが先手中飛車の第一歩です。初手を▲7六歩にして角道を開けてから飛車を振ると、角交換から△4五角と打ち込まれて馬を作られます(実測で先手-52)。この順番ならそれが起きません。"]
-    : comment ? [note, comment] : [note]);
+const sharedNotes = shoteSente.notes.slice(0, 3).map(([note, comment]) => (comment ? [note, comment] : [note]));
 
 export default {
   id: "nakabisha-vs-5yonfu--kakukoukan",
