@@ -55,7 +55,7 @@ function features(sfen, usiList) {
   const cnt = { mine: 0, other: 0 };
   for (let i = 0; i < board.length - 1; i++) if (board[i] === "+" && /[rbRB]/.test(board[i + 1])) {
     const isBlack = board[i + 1] === board[i + 1].toUpperCase();
-    (isBlack === mine ? cnt.mine : cnt.other)++;
+    if (isBlack === mine) cnt.mine++; else cnt.other++;
   }
   res.endHorseDragon = cnt;
   res.endSfen = p.sfen;

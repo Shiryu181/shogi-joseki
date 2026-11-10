@@ -241,7 +241,7 @@ function branchOpponentPositions(id) {
     const loss = root1.list[0].cp + c1.list[0].cp; // 根の最善 - その手の評価(ミスする側から見て)
     if (loss < 300) { const r0 = { label, sfen, usi, jp: jp(sfen, usi), rootBestJp: jp(sfen, root1.list[0].usi), loss, skipped: "損300未満" }; fs.appendFileSync(path.join(out, "alt-punish-confirm.jsonl"), JSON.stringify(r0) + "\n"); console.error(JSON.stringify(r0)); eng.close(); setTimeout(() => process.exit(0), 700); return; }
     // 20手指し継ぎ(両者最善、1手200万ノード)。咎める側から見た評価を記録
-    let cur = child; const trace = []; let moves = [];
+    let cur = child; const trace = []; let moves = []; const movesUsi = [usi];
     for (let i = 1; i <= 20; i++) {
       const r = await search(cur, 1, 2000000);
       if (!r.list.length) break;
@@ -249,10 +249,11 @@ function branchOpponentPositions(id) {
       const cpMover = r.list[0].cp;
       const cpPunisher = mover === turn ? -cpMover : cpMover; // 咎める側から見た評価
       trace.push(cpPunisher);
-      const mv = r.list[0].usi; moves.push(jp(cur, mv));
+      const mv = r.list[0].usi; moves.push(jp(cur, mv)); movesUsi.push(mv);
       const nx = after(cur, mv); if (!nx) break; cur = nx;
     }
     const rec = { label, sfen, usi, jp: jp(sfen, usi), rootBest: root1.list[0].usi, rootBestJp: jp(sfen, root1.list[0].usi), rootCp: root1.list[0].cp, childCp: -c1.list[0].cp, loss, refutation: jp(child, c1.list[0].usi), afterLine: moves, tracePunisher: trace, final: trace[trace.length - 1], baselinePunisher: -root1.list[0].cp };
+    try { const ft = features(sfen, movesUsi.filter(Boolean)); rec.feat = { matGain: (ft.mat[ft.mat.length - 1] - ft.mat0) / 2, made: ft.made, checkRun: ft.checkRun, endHorseDragon: ft.endHorseDragon, endSfen: ft.endSfen, movesUsi: movesUsi.filter(Boolean) }; } catch (e) { rec.featError = String(e); }
     fs.appendFileSync(path.join(out, "alt-punish-confirm.jsonl"), JSON.stringify(rec) + "\n");
     console.error(JSON.stringify(rec));
   }
