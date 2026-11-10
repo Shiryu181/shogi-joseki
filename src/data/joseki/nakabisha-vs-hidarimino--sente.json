@@ -460,7 +460,7 @@
                                                                                                                                                         "child": {
                                                                                                                                                           "id": "n25",
                                                                                                                                                           "sfen": "ln3g1nl/1r1s2sk1/p1pppgbpp/5pp2/1p2P4/2P2SP2/PPBP1P1PP/6RK1/LN1G1GSNL w - 1",
-                                                                                                                                                          "comment": "5八の飛車がいなくなったので、5五の歩の守りは、4六の銀と7七の角の2枚になりました。形勢は後手が良い形です。",
+                                                                                                                                                          "comment": "5八の飛車がいなくなったので、5五の歩の守りは、4六の銀と7七の角の2枚になりました。形勢は後手が少し良い形です。",
                                                                                                                                                           "branches": [
                                                                                                                                                             {
                                                                                                                                                               "usi": "3c4b",
@@ -727,10 +727,11 @@
                                                                                                                                                 {
                                                                                                                                                   "usi": "3b2c",
                                                                                                                                                   "kind": "main",
-                                                                                                                                                  "note": "相手は3二の銀を2三へ上げます。最善で、次善の△8四飛よりはっきり良い、唯一の手です。",
+                                                                                                                                                  "note": "相手は3二の銀を2三へ上げます。",
                                                                                                                                                   "child": {
                                                                                                                                                     "id": "d22_2",
                                                                                                                                                     "sfen": "ln3g1nl/1r1sg2k1/p1ppppbsp/6pp1/1p2P4/2P2SP2/PPBP1P1PP/4R2K1/LN1G1GSNL b - 1",
+                                                                                                                                                    "comment": "最善で、次善の△8四飛より少し良い手です。",
                                                                                                                                                     "branches": [
                                                                                                                                                       {
                                                                                                                                                         "usi": "5h3h",

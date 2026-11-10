@@ -56,6 +56,7 @@ const KNOWN_BOOK_OVER_ENGINE = new Set([
   "sankenbisha-ishida--deashi 2手目 変化5c5d", // ▲6六歩(同上。△5四歩の変化の中、決定4)
   "sankenbisha-ishida--hidarimino 21手目", // ▲7七角(▲7七角型を覚える章の題材の手。新エンジン2段目で最善▲1六歩との差108、2026-11-09。docs/fix-proposal-2.md 決定28)
   "nakabisha-vs-8yonfu--kakukoukan 9手目", // ▲6八玉(玉を左へ運ぶ章の骨格の手。新エンジン1段目で最善▲1六歩との差199、2026-11-09。決定12 案C)
+  "nakabisha-vs-8yonfu--kakukoukan 8手目 変化3a4b", // 11手目 ▲6八玉(△4二銀の変化の枝の中。玉を左へ運ぶ章の骨格の手。D(置換表を毎回消す測り)で最善▲8六歩との差155、2026-11-10。docs/fix-proposal-3.md 決定1 案A)
   "sankenbisha-gote--aisanken 4手目", // △4四歩(三間飛車を指すための手。新エンジン2段目で最善△5四歩との差103、2026-11-09。docs/fix-proposal-2.md 決定1)
   "sankenbisha-gote--aisanken 6手目", // △3二飛(先手の石田流に三間で振る手。最善△3二銀・△6二銀との差102〜103で100をわずかに超える。戦法を選ぶ手として例外、深さ固定d16/d18、2026-10-27)
 ]);

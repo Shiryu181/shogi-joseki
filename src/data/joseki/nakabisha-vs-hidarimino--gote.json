@@ -157,7 +157,7 @@
                                                         "child": {
                                                           "id": "n9",
                                                           "sfen": "lnsgkgsnl/4r4/pppp1pbpp/4p1p2/7P1/2P6/PP1PPPP1P/1B2GS1R1/LNSGK2NL w - 1",
-                                                          "comment": "角交換のほうがはっきり良い手ですが、▲5八金右は穴熊や左美濃のように玉を固める組み方を選ぶ手です。",
+                                                          "comment": "角交換のほうが少し良い手ですが、▲5八金右は穴熊や左美濃のように玉を固める組み方を選ぶ手です。",
                                                           "branches": [
                                                             {
                                                               "usi": "3a4b",
@@ -268,7 +268,7 @@
                                                                                             "child": {
                                                                                               "id": "n15",
                                                                                               "sfen": "lnsg1g1nl/2k1rs3/pppp1pbpp/4p1p2/7P1/2P6/PPBPPPP1P/2K1GS1R1/LNSG3NL w - 1",
-                                                                                              "comment": null,
+                                                                                              "comment": "より良い手(▲3三角成など)もありますが、これは玉を囲うための手です。",
                                                                                               "branches": [
                                                                                                 {
                                                                                                   "usi": "7b8b",
@@ -345,7 +345,7 @@
                                                                                                                     "child": {
                                                                                                                       "id": "n19",
                                                                                                                       "sfen": "lnsg1g1nl/1k2rs3/pppp1pbpp/6p2/4p2P1/2P6/PPBPPPP1P/1KS1GS1R1/LN1G3NL w - 1",
-                                                                                                                      "comment": "先手の囲いは、玉が8八、銀が7八、金が6九と5八に並びました。左美濃の形です。7七の角はそのままです。形勢は先手が少し良い形です。",
+                                                                                                                      "comment": "先手の囲いは、玉が8八、銀が7八、金が6九と5八に並びました。左美濃の形です。7七の角はそのままです。形勢は互角です。",
                                                                                                                       "branches": [
                                                                                                                         {
                                                                                                                           "usi": "4b5c",
