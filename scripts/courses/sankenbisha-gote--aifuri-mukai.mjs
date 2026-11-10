@@ -4,24 +4,7 @@
 import deashi from "./sankenbisha-gote--deashi.mjs";
 
 // 第1章の1〜2手目の解説。変化の枝(1手目の▲2六歩)は持ち込まない。
-
-// 解説の直し(2026-11-10): 第1章(deashi)から借りる解説のうち、この章で書き直した分。元の文は evidence(画面に出ない検証メモ)に残す。
-const NOTE_FIX = new Map([
-  ["角道を開けます。三間飛車でも、まず△3四歩と角道を開けて、そのあとで△4四歩と閉じる順番にします。",
-   "角道を開けます(△3四歩)。先に△4四歩と閉じず、開けてから閉じる順番にします。この順番がよい理由は調べていません。"],
-]);
-const COMMENT_FIX = new Map([
-  ["先に△4四歩と突くと、先手が良い形勢になりました。なぜそこまで差がつくかは、この講座では調べていません。分かっているのは『開けてから閉じる順番がよい』というところまでです。",
-   "先に△4四歩と突くと、先手が良い形勢になります。なぜそこまで差がつくかは調べていません。分かっているのは『開けてから閉じる順番がよい』というところまでです。"],
-]);
-const applyFix = ([note, comment], i, last) => {
-  const n2 = NOTE_FIX.get(note) ?? note;
-  const c2 = comment ? (COMMENT_FIX.get(comment) ?? comment) : comment;
-  const ev = [...(n2 !== note ? ["消した文(note): " + note] : []), ...(c2 !== comment ? ["消した文(comment): " + comment] : [])];
-  const head = last ? [n2] : [n2, c2];
-  return ev.length ? [n2, last ? null : (c2 ?? null), null, null, ev] : head;
-};
-const sharedNotes = deashi.notes.slice(0, 2).map((n, i) => applyFix(n, i, false));
+const sharedNotes = deashi.notes.slice(0, 2).map(([note, comment, , , ev]) => [note, comment ?? null, null, null, ev]);
 
 export default {
   id: "sankenbisha-gote--aifuri-mukai",
