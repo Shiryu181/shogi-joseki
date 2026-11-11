@@ -224,6 +224,29 @@ function branchOpponentPositions(id) {
       cur = after(cur, r.list[0].usi);
       if (!cur) break;
     }
+  } else if (mode === "line") {
+    // 咎めの枝の手順の検査: line <sfen> <usi...>。1手目(ミスの手)は測らず、2手目以降を各局面で500万ノード・MultiPV 8 で測り、
+    // 各手の最善との差と、学ぶ側(2手目、4手目…)では差100以内の別解を出す。差60以上は4000万ノードで測り直す。
+    const [sfen0, ...us] = process.argv.slice(3);
+    let cur = after(sfen0, us[0]); if (!cur) throw new Error("非合法: " + us[0]);
+    const res = [];
+    for (let i = 1; i < us.length; i++) {
+      const student = i % 2 === 1;
+      let r = await search(cur, 8, 5000000); let nodes = "5M";
+      const lossOf = (rr) => { const h = rr.list.find((x) => x.usi === us[i]); return h ? rr.list[0].cp - h.cp : null; };
+      let l = lossOf(r);
+      if (l === null || l >= 60) { r = await search(cur, 8, 40000000); nodes = "40M"; l = lossOf(r); }
+      const best = r.list[0].cp;
+      let viaChild = false;
+      if (l === null) { // 上位8手に入らない手は、その手を指したあとの局面を同じノード数で測って損を出す
+        const rc = await search(after(cur, us[i]), 1, nodes === "40M" ? 40000000 : 5000000);
+        l = best + rc.list[0].cp; viaChild = true;
+      }
+      const alts = r.list.filter((x) => x.usi !== us[i] && best - x.cp <= 100).map((x) => `${jp(cur, x.usi)}(${best - x.cp})`);
+      const row = { i: i + 1, who: student ? "学ぶ側" : "相手", usi: us[i], jp: jp(cur, us[i]), loss: l, viaChild, nodes, best: jp(cur, r.list[0].usi), alts };
+      res.push(row); console.error(JSON.stringify(row));
+      cur = after(cur, us[i]); if (!cur) throw new Error("非合法: " + us[i]);
+    }
   } else if (mode === "measure") {
     const [sfen, ...usis] = process.argv.slice(3);
     const r = await search(sfen, 8, 40000000);
