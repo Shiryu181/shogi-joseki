@@ -465,6 +465,72 @@
                                                                               }
                                                                             ]
                                                                           }
+                                                                        },
+                                                                        {
+                                                                          "usi": "3b3c",
+                                                                          "kind": "deviation",
+                                                                          "note": "相手は銀を6二に上げずに、3二の銀を3三へ上げました。",
+                                                                          "punishNote": "銀を3三に上げると、4三の歩を守る駒がなくなります。角で4三の歩を取って成り込み、馬を作れます。馬は相手の駒に取られません。",
+                                                                          "child": {
+                                                                            "id": "d12",
+                                                                            "sfen": "lnsgkg1nl/1r7/p1ppppspp/1p4p2/2P2b3/2B6/PP1PPPPPP/1SR3S2/LN1GKG1NL b - 1",
+                                                                            "branches": [
+                                                                              {
+                                                                                "usi": "7f4c+",
+                                                                                "kind": "main",
+                                                                                "note": "角で4三の歩を取って成り込み、馬を作ります。取られません。",
+                                                                                "child": {
+                                                                                  "id": "d12_1",
+                                                                                  "sfen": "lnsgkg1nl/1r7/p1ppp+Bspp/1p4p2/2P2b3/9/PP1PPPPPP/1SR3S2/LN1GKG1NL w P 1",
+                                                                                  "branches": [
+                                                                                    {
+                                                                                      "usi": "8b2b",
+                                                                                      "kind": "main",
+                                                                                      "note": "相手は飛車を2二に動かしました。",
+                                                                                      "child": {
+                                                                                        "id": "d12_2",
+                                                                                        "sfen": "lnsgkg1nl/7r1/p1ppp+Bspp/1p4p2/2P2b3/9/PP1PPPPPP/1SR3S2/LN1GKG1NL b P 1",
+                                                                                        "branches": [
+                                                                                          {
+                                                                                            "usi": "5i6h",
+                                                                                            "kind": "main",
+                                                                                            "note": "玉を6八に寄せます。守りの形を整える手と考えられます。",
+                                                                                            "child": {
+                                                                                              "id": "d12_3",
+                                                                                              "sfen": "lnsgkg1nl/7r1/p1ppp+Bspp/1p4p2/2P2b3/9/PP1PPPPPP/1SRK2S2/LN1G1G1NL w P 1",
+                                                                                              "branches": [
+                                                                                                {
+                                                                                                  "usi": "4a5b",
+                                                                                                  "kind": "main",
+                                                                                                  "note": "相手は金を5二に寄せました。",
+                                                                                                  "child": {
+                                                                                                    "id": "d12_4",
+                                                                                                    "sfen": "lnsgk2nl/4g2r1/p1ppp+Bspp/1p4p2/2P2b3/9/PP1PPPPPP/1SRK2S2/LN1G1G1NL b P 1",
+                                                                                                    "branches": [
+                                                                                                      {
+                                                                                                        "usi": "4c6e",
+                                                                                                        "kind": "main",
+                                                                                                        "note": "馬を6五に引きます。",
+                                                                                                        "child": {
+                                                                                                          "id": "d12_5",
+                                                                                                          "sfen": "lnsgk2nl/4g2r1/p1ppp1spp/1p4p2/2P+B1b3/9/PP1PPPPPP/1SRK2S2/LN1G1G1NL w P 1",
+                                                                                                          "branches": []
+                                                                                                        }
+                                                                                                      }
+                                                                                                    ]
+                                                                                                  }
+                                                                                                }
+                                                                                              ]
+                                                                                            }
+                                                                                          }
+                                                                                        ]
+                                                                                      }
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              }
+                                                                            ]
+                                                                          }
                                                                         }
                                                                       ]
                                                                     }
