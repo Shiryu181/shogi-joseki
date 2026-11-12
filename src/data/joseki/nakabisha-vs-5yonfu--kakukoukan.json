@@ -451,6 +451,51 @@
                                                                                                                               }
                                                                                                                             ]
                                                                                                                           }
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                          "usi": "8b6b",
+                                                                                                                          "kind": "deviation",
+                                                                                                                          "note": "相手は飛車を6二に動かしました。",
+                                                                                                                          "punishNote": "飛車を6二に動かすと、8一の桂が取られます。馬で桂を取り、続けて9一の香も取れます。",
+                                                                                                                          "child": {
+                                                                                                                            "id": "d20",
+                                                                                                                            "sfen": "lnsg1gknl/3r3s1/ppp+B3pp/5pp2/4p4/2P6/PP1P1PPPP/4R4/LNSGKGSNL b Pbp 1",
+                                                                                                                            "branches": [
+                                                                                                                              {
+                                                                                                                                "usi": "6c8a",
+                                                                                                                                "kind": "main",
+                                                                                                                                "note": "馬で8一の桂を取ります。",
+                                                                                                                                "child": {
+                                                                                                                                  "id": "d20_1",
+                                                                                                                                  "sfen": "l+Bsg1gknl/3r3s1/ppp4pp/5pp2/4p4/2P6/PP1P1PPPP/4R4/LNSGKGSNL w NPbp 1",
+                                                                                                                                  "branches": [
+                                                                                                                                    {
+                                                                                                                                      "usi": "7a7b",
+                                                                                                                                      "kind": "main",
+                                                                                                                                      "note": "相手は銀を7二に上げました。",
+                                                                                                                                      "child": {
+                                                                                                                                        "id": "d20_2",
+                                                                                                                                        "sfen": "l+B1g1gknl/2sr3s1/ppp4pp/5pp2/4p4/2P6/PP1P1PPPP/4R4/LNSGKGSNL b NPbp 1",
+                                                                                                                                        "branches": [
+                                                                                                                                          {
+                                                                                                                                            "usi": "8a9a",
+                                                                                                                                            "kind": "main",
+                                                                                                                                            "note": "馬で9一の香を取ります。",
+                                                                                                                                            "child": {
+                                                                                                                                              "id": "d20_3",
+                                                                                                                                              "sfen": "+B2g1gknl/2sr3s1/ppp4pp/5pp2/4p4/2P6/PP1P1PPPP/4R4/LNSGKGSNL w NLPbp 1",
+                                                                                                                                              "comment": "桂と香を取りました。",
+                                                                                                                                              "branches": []
+                                                                                                                                            }
+                                                                                                                                          }
+                                                                                                                                        ]
+                                                                                                                                      }
+                                                                                                                                    }
+                                                                                                                                  ]
+                                                                                                                                }
+                                                                                                                              }
+                                                                                                                            ]
+                                                                                                                          }
                                                                                                                         }
                                                                                                                       ]
                                                                                                                     }
@@ -579,6 +624,119 @@
                                                                                                           "id": "d10_7",
                                                                                                           "sfen": "lnsg1g1nl/1r5s1/pppp2kpp/4Bpp2/4p4/2P6/PP1P1PPPP/4R4/LNSGKGSNL w bp 1",
                                                                                                           "comment": "本線と比べて、後手の玉が3三にいるぶん先手の良さが小さく、互角の形です。",
+                                                                                                          "branches": [
+                                                                                                            {
+                                                                                                              "usi": "2c2d",
+                                                                                                              "kind": "deviation",
+                                                                                                              "note": "相手は歩を2四に突きました。",
+                                                                                                              "punishNote": "歩を2四に突くと、2一の桂が角で取られます。成り込んで馬を作れて、馬は相手の駒に取られません。",
+                                                                                                              "child": {
+                                                                                                                "id": "d10_7x1",
+                                                                                                                "sfen": "lnsg1g1nl/1r5s1/pppp2k1p/4Bppp1/4p4/2P6/PP1P1PPPP/4R4/LNSGKGSNL b bp 1",
+                                                                                                                "branches": [
+                                                                                                                  {
+                                                                                                                    "usi": "5d2a+",
+                                                                                                                    "kind": "main",
+                                                                                                                    "note": "角で2一の桂を取って、成ります。馬は取られません。",
+                                                                                                                    "child": {
+                                                                                                                      "id": "d10_7x1_1",
+                                                                                                                      "sfen": "lnsg1g1+Bl/1r5s1/pppp2k1p/5ppp1/4p4/2P6/PP1P1PPPP/4R4/LNSGKGSNL w Nbp 1",
+                                                                                                                      "branches": [
+                                                                                                                        {
+                                                                                                                          "usi": "8b5b",
+                                                                                                                          "kind": "main",
+                                                                                                                          "note": "相手は飛車を5二に動かしました。",
+                                                                                                                          "child": {
+                                                                                                                            "id": "d10_7x1_2",
+                                                                                                                            "sfen": "lnsg1g1+Bl/4r2s1/pppp2k1p/5ppp1/4p4/2P6/PP1P1PPPP/4R4/LNSGKGSNL b Nbp 1",
+                                                                                                                            "branches": [
+                                                                                                                              {
+                                                                                                                                "usi": "2a6e",
+                                                                                                                                "kind": "main",
+                                                                                                                                "note": "馬を6五に引きます。",
+                                                                                                                                "child": {
+                                                                                                                                  "id": "d10_7x1_3",
+                                                                                                                                  "sfen": "lnsg1g2l/4r2s1/pppp2k1p/5ppp1/3+Bp4/2P6/PP1P1PPPP/4R4/LNSGKGSNL w Nbp 1",
+                                                                                                                                  "comment": "桂を取って、馬が残りました。",
+                                                                                                                                  "branches": []
+                                                                                                                                }
+                                                                                                                              }
+                                                                                                                            ]
+                                                                                                                          }
+                                                                                                                        }
+                                                                                                                      ]
+                                                                                                                    }
+                                                                                                                  }
+                                                                                                                ]
+                                                                                                              }
+                                                                                                            }
+                                                                                                          ]
+                                                                                                        }
+                                                                                                      }
+                                                                                                    ]
+                                                                                                  }
+                                                                                                }
+                                                                                              ]
+                                                                                            }
+                                                                                          }
+                                                                                        ]
+                                                                                      }
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              }
+                                                                            ]
+                                                                          }
+                                                                        },
+                                                                        {
+                                                                          "usi": "8b5b",
+                                                                          "kind": "deviation",
+                                                                          "note": "相手は飛車を5二に動かして、5三の馬に当てました。",
+                                                                          "punishNote": "飛車を5二に動かすと、馬で飛車を取られます。金で取り返されても、取った飛車を打ち込んで、桂を取りながら龍を作れます。龍は相手の駒に取られません。",
+                                                                          "child": {
+                                                                            "id": "d10_1x1",
+                                                                            "sfen": "lnsg1g1nl/4r2s1/pppp+Bpkpp/4p1p2/9/2P1P4/PP1P1PPPP/4R4/LNSGKGSNL b b 1",
+                                                                            "branches": [
+                                                                              {
+                                                                                "usi": "5c5b",
+                                                                                "kind": "main",
+                                                                                "note": "馬で5二の飛車を取ります。",
+                                                                                "child": {
+                                                                                  "id": "d10_1x1_1",
+                                                                                  "sfen": "lnsg1g1nl/4+B2s1/pppp1pkpp/4p1p2/9/2P1P4/PP1P1PPPP/4R4/LNSGKGSNL w Rb 1",
+                                                                                  "branches": [
+                                                                                    {
+                                                                                      "usi": "4a5b",
+                                                                                      "kind": "main",
+                                                                                      "note": "相手は金で馬を取り返しました。",
+                                                                                      "child": {
+                                                                                        "id": "d10_1x1_2",
+                                                                                        "sfen": "lnsg3nl/4g2s1/pppp1pkpp/4p1p2/9/2P1P4/PP1P1PPPP/4R4/LNSGKGSNL b R2b 1",
+                                                                                        "branches": [
+                                                                                          {
+                                                                                            "usi": "R*4a",
+                                                                                            "kind": "main",
+                                                                                            "note": "取った飛車を4一に打ちます。2一の桂を狙います。",
+                                                                                            "child": {
+                                                                                              "id": "d10_1x1_3",
+                                                                                              "sfen": "lnsg1R1nl/4g2s1/pppp1pkpp/4p1p2/9/2P1P4/PP1P1PPPP/4R4/LNSGKGSNL w 2b 1",
+                                                                                              "branches": [
+                                                                                                {
+                                                                                                  "usi": "7a7b",
+                                                                                                  "kind": "main",
+                                                                                                  "note": "相手は銀を7二に上げました。",
+                                                                                                  "child": {
+                                                                                                    "id": "d10_1x1_4",
+                                                                                                    "sfen": "ln1g1R1nl/2s1g2s1/pppp1pkpp/4p1p2/9/2P1P4/PP1P1PPPP/4R4/LNSGKGSNL b 2b 1",
+                                                                                                    "branches": [
+                                                                                                      {
+                                                                                                        "usi": "4a2a+",
+                                                                                                        "kind": "main",
+                                                                                                        "note": "飛車で2一の桂を取って、龍を作ります。龍は取られません。",
+                                                                                                        "child": {
+                                                                                                          "id": "d10_1x1_5",
+                                                                                                          "sfen": "ln1g3+Rl/2s1g2s1/pppp1pkpp/4p1p2/9/2P1P4/PP1P1PPPP/4R4/LNSGKGSNL w N2b 1",
+                                                                                                          "comment": "飛車を取り、桂も取って、龍ができました。",
                                                                                                           "branches": []
                                                                                                         }
                                                                                                       }

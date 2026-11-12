@@ -247,6 +247,7 @@
                                                                                       "child": {
                                                                                         "id": "n14",
                                                                                         "sfen": "ln3gsnl/1r1sg1kb1/p1pppp1pp/6p2/1p7/2P1P4/PPBP1PPPP/3SR1K2/LN1G1GSNL b - 1",
+                                                                                        "comment": null,
                                                                                         "branches": [
                                                                                           {
                                                                                             "usi": "3h2h",
@@ -830,6 +831,95 @@
                                                                                                                                       }
                                                                                                                                     }
                                                                                                                                   ]
+                                                                                                                                }
+                                                                                                                              }
+                                                                                                                            ]
+                                                                                                                          }
+                                                                                                                        }
+                                                                                                                      ]
+                                                                                                                    }
+                                                                                                                  }
+                                                                                                                ]
+                                                                                                              }
+                                                                                                            }
+                                                                                                          ]
+                                                                                                        }
+                                                                                                      }
+                                                                                                    ]
+                                                                                                  }
+                                                                                                }
+                                                                                              ]
+                                                                                            }
+                                                                                          }
+                                                                                        ]
+                                                                                      }
+                                                                                    },
+                                                                                    {
+                                                                                      "usi": "7c7d",
+                                                                                      "kind": "deviation",
+                                                                                      "note": "相手は7四に歩を突きました。",
+                                                                                      "punishNote": "7四に歩を突いても、先手が先に角を取って成り込めます。角を打ち直して銀を取り、馬を作って桂も取れます。",
+                                                                                      "child": {
+                                                                                        "id": "d14",
+                                                                                        "sfen": "ln3gsnl/1r1sgk1b1/p2ppp1pp/2p3p2/1p7/2P1P4/PPBP1PPPP/3SR1K2/LN1G1GSNL b - 1",
+                                                                                        "branches": [
+                                                                                          {
+                                                                                            "usi": "7g2b+",
+                                                                                            "kind": "main",
+                                                                                            "note": "角で相手の角を取って、成ります。",
+                                                                                            "child": {
+                                                                                              "id": "d14_1",
+                                                                                              "sfen": "ln3gsnl/1r1sgk1+B1/p2ppp1pp/2p3p2/1p7/2P1P4/PP1P1PPPP/3SR1K2/LN1G1GSNL w B 1",
+                                                                                              "branches": [
+                                                                                                {
+                                                                                                  "usi": "3a2b",
+                                                                                                  "kind": "main",
+                                                                                                  "note": "相手は銀で取り返しました。",
+                                                                                                  "child": {
+                                                                                                    "id": "d14_2",
+                                                                                                    "sfen": "ln3g1nl/1r1sgk1s1/p2ppp1pp/2p3p2/1p7/2P1P4/PP1P1PPPP/3SR1K2/LN1G1GSNL b Bb 1",
+                                                                                                    "branches": [
+                                                                                                      {
+                                                                                                        "usi": "B*5e",
+                                                                                                        "kind": "main",
+                                                                                                        "note": "持ち駒の角を5五に打って、2二の銀を狙います。",
+                                                                                                        "child": {
+                                                                                                          "id": "d14_3",
+                                                                                                          "sfen": "ln3g1nl/1r1sgk1s1/p2ppp1pp/2p3p2/1p2B4/2P1P4/PP1P1PPPP/3SR1K2/LN1G1GSNL w b 1",
+                                                                                                          "branches": [
+                                                                                                            {
+                                                                                                              "usi": "8a7c",
+                                                                                                              "kind": "main",
+                                                                                                              "note": "相手は桂を7三に跳ねました。",
+                                                                                                              "child": {
+                                                                                                                "id": "d14_4",
+                                                                                                                "sfen": "l4g1nl/1r1sgk1s1/p1nppp1pp/2p3p2/1p2B4/2P1P4/PP1P1PPPP/3SR1K2/LN1G1GSNL b b 1",
+                                                                                                                "branches": [
+                                                                                                                  {
+                                                                                                                    "usi": "5e2b+",
+                                                                                                                    "kind": "main",
+                                                                                                                    "note": "角で2二の銀を取って、馬を作ります。",
+                                                                                                                    "child": {
+                                                                                                                      "id": "d14_5",
+                                                                                                                      "sfen": "l4g1nl/1r1sgk1+B1/p1nppp1pp/2p3p2/1p7/2P1P4/PP1P1PPPP/3SR1K2/LN1G1GSNL w Sb 1",
+                                                                                                                      "branches": [
+                                                                                                                        {
+                                                                                                                          "usi": "8e8f",
+                                                                                                                          "kind": "main",
+                                                                                                                          "note": "相手は歩を8六に突きました。",
+                                                                                                                          "child": {
+                                                                                                                            "id": "d14_6",
+                                                                                                                            "sfen": "l4g1nl/1r1sgk1+B1/p1nppp1pp/2p3p2/9/1pP1P4/PP1P1PPPP/3SR1K2/LN1G1GSNL b Sb 1",
+                                                                                                                            "branches": [
+                                                                                                                              {
+                                                                                                                                "usi": "2b2a",
+                                                                                                                                "kind": "main",
+                                                                                                                                "note": "馬で2一の桂を取ります。馬は取られません。",
+                                                                                                                                "child": {
+                                                                                                                                  "id": "d14_7",
+                                                                                                                                  "sfen": "l4g1+Bl/1r1sgk3/p1nppp1pp/2p3p2/9/1pP1P4/PP1P1PPPP/3SR1K2/LN1G1GSNL w SNb 1",
+                                                                                                                                  "comment": "銀と桂を取って、馬が残りました。",
+                                                                                                                                  "branches": []
                                                                                                                                 }
                                                                                                                               }
                                                                                                                             ]

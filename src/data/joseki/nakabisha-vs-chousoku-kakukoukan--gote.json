@@ -510,6 +510,73 @@
                                                                                                                                     }
                                                                                                                                   ]
                                                                                                                                 }
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                "usi": "2d2f",
+                                                                                                                                "kind": "deviation",
+                                                                                                                                "note": "相手は飛車を2六に動かしました。",
+                                                                                                                                "punishNote": "飛車を2六に動かしても、後手は角を4四に打って、9九の香を取りながら成り込めます。馬は相手の駒に取られません。",
+                                                                                                                                "child": {
+                                                                                                                                  "id": "d21",
+                                                                                                                                  "sfen": "lnsg2s1l/3kr1g2/1ppp1pnpp/p3p1p2/9/2P4R1/PP1PPPP1P/2K2S3/LNSGG2NL w BPb 1",
+                                                                                                                                  "branches": [
+                                                                                                                                    {
+                                                                                                                                      "usi": "B*4d",
+                                                                                                                                      "kind": "main",
+                                                                                                                                      "note": "持ち駒の角を4四に打ちます。",
+                                                                                                                                      "child": {
+                                                                                                                                        "id": "d21_1",
+                                                                                                                                        "sfen": "lnsg2s1l/3kr1g2/1ppp1pnpp/p3pbp2/9/2P4R1/PP1PPPP1P/2K2S3/LNSGG2NL b BP 1",
+                                                                                                                                        "branches": [
+                                                                                                                                          {
+                                                                                                                                            "usi": "2f4f",
+                                                                                                                                            "kind": "main",
+                                                                                                                                            "note": "相手は飛車を4六に動かしました。",
+                                                                                                                                            "child": {
+                                                                                                                                              "id": "d21_2",
+                                                                                                                                              "sfen": "lnsg2s1l/3kr1g2/1ppp1pnpp/p3pbp2/9/2P2R3/PP1PPPP1P/2K2S3/LNSGG2NL w BP 1",
+                                                                                                                                              "branches": [
+                                                                                                                                                {
+                                                                                                                                                  "usi": "4d9i+",
+                                                                                                                                                  "kind": "main",
+                                                                                                                                                  "note": "角で9九の香を取って、馬を作ります。",
+                                                                                                                                                  "child": {
+                                                                                                                                                    "id": "d21_3",
+                                                                                                                                                    "sfen": "lnsg2s1l/3kr1g2/1ppp1pnpp/p3p1p2/9/2P2R3/PP1PPPP1P/2K2S3/+bNSGG2NL b BPl 1",
+                                                                                                                                                    "branches": [
+                                                                                                                                                      {
+                                                                                                                                                        "usi": "7i8h",
+                                                                                                                                                        "kind": "main",
+                                                                                                                                                        "note": "相手は銀を8八に上げました。",
+                                                                                                                                                        "child": {
+                                                                                                                                                          "id": "d21_4",
+                                                                                                                                                          "sfen": "lnsg2s1l/3kr1g2/1ppp1pnpp/p3p1p2/9/2P2R3/PP1PPPP1P/1SK2S3/+bN1GG2NL w BPl 1",
+                                                                                                                                                          "branches": [
+                                                                                                                                                            {
+                                                                                                                                                              "usi": "9i9h",
+                                                                                                                                                              "kind": "main",
+                                                                                                                                                              "note": "馬を9八に引きます。取られません。",
+                                                                                                                                                              "child": {
+                                                                                                                                                                "id": "d21_5",
+                                                                                                                                                                "sfen": "lnsg2s1l/3kr1g2/1ppp1pnpp/p3p1p2/9/2P2R3/PP1PPPP1P/+bSK2S3/1N1GG2NL b BPl 1",
+                                                                                                                                                                "comment": "香を取って、馬が残りました。",
+                                                                                                                                                                "branches": []
+                                                                                                                                                              }
+                                                                                                                                                            }
+                                                                                                                                                          ]
+                                                                                                                                                        }
+                                                                                                                                                      }
+                                                                                                                                                    ]
+                                                                                                                                                  }
+                                                                                                                                                }
+                                                                                                                                              ]
+                                                                                                                                            }
+                                                                                                                                          }
+                                                                                                                                        ]
+                                                                                                                                      }
+                                                                                                                                    }
+                                                                                                                                  ]
+                                                                                                                                }
                                                                                                                               }
                                                                                                                             ]
                                                                                                                           }

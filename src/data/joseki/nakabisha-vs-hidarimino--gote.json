@@ -236,6 +236,7 @@
                                                                                 "child": {
                                                                                   "id": "n13",
                                                                                   "sfen": "lnsg1g1nl/3krs3/pppp1pbpp/4p1p2/7P1/2P6/PP1PPPP1P/1BK1GS1R1/LNSG3NL w - 1",
+                                                                                  "comment": null,
                                                                                   "branches": [
                                                                                     {
                                                                                       "usi": "6b7b",
@@ -939,6 +940,95 @@
                                                                                                                                 }
                                                                                                                               }
                                                                                                                             ]
+                                                                                                                          }
+                                                                                                                        }
+                                                                                                                      ]
+                                                                                                                    }
+                                                                                                                  }
+                                                                                                                ]
+                                                                                                              }
+                                                                                                            }
+                                                                                                          ]
+                                                                                                        }
+                                                                                                      }
+                                                                                                    ]
+                                                                                                  }
+                                                                                                }
+                                                                                              ]
+                                                                                            }
+                                                                                          }
+                                                                                        ]
+                                                                                      }
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              },
+                                                                              {
+                                                                                "usi": "3g3f",
+                                                                                "kind": "deviation",
+                                                                                "note": "相手は角を交換する前に、3六へ歩を突きました。",
+                                                                                "punishNote": "角を交換する前に3六へ歩を突くと、後手が先に角を取って成り込めます。銀を取って馬を作ったあと、桂も取れます。",
+                                                                                "child": {
+                                                                                  "id": "d13",
+                                                                                  "sfen": "lnsg1g1nl/3krs3/pppp1pbpp/4p1p2/7P1/2P3P2/PP1PPP2P/1B1KGS1R1/LNSG3NL w - 1",
+                                                                                  "branches": [
+                                                                                    {
+                                                                                      "usi": "3c8h+",
+                                                                                      "kind": "main",
+                                                                                      "note": "角で相手の角を取って、成ります。",
+                                                                                      "child": {
+                                                                                        "id": "d13_1",
+                                                                                        "sfen": "lnsg1g1nl/3krs3/pppp1p1pp/4p1p2/7P1/2P3P2/PP1PPP2P/1+b1KGS1R1/LNSG3NL b b 1",
+                                                                                        "branches": [
+                                                                                          {
+                                                                                            "usi": "7i8h",
+                                                                                            "kind": "main",
+                                                                                            "note": "相手は銀で取り返しました。",
+                                                                                            "child": {
+                                                                                              "id": "d13_2",
+                                                                                              "sfen": "lnsg1g1nl/3krs3/pppp1p1pp/4p1p2/7P1/2P3P2/PP1PPP2P/1S1KGS1R1/LN1G3NL w Bb 1",
+                                                                                              "branches": [
+                                                                                                {
+                                                                                                  "usi": "B*5e",
+                                                                                                  "kind": "main",
+                                                                                                  "note": "持ち駒の角を5五に打って、8八の銀を狙います。",
+                                                                                                  "child": {
+                                                                                                    "id": "d13_3",
+                                                                                                    "sfen": "lnsg1g1nl/3krs3/pppp1p1pp/4p1p2/4b2P1/2P3P2/PP1PPP2P/1S1KGS1R1/LN1G3NL b B 1",
+                                                                                                    "branches": [
+                                                                                                      {
+                                                                                                        "usi": "4g4f",
+                                                                                                        "kind": "main",
+                                                                                                        "note": "相手は歩を4六に突きました。",
+                                                                                                        "child": {
+                                                                                                          "id": "d13_4",
+                                                                                                          "sfen": "lnsg1g1nl/3krs3/pppp1p1pp/4p1p2/4b2P1/2P2PP2/PP1PP3P/1S1KGS1R1/LN1G3NL w B 1",
+                                                                                                          "branches": [
+                                                                                                            {
+                                                                                                              "usi": "5e8h+",
+                                                                                                              "kind": "main",
+                                                                                                              "note": "角で8八の銀を取って、馬を作ります。",
+                                                                                                              "child": {
+                                                                                                                "id": "d13_5",
+                                                                                                                "sfen": "lnsg1g1nl/3krs3/pppp1p1pp/4p1p2/7P1/2P2PP2/PP1PP3P/1+b1KGS1R1/LN1G3NL b Bs 1",
+                                                                                                                "branches": [
+                                                                                                                  {
+                                                                                                                    "usi": "2e2d",
+                                                                                                                    "kind": "main",
+                                                                                                                    "note": "相手は歩を2四に突き出しました。",
+                                                                                                                    "child": {
+                                                                                                                      "id": "d13_6",
+                                                                                                                      "sfen": "lnsg1g1nl/3krs3/pppp1p1pp/4p1pP1/9/2P2PP2/PP1PP3P/1+b1KGS1R1/LN1G3NL w Bs 1",
+                                                                                                                      "branches": [
+                                                                                                                        {
+                                                                                                                          "usi": "8h8i",
+                                                                                                                          "kind": "main",
+                                                                                                                          "note": "馬で8九の桂を取ります。馬は取られません。",
+                                                                                                                          "child": {
+                                                                                                                            "id": "d13_7",
+                                                                                                                            "sfen": "lnsg1g1nl/3krs3/pppp1p1pp/4p1pP1/9/2P2PP2/PP1PP3P/3KGS1R1/L+b1G3NL b Bsn 1",
+                                                                                                                            "comment": "銀と桂を取って、馬が残りました。",
+                                                                                                                            "branches": []
                                                                                                                           }
                                                                                                                         }
                                                                                                                       ]

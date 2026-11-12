@@ -739,6 +739,73 @@
                                           }
                                         ]
                                       }
+                                    },
+                                    {
+                                      "usi": "4c4d",
+                                      "kind": "deviation",
+                                      "note": "相手は歩を4四に突きました。",
+                                      "punishNote": "歩を突いても、4三が空いています。角を打ち込んで、馬を作れます。",
+                                      "child": {
+                                        "id": "d4_1x1",
+                                        "sfen": "lnsgkgsnl/1r7/ppppp2pp/5pp2/2P6/9/PP1PPPPPP/1S5R1/LN1GKGSNL b Bb 1",
+                                        "branches": [
+                                          {
+                                            "usi": "B*4c",
+                                            "kind": "main",
+                                            "note": "持ち駒の角を4三に打ちます。",
+                                            "child": {
+                                              "id": "d4_1x1_1",
+                                              "sfen": "lnsgkgsnl/1r7/pppppB1pp/5pp2/2P6/9/PP1PPPPPP/1S5R1/LN1GKGSNL w b 1",
+                                              "branches": [
+                                                {
+                                                  "usi": "8b3b",
+                                                  "kind": "main",
+                                                  "note": "相手は飛車を3二に動かしました。",
+                                                  "child": {
+                                                    "id": "d4_1x1_2",
+                                                    "sfen": "lnsgkgsnl/6r2/pppppB1pp/5pp2/2P6/9/PP1PPPPPP/1S5R1/LN1GKGSNL b b 1",
+                                                    "branches": [
+                                                      {
+                                                        "usi": "4c6e+",
+                                                        "kind": "main",
+                                                        "note": "角を成って馬を作ります。取られません。",
+                                                        "child": {
+                                                          "id": "d4_1x1_3",
+                                                          "sfen": "lnsgkgsnl/6r2/ppppp2pp/5pp2/2P+B5/9/PP1PPPPPP/1S5R1/LN1GKGSNL w b 1",
+                                                          "branches": [
+                                                            {
+                                                              "usi": "3a4b",
+                                                              "kind": "main",
+                                                              "note": "相手は銀を4二に寄せました。",
+                                                              "child": {
+                                                                "id": "d4_1x1_4",
+                                                                "sfen": "lnsgkg1nl/5sr2/ppppp2pp/5pp2/2P+B5/9/PP1PPPPPP/1S5R1/LN1GKGSNL b b 1",
+                                                                "branches": [
+                                                                  {
+                                                                    "usi": "6e8c",
+                                                                    "kind": "main",
+                                                                    "note": "馬を8三に進めます。",
+                                                                    "child": {
+                                                                      "id": "d4_1x1_5",
+                                                                      "sfen": "lnsgkg1nl/5sr2/p+Bppp2pp/5pp2/2P6/9/PP1PPPPPP/1S5R1/LN1GKGSNL w Pb 1",
+                                                                      "comment": "馬が残りました。",
+                                                                      "branches": []
+                                                                    }
+                                                                  }
+                                                                ]
+                                                              }
+                                                            }
+                                                          ]
+                                                        }
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        ]
+                                      }
                                     }
                                   ]
                                 }
