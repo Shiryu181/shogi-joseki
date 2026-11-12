@@ -55,21 +55,27 @@ function after(sfen, usi) {
 const sideToMove = (sfen) => (sfen.split(" ")[1] === "w" ? "gote" : "sente");
 const mainOf = (node) => node.branches.find((b) => b.kind === "main");
 
-/** 逸れ手を含む分岐点をすべて集める。 */
+/**
+ * 逸れ手(咎め)を含む分岐点をすべて集める。本線の局面に加えて、変化(variation)の枝の中の局面にある咎めも対象にする
+ * (2026-11-12。枝の中の咎めは build-joseki.mjs の line の devs / endDevs で書く)。
+ * 変化そのもの(variation:true)はミスではないので咎め検証の対象外。tag は枝の中の咎めの場所(本線は空)。
+ */
 function collectQuizzes(course) {
   const out = [];
-  let node = course.root;
-  let moveNo = 1;
-  while (node) {
-    for (const b of node.branches) {
-      // 変化(variation)はミスではないので咎め検証の対象外
-      if (b.kind === "deviation" && !b.variation && b.child) out.push({ moveNo, anchor: node, dev: b });
+  function chain(node, moveNo, tag) {
+    while (node) {
+      for (const b of node.branches) {
+        if (b.kind !== "deviation" || !b.child) continue;
+        if (b.variation) chain(b.child, moveNo + 1, `${tag}${moveNo}手目${b.usi}の枝の中 `);
+        else out.push({ moveNo, anchor: node, dev: b, tag });
+      }
+      const next = mainOf(node);
+      if (!next || !next.child) break;
+      node = next.child;
+      moveNo++;
     }
-    const next = mainOf(node);
-    if (!next || !next.child) break;
-    node = next.child;
-    moveNo++;
   }
+  chain(course.root, 1, "");
   return out;
 }
 
@@ -95,6 +101,15 @@ function collectQuizzes(course) {
   /** 手番側から見た評価値つき候補手リスト(MultiPV)。 */
   async function top(sfen, pv) {
     CAP.length = 0; hook();
+    if (NATIVE) {
+      // 局面ごとに置換表を消す(scripts/lib/usi-clear.cjs と同じ手順。前の局面の探索が混ざらないように)。
+      const hash = Number(process.env.YO_HASH || 256);
+      for (const mb of [hash + 1, hash]) {
+        send(`setoption name USI_Hash value ${mb}`); send("isready");
+        await waitFor((l) => l === "readyok", 60000); CAP.length = 0;
+      }
+      send("usinewgame");
+    }
     send(`setoption name MultiPV value ${pv}`);
     send(`position sfen ${sfen}`);
     send(NODES ? `go nodes ${NODES}` : `go movetime ${MS}`);
@@ -144,7 +159,7 @@ function collectQuizzes(course) {
       total++;
       const devLoss = await lossOf(q.anchor.sfen, q.dev.usi);
       const okDev = devLoss !== null && devLoss >= DEV_MIN;
-      out(`  ${q.moveNo}手目 逸れ手 ${q.dev.usi}: 相手の損 ${devLoss}点 ${okDev ? "OK" : "← 損が小さい(出題に向かない)"}`);
+      out(`  ${q.tag}${q.moveNo}手目 逸れ手 ${q.dev.usi}: 相手の損 ${devLoss}点 ${okDev ? "OK" : "← 損が小さい(出題に向かない)"}`);
       if (!okDev) ng++;
 
       // 咎めの手順を1手ずつたどり、自分が指す手だけを検証する。

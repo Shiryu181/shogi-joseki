@@ -211,7 +211,19 @@ function checkEvidence(evidence, label) {
   if (!ok) throw new Error(`${label}: evidence は文字列か文字列の配列にしてください`);
 }
 
-export function buildCourse({ id, title, myStrategy, opponentStrategy, mySide, source, goalFormation, goalLabel, rootComment, moves }) {
+/**
+ * 本線の最後の局面(章の終わり)にも、相手の逸れ手と咎めを置ける(コース定義の endDevs)。
+ * 章の終わりが相手の番のとき、その局面で相手が外れた手を咎める枝になる。学ぶ側の番の局面には置けない。
+ */
+function addEndDevs(position, nodes, endDevs, id, mySide) {
+  if (!endDevs || endDevs.length === 0) return;
+  const last = nodes[nodes.length - 1];
+  const sideToMove = position.sfen.split(" ")[1] === "b" ? "sente" : "gote";
+  if (sideToMove === mySide) throw new Error(`${id}: endDevs は相手の番で終わる章にだけ置けます(章の終わりは学ぶ側の番)`);
+  endDevs.forEach((dev) => last.branches.push(buildDeviation(position, dev, nodes.length, { id, mySide })));
+}
+
+export function buildCourse({ id, title, myStrategy, opponentStrategy, mySide, source, goalFormation, goalLabel, rootComment, moves, endDevs }) {
   const position = new Position();
   position.resetBySFEN(InitialPositionSFEN.STANDARD);
 
@@ -244,6 +256,7 @@ export function buildCourse({ id, title, myStrategy, opponentStrategy, mySide, s
     for (const b of devBranches) nodes[i].branches.push(b);
     nodes.push(child);
   });
+  addEndDevs(position, nodes, endDevs, id, mySide);
 
   const course = {
     id, title, myStrategy, opponentStrategy, mySide, source,
@@ -283,18 +296,34 @@ function resolveDevMove(position, spec, label) {
  */
 function buildDeviation(position, dev, moveNo, ctx = {}) {
   const work = position.clone();
+  const idBase = ctx.idBase ?? `d${moveNo}`;
   checkEvidence(dev.evidence, `${moveNo}手目の逸れ手`);
   const devMove = resolveDevMove(work, dev, `${moveNo}(逸れ手)`);
   if (!work.doMove(devMove)) throw new Error(`${moveNo}手目の逸れ手 ${devMove.usi}: 適用に失敗`);
 
-  const head = { id: `d${moveNo}`, sfen: work.sfen, comment: dev.comment, branches: [] };
+  const head = { id: idBase, sfen: work.sfen, comment: dev.comment, branches: [] };
   let cursor = head;
+  /**
+   * 枝の中の咎め(2026-11-12)。line の手 spec に devs を書くと、その手を指す前の局面(=いまの cursor)に
+   * 相手の別の手と咎めを足す。dev.endDevs は line の最後の手を指した後の局面に足す。
+   * どちらも相手の番の局面でなければ停止する(学ぶ側の番に「相手のミス」を置いてしまう取り違えを防ぐ)。
+   * 足した枝は、その局面の本線の手のあとに並ぶ(本線は常に branches[0])。
+   */
+  const nestedDevs = (devs, plyOfPosition, label) => {
+    if (!devs || devs.length === 0) return [];
+    const sideToMove = work.sfen.split(" ")[1] === "b" ? "sente" : "gote";
+    if (ctx.mySide && sideToMove === ctx.mySide) {
+      throw new Error(`${label}: 枝の中の咎めは相手の番の局面にだけ置けます(この局面は ${ctx.mySide} =学ぶ側の番)`);
+    }
+    return devs.map((nd, k) => buildDeviation(work, nd, plyOfPosition, { ...ctx, idBase: `${cursor.id}x${k + 1}` }));
+  };
   (dev.line ?? []).forEach((spec, j) => {
     const sfenBefore = work.sfen;
     checkEvidence(spec.evidence, `${moveNo}手目の咎め${j + 1}`);
+    const nested = nestedDevs(spec.devs, moveNo + 1 + j, `${ctx.id ?? ""} ${moveNo}手目の枝の ${moveNo + 1 + j}手目の前`);
     const mv = resolveDevMove(work, spec, `${moveNo}(咎め${j + 1})`);
     if (!work.doMove(mv)) throw new Error(`${moveNo}手目の咎め手 ${mv.usi}: 適用に失敗`);
-    const child = { id: `d${moveNo}_${j + 1}`, sfen: work.sfen, comment: spec.comment, branches: [] };
+    const child = { id: `${idBase}_${j + 1}`, sfen: work.sfen, comment: spec.comment, branches: [] };
     const extra = dev.variation
       ? {
           ...((spec.aim ?? (spec.note ? AIM_BY_NOTE[spec.note] : undefined)) ? { aim: spec.aim ?? AIM_BY_NOTE[spec.note] } : {}),
@@ -302,8 +331,11 @@ function buildDeviation(position, dev, moveNo, ctx = {}) {
         }
       : {};
     cursor.branches.push({ usi: mv.usi, kind: "main", note: spec.note, ...extra, child });
+    for (const b of nested) cursor.branches.push(b);
     cursor = child;
   });
+  const endLen = (dev.line ?? []).length;
+  for (const b of nestedDevs(dev.endDevs, moveNo + 1 + endLen, `${ctx.id ?? ""} ${moveNo}手目の枝の終わり`)) cursor.branches.push(b);
 
   return {
     usi: devMove.usi,
@@ -321,7 +353,7 @@ function buildDeviation(position, dev, moveNo, ctx = {}) {
  * (人間が指し手を書き写さないので転記ミスが入らない)。
  * notes[i] = [note, comment] を手ごとに与える。
  */
-export function buildCourseFromUsi({ id, title, myStrategy, opponentStrategy, mySide, source, goalFormation, goalLabel, rootComment, usiList, notes = [] }) {
+export function buildCourseFromUsi({ id, title, myStrategy, opponentStrategy, mySide, source, goalFormation, goalLabel, rootComment, usiList, notes = [], endDevs }) {
   const position = new Position();
   position.resetBySFEN(InitialPositionSFEN.STANDARD);
   const nodes = [{ id: "n0", sfen: position.sfen, comment: rootComment, branches: [] }];
@@ -353,6 +385,7 @@ export function buildCourseFromUsi({ id, title, myStrategy, opponentStrategy, my
     for (const b of devBranches) nodes[i].branches.push(b);
     nodes.push(child);
   });
+  addEndDevs(position, nodes, endDevs, id, mySide);
 
   const course = {
     id, title, myStrategy, opponentStrategy, mySide, source,

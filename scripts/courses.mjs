@@ -262,3 +262,26 @@ reportAnnotateWarnings();
 // 止めはしない(JSON は書き出し済み)が、食い違いがあれば必ず出す。単独で動かすと終了コード 1 になる:
 // node scripts/check-consistency.mjs
 checkConsistency();
+
+// 咎め(相手のミスを咎める枝。variation でない deviation)の本数。本線の局面にあるものと、変化(variation)の枝の中にあるものを分けて数える。
+// 画面に出す章(josekiLoader の gokigen / sankenbisha の42章)だけが対象。章ごとの内訳は --punish で出す。
+{
+  const { listEntries } = await import("./count-screen-numbers.mjs");
+  const { readFileSync } = await import("node:fs");
+  let main = 0, inBranch = 0, zero = 0;
+  const rows = [];
+  for (const e of listEntries()) {
+    const c = JSON.parse(readFileSync(new URL(`../src/data/joseki/${e.id}.json`, import.meta.url), "utf-8"));
+    let m = 0, v = 0;
+    (function walk(node, inVar) {
+      for (const b of node.branches ?? []) {
+        if (b.kind === "deviation" && !b.variation) { if (inVar) v++; else m++; }
+        if (b.child) walk(b.child, inVar || (b.kind === "deviation" && !!b.variation));
+      }
+    })(c.root, false);
+    main += m; inBranch += v; if (m + v === 0) zero++;
+    rows.push(`${e.id}: ${m + v}${v ? `(うち枝の中${v})` : ""}`);
+  }
+  console.log(`咎め: 本線 ${main}本 + 枝の中 ${inBranch}本 = ${main + inBranch}本(0本の章 ${zero}章)`);
+  if (process.argv.includes("--punish")) for (const r of rows) console.log("  " + r);
+}
